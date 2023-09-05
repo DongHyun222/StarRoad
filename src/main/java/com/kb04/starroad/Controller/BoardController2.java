@@ -7,7 +7,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RestController
 public class BoardController2 {
 
-    @GetMapping("/starroad/board")
+    @GetMapping("/starroad/board2")
     public ModelAndView board() {
         ModelAndView mav = new ModelAndView("board/board");
         return mav;
