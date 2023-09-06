@@ -41,8 +41,8 @@ public class BoardDto {
     @Column(name = "comment_num", nullable = false)
     private int commentNum = 0;
 
-    @Column(name = "status", nullable = false)
-    private Boolean status;
+    @Column(columnDefinition = "char(1)", name = "status", nullable = false)
+    private Character status;
 
     @Column(name = "type", length = 1, nullable = false)
     private String type;
