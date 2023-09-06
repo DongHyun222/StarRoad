@@ -12,4 +12,9 @@ public class ProductController {
         ModelAndView mav = new ModelAndView("product/product");
         return mav;
     }
+
+    @GetMapping("/api/product")
+    public String product_list() {
+        return "product";
+    }
 }
