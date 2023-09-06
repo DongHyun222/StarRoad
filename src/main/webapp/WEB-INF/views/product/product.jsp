@@ -97,9 +97,9 @@
                 <span aria-hidden="true">&laquo;</span>
             </a>
         </li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <c:forEach begin="1" end="3" var="i">
+            <li class="page-item"><a class="page-link" href="#" aria-label="${i}">${i}</a></li>
+        </c:forEach>
         <li class="page-item">
             <a class="page-link" href="#" aria-label="Next">
                 <span aria-hidden="true">&raquo;</span>
@@ -107,5 +107,40 @@
         </li>
     </ul>
 </nav>
+
+<script>
+    // 페이지 링크 요소를 선택합니다.
+    const pageLinks = document.querySelectorAll('.page-link');
+
+    // 이전 페이지로 이동하는 함수
+    function goToPreviousPage() {
+        // 이전 페이지로 이동하는 코드를 작성하세요.
+        // 예: window.location.href = '이전 페이지 URL';
+        window.location.href = document.referrer;
+    }
+
+    // 다음 페이지로 이동하는 함수
+    function goToNextPage() {
+        // 다음 페이지로 이동하는 코드를 작성하세요.
+        // 예: window.location.href = '다음 페이지 URL';
+        window.location.href = document.referrer;
+    }
+
+    // 페이지 링크에 클릭 이벤트 리스너를 추가합니다.
+    pageLinks.forEach((link) => {
+        link.addEventListener('click', (event) => {
+            event.preventDefault(); // 기본 링크 동작을 막습니다.
+
+            if (link.getAttribute('aria-label') === 'Previous') {
+                goToPreviousPage();
+            } else if (link.getAttribute('aria-label') === 'Next') {
+                goToNextPage();
+            } else {
+                // 페이지 번호를 클릭한 경우에 대한 처리를 추가하세요.
+                window.location.href = '/starroad/product?page='+link.getAttribute('aria-label');
+            }
+        });
+    });
+</script>
 </body>
 </html>
