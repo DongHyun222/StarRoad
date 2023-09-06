@@ -4,7 +4,6 @@ main {
 
 aside {
     width: 280px;
-    font-size: 24px;
 }
 
 #sidebar_title {
@@ -24,10 +23,6 @@ li {
 }
 
 .sidebar_menu {
-    font-size: 24px;
-    text-decoration: none;
-    color: black;
-    cursor: pointer;
     background-repeat: no-repeat;
     background-size: 0%;
     transition: background-size 0.5s;
