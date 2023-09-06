@@ -54,14 +54,14 @@ public class MemberDto {
     @Column(name="goal",nullable = false)
     private int goal;
 
-    @Column(name="status",nullable = false)
-    private boolean status;
+    @Column(columnDefinition = "char(1)", name="status",nullable = false)
+    private Character status;
 
     @Column(name="salary",nullable = false)
     private int salary;
 
-    @Column(name="agreement",nullable = false)
-    private boolean agreement;
+    @Column(columnDefinition = "char(1)", name="agreement",nullable = false)
+    private Character agreement;
 
     @Column(name="point",nullable = false)
     private int point;

@@ -35,8 +35,8 @@ public class BoardDto {
     @Column(name = "content", length = 2000, nullable = false)
     private String content;
 
-    @Column(name = "like")
-    private int like;
+    @Column(name = "likes")
+    private int likes;
 
     @Column(name = "comment_num", nullable = false)
     private int commentNum = 0;
