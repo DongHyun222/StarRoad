@@ -1,0 +1,33 @@
+.container {
+    margin-top : 30px;
+}
+
+/* 하단 섹션 스타일 */
+.bottom-section {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* 각 섹션 스타일 */
+.section {
+    flex: 1;
+    text-align: center;
+    padding: 20px;
+}
+
+/* 이미지 스타일 */
+.section img {
+
+    width : 160px;
+    height: 160px;
+}
+
+/* 설명 스타일 */
+.section p {
+    margin-top: 30px;
+    font-size: 15px;
+}
+
+container {
+    margin: 0;
+}
