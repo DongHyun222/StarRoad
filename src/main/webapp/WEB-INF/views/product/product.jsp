@@ -6,21 +6,48 @@
 <head>
     <meta charset="UTF-8">
     <title>예적금 상품 추천</title>
-    <link rel="stylesheet" type="text/css" href="${path}/resources/static/css/product.css">
-    <%--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">--%>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="${path}/resources/static/css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="${path}/resources/static/css/product.css">
 </head>
 <body>
 <header>
 
 </header>
-<h1>예적금 상품 추천</h1>
+<h1 class="fw-bold">예적금 상품 추천</h1>
 <div id="product_search">
     <nav class="navbar navbar-light bg-light">
         <div class="container-fluid">
             <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
+                <div>
+                    <div class="search_type">상품 유형</div>
+                    <div class="dropdown">
+                        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                            상품 유형 선택
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <li><a class="dropdown-item" href="#">적금</a></li>
+                            <li><a class="dropdown-item" href="#">예금</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="search_type">가입 기간</div>
+                    <ul id="period">
+                        <li><button class="btn period_btn">1</button></li>
+                        <li><button class="btn period_btn">2</button></li>
+                        <li><button class="btn period_btn">3</button></li>
+                        <li><button class="btn period_btn">4</button></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <div class="search_type">상품</div>
+                    <input class="form-control me-2 search_bar" type="search" placeholder="예적금 상품명을 적어주세요" aria-label="Search">
+                    <button class="btn search_btn" type="submit">검색</button>
+                </div>
+
             </form>
         </div>
     </nav>
@@ -56,7 +83,7 @@
                     세후 <span>${price}</span>원 입니다.
                 </div>
                 <div id="detail_button" class="content">
-                    <button id="detail">자세히</button>
+                    <button class=" btn detail_btn">자세히</button>
                 </div>
 
             </li>
