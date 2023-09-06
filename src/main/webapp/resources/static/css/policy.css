@@ -1,0 +1,18 @@
+.policyBox {
+    border: black 1px solid;
+    background-color: darkgrey;
+    display: flex;
+    margin: inherit;
+    justify-content: space-evenly;
+}
+
+.policy {
+    border: black 1px solid;
+    background-color: cornflowerblue;
+    margin: inherit;
+}
+
+.policy > div {
+    margin: inherit;
+}
+
