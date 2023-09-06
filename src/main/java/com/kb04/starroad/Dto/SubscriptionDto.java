@@ -22,7 +22,7 @@ public class SubscriptionDto {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_no", nullable = false)
-    private int memberNo;
+    private MemberDto memberNo;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "prod_no", nullable = false)

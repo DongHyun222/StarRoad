@@ -26,6 +26,6 @@ public class MemberConditionDto {
     private ConditionDto conditionNo;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @Column(name = "member_no", nullable = false)
+    @JoinColumn(name = "member_no", nullable = false)
     private MemberDto memberNo;
 }
