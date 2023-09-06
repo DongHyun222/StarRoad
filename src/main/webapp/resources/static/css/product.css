@@ -58,6 +58,11 @@ div {
 
 .max_rate {
     color: orangered;
+    font-size: small;
+}
+
+.max_rate > span{
+    color: orangered;
     font-size: large;
 }
 

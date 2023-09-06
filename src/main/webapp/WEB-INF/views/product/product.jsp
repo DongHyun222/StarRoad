@@ -33,7 +33,7 @@
                     <div class="explain">${item.explain}</div>
                 </div>
                 <div class="rate">
-                    최고 연 <span class="max_rate">${item.maxRate}%</span> (${item.maxRatePeriod}개월)
+                    최고 연 <span class="max_rate"><span>${item.maxRate}</span>%</span> (${item.maxRatePeriod}개월)
                 </div>
 
             </li>
