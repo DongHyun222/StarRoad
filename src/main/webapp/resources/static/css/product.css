@@ -3,6 +3,10 @@ h1 {
     justify-content: center;
 }
 
+header {
+    height: 30px;
+}
+
 #product_list {
     display: flex;
     justify-content: center;
@@ -13,8 +17,14 @@ h1 {
     justify-content: center;
 }
 
-ul {
+#product_list > ul {
     width: 80%;
+    /*margin: 0px;*/
+    padding: 0px;
+    display: flex;
+    flex-direction: column;
+    /*justify-content: center;*/
+    align-items: center;
 }
 
 div {
@@ -22,12 +32,14 @@ div {
 }
 
 #product_item {
+    display: flex;
+    justify-content: space-between;
     list-style: none;
-    width: 100%;
+    width: 80%;
     border: 1px solid var(--sub-kb-gold);
     border-radius: 10px;
-    padding: 10px;
-    margin: 10px;
+    padding: 14px;
+    margin-block: 10px;
 }
 
 /*flex-flow: row wrap;*/
@@ -37,10 +49,12 @@ div {
     flex-flow: row wrap;
     font-size: small;
     color: var(--sub-kb-silver);
+    align-items: baseline;
 }
 
-.type {
-
+.attribute {
+    font-size: smaller;
+    align-items: baseline;
 }
 
 .rate {
@@ -50,6 +64,7 @@ div {
 
 .name {
     font-size: large;
+    font-weight: bold;
 }
 
 .explain {
@@ -59,6 +74,7 @@ div {
 .max_rate {
     color: orangered;
     font-size: small;
+    font-weight: bold;
 }
 
 .max_rate > span{
@@ -66,3 +82,38 @@ div {
     font-size: large;
 }
 
+#member > span{
+    color: orangered;
+    display: contents;
+}
+nav {
+    display: flex;
+    justify-content: center;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+
+}
+
+#member {
+    display: flex;
+    flex-direction: row;
+}
+
+#detail {
+    background-color: var(--main-kb-yellow);
+    font-size: large;
+    font-weight: bold;
+    border-radius: 10px;
+    border: none;
+    padding-inline: 10px;
+    padding-block: 5px;
+}
+.content {
+    align-items: center;
+}
+#detail_button {
+    display: flex;
+}

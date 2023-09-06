@@ -34,9 +34,11 @@ public class ProductController {
         productRepository.save(dto2);
         productRepository.save(dto3);
 
-        productDtos.addAll(productRepository.findAll());
+//        productDtos.addAll();
 
-        model.addAttribute("product_items", productDtos);
+        model.addAttribute("product_items", productRepository.findAll());
+        model.addAttribute("user", "장서우");
+        model.addAttribute("price", 10000);
 
         ModelAndView mav = new ModelAndView("product/product");
         return mav;

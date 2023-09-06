@@ -7,38 +7,78 @@
     <meta charset="UTF-8">
     <title>예적금 상품 추천</title>
     <link rel="stylesheet" type="text/css" href="${path}/resources/static/css/product.css">
+    <%--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">--%>
     <link rel="stylesheet" type="text/css" href="${path}/resources/static/css/common.css"/>
 </head>
 <body>
+<header>
+
+</header>
 <h1>예적금 상품 추천</h1>
-<div id="product_search"></div>
+<div id="product_search">
+    <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+            <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+</div>
 <div id="product_list">
     <ul>
         <c:forEach items="${product_items}" var="item">
             <li id="product_item">
-                <div id="sub">
-                    <c:choose>
-                        <c:when test="${item.type eq 'D'.charAt(0) }">
-                            <div class="type">적금</div>
-                        </c:when>
-                        <c:when test="${item.type eq 'I'.charAt(0)}">
-                            <div class="type">예금</div>
-                        </c:when>
-                    </c:choose>
-                    <div class="attribute">${item.attribute}</div>
-                </div>
+                <div id="product" class="content">
+                    <div class="sub">
+                        <c:choose>
+                            <c:when test="${item.type eq 'D'.charAt(0) }">
+                                <div class="type">적금</div>
+                            </c:when>
+                            <c:when test="${item.type eq 'I'.charAt(0)}">
+                                <div class="type">예금</div>
+                            </c:when>
+                        </c:choose>
+                        <div class="attribute">${item.attribute}</div>
+                    </div>
 
-                <div class="title">
-                    <div class="name">${item.name}</div>
-                    <div class="explain">${item.explain}</div>
+                    <div class="title">
+                        <div class="name">${item.name}</div>
+                        <div class="explain">${item.explain}</div>
+                    </div>
+                    <div class="rate">
+                        최고 연 <span class="max_rate"><span>${item.maxRate}</span>%</span> (${item.maxRatePeriod}개월)
+                    </div>
                 </div>
-                <div class="rate">
-                    최고 연 <span class="max_rate"><span>${item.maxRate}</span>%</span> (${item.maxRatePeriod}개월)
+                <div id="member" class="content">
+                    현재 ${user}님의 자산으로 계산된<br>
+                    만기 예상 금액은<br>
+                    세후 <span>${price}</span>원 입니다.
+                </div>
+                <div id="detail_button" class="content">
+                    <button id="detail">자세히</button>
                 </div>
 
             </li>
         </c:forEach>
     </ul>
 </div>
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        <li class="page-item">
+            <a class="page-link" href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item">
+            <a class="page-link" href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>
 </body>
 </html>
