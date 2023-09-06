@@ -14,7 +14,24 @@
 <div id="product_list">
     <ul>
         <c:forEach items="${product_items}" var="item">
-            <li>${item}</li>
+            <li id="product_item">
+                <c:choose>
+                    <c:when test="${item.type eq 'D'.charAt(0) }">
+                        <div class="type">적금</div>
+                    </c:when>
+                    <c:when test="${item.type eq 'I'.charAt(0)}">
+                        <div class="type">예금</div>
+                    </c:when>
+                </c:choose>
+                <div class="title">
+                    <div class="name">${item.name}</div>
+                    <div class="explain">${item.explain}</div>
+                </div>
+                <div class="attribute">${item.attribute}</div>
+
+
+                <div class="attribute">${item.attribute}</div>
+            </li>
         </c:forEach>
     </ul>
 </div>

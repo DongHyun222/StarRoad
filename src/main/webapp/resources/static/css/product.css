@@ -1,5 +1,37 @@
 h1 {
-    color: blue;
     display: flex;
     justify-content: center;
 }
+
+#product_list {
+    display: flex;
+    justify-content: center;
+}
+
+#product_search {
+    display: flex;
+    justify-content: center;
+}
+
+ul {
+    width: 80%;
+}
+
+#product_item {
+    list-style: none;
+    width: 100%;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+}
+/*flex-flow: row wrap;*/
+.name {
+    font-size: 20px;
+}
+
+
+
+
+
+
