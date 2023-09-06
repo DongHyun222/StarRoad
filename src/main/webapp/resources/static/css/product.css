@@ -17,15 +17,47 @@ ul {
     width: 80%;
 }
 
+div {
+    padding: 1px;
+}
+
 #product_item {
     list-style: none;
     width: 100%;
-    border: 1px solid black;
-    border-radius: 5px;
+    border: 1px solid var(--sub-kb-gold);
+    border-radius: 10px;
     padding: 10px;
     margin: 10px;
 }
+
 /*flex-flow: row wrap;*/
-.name {
-    font-size: 20px;
+
+#sub {
+    display: flex;
+    flex-flow: row wrap;
+    font-size: small;
+    color: var(--sub-kb-silver);
 }
+
+.type {
+
+}
+
+.rate {
+    color: var(--sub-kb-dark-gray);
+    font-size: small;
+}
+
+.name {
+    font-size: large;
+}
+
+.explain {
+    font-size: small;
+}
+
+.max_rate {
+    color: orangered;
+    font-size: large;
+}
+
