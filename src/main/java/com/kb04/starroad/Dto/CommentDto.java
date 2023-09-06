@@ -9,7 +9,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "comment")
+@Table(name = "comments")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
