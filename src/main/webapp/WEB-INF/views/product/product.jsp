@@ -4,9 +4,10 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>BOARD</title>
+    <title>PRODUCT</title>
+    <link rel="stylesheet" type="text/css" href="${path}/resources/static/css/product.css">
 </head>
 <body>
-<h1>board.jsp</h1>
+<h1>product.jsp</h1>
 </body>
 </html>
