@@ -1,0 +1,15 @@
+/* 색상 */
+:root {
+    --main-kb-yellow: #FFBC00;
+    --main-kb-gray-negative: #60584C;
+    --main-kb-yellow-positive: #FFCC00;
+    --sub-kb-dark-gray: #545045;
+    --sub-kb-gold: #8D744A;
+    --sub-kb-silver: #84888B;
+}
+
+/* 글꼴 */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+* {
+ font-family: 'Noto Sans KR', sans-serif;
+}
