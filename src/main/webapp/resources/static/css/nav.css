@@ -1,0 +1,58 @@
+/* 네비게이션 바 스타일 */
+header {
+    background-color: #fff;
+    padding: 10px 0;
+    border-bottom: 2px solid var(--main-kb-yellow);;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    width: 80px;
+    height: 80px;
+    margin-left: 30px;
+}
+
+.logo-text {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+nav li { /*얘로 상단 메뉴 가로정렬*/
+    display: inline;
+    align-items : flex-start;
+}
+
+nav li a {
+    color: #000;
+    text-decoration: none; /* 밑줄 제거 */
+    margin-right: 100px; /* 간격 조절 */
+    font-size: 25px; /* 글자 크기를 조절하세요. */
+    font-weight: bold; /* 글자 굵기를 조절하세요. */
+}
+
+.login-button {
+    background-color: #fff; /* 배경색을 흰색으로 설정 */
+    color: #000; /* 글자색을 검은색으로 설정 */
+    padding: 8px 16px;
+    border: 1px solid #000; /* 버튼 테두리를 검은색으로 설정 */
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-right: 30px;
+}
+
+.login-button a {
+    text-decoration: none; /* 밑줄 제거 */
+    color: #000; /* 글자색을 검은색으로 설정 */
+}
+
