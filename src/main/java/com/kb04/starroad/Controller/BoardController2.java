@@ -4,6 +4,9 @@ import com.kb04.starroad.Dto.BoardDto;
 import com.kb04.starroad.Repository.BoardRepository;
 import com.kb04.starroad.Service.BoardService2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,16 +31,25 @@ public class BoardController2 {
         return mav;
     }
 
+
     @GetMapping("/starroad/freeboard")
-    public ModelAndView freeBoard(){
-        ModelAndView mav =new ModelAndView("board/freeBoard");
+    public ModelAndView boardList(
+            @RequestParam(name = "page", defaultValue = "1") int page,
+            @RequestParam(name = "size", defaultValue = "6") int size) {
+
+        ModelAndView mav = new ModelAndView("board/freeBoard");
+
+        // 페이징 정보 설정
+        PageRequest pageable = PageRequest.of(page , size, Sort.by("regdate").descending());
+
+        // 게시글 목록 조회
+        Page<BoardDto> boardPage = boardService.findPaginated(pageable);
+
+        mav.addObject("freeBoardPage", boardPage);
+
         return mav;
     }
-    @GetMapping("/starroad/boardList")
-    public List<BoardDto>  boardList(){
-        List<BoardDto> boardList = boardService.boardList();
-        return boardList;
-    }
+
     @PostMapping("/starroad/writepro")
     public ResponseEntity<String> boardWritePro(
             @RequestParam("type") String type,
@@ -47,29 +59,11 @@ public class BoardController2 {
             @RequestParam("image") MultipartFile imageFile
     ) {
         try {
-            // 이미지 파일이 업로드된 경우에만 처리
-            if (!imageFile.isEmpty()) {
-                // 이미지 파일을 byte 배열로 변환
-                byte[] imageBytes = imageFile.getBytes();
+            boardService.writeBoard(type, detailType, title, content, imageFile);
 
-                // BoardDto 객체 생성 및 데이터 설정
-                BoardDto board = new BoardDto();
-                board.setType(type);
-                board.setDetailType(detailType);
-                board.setTitle(title);
-                board.setContent(content);
-                board.setImage(imageBytes);
-
-                // 게시글 저장
-                boardService.write(board);
-
-                HttpHeaders headers = new HttpHeaders();
-                headers.add("Location", "/starroad/freeboard");
-                return new ResponseEntity<>("", headers, HttpStatus.FOUND);
-            } else {
-                // 이미지 파일이 업로드되지 않은 경우 에러 응답
-                return ResponseEntity.badRequest().body("Image file is empty.");
-            }
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Location", "/starroad/freeboard");
+            return new ResponseEntity<>("", headers, HttpStatus.FOUND);
         } catch (IOException e) {
             e.printStackTrace();
             // 이미지 업로드 실패 시 에러 응답
