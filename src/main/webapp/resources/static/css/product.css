@@ -62,9 +62,8 @@ form > div {
     margin-right: 10px;
     border-right: 3px solid var(--sub-kb-dark-gray);
 }
-
-.search_btn {
-    width: 100px;
+#period > li {
+    margin: 3px;
 }
 
 /*상품 리스트*/

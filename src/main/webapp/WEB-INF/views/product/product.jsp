@@ -23,39 +23,33 @@
         <div class="container-fluid">
             <form class="d-flex">
                 <div>
-                    <div class="search_type">상품 유형</div>
-                    <div class="dropdown">
-                        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                           data-bs-toggle="dropdown" aria-expanded="false">
-                            상품 유형 선택
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <li><a class="dropdown-item" href="#">적금</a></li>
-                            <li><a class="dropdown-item" href="#">예금</a></li>
-                        </ul>
-                    </div>
+                    <div class="search_type content">상품 유형</div>
+                    <select name="type" id="type" class="content">
+                        <option value="D">적금</option>
+                        <option value="I">예금</option>
+                    </select>
                 </div>
 
                 <div>
-                    <div class="search_type">가입 기간</div>
-                    <ul id="period">
+                    <div class="search_type content">최대 가능<br>가입 기간</div>
+                    <ul id="period" class="content">
                         <li>
-                            <button class="btn period_btn">1</button>
+                            <button class="btn period_btn">6개월</button>
                         </li>
                         <li>
-                            <button class="btn period_btn">2</button>
+                            <button class="btn period_btn">12개월</button>
                         </li>
                         <li>
-                            <button class="btn period_btn">3</button>
+                            <button class="btn period_btn">24개월</button>
                         </li>
                         <li>
-                            <button class="btn period_btn">4</button>
+                            <button class="btn period_btn">24개월 초과</button>
                         </li>
                     </ul>
                 </div>
 
                 <div>
-                    <div class="search_type">상품</div>
+                    <div class="search_type content">상품</div>
                     <input class="form-control me-2 search_bar" type="search" placeholder="예적금 상품명을 적어주세요"
                            aria-label="Search">
                     <button class="btn search_btn" type="submit">검색</button>
