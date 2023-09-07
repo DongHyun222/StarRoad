@@ -37,6 +37,7 @@ public class BoardService2 {
             board.setContent(content);
             board.setImage(imageBytes);
 
+
             boardRepository.save(board);
         } else {
             // 이미지 파일이 없는 경우에도 게시글 저장
