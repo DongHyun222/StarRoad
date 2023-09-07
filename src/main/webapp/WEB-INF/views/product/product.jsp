@@ -103,7 +103,7 @@
         </c:forEach>
     </ul>
 </div>
-<nav aria-label="Page navigation example">
+<div aria-label="Page navigation example">
     <ul class="pagination">
         <li class="page-item">
             <a class="page-link" href="#" aria-label="Previous">
@@ -119,7 +119,7 @@
             </a>
         </li>
     </ul>
-</nav>
+</div>
 <script>
     // 페이지 링크 요소를 선택
     let current_page = ${currentPage};
