@@ -7,6 +7,13 @@
     <title>MEMBER</title>
 </head>
 <body>
-<h1>member.jsp</h1>
+
+    <div id="navbar"></div>
+
+    <script>
+        $(function() {
+          $("#navbar").load("navbar.html");
+        }
+    </script>
 </body>
 </html>
