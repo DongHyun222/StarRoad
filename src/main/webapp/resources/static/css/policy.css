@@ -1,18 +1,76 @@
 .policyBox {
     border: black 1px solid;
-    background-color: darkgrey;
     display: flex;
     margin: inherit;
     justify-content: space-evenly;
+    height: 100%;
+    align-items: center;
+    width: 77%;
 }
 
 .policy {
-    border: black 1px solid;
-    background-color: cornflowerblue;
+    border: var(--sub-kb-gold) 1px solid;
     margin: inherit;
+    height: 500px;
+    border-radius: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+    width: 30%;
 }
 
 .policy > div {
     margin: inherit;
 }
 
+.name {
+    font-weight: bold;
+    font-size: larger;
+    height: 13%;
+    padding: 30px;
+}
+
+.explain {
+    font-size: medium;
+    height: 35%;
+    padding: 40px;
+}
+
+.btnDiv {
+    padding: 20px;
+}
+
+.tag {
+    color: var(--sub-kb-gold);
+    padding: 20px;
+    height: 10%;
+}
+
+.linkBtn {
+    border: var(--main-kb-yellow) 1px solid;
+    background: var(--main-kb-yellow);
+    border-radius: 15px;
+    width: 35%;
+    height: 50px;
+}
+
+
+.linkBtn > a {
+    color: black;
+    text-decoration: none;
+    font-size: larger;
+}
+
+.linkBtn:hover {
+    background: #eea419;
+}
+
+.container-fluid {
+    justify-content: center;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
