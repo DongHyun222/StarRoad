@@ -17,6 +17,8 @@
         <main>
             <div class="title"><h1>청년 금융 정책</h1></div>
 
+            <br>
+
             <nav class="navbar bg-body-tertiary">
                 <div class="container-fluid">
                     <form class="d-flex" role="search">
@@ -26,16 +28,20 @@
                 </div>
             </nav>
 
+            <br>
+
             <div class="policyBox">
                 <c:forEach items="${list.iterator()}" var="l">
                     <div class="policy">
                         <div class="name">${l.name}</div>
                         <div class="explain">${l.explain}</div>
-                        <div class="tag">${l.tag}</div>
-                        <div class="linkBtn"><button><a href="${l.link}">더보기${l.link}</a></button></div>
+                        <div class="tag">#${l.tag}</div>
+                        <div class="btnDiv"><button class="linkBtn"><a href="${l.link}">더보기</a></button></div>
                     </div>
                 </c:forEach>
             </div>
+
+            <br>
 
             <nav aria-label="Page navigation example">
                 <ul id="dyn_ul" class="pagination">
