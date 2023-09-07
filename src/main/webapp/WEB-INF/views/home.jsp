@@ -8,35 +8,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="${path}/resources/static/css/common.css">
     <link rel="stylesheet" type="text/css" href="${path}/resources/static/css/home/home.css">
-    <link rel="stylesheet" type="text/css" href="${path}/resources/static/css/nav.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <title>Starroad</title>
+
   </head>
 
 <body>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
-  <header>
-      <nav>
-          <!-- 로고와 이름 -->
-          <div class="logo">
-              <a href="/starroad">
-              <img src="${path}/resources/static/image/home/starroad.png" alt="로고 이미지">
-              </a>
-          </div>
-
-          <!-- 네비게이션 메뉴 -->
-          <nav>
-              <ul>
-                  <li><a href="/starroad/product">금융상품</a></li>
-                  <li><a href="/starroad/policy">청년정책</a></li>
-                  <li><a href="/starroad/board1">커뮤니티</a></li>
-              </ul>
-          </nav>
-
-          <!-- 로그인 버튼 -->
-          <button class="login-button"><a href="/starroad/user">로그인</a></button>
-      </nav>
-  </header>
+  <div id="navbar"></div>
 
   <!-- 본문 내용 -->
   <div class="container">
@@ -80,5 +58,10 @@
       </div>
   </div>
 
+  <script>
+    $(function() {
+      $("#navbar").load("navbar.html");
+    }
+  </script
 </body>
 </html>
