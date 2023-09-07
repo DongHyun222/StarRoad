@@ -20,53 +20,56 @@
 
             <br>
 
-            <nav class="navbar bg-body-tertiary">
-                <div class="container-fluid">
-                    <form class="d-flex" role="search">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
-                    </form>
-                </div>
-            </nav>
+            <div class="search_box">
+
+                <form class="search_form" method="get" action="">
+                    <div class="search_small_box">
+                        <div class="search_box_title">지역</div>
+                        <div class="search_box_option">
+                            <select class="location_select_box" name="selected_location">
+                                <option disabled selected>선택해주세요</option>
+                                <option value="서울">서울</option>
+                                <option value="경기">경기</option>
+                                <option value="중앙부처">중앙부처</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="search_small_box">
+                        <div class="search_box_title">태그</div>
+                        <div class="search_box_option">
+                            <input name="tag" type="button" class="search_btn" value="금융지원"/>
+                            <input name="tag" type="button" class="search_btn" value="교육"/>
+                            <input name="tag" type="button" class="search_btn" value="생활지원"/>
+                            <input name="tag" type="button" class="search_btn" value="금융자산 형성"/>
+                        </div>
+                    </div>
+
+                    <div class="search_small_box">
+                        <div class="search_box_title">정책명</div>
+                        <div class="search_box_option">
+                            <input class="search_input" name="keyword" type="text" placeholder="키워드를 입력해주세요">
+                            <button class="submit_btn" type="submit">검색</button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
 
             <br>
 
-            <div class="policyBox">
+            <div class="policy_box">
                 <c:forEach items="${policyList}" var="item">
                     <div class="policy">
                         <div class="name">${item.name}</div>
                         <div class="explain">${item.explain}</div>
                         <div class="tag">#${item.tag}</div>
-                        <div class="btnDiv"><button class="linkBtn"><a href="${item.link}">더보기</a></button></div>
+                        <div class="btn_div"><button class="link_btn"><a href="${item.link}">더보기</a></button></div>
                     </div>
                 </c:forEach>
             </div>
 
             <br>
-            <!--
-            <nav aria-label="Page navigation example">
-                <ul id="dyn_ul" class="pagination">
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="/starroad/policy?pageIndex=0">1</a></li>
-                    <li class="page-item"><a class="page-link" href="/starroad/policy?pageIndex=1">2</a></li>
-                    <li class="page-item"><a class="page-link" href="/starroad/policy?pageIndex=2">3</a></li>
-                    <li class="page-item"><a class="page-link" href="/starroad/policy?pageIndex=3">4</a></li>
-                    <li class="page-item"><a class="page-link" href="/starroad/policy?pageIndex=4">5</a></li>
-                    <li class="page-item"><a class="page-link" href="/starroad/policy?pageIndex=5">6</a></li>
-                    <li class="page-item"><a class="page-link" href="/starroad/policy?pageIndex=6">7</a></li>
-                    <li class="page-item"><a class="page-link" href="/starroad/policy?pageIndex=7">8</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-            -->
 
             <nav aria-label="Page navigation example">
                 <ul class="pagination">
@@ -90,6 +93,15 @@
     </div>
 
     <script>
+
+        $(document.getElementsByClassName('search_btn')).click(function(){
+            if($(this).hasClass("active")){
+                $(this).removeClass("active");
+            }else{
+                $(this).addClass("active");
+            }
+        });
+
         // 페이지 링크 요소를 선택
         let current_page = ${currentPage};
         document.getElementById(current_page+"_page").style.color = "#FFCC00FF";
