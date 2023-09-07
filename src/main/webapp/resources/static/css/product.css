@@ -1,0 +1,176 @@
+h1 {
+    display: flex;
+    justify-content: center;
+}
+
+/*header {*/
+/*    height: 30px;*/
+/*}*/
+
+div {
+    padding: 1px;
+}
+
+#product_list {
+    display: flex;
+    justify-content: center;
+}
+
+form {
+    flex-direction: column;
+}
+
+form > div {
+    display: flex;
+}
+
+#product_search{
+    display: flex;
+    justify-content: center;
+}
+#product_search > div {
+    display: flex;
+    width: 80%;
+    justify-content: center;
+    border: 1px solid var(--sub-kb-silver);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+/*ul {*/
+
+/*    padding: 0px;*/
+/*    list-style: none;*/
+/*}*/
+
+
+#product_list > ul {
+    width: 80%;
+    padding: 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+
+#product_item {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    border: 1px solid var(--sub-kb-gold);
+    border-radius: 10px;
+    padding: 14px;
+    margin-block: 10px;
+}
+
+
+.sub {
+    display: flex;
+    flex-flow: row wrap;
+    font-size: small;
+    color: var(--sub-kb-silver);
+    align-items: baseline;
+}
+
+.attribute {
+    font-size: smaller;
+    align-items: baseline;
+}
+
+.rate {
+    color: var(--sub-kb-dark-gray);
+    font-size: small;
+}
+
+.name {
+    font-size: large;
+    font-weight: bold;
+}
+
+.explain {
+    font-size: small;
+}
+
+.max_rate {
+    color: orangered;
+    font-size: small;
+    font-weight: bold;
+}
+
+.max_rate > span{
+    color: orangered;
+    font-size: large;
+}
+
+#member > span{
+    color: orangered;
+    display: contents;
+}
+
+#product_search_nav {
+    display: flex;
+    justify-content: center;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+
+}
+
+.page-link:hover {
+    color: var(--main-kb-yellow-positive);
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+#member {
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+}
+
+.btn {
+    background-color: var(--main-kb-yellow);
+    font-size: large;
+    font-weight: bold;
+    border-radius: 10px;
+    border: none;
+    padding-inline: 10px;
+    padding-block: 5px;
+}
+
+.detail_btn {
+    font-size: large;
+    font-weight: bold;
+}
+.search_bar {
+    width: 500px;
+}
+.search_type {
+    width: 100px;
+    margin-right: 10px;
+    border-right: 3px solid var(--sub-kb-dark-gray);
+}
+
+.search_btn {
+    width: 100px;
+}
+
+
+.content {
+    align-items: center;
+
+}
+#detail_button {
+    display: flex;
+}
+
+a.page-link {
+    color: black;
+}
+
+btn.search_btn {
+
+}
