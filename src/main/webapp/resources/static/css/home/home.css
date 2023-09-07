@@ -2,6 +2,11 @@
     margin-top : 30px;
 }
 
+.d-block {
+    width: inherit;
+    /*width : 70vw;*/
+}
+
 /* 하단 섹션 스타일 */
 .bottom-section {
     display: flex;
