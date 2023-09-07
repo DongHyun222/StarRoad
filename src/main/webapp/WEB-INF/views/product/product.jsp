@@ -69,7 +69,7 @@
     <ul>
         <c:forEach items="${productItems}" var="item">
             <li id="product_item">
-                <div id="product" class="content">
+                <div id="product">
                     <div class="sub">
                         <c:choose>
                             <c:when test="${item.type eq 'D'.charAt(0) }">
@@ -95,8 +95,8 @@
                     만기 예상 금액은<br>
                     세후 <span>${price}</span>원 입니다.
                 </div>
-                <div id="detail_button" class="content">
-                    <button class=" btn detail_btn"><a href="${item.link}">자세히</a></button>
+                <div class="content">
+                    <button class="btn"><a href="${item.link}">자세히</a></button>
                 </div>
 
             </li>
