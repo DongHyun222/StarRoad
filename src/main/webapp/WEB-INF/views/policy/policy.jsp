@@ -7,7 +7,8 @@
     <meta charset="UTF-8">
     <title>POLICY</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/static/css/common.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/static/css/policy.css">
 </head>
@@ -31,18 +32,18 @@
             <br>
 
             <div class="policyBox">
-                <c:forEach items="${list.iterator()}" var="l">
+                <c:forEach items="${policyList}" var="item">
                     <div class="policy">
-                        <div class="name">${l.name}</div>
-                        <div class="explain">${l.explain}</div>
-                        <div class="tag">#${l.tag}</div>
-                        <div class="btnDiv"><button class="linkBtn"><a href="${l.link}">더보기</a></button></div>
+                        <div class="name">${item.name}</div>
+                        <div class="explain">${item.explain}</div>
+                        <div class="tag">#${item.tag}</div>
+                        <div class="btnDiv"><button class="linkBtn"><a href="${item.link}">더보기</a></button></div>
                     </div>
                 </c:forEach>
             </div>
 
             <br>
-
+            <!--
             <nav aria-label="Page navigation example">
                 <ul id="dyn_ul" class="pagination">
                     <li class="page-item">
@@ -65,7 +66,58 @@
                     </li>
                 </ul>
             </nav>
+            -->
+
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <c:forEach begin="1" end="${pageEndIndex}" var="i">
+                        <li class="page-item"><a class="page-link" href="#" aria-label="${i}" id="${i}_page">${i}</a></li>
+                    </c:forEach>
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
         </main>
     </div>
+
+    <script>
+        // 페이지 링크 요소를 선택
+        let current_page = ${currentPage};
+        document.getElementById(current_page+"_page").style.color = "#FFCC00FF";
+        document.getElementById(current_page+"_page").style.textDecoration = "underline";
+        document.getElementById(current_page+"_page").style.fontWeight = "bold";
+
+        let next = current_page+1;
+        let prev = current_page-1;
+
+        // 페이지 링크에 클릭 이벤트 리스너를 추가
+        const pageLinks = document.querySelectorAll('.page-link');
+        pageLinks.forEach((link) => {
+            link.addEventListener('click', (event) => {
+                event.preventDefault();
+                if (link.getAttribute('aria-label') === 'Previous') {
+                    if (current_page > 1) {
+                        window.location.href = '/starroad/policy?pageIndex=' + prev;
+                    }
+                } else if (link.getAttribute('aria-label') === 'Next') {
+                    if (parseInt(${pageEndIndex}) > current_page) {
+                        window.location.href = '/starroad/policy?pageIndex=' + next;
+                    }
+                } else {
+                    window.location.href = '/starroad/policy?pageIndex=' + link.getAttribute('aria-label');
+                }
+            });
+        });
+    </script>
+
 </body>
 </html>
