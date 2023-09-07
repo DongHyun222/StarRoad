@@ -1,12 +1,6 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: student
-  Date: 2023-09-06
-  Time: 오후 1:17
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html lang="en">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<html lang="ko">
 <head>
     <!-- 메타 정보, 스타일 등 -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -39,12 +33,11 @@
             padding: 20px;
             border: 1px solid #ddd;
         }
-        /* 그리드 스타일 */
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr); /* 2열로 분할 */
-        }
-        .grid-item {
+        /* 게시글 스타일 */
+        .board-item {
+            flex: 0 0 calc(50% - 10px);
+            margin-right: 10px;
+            margin-bottom: 20px;
             border: 1px solid #ddd;
             padding: 10px;
             text-align: center;
@@ -74,36 +67,56 @@
         <!-- 게시판 내용 분리 -->
         <div class="board">
             <h2>자유게시판</h2>
-        </div>
-        <div class="board">
-            <!-- 그리드로 표현 -->
-            <div class="grid-container">
-                <!-- 예시 데이터 -->
-                <div class="grid-item">
-                    <h3>Title 1</h3>
-                    <p>Content 1</p>
-                </div>
-                <div class="grid-item">
-                    <h3>Title 2</h3>
-                    <p>Content 2</p>
-                </div>
-                <div class="grid-item">
-                    <h3>Title 3</h3>
-                    <p>Content 3</p>
-                </div>
-                <div class="grid-item">
-                    <h3>Title 4</h3>
-                    <p>Content 4</p>
-                </div>
-                <div class="grid-item">
-                    <h3>Title 5</h3>
-                    <p>Content 5</p>
-                </div>
-                <div class="grid-item">
-                    <h3>Title 6</h3>
-                    <p>Content 6</p>
-                </div>
+
+            <!-- 예시 데이터 -->
+            <div class="row">
+                <c:forEach items="${freeBoardPage.content}" var="board">
+                    <div class="col-md-6">
+                        <div class="board-item">
+                            <h3>${board.title}</h3>
+                            <p>${board.content}</p>
+                        </div>
+                    </div>
+                </c:forEach>
             </div>
+
+
+
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center">
+                    <c:if test="${freeBoardPage.totalPages > 1}">
+                        <c:if test="${freeBoardPage.number != 0}">
+                            <li class="page-item">
+                                <a class="page-link" href="?page=0" aria-label="처음">
+                                    <span aria-hidden="true">&laquo;&laquo;</span>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page=${freeBoardPage.number - 1}" aria-label="이전">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                        </c:if>
+                        <c:forEach begin="0" end="${freeBoardPage.totalPages - 1}" varStatus="loop">
+                            <li class="page-item ${loop.index == freeBoardPage.number ? 'active' : ''}">
+                                <a class="page-link" href="?page=${loop.index}">${loop.index + 1}</a>
+                            </li>
+                        </c:forEach>
+                        <c:if test="${freeBoardPage.number + 1 < freeBoardPage.totalPages}">
+                            <li class="page-item">
+                                <a class="page-link" href="?page=${freeBoardPage.number + 1}" aria-label="다음">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page=${freeBoardPage.totalPages - 1}" aria-label="끝">
+                                    <span aria-hidden="true">&raquo;&raquo;</span>
+                                </a>
+                            </li>
+                        </c:if>
+                    </c:if>
+                </ul>
+            </nav>
         </div>
     </div>
 
