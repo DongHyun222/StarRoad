@@ -30,13 +30,14 @@ public class ProductController {
             Model model,
             @RequestParam(defaultValue = "1") int page) {
 
-
         productDtos  = productRepository.findAll();
 
         int startIndex = (page - 1) * ITEMS_PER_PAGE;
         int endIndex = Math.min(startIndex + ITEMS_PER_PAGE, productDtos.size());
 
-        model.addAttribute("product_items", productDtos.subList(startIndex, endIndex));
+        model.addAttribute("productItems", productDtos.subList(startIndex, endIndex));
+        model.addAttribute("pageEndIndex", Math.ceil(productDtos.size()/Double.valueOf(ITEMS_PER_PAGE)));
+        model.addAttribute("currentPage", page);
         model.addAttribute("user", "장서우");
         model.addAttribute("price", 10000);
 
@@ -52,7 +53,6 @@ public class ProductController {
 
     @PostConstruct
     public void initialize() {
-
         productDtos = new ArrayList<>();
         ProductDto dto = new ProductDto(1, 'D', "상품1", "상품 설명1", "자유적립식", 3, 6, 10, 1000, "#",3.3, 10 );
         ProductDto dto2 = new ProductDto(2, 'D', "상품2", "상품 설명2", "자유적립식", 6, 9, 13, 2000, "#",3.3, 10 );
@@ -65,7 +65,5 @@ public class ProductController {
         productRepository.save(dto3);
         productRepository.save(dto4);
         productRepository.save(dto5);
-
     }
-
 }
