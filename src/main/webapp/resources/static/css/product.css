@@ -1,6 +1,8 @@
-h1 {
+h3 {
     display: flex;
     justify-content: center;
+    margin-top: 30px;
+    margin-bottom: 20px;
 }
 
 div {
@@ -28,7 +30,7 @@ div {
 #product_search {
     display: flex;
     justify-content: center;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
 }
 
 #product_search > div {
@@ -135,21 +137,23 @@ label{
     border-radius: 10px;
     padding-inline: 24px;
     padding-block: 10px;
-    margin-block: 10px;
+    margin-block: 5px;
 }
 
 /*상품 정보*/
 .sub {
     display: flex;
     flex-flow: row wrap;
-    font-size: small;
     color: var(--sub-kb-silver);
     align-items: baseline;
 }
 
+.type {
+    font-size: small;
+}
+
 .attribute {
-    font-size: smaller;
-    align-items: baseline;
+    font-size: 5px;
 }
 
 .rate {
@@ -180,6 +184,7 @@ label{
 /*자산으로 계산된 만기 예상 금액 어쩌구*/
 #member {
     text-align: center;
+    font-size: 15px;
 }
 
 #member > span {
@@ -191,7 +196,7 @@ label{
 .pagination {
     display: flex;
     justify-content: center;
-
+    margin-top: 15px;
 }
 
 .page-link:hover {

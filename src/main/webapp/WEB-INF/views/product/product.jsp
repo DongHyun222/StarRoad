@@ -6,18 +6,21 @@
 <head>
     <meta charset="UTF-8">
     <title>예적금 상품 추천</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="${path}/resources/static/css/common.css"/>
     <link rel="stylesheet" type="text/css" href="${path}/resources/static/css/nav.css">
     <link rel="stylesheet" type="text/css" href="${path}/resources/static/css/product.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            $("#navbar").load("${path}/resources/navbar.jsp");
+        });
+    </script>
 </head>
 <body>
-<header>
-
-</header>
-<h1 class="fw-bold">예적금 상품 추천</h1>
+<div id="navbar"></div>
+<h3>예적금 상품 추천</h3>
 <div id="product_search">
     <nav class="navbar navbar-light bg-light" id="product_search_nav">
         <div class="container-fluid">
