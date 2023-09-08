@@ -10,10 +10,17 @@
     <link rel="stylesheet" href="${path}/resources/static/css/mypage/asset.css">
     <!-- 차트 링크 -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0"></script>
+    <!-- jquery 링크, navbar -->
+    <script src="//code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            $("#navbar").load("${path}/resources/navbar.jsp");
+        });
+    </script>
 </head>
 <body>
-    <nav></nav>
-    <main>
+    <div id="navbar"></div>
+        <main>
         <aside>
             <div id='sidebar_title'>마이페이지</div>
             <ul>
@@ -26,8 +33,8 @@
         </aside>
         <article>
             <section id="pointree">
-                <span>${member.name}님의 포인트리</span>
-                <span>${member.point}P</span>
+                <span>${memberAssets.name}님의 포인트리</span>
+                <span>${memberAssets.point}P</span>
             </section>
             <section id="asset">
                 <canvas id="myChart"></canvas>
@@ -39,7 +46,7 @@
             data = {
                 datasets: [{
                     backgroundColor: ['#FFBC00','#545045','#8D744A'],
-                    data: [1510, 1000, ${member.investment}]
+                    data: [${memberAssets.savings*0.1}, ${memberAssets.deposit*0.1}, ${memberAssets.investment*0.1}]
                 }],
                 labels: ['적금','예금','투자금']
             };
