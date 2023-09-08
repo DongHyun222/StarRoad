@@ -13,5 +13,4 @@ public class BoardController1 {
         return mav;
     }
 
-
 }
