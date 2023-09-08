@@ -1,6 +1,7 @@
 package com.kb04.starroad.Controller;
 
 import com.kb04.starroad.Dto.board.BoardDto;
+import com.kb04.starroad.Entity.Board;
 import com.kb04.starroad.Service.BoardService2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -41,7 +42,7 @@ public class BoardController2 {
         PageRequest pageable = PageRequest.of(page , size, Sort.by("regdate").descending());
 
         // 게시글 목록 조회
-        Page<BoardDto> boardPage = boardService.findPaginated(pageable);
+        Page<Board> boardPage = boardService.findPaginated(pageable);
 
         mav.addObject("freeBoardPage", boardPage);
 

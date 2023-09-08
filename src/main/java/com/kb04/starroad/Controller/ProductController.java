@@ -1,6 +1,7 @@
 package com.kb04.starroad.Controller;
 
 import com.kb04.starroad.Dto.product.ProductDto;
+import com.kb04.starroad.Entity.Product;
 import com.kb04.starroad.Repository.ProductRepository;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +20,7 @@ public class ProductController {
 
     private static final int ITEMS_PER_PAGE = 3;
 
-    private List<ProductDto> productDtos;
+    private List<Product> productList;
 
     public ProductController(ProductRepository productRepository) {
         this.productRepository = productRepository;
@@ -30,13 +31,13 @@ public class ProductController {
             Model model,
             @RequestParam(defaultValue = "1") int page) {
 
-        productDtos  = productRepository.findAll();
+        productList  = productRepository.findAll();
 
         int startIndex = (page - 1) * ITEMS_PER_PAGE;
-        int endIndex = Math.min(startIndex + ITEMS_PER_PAGE, productDtos.size());
+        int endIndex = Math.min(startIndex + ITEMS_PER_PAGE, productList.size());
 
-        model.addAttribute("productItems", productDtos.subList(startIndex, endIndex));
-        model.addAttribute("pageEndIndex", Math.ceil(productDtos.size()/Double.valueOf(ITEMS_PER_PAGE)));
+        model.addAttribute("productItems", productList.subList(startIndex, endIndex));
+        model.addAttribute("pageEndIndex", Math.ceil(productList.size()/Double.valueOf(ITEMS_PER_PAGE)));
         model.addAttribute("currentPage", page);
         model.addAttribute("user", "장서우");
         model.addAttribute("price", 10000);
@@ -61,17 +62,17 @@ public class ProductController {
 
     @PostConstruct
     public void initialize() {
-        productDtos = new ArrayList<>();
-        ProductDto dto = new ProductDto(1, 'D', "상품1", "상품 설명1", "자유적립식", 3, 6, 10, 1000, "#",3.3, 10 );
-        ProductDto dto2 = new ProductDto(2, 'D', "상품2", "상품 설명2", "자유적립식", 6, 9, 13, 2000, "#",3.3, 10 );
-        ProductDto dto3 = new ProductDto(3, 'I', "상품3", "상품 설명3", "추가입금불가", 9, 10, 14, 3000, "#",3.3, 10 );
-        ProductDto dto4 = new ProductDto(4, 'D', "상품4", "상품 설명1", "자유적립식", 3, 6, 10, 1000, "#",3.3, 10 );
-        ProductDto dto5 = new ProductDto(5, 'D', "상품5", "상품 설명2", "자유적립식", 6, 9, 13, 2000, "#",3.3, 10 );
-
-        productRepository.save(dto);
-        productRepository.save(dto2);
-        productRepository.save(dto3);
-        productRepository.save(dto4);
-        productRepository.save(dto5);
+//        productDtos = new ArrayList<>();
+//        ProductDto dto = new ProductDto(1, 'D', "상품1", "상품 설명1", "자유적립식", 3, 6, 10, 1000, "#",3.3, 10 );
+//        ProductDto dto2 = new ProductDto(2, 'D', "상품2", "상품 설명2", "자유적립식", 6, 9, 13, 2000, "#",3.3, 10 );
+//        ProductDto dto3 = new ProductDto(3, 'I', "상품3", "상품 설명3", "추가입금불가", 9, 10, 14, 3000, "#",3.3, 10 );
+//        ProductDto dto4 = new ProductDto(4, 'D', "상품4", "상품 설명1", "자유적립식", 3, 6, 10, 1000, "#",3.3, 10 );
+//        ProductDto dto5 = new ProductDto(5, 'D', "상품5", "상품 설명2", "자유적립식", 6, 9, 13, 2000, "#",3.3, 10 );
+//
+//        productRepository.save(dto);
+//        productRepository.save(dto2);
+//        productRepository.save(dto3);
+//        productRepository.save(dto4);
+//        productRepository.save(dto5);
     }
 }
