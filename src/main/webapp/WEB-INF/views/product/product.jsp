@@ -34,20 +34,25 @@
                     <div class="search_type content">최대 가능<br>가입 기간</div>
                     <ul id="period" class="content">
                         <li>
-                            <input type="checkbox" name="period" value="6" id="period_6" class="btn period_btn" checked>
+                            <input type="radio" name="period" value="1" id="period_1" class="btn period_btn" checked>
+                            <label for="period_1">6개월 이하</label>
+                            </input>
+                        </li>
+                        <li>
+                            <input type="radio" name="period" value="6" id="period_6" class="btn period_btn" checked>
                             <label for="period_6">6개월</label>
                             </input>
                         </li>
                         <li>
-                            <input type="checkbox" name="period" value="12" id="period_12" class="btn period_btn">
+                            <input type="radio" name="period" value="12" id="period_12" class="btn period_btn">
                             <label for="period_12">12개월</label></input>
                         </li>
                         <li>
-                            <input type="checkbox" name="period" value="18" id="period_18" class="btn period_btn">
+                            <input type="radio" name="period" value="18" id="period_18" class="btn period_btn">
                             <label for="period_18">18개월</label></input>
                         </li>
                         <li>
-                            <input type="checkbox" name="period" value="24" id="period_24" class="btn period_btn">
+                            <input type="radio" name="period" value="24" id="period_24" class="btn period_btn">
                             <label for="period_24">24개월 이상</label></input>
                         </li>
                     </ul>
@@ -58,7 +63,7 @@
                     <input id="searchInput" name="query" class="form-control me-2 search_bar" type="text"
                            placeholder="예적금 상품명을 적어주세요"
                            aria-label="Search">
-                    <input id="submitButton" class="btn search_btn" type="submit">검색</input>
+                    <button id="submitButton" class="btn search_btn" type="submit">검색</button>
                 </div>
 
             </form>

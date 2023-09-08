@@ -12,7 +12,6 @@ div {
     background-color: var(--main-kb-yellow);
     font-size: large;
     color: var(--sub-kb-dark-gray);
-    /*font-weight: bold;*/
     border-radius: 10px;
     border: none;
     padding-inline: 10px;
@@ -55,6 +54,8 @@ form > div {
 
 .search_bar {
     width: 500px;
+    border-radius: 10px;
+    border: 1px solid var(--sub-kb-silver);
 }
 
 .search_type {
@@ -62,6 +63,13 @@ form > div {
     margin-right: 10px;
     border-right: 3px solid var(--sub-kb-dark-gray);
 }
+
+#type {
+    border-radius: 10px;
+    border: 1px solid var(--sub-kb-silver);
+    padding: 5px;
+}
+
 #period > li {
     margin: 3px;
 }
@@ -69,8 +77,8 @@ form > div {
 label{
     display: inline-block;
     background-color: rgba(255, 255, 255, .9);
-    border: 2px solid rgba(139, 139, 139, .3);
-    color: #adadad;
+    border: 2px solid #d3d3d3;
+    color: var(--sub-kb-dark-gray);
     border-radius: 25px;
     white-space: nowrap;
     margin: 3px 0px;
@@ -84,44 +92,24 @@ label{
 }
 
 #period > li label {
-    padding: 8px 12px;
+    padding: 5px 12px;
     cursor: pointer;
 }
 
-#period > li label::before {
-    display: inline-block;
-    font-style: normal;
-    font-variant: normal;
-    text-rendering: auto;
-    -webkit-font-smoothing: antialiased;
-    font-family: "Font Awesome 5 Free";
-    font-weight: 900;
-    font-size: 12px;
-    padding: 2px 6px 2px 2px;
-    content: "\f067";
-    transition: transform .3s ease-in-out;
-}
-
-#period > li input[type="checkbox"]:checked + label::before {
-    content: "\f00c";
-    transform: rotate(-360deg);
-    transition: transform .3s ease-in-out;
-}
-
-#period > li input[type="checkbox"]:checked + label {
-    border: 2px solid #1bdbf8;
-    background-color: #12bbd4;
-    color: #fff;
+#period > li input[type="radio"]:checked + label {
+    border: 2px solid var(--main-kb-yellow);
+    background-color: var(--main-kb-yellow-positive);
+    color: black;
     transition: all .2s;
 }
-#period >  li input[type="checkbox"] {
+#period >  li input[type="radio"] {
     position: absolute;
 }
-#period >  li input[type="checkbox"] {
+#period >  li input[type="radio"] {
     position: absolute;
     opacity: 0;
 }
-#period > li input[type="checkbox"]:focus + label {
+#period > li input[type="radio"]:focus + label {
     border: 2px solid #e9a1ff;
 }
 
