@@ -1,20 +1,16 @@
-package com.kb04.starroad.Dto;
+package com.kb04.starroad.Entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
-@Data
+@Getter
 @Entity
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @SequenceGenerator(name = "product_seq", sequenceName = "product_seq")
 @Table(name = "product")
-public class ProductDto {
+public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_seq")

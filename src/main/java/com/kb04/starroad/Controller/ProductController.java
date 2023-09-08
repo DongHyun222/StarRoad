@@ -1,8 +1,7 @@
 package com.kb04.starroad.Controller;
 
-import com.kb04.starroad.Dto.ProductDto;
+import com.kb04.starroad.Dto.product.ProductDto;
 import com.kb04.starroad.Repository.ProductRepository;
-import org.springframework.transaction.jta.SpringJtaSynchronizationAdapter;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;

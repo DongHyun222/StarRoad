@@ -1,21 +1,17 @@
-package com.kb04.starroad.Dto;
+package com.kb04.starroad.Entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
 
     @Entity
-    @Data
+    @Getter
     @Table(name = "board")
-    @Builder
     @AllArgsConstructor
     @NoArgsConstructor
 
-    public class BoardDto {
+    public class Board {
         @Id
         @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "board_seq")
         @SequenceGenerator(name = "board_seq", sequenceName = "BOARD_SEQ", allocationSize = 1)
@@ -24,7 +20,7 @@ import java.util.Date;
 
         @ManyToOne(fetch = FetchType.EAGER)
         @JoinColumn(name = "member_no")
-        private MemberDto memberNo;
+        private Member memberNo;
 
         @Column(name = "title", length = 50, nullable = false)
         private String title;

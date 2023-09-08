@@ -1,6 +1,6 @@
 package com.kb04.starroad.Repository;
 
-import com.kb04.starroad.Dto.PolicyDto;
+import com.kb04.starroad.Dto.policy.PolicyDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

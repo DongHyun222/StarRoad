@@ -1,20 +1,16 @@
-package com.kb04.starroad.Dto;
+package com.kb04.starroad.Entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @Table(name = "comments")
-@Data
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class CommentDto {
+public class Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "comment_seq")
@@ -24,11 +20,11 @@ public class CommentDto {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_no")
-    private BoardDto board;
+    private Board board;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_no")
-    private MemberDto member;
+    private Member member;
 
     @Column(name = "regdate", nullable = false)
     private Date regdate;
