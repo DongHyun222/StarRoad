@@ -2,6 +2,7 @@ package com.kb04.starroad.Controller;
 
 import com.kb04.starroad.Dto.ProductDto;
 import com.kb04.starroad.Repository.ProductRepository;
+import org.springframework.transaction.jta.SpringJtaSynchronizationAdapter;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -46,9 +47,17 @@ public class ProductController {
     }
 
     @GetMapping("/api/product")
-    public String product_list(Model model) {
+    public String product_list(
+            Model model,
+            @RequestParam(required = false, defaultValue = "1") int page,
+            @RequestParam String type,
+            @RequestParam String period,
+            @RequestParam String query
+            ) {
+        String data = "";
 
-        return "product";
+
+        return data;
     }
 
     @PostConstruct

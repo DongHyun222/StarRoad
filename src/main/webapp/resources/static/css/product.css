@@ -3,17 +3,45 @@ h1 {
     justify-content: center;
 }
 
-/*header {*/
-/*    height: 30px;*/
-/*}*/
-
 div {
     padding: 1px;
 }
 
-#product_list {
+/*노랑 버튼*/
+.btn {
+    background-color: var(--main-kb-yellow);
+    font-size: large;
+    color: var(--sub-kb-dark-gray);
+    /*font-weight: bold;*/
+    border-radius: 10px;
+    border: none;
+    padding-inline: 10px;
+    padding-block: 5px;
+}
+
+/*세로 정렬*/
+.content {
+    display: flex;
+    align-items: center;
+}
+
+/*상품 검색 창*/
+#product_search {
     display: flex;
     justify-content: center;
+    margin-bottom: 30px;
+}
+
+#product_search > div {
+    width: 80%;
+}
+
+#product_search_nav {
+    display: flex;
+    justify-content: center;
+    padding: 24px;
+    border: 1px solid var(--sub-kb-silver);
+    border-radius: 10px;
 }
 
 form {
@@ -22,27 +50,86 @@ form {
 
 form > div {
     display: flex;
+    padding: 5px;
 }
 
-#product_search{
+.search_bar {
+    width: 500px;
+}
+
+.search_type {
+    width: 100px;
+    margin-right: 10px;
+    border-right: 3px solid var(--sub-kb-dark-gray);
+}
+#period > li {
+    margin: 3px;
+}
+
+label{
+    display: inline-block;
+    background-color: rgba(255, 255, 255, .9);
+    border: 2px solid rgba(139, 139, 139, .3);
+    color: #adadad;
+    border-radius: 25px;
+    white-space: nowrap;
+    margin: 3px 0px;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: all .2s;
+}
+
+#period > li label {
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+#period > li label::before {
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    font-size: 12px;
+    padding: 2px 6px 2px 2px;
+    content: "\f067";
+    transition: transform .3s ease-in-out;
+}
+
+#period > li input[type="checkbox"]:checked + label::before {
+    content: "\f00c";
+    transform: rotate(-360deg);
+    transition: transform .3s ease-in-out;
+}
+
+#period > li input[type="checkbox"]:checked + label {
+    border: 2px solid #1bdbf8;
+    background-color: #12bbd4;
+    color: #fff;
+    transition: all .2s;
+}
+#period >  li input[type="checkbox"] {
+    position: absolute;
+}
+#period >  li input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+}
+#period > li input[type="checkbox"]:focus + label {
+    border: 2px solid #e9a1ff;
+}
+
+/*상품 리스트*/
+#product_list {
     display: flex;
     justify-content: center;
 }
-#product_search > div {
-    display: flex;
-    width: 80%;
-    justify-content: center;
-    border: 1px solid var(--sub-kb-silver);
-    padding: 20px;
-    border-radius: 10px;
-}
-
-/*ul {*/
-
-/*    padding: 0px;*/
-/*    list-style: none;*/
-/*}*/
-
 
 #product_list > ul {
     width: 80%;
@@ -52,19 +139,18 @@ form > div {
     align-items: center;
 }
 
-
-
 #product_item {
     display: flex;
     justify-content: space-between;
     width: 80%;
     border: 1px solid var(--sub-kb-gold);
     border-radius: 10px;
-    padding: 14px;
+    padding-inline: 24px;
+    padding-block: 10px;
     margin-block: 10px;
 }
 
-
+/*상품 정보*/
 .sub {
     display: flex;
     flex-flow: row wrap;
@@ -98,21 +184,22 @@ form > div {
     font-weight: bold;
 }
 
-.max_rate > span{
+.max_rate > span {
     color: orangered;
     font-size: large;
 }
 
-#member > span{
+/*자산으로 계산된 만기 예상 금액 어쩌구*/
+#member {
+    text-align: center;
+}
+
+#member > span {
     color: orangered;
     display: contents;
 }
 
-#product_search_nav {
-    display: flex;
-    justify-content: center;
-}
-
+/*페이지네이션*/
 .pagination {
     display: flex;
     justify-content: center;
@@ -125,52 +212,8 @@ form > div {
     font-weight: bold;
 }
 
-#member {
-    display: flex;
-    flex-direction: row;
-    text-align: center;
-}
-
-.btn {
-    background-color: var(--main-kb-yellow);
-    font-size: large;
-    font-weight: bold;
-    border-radius: 10px;
-    border: none;
-    padding-inline: 10px;
-    padding-block: 5px;
-}
-
-.detail_btn {
-    font-size: large;
-    font-weight: bold;
-}
-.search_bar {
-    width: 500px;
-}
-.search_type {
-    width: 100px;
-    margin-right: 10px;
-    border-right: 3px solid var(--sub-kb-dark-gray);
-}
-
-.search_btn {
-    width: 100px;
-}
-
-
-.content {
-    align-items: center;
-
-}
-#detail_button {
-    display: flex;
-}
-
 a.page-link {
     color: black;
 }
 
-btn.search_btn {
 
-}

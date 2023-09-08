@@ -21,44 +21,44 @@
 <div id="product_search">
     <nav class="navbar navbar-light bg-light" id="product_search_nav">
         <div class="container-fluid">
-            <form class="d-flex">
+            <form id="searchForm" class="d-flex" action="/api/product" method="GET">
                 <div>
-                    <div class="search_type">상품 유형</div>
-                    <div class="dropdown">
-                        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                           data-bs-toggle="dropdown" aria-expanded="false">
-                            상품 유형 선택
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <li><a class="dropdown-item" href="#">적금</a></li>
-                            <li><a class="dropdown-item" href="#">예금</a></li>
-                        </ul>
-                    </div>
+                    <div class="search_type content">상품 유형</div>
+                    <select name="type" id="type" class="content">
+                        <option value="D">적금</option>
+                        <option value="I">예금</option>
+                    </select>
                 </div>
 
                 <div>
-                    <div class="search_type">가입 기간</div>
-                    <ul id="period">
+                    <div class="search_type content">최대 가능<br>가입 기간</div>
+                    <ul id="period" class="content">
                         <li>
-                            <button class="btn period_btn">1</button>
+                            <input type="checkbox" name="period" value="6" id="period_6" class="btn period_btn" checked>
+                            <label for="period_6">6개월</label>
+                            </input>
                         </li>
                         <li>
-                            <button class="btn period_btn">2</button>
+                            <input type="checkbox" name="period" value="12" id="period_12" class="btn period_btn">
+                            <label for="period_12">12개월</label></input>
                         </li>
                         <li>
-                            <button class="btn period_btn">3</button>
+                            <input type="checkbox" name="period" value="18" id="period_18" class="btn period_btn">
+                            <label for="period_18">18개월</label></input>
                         </li>
                         <li>
-                            <button class="btn period_btn">4</button>
+                            <input type="checkbox" name="period" value="24" id="period_24" class="btn period_btn">
+                            <label for="period_24">24개월 이상</label></input>
                         </li>
                     </ul>
                 </div>
 
                 <div>
-                    <div class="search_type">상품</div>
-                    <input class="form-control me-2 search_bar" type="search" placeholder="예적금 상품명을 적어주세요"
+                    <div class="search_type content">상품</div>
+                    <input id="searchInput" name="query" class="form-control me-2 search_bar" type="text"
+                           placeholder="예적금 상품명을 적어주세요"
                            aria-label="Search">
-                    <button class="btn search_btn" type="submit">검색</button>
+                    <input id="submitButton" class="btn search_btn" type="submit">검색</input>
                 </div>
 
             </form>
@@ -69,7 +69,7 @@
     <ul>
         <c:forEach items="${productItems}" var="item">
             <li id="product_item">
-                <div id="product" class="content">
+                <div id="product">
                     <div class="sub">
                         <c:choose>
                             <c:when test="${item.type eq 'D'.charAt(0) }">
@@ -95,8 +95,8 @@
                     만기 예상 금액은<br>
                     세후 <span>${price}</span>원 입니다.
                 </div>
-                <div id="detail_button" class="content">
-                    <button class=" btn detail_btn"><a href="${item.link}">자세히</a></button>
+                <div class="content">
+                    <button class="btn"><a href="${item.link}">자세히</a></button>
                 </div>
 
             </li>
@@ -123,12 +123,12 @@
 <script>
     // 페이지 링크 요소를 선택
     let current_page = ${currentPage};
-    document.getElementById(current_page+"_page").style.color = "#FFCC00FF";
-    document.getElementById(current_page+"_page").style.textDecoration = "underline";
-    document.getElementById(current_page+"_page").style.fontWeight = "bold";
+    document.getElementById(current_page + "_page").style.color = "#FFCC00FF";
+    document.getElementById(current_page + "_page").style.textDecoration = "underline";
+    document.getElementById(current_page + "_page").style.fontWeight = "bold";
 
-    let next = current_page+1;
-    let prev = current_page-1;
+    let next = current_page + 1;
+    let prev = current_page - 1;
 
     // 페이지 링크에 클릭 이벤트 리스너를 추가
     const pageLinks = document.querySelectorAll('.page-link');
@@ -148,6 +148,45 @@
             }
         });
     });
+</script>
+<script>
+    /*
+    let selectedPeriod = "6";
+    let searchInput = document.getElementById('searchInput');
+    let typeSelect = document.getElementById('type');
+    let selectedType = typeSelect.options[typeSelect.selectedIndex].value;
+    let queryString = `?type=${"${selectedType}"}&period=${"${selectedPeriod}"}&query=${"${searchInput.value}"}`;
+
+    const searchForm = document.getElementById('searchForm');
+    searchForm.action = '/api/product' + queryString;
+
+
+    searchInput.addEventListener('input', (event) => {
+        // searchInput = searchInput.value;
+        queryString = `?type=${"${selectedType}"}&period=${"${selectedPeriod}"}&query=${"${searchInput.value}"}`;
+        searchForm.action = '/api/product' + queryString;
+    })
+
+
+    const periodButtons = document.querySelectorAll('.period_btn');
+    // 페이지 버튼을 클릭할 때 선택한 값을 query string에 추가합니다.
+    periodButtons.forEach(button => {
+        button.addEventListener('click', (event) => {
+            event.preventDefault();
+            selectedPeriod = encodeURIComponent(button.value);
+            queryString = `?type=${"${selectedType}"}&period=${"${selectedPeriod}"}&query=${"${searchInput.value}"}`;
+            searchForm.action = '/api/product' + queryString;
+        });
+    });
+*/
+    // form의 action을 업데이트하고 form을 제출합니다.
+    /*
+    const submitButton = document.getElementById('submitButton');
+    submitButton.addEventListener('click', () => {
+        searchForm.action = '/api/product' + queryString;
+        searchForm.submit();
+    })
+    */
 </script>
 </body>
 </html>
