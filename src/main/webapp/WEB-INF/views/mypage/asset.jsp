@@ -10,10 +10,17 @@
     <link rel="stylesheet" href="${path}/resources/static/css/mypage/asset.css">
     <!-- 차트 링크 -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0"></script>
+    <!-- jquery 링크, navbar -->
+    <script src="//code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            $("#navbar").load("${path}/resources/navbar.jsp");
+        });
+    </script>
 </head>
 <body>
-    <nav></nav>
-    <main>
+    <div id="navbar"></div>
+        <main>
         <aside>
             <div id='sidebar_title'>마이페이지</div>
             <ul>
