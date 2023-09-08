@@ -1,6 +1,5 @@
 package com.kb04.starroad.Dto.board;
 
-import com.kb04.starroad.Dto.MemberDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -8,16 +7,18 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
-
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CommentDto {
-
+public class BoardResponseDto {
     private int no;
-    private BoardRequestDto board;
-    private MemberDto member;
+    private String title;
     private Date regdate;
     private String content;
+    private int likes;
+    private int commentNum;
+    private String type;
+    private String detailType;
+
 }

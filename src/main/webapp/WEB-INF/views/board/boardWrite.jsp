@@ -75,6 +75,7 @@
             cursor: pointer;
         }
     </style>
+
 </head>
 <body>
 <div class="container">
@@ -85,8 +86,8 @@
         <!-- 게시판 선택 드롭다운 -->
         <label for="type">게시판 선택:</label>
         <select id="type" name="type" required>
-            <option value=0>자유게시판</option>
-            <option value=1>인증게시판</option>
+            <option value="0">자유게시판</option>
+            <option value="1">인증게시판</option>
         </select>
 
         <!-- 게시글 종류 드롭다운 -->
