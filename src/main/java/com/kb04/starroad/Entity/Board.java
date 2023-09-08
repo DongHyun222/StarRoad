@@ -7,6 +7,7 @@ import java.util.Date;
 
     @Entity
     @Getter
+    @Builder
     @Table(name = "board")
     @AllArgsConstructor
     @NoArgsConstructor
@@ -63,4 +64,7 @@ import java.util.Date;
 
         @Column(name = "detail_type", length = 100, nullable = false)
         private String detailType;
+
+
+
     }

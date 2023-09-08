@@ -1,5 +1,6 @@
 package com.kb04.starroad.Dto;
 
+import com.kb04.starroad.Entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
