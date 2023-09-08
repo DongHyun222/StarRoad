@@ -22,7 +22,7 @@
 
             <div class="search_box">
 
-                <form class="search_form" method="get" action="">
+                <form class="search_form" method="get" action="https://localhost:8080">
                     <div class="search_small_box">
                         <div class="search_box_title">지역</div>
                         <div class="search_box_option">
@@ -38,10 +38,18 @@
                     <div class="search_small_box">
                         <div class="search_box_title">태그</div>
                         <div class="search_box_option">
-                            <input name="tag" type="button" class="search_btn" value="금융지원"/>
-                            <input name="tag" type="button" class="search_btn" value="교육"/>
-                            <input name="tag" type="button" class="search_btn" value="생활지원"/>
-                            <input name="tag" type="button" class="search_btn" value="금융자산 형성"/>
+                            <label>
+                                <input type="checkbox" name="tag[]" class="search_btn" value="금융지원"/>금융지원
+                            </label>
+                            <label>
+                                <input type="checkbox" name="tag[]" class="search_btn" value="교육"/>교육
+                            </label>
+                            <label>
+                                <input type="checkbox" name="tag[]"  class="search_btn" value="생활지원"/>생활지원
+                            </label>
+                            <label>
+                                <input type="checkbox" name="tag[]"  class="search_btn" value="금융자산형성"/>금융자산 형성
+                            </label>
                         </div>
                     </div>
 
@@ -49,7 +57,8 @@
                         <div class="search_box_title">정책명</div>
                         <div class="search_box_option">
                             <input class="search_input" name="keyword" type="text" placeholder="키워드를 입력해주세요">
-                            <button class="submit_btn" type="submit">검색</button>
+                            <input type='hidden' name='make' id='make'>
+                            <button id="final" class="submit_btn" type="submit" onclick='buildup()'>검색</button>
                         </div>
                     </div>
 
@@ -75,7 +84,7 @@
                 <ul class="pagination">
                     <li class="page-item">
                         <a class="page-link" href="#" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
+                            <span aria-hidden="true">&lt;</span>
                         </a>
                     </li>
                     <c:forEach begin="1" end="${pageEndIndex}" var="i">
@@ -83,7 +92,7 @@
                     </c:forEach>
                     <li class="page-item">
                         <a class="page-link" href="#" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
+                            <span aria-hidden="true">&gt;</span>
                         </a>
                     </li>
                 </ul>
@@ -94,13 +103,18 @@
 
     <script>
 
-        $(document.getElementsByClassName('search_btn')).click(function(){
-            if($(this).hasClass("active")){
-                $(this).removeClass("active");
-            }else{
-                $(this).addClass("active");
+        function buildup(){
+            var makes=document.getElementsByName('tag[]');
+            var m=document.getElementById('make');
+            m.value='';
+            ms='';
+            for (var i = makes.length - 1; i >= 0; i--) {
+                if(i>0)ms=ms+',';
+                ms=ms+makes[i].value;
             }
-        });
+            m.value=ms;
+            document.getElementById('form').submit();
+        }
 
         // 페이지 링크 요소를 선택
         let current_page = ${currentPage};
