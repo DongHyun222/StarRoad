@@ -1,6 +1,7 @@
 package com.kb04.starroad.Service;
 
 import com.kb04.starroad.Dto.board.BoardDto;
+import com.kb04.starroad.Entity.Board;
 import com.kb04.starroad.Repository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,7 +19,7 @@ public class BoardService2 {
     @Autowired
     private BoardRepository boardRepository;
 
-    public void write(BoardDto board) {  //entity를 매개변수로 받음
+    public void write(Board board) {  //entity를 매개변수로 받음
 
         boardRepository.save(board);        //새로운 게시물이 데이터베이스에 추가됩니다.
     }
@@ -36,8 +37,10 @@ public class BoardService2 {
             board.setContent(content);
             board.setImage(imageBytes);
 
+            // Dto -> Entity
 
-            boardRepository.save(board);
+
+//            boardRepository.save(board);
         } else {
             // 이미지 파일이 없는 경우에도 게시글 저장
             BoardDto board = new BoardDto();
@@ -46,15 +49,15 @@ public class BoardService2 {
             board.setTitle(title);
             board.setContent(content);
 
-            boardRepository.save(board);
+//            boardRepository.save(board);
         }
     }
-    public Page<BoardDto> findPaginated(Pageable pageable) {
+    public Page<Board> findPaginated(Pageable pageable) {
         return boardRepository.findAll(pageable);
     }
 
-    public List<BoardDto> boardList(){
-        List<BoardDto> boardList = boardRepository.findAll();
+    public List<Board> boardList(){
+        List<Board> boardList = boardRepository.findAll();
         return boardList;
     }
 }

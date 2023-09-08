@@ -1,6 +1,7 @@
 package com.kb04.starroad.Controller;
 
 import com.kb04.starroad.Dto.policy.PolicyDto;
+import com.kb04.starroad.Entity.Policy;
 import com.kb04.starroad.Repository.PolicyRepository;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +16,7 @@ public class PolicyController {
 
     private final PolicyRepository policyRepository;
     private static final int ITEMS_PER_PAGE = 3;
-    private List<PolicyDto> policyDtos;
+    private List<Policy> policies;
 
     public PolicyController(PolicyRepository policyRepository) {
         this.policyRepository = policyRepository;
@@ -24,12 +25,12 @@ public class PolicyController {
     @GetMapping("/starroad/policy")
     public ModelAndView policy(Model model, @RequestParam(value = "pageIndex", defaultValue = "1") int pageIndex) {
 
-        policyDtos = policyRepository.findAll();
+        policies = policyRepository.findAll();
         int startIndex = (pageIndex - 1) * ITEMS_PER_PAGE;
-        int endIndex = Math.min(startIndex + ITEMS_PER_PAGE, policyDtos.size());
-        int totalCount = policyDtos.size();
+        int endIndex = Math.min(startIndex + ITEMS_PER_PAGE, policies.size());
+        int totalCount = policies.size();
 
-        model.addAttribute("policyList", policyDtos.subList(startIndex, endIndex));
+        model.addAttribute("policyList", policies.subList(startIndex, endIndex));
         model.addAttribute("pageEndIndex", Math.ceil(totalCount / (double) ITEMS_PER_PAGE));
         model.addAttribute("currentPage", pageIndex);
 
