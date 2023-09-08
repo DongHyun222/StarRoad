@@ -1,14 +1,21 @@
 package com.kb04.starroad.Controller;
 
+import com.kb04.starroad.Service.MemberService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 @RestController
+@RequiredArgsConstructor
 public class MypageController {
+
+    private final MemberService memberService;
+
     @GetMapping("/starroad/mypage/asset")
     public ModelAndView asset() {
         ModelAndView mav = new ModelAndView("mypage/asset");
+        mav.addObject("memberAssets", memberService.getAssets(1));
         return mav;
     }
 
