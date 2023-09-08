@@ -10,7 +10,6 @@ import javax.persistence.*;
 @AllArgsConstructor
 public class PolicyDto {
 
-    private int no;
     private String name;
     private String location;
     private String explain;
