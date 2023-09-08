@@ -1,14 +1,16 @@
 package com.kb04.starroad.Entity;
 
 import lombok.*;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 
 @Getter
+@ToString
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@SequenceGenerator(name = "product_seq", sequenceName = "product_seq")
+@SequenceGenerator(name = "product_seq", sequenceName = "product_seq", allocationSize = 50, initialValue = 1)
 @Table(name = "product")
 public class Product {
 
@@ -38,8 +40,9 @@ public class Product {
     @Column(name = "min_price", nullable = false)
     private int minPrice;
 
+    @Nullable
     @Column(name = "max_price")
-    private int maxPrice;
+    private Integer maxPrice;
 
     @Column(length = 5000, nullable = false)
     private String link;
@@ -47,8 +50,8 @@ public class Product {
     @Column(name = "max_rate", nullable = false)
     private Double maxRate;
 
+    @Nullable
     @Column(name = "max_rate_period")
-    private int maxRatePeriod;
-
+    private Integer maxRatePeriod;
 
 }

@@ -1,29 +1,27 @@
 package com.kb04.starroad.Controller;
 
-import com.kb04.starroad.Dto.product.ProductDto;
+import com.kb04.starroad.Dto.product.ProductResponseDto;
 import com.kb04.starroad.Entity.Product;
-import com.kb04.starroad.Repository.ProductRepository;
+import com.kb04.starroad.Service.ProductService;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.annotation.PostConstruct;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 public class ProductController {
 
-    private final ProductRepository productRepository;
+    private final ProductService productService;
 
     private static final int ITEMS_PER_PAGE = 3;
 
-    private List<Product> productList;
+//    private List<ProductResponseDto> productList;
 
-    public ProductController(ProductRepository productRepository) {
-        this.productRepository = productRepository;
+    public ProductController(ProductService productService) {
+        this.productService = productService;
     }
 
     @GetMapping("/starroad/product")
@@ -31,7 +29,7 @@ public class ProductController {
             Model model,
             @RequestParam(defaultValue = "1") int page) {
 
-        productList  = productRepository.findAll();
+        List<ProductResponseDto> productList  = productService.getProductList();
 
         int startIndex = (page - 1) * ITEMS_PER_PAGE;
         int endIndex = Math.min(startIndex + ITEMS_PER_PAGE, productList.size());
@@ -60,8 +58,8 @@ public class ProductController {
         return data;
     }
 
-    @PostConstruct
-    public void initialize() {
+//    @PostConstruct
+//    public void initialize() {
 //        productDtos = new ArrayList<>();
 //        ProductDto dto = new ProductDto(1, 'D', "상품1", "상품 설명1", "자유적립식", 3, 6, 10, 1000, "#",3.3, 10 );
 //        ProductDto dto2 = new ProductDto(2, 'D', "상품2", "상품 설명2", "자유적립식", 6, 9, 13, 2000, "#",3.3, 10 );
@@ -74,5 +72,5 @@ public class ProductController {
 //        productRepository.save(dto3);
 //        productRepository.save(dto4);
 //        productRepository.save(dto5);
-    }
+//    }
 }

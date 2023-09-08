@@ -5,25 +5,22 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductDto {
-
-    private int no;
+public class ProductResponseDto {
+    
+//    private int no;
     private Character type;
+    private String attribute;
+
     private String name;
     private String explain;
-    private String attribute;
-    private int minPeriod;
-    private int maxPeriod;
-    private int minPrice;
-    private Integer maxPrice;
-    private String link;
+
     private Double maxRate;
     private Integer maxRatePeriod;
+
+    private String link;
 
 }
