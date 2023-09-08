@@ -6,6 +6,10 @@ aside {
     width: 280px;
 }
 
+article {
+    width: 80%;
+}
+
 #sidebar_title {
     background-color: var(--sub-kb-dark-gray);
     color: white;

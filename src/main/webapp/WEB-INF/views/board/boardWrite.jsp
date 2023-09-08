@@ -37,7 +37,7 @@
         }
 
         .layout select {
-            width: 25%; /* 게시판 선택 드롭다운 너비 늘리기 */
+            width: 30%; /* 게시판 선택 드롭다운 너비 늘리기 */
             height: 40px; /* 게시판 선택 드롭다운 높이 줄이기 */
             margin-top: 5px; /* 드롭다운 간격 설정 */
         }
@@ -79,7 +79,9 @@
 <body>
 <div class="container">
     <H1> 글쓰기</H1>
+
     <div class="layout">
+        <form method="post" action="/starroad/writepro" enctype="multipart/form-data" >
         <!-- 게시판 선택 드롭다운 -->
         <label for="type">게시판 선택:</label>
         <select id="type" name="type" required>
@@ -88,27 +90,27 @@
         </select>
 
         <!-- 게시글 종류 드롭다운 -->
-        <label for="postType">게시글 종류:</label>
-        <select id="postType" name="postType" required>
+        <label for="detailType">게시글 종류:</label>
+        <select id="detailType" name="detailType" required>
             <option value="잡담">잡담</option>
             <option value="정보">정보</option>
             <option value="질문">질문</option>
         </select>
+        <br>
 
-        <label for="title">제목:</label>
         <input name="title" type="text" id="title" placeholder="제목을 입력하세요" required>
 
-        <label for="content">내용:</label>
+
         <textarea name="content" id="content" placeholder="내용을 입력하세요" required></textarea>
+            <!-- 이미지 업로드 필드 -->
+           <div class="image-input">
+               <input type="file" name="image" id="image">
+          </div>
 
-        <!-- 이미지 업로드 필드 -->
-        <div class="image-input">
-
-            <input type="file" name="image" id="image">
-        </div>
 
         <!-- 등록 버튼 -->
         <button type="submit" class="submit-button">등록</button>
+        </form> <!-- 폼 종료 -->
     </div>
 </div>
 </body>
