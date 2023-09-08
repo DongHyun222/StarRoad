@@ -38,18 +38,14 @@
                     <div class="search_small_box">
                         <div class="search_box_title">태그</div>
                         <div class="search_box_option">
-                            <label>
-                                <input type="checkbox" name="tag[]" class="search_btn" value="금융지원"/>금융지원
-                            </label>
-                            <label>
-                                <input type="checkbox" name="tag[]" class="search_btn" value="교육"/>교육
-                            </label>
-                            <label>
-                                <input type="checkbox" name="tag[]"  class="search_btn" value="생활지원"/>생활지원
-                            </label>
-                            <label>
-                                <input type="checkbox" name="tag[]"  class="search_btn" value="금융자산형성"/>금융자산 형성
-                            </label>
+
+                            <ul class="ks-cboxtags">
+                                <li><input type="checkbox" id="checkboxOne" value="금융지원"><label for="checkboxOne">금융지원</label></li>
+                                <li><input type="checkbox" id="checkboxTwo" value="교육"><label for="checkboxTwo">교육</label></li>
+                                <li><input type="checkbox" id="checkboxThree" value="생활지원"><label for="checkboxThree">생활지원</label></li>
+                                <li><input type="checkbox" id="checkboxFour" value="금융자산 형성"><label for="checkboxFour">금융자산 형성</label></li>
+                            </ul>
+
                         </div>
                     </div>
 
