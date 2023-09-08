@@ -1,7 +1,6 @@
 package com.kb04.starroad.Controller;
 
-import com.kb04.starroad.Dto.BoardDto;
-import com.kb04.starroad.Repository.BoardRepository;
+import com.kb04.starroad.Dto.board.BoardDto;
 import com.kb04.starroad.Service.BoardService2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
-import java.util.List;
 
 @RestController
 public class BoardController2 {
