@@ -11,8 +11,28 @@
     <script type="text/javascript">
         $(function() {
             $("#navbar").load("${path}/resources/navbar.jsp");
+
+            <%-- $("#confirmPassword").submit(function(){
+                if($("#password").val() !== $("#password1").val()){
+                    alert("비밀번호가 다릅니다.");
+                    $("#password").val("").focus();
+                    $("#password1").val("");
+                    return false;
+                }else if ($("#password").val().length < 8) {
+                    alert("비밀번호는 8자 이상으로 설정해야 합니다.");
+                    $("#password").val("").focus();
+                    return false;
+                }else if($.trim($("#password").val()) !== $("#password").val() || $.trim($("#email").val()) !== $("#email").val() || $.trim($("#id").val()) !== $("#id").val()){
+                    alert("공백은 입력이 불가능합니다.");
+                    return false;
+                }
+            }) --%>
         });
+
+
     </script>
+
+
 </head>
 <body>
     <div id="navbar"></div>
@@ -31,7 +51,7 @@
                     <tr>
                         <th>아이디 <span class="star">*</span></th>
                         <td>
-                            <input type="text" name="username">
+                            <input type="text" name="name">
                             <button class='memberClick'>중복 확인</button><br>
                             <div class='valid'>6~12자리 영문/숫자 조합</div>
                         </td>
@@ -47,7 +67,7 @@
                     <tr>
                         <th>비밀번호 확인 <span class="star">*</span></th>
                         <td>
-                            <input type="password" name="confirm_password">
+                            <input type="password" name="confirm_password" id="confirmPassword">
                             <div class='valid'>비밀번호를 다시한번 입력하세요</div>
                         </td>
                     </tr>
@@ -60,21 +80,15 @@
                     <tr>
                         <th>전화번호 <span class="star">*</span></th>
                         <td>
-                            <input type="text" name="tel" /> -
-                            <input type="text" name="tel" /> -
-                            <input type="text" name="tel" />
+                            <input type="text" name="phone" /> -
+                            <input type="text" name="phone" /> -
+                            <input type="text" name="phone" />
                         </td>
                     </tr>
                     <tr>
                         <th>이메일 <span class="star">*</span></th>
                         <td>
-                            <input type="text" id="user_email" name="email" required><span id="middle"> @ </span><input type="text" id="email_address" list="user_email_address" name="email">
-                            <datalist id="user_email_address">
-                                <option value="naver.com"></option>
-                                <option value="daum.com"></option>
-                                <option value="google.com"></option>
-                                <option value="직접입력"></option>
-                            </datalist>
+                            <input type="text" id="user_email" name="email" required>
                         </td>
                     </tr>
                     <tr>
