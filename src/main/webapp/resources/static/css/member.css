@@ -57,10 +57,6 @@ table tr th {
 	text-align: left;
 }
 
-table tr td input[name=tel] {
+table tr td input[name=phone] {
 	width: 60px;
-}
-
-table tr td input[name=email] {
-	width: 150px;
 }
