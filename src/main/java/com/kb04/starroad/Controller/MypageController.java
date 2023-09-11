@@ -26,6 +26,13 @@ public class MypageController {
         return mav;
     }
 
+    @GetMapping("/starroad/mypage/comment")
+    public ModelAndView comment() {
+        ModelAndView mav = new ModelAndView("mypage/comment");
+        mav.addObject("comments", memberService.getComments(1));
+        return mav;
+    }
+
     @GetMapping("/starroad/mypage/challenge")
     public ModelAndView challenge() {
         ModelAndView mav = new ModelAndView("mypage/challenge");

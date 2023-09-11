@@ -13,18 +13,18 @@
     color: var(--sub-kb-dark-gray);
 }
 
-.writings {
+.b_contents {
     border-bottom: 1px solid var(--sub-kb-dark-gray);
     padding: 10px;
 }
 
-.w_type {
+.b_type {
     font-size: 16px;
     font-weight: lighter;
     color: var(--sub-kb-dark-gray);
 }
 
-.w_title {
+.b_title {
     margin: 10px;
     font-weight: bold;
 }
@@ -43,4 +43,13 @@
     aspect-ratio: 1/1;
     vertical-align: bottom;
     margin-right: 3px;
+}
+
+.w_t_d {
+    display: flex;
+    justify-content: space-between;
+}
+
+.w_title {
+    font-size: 16px;
 }

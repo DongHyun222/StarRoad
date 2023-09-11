@@ -32,18 +32,17 @@
     </aside>
     <article>
         <div id="sub_menu">
-            <a id="sel" href="/starroad/mypage/board">작성글</a>&nbsp;
-            <a id="not_sel" href="/starroad/mypage/comment">작성댓글</a>
+            <a id="not_sel" href="/starroad/mypage/board">작성글</a>&nbsp;
+            <a id="sel" href="/starroad/mypage/comment">작성댓글</a>
         </div>
         <section>
-            <c:forEach var="writing" items="${writings}">
+            <c:forEach var="comment" items="${comments}">
                 <div class="b_contents">
-                    <span class="b_type">${writing.type.equals("0")?"자유게시판":"인증게시판"}</span><br>
-                    <div class="b_title"><a href="#" class="b_title">${writing.title}</a></div>
-                    <div class="w_d_l">
-                        <div class="w_date">${writing.regdate.toString().substring(0,10)}</div>
-                        <div class="w_likes"><img class="thumb" src="https://ifh.cc/g/aw0vjY.png"
-                                                  alt="thumb">${writing.likes}</div>
+                    <span class="b_type">${comment.board.type.equals("0")?"자유게시판":"인증게시판"}</span><br>
+                    <div class="b_title"><a href="#" class="b_title">${comment.content}</a></div>
+                    <div class="w_t_d">
+                        <div class="w_title">${comment.board.title}</div>
+                        <div class="w_date">${comment.regdate.toString().substring(0,10)}</div>
                     </div>
                 </div>
             </c:forEach>
