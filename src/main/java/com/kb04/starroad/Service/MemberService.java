@@ -1,12 +1,12 @@
 package com.kb04.starroad.Service;
 
 import com.kb04.starroad.Dto.MypageResponseDto;
-import com.kb04.starroad.Dto.MemberDto;
 import com.kb04.starroad.Entity.Member;
 import com.kb04.starroad.Repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 
 @RequiredArgsConstructor
 @Service
@@ -27,4 +27,9 @@ public class MemberService {
 
         return mypageResponseDto;
     }
+
+    public Member checkId(String id) {
+        return memberRepository.findById(id);
+    }
+
 }

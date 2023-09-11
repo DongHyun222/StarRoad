@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 import java.util.Date;
 
 @Data
@@ -14,7 +13,6 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MemberDto {
-
 
     private int no;
     private String name;
@@ -33,5 +31,26 @@ public class MemberDto {
     private Character agreement;
     private int point;
     private int investment;
+
+    public Member toMemberEntity() { // Dto를 Entity로 변환
+        return Member.builder()
+            .name(this.name)
+            .id(this.id)
+            .password(this.password)
+            .birthday(this.birthday)
+            .phone(this.phone)
+            .email(this.email)
+            .address(this.address)
+            .job(this.job)
+            .purpose(this.purpose)
+            .source(this.source)
+            .goal(this.goal)
+            .status(this.status)
+            .salary(this.salary)
+            .agreement(this.agreement)
+            .point(this.point)
+            .investment(this.investment)
+            .build();
+    }
 
 }
