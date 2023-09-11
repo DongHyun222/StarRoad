@@ -11,4 +11,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BoardRepository extends JpaRepository<Board, Integer> {
     Page<Board> findByType(String type, Pageable pageable);
+    Page<Board> findAllByOrderByLikesDesc(Pageable pageable);
 }
