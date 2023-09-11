@@ -40,6 +40,8 @@ import java.util.Date;
                     .detailType(this.detailType)
                     .build();
         }
+
+        //고민
         public static BoardResponseDto fromEntity(Board board) {
             BoardResponseDto dto = new BoardResponseDto();
             dto.setNo(board.getNo());

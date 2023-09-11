@@ -10,10 +10,15 @@
 <head>
     <title>Title</title>
 </head>
+
 <body>
 
 <a href="/starroad/freeboard?type=0">자유게시판 더보기</a>
 <a href="/starroad/freeboard?type=1">인증글 더보기</a>
+<a href="/starroad/popular"> 인기글 더보기</a>
+
+
 
 </body>
+
 </html>
