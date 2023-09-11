@@ -13,8 +13,11 @@
     <link rel="stylesheet" type="text/css" href="${path}/resources/static/css/product.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script type="text/javascript">
-        $(function() {
+        $(function () {
             $("#navbar").load("${path}/resources/navbar.jsp");
+            $("#type_${type}").prop("selected", true);
+            $("#period_${period}").prop("checked", true);
+            $("#searchInput").val("${query}");
         });
     </script>
 </head>
@@ -28,8 +31,8 @@
                 <div>
                     <div class="search_type content">상품 유형</div>
                     <select name="type" id="type" class="content">
-                        <option value="S">적금</option>
-                        <option value="D">예금</option>
+                        <option id="type_S" value="S">적금</option>
+                        <option id="type_D" value="D">예금</option>
                     </select>
                 </div>
 
@@ -129,6 +132,9 @@
     </ul>
 </div>
 <script>
+
+
+
     // 페이지 링크 요소를 선택
     let current_page = ${currentPage};
     document.getElementById(current_page + "_page").style.color = "#FFCC00FF";
@@ -145,14 +151,14 @@
             event.preventDefault();
             if (link.getAttribute('aria-label') === 'Previous') {
                 if (current_page > 1) {
-                    window.location.href = '/starroad/product?page=' + prev;
+                    window.location.href = '/starroad/product/result?type=${type}&period=${period}&query=${query}&page=' + prev;
                 }
             } else if (link.getAttribute('aria-label') === 'Next') {
                 if (parseInt(${pageEndIndex}) > current_page) {
-                    window.location.href = '/starroad/product?page=' + next;
+                    window.location.href = '/starroad/product/result?type=${type}&period=${period}&query=${query}&page=' + next;
                 }
             } else {
-                window.location.href = '/starroad/product?page=' + link.getAttribute('aria-label');
+                window.location.href = '/starroad/product/result?type=${type}&period=${period}&query=${query}&page=' + link.getAttribute('aria-label');
             }
         });
     });

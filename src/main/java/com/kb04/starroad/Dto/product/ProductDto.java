@@ -21,9 +21,9 @@ public class ProductDto {
     private int minPeriod;
     private int maxPeriod;
     private int minPrice;
-    private int maxPrice;
+    private Integer maxPrice;
     private String link;
     private Double maxRate;
-    private int maxRatePeriod;
+    private Integer maxRatePeriod;
 
 }
