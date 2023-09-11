@@ -17,7 +17,7 @@ public class AuthController {
     @Autowired
     private AuthService authService;
 
-    @GetMapping("/starroad/auth/login")
+    @GetMapping("/starroad/login")
     public ModelAndView showLoginForm() {
         ModelAndView mav = new ModelAndView("member/login");
 
@@ -25,7 +25,7 @@ public class AuthController {
 
         return mav;
     }
-    @PostMapping("/starroad/auth/login")
+    @PostMapping("/starroad/login")
     public ModelAndView login(LoginRequestDto requestDto, HttpSession session) {
         Member member = authService.authenticate(requestDto.getId(), requestDto.getPw());
         if (member != null) {
@@ -38,9 +38,9 @@ public class AuthController {
         }
     }
 
-    @GetMapping("/starroad/auth/logout")
+    @GetMapping("/starroad/logout")
     public String logout(HttpSession session) {
         session.invalidate();
-        return "starroad/auth/login";
+        return "starroad/login";
     }
 }

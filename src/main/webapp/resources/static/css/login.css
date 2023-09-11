@@ -1,0 +1,101 @@
+#navbar {
+    position: fixed;
+    top: 0;
+    left: 0;   /* 화면의 왼쪽에서 시작합니다. */
+    width: 100%;  /* 전체 너비를 차지하게 합니다. */
+    z-index: 1000;  /* 다른 요소 위에 올려놓습니다. */
+    background: #FFF; /* 배경색을 흰색으로 설정 (필요에 따라 수정) */
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    font-family: 'Noto Sans', sans-serif;
+}
+
+.container {
+    width: 564px;
+    padding: 20px;
+    background: #FFF;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.text-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #767676;
+    font-size: 20px;
+    text-align: center; /* 중앙 정렬 */
+    margin-top: 250px;
+}
+
+.title {
+    margin-bottom: 20px;
+    color: #000;
+    text-align: center;
+    font-size: 24px;
+}
+
+/* 폼 내의 입력 상자 크기 조절 */
+.text-container input[type="text"],
+.text-container input[type="password"] {
+    font-size: 24px;  /* 글씨 크기를 조절하세요 */
+    height: 30px;    /* 입력 상자의 높이를 조절하세요 */
+    width: 400px;    /* 입력 상자의 너비를 조절하세요 */
+    padding: 5px 10px;  /* 내부 패딩을 조절하여 텍스트가 중앙에 위치하도록 함 */
+}
+
+/* 폼 내의 희미한 텍스트 스타일 조절 */
+.text-container input[type="text"]::placeholder,
+.text-container input[type="password"]::placeholder {
+    font-size: 18px;  /* 원하는 글씨 크기로 조절하세요 */
+    color: #aaa;     /* 희미한 텍스트의 색상을 회색으로 조절하세요 */
+}
+
+.checkbox-container {
+    display: inline-flex; /* inline-flex를 사용하여 체크박스와 텍스트를 한 라인에 놓습니다 */
+    width: 100%;         /* 전체 너비를 차지하게 합니다. */
+    text-align: left;    /* 왼쪽 정렬 */
+    margin-left: 135px;
+    margin-top: 20px;
+}
+
+.checkbox-container input[type="checkbox"] {
+    margin-right: 5px; /* 체크박스와 라벨 사이의 간격 조정 */
+}
+
+.login-button1 {
+    width: 420px;   /* 버튼의 너비 */
+    height: 50px;  /* 버튼의 높이 */
+    font-size: 20px; /* 글자 크기 */
+    background-color: #FFCF02; /* 버튼의 배경색 고정 */
+    color: black;  /* 버튼의 글자색 */
+    border: none;  /* 테두리 제거 */
+    border-radius: 5px;  /* 둥근 모서리 설정 */
+    cursor: pointer;  /* 마우스 오버 시 손가락 모양으로 변경 */
+    margin-top: 20px;
+    margin-right: 5px;
+}
+
+.signup-options a {
+    margin-left: 60px;
+    color: #aaa;
+}
+
+.link-container {
+    display: flex;
+    justify-content: space-between; /* 왼쪽과 오른쪽 요소 사이에 최대 간격 제공 */
+    margin-top: 10px;  /* 로그인 버튼과의 간격 설정 */
+}
+
+.find-options a {
+    margin: 0 120px; /* 각 링크 사이의 간격 설정 */
+    color: #aaa;
+}
+
+.find-options a:hover, .signup-options a:hover {
+    text-decoration: underline; /* 마우스 오버 시 밑줄 추가 */
+}
