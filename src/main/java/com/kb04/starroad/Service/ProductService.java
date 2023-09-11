@@ -22,15 +22,7 @@ public class ProductService {
     public List<ProductResponseDto> makeProductResponseDtoList(List<Product> productListAll) {
         List<ProductResponseDto> list = new ArrayList<>();
         for (Product product : productListAll) {
-            ProductResponseDto dto = ProductResponseDto.builder()
-                    .type(product.getType())
-                    .name(product.getName())
-                    .attribute(product.getAttribute())
-                    .explain(product.getExplain())
-                    .maxRate(product.getMaxRate())
-                    .maxRatePeriod(product.getMaxPeriod())
-                    .link(product.getLink())
-                    .build();
+            ProductResponseDto dto = product.toProductResponseDto();
             list.add(dto);
         }
         return list;

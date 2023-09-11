@@ -1,13 +1,14 @@
 package com.kb04.starroad.Entity;
 
+import com.kb04.starroad.Dto.product.ProductResponseDto;
 import lombok.*;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 
 @Getter
-@ToString
 @Entity
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @SequenceGenerator(name = "product_seq", sequenceName = "product_seq", allocationSize = 50, initialValue = 1)
@@ -53,5 +54,17 @@ public class Product {
     @Nullable
     @Column(name = "max_rate_period")
     private Integer maxRatePeriod;
+
+    public ProductResponseDto toProductResponseDto() {
+        return ProductResponseDto.builder()
+                .type(type)
+                .attribute(attribute)
+                .name(name)
+                .explain(explain)
+                .maxRate(maxRate)
+                .maxRatePeriod(maxRatePeriod)
+                .link(link)
+                .build();
+    }
 
 }

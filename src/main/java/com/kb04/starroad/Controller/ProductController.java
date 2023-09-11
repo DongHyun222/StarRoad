@@ -9,11 +9,9 @@ import java.util.List;
 
 @RestController
 public class ProductController {
-
     private final ProductService productService;
 
     private static final int ITEMS_PER_PAGE = 3;
-
 
     public ProductController(ProductService productService) {
         this.productService = productService;
@@ -27,13 +25,9 @@ public class ProductController {
             @RequestParam(required = false) String query,
             @RequestParam(defaultValue = "1") int page) {
 
-        System.out.println("type: "+type);
-        System.out.println("period: "+period);
-        System.out.println("query: "+query);
         List<ProductResponseDto> productList = null;
         if(type!=null || period!=null || query != null)
             productList = productService.findByForm(type, Integer.parseInt(period), query);
-        System.out.println(productList);
         if(productList == null) {
             productList  = productService.getProductList();
         }
