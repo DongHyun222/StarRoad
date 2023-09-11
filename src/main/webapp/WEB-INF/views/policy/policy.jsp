@@ -22,11 +22,11 @@
 
             <div class="search_box">
 
-                <form class="search_form" method="get" action="https://localhost:8080">
+                <form class="search_form" method="post" action="${pageContext.request.contextPath}/api/starroad/policy">
                     <div class="search_small_box">
                         <div class="search_box_title">지역</div>
                         <div class="search_box_option">
-                            <select class="location_select_box" name="selected_location">
+                            <select class="location_select_box" name="location">
                                 <option disabled selected>선택해주세요</option>
                                 <option value="서울">서울</option>
                                 <option value="경기">경기</option>
@@ -38,18 +38,14 @@
                     <div class="search_small_box">
                         <div class="search_box_title">태그</div>
                         <div class="search_box_option">
-                            <label>
-                                <input type="checkbox" name="tag[]" class="search_btn" value="금융지원"/>금융지원
-                            </label>
-                            <label>
-                                <input type="checkbox" name="tag[]" class="search_btn" value="교육"/>교육
-                            </label>
-                            <label>
-                                <input type="checkbox" name="tag[]"  class="search_btn" value="생활지원"/>생활지원
-                            </label>
-                            <label>
-                                <input type="checkbox" name="tag[]"  class="search_btn" value="금융자산형성"/>금융자산 형성
-                            </label>
+
+                            <ul class="ks-cboxtags">
+                                <li><input type="checkbox" id="checkboxOne" name="tag1" value="금융지원"><label for="checkboxOne">금융지원</label></li>
+                                <li><input type="checkbox" id="checkboxTwo" name="tag2" value="교육"><label for="checkboxTwo">교육</label></li>
+                                <li><input type="checkbox" id="checkboxThree" name="tag3" value="생활지원"><label for="checkboxThree">생활지원</label></li>
+                                <li><input type="checkbox" id="checkboxFour" name="tag4" value="금융자산 형성"><label for="checkboxFour">금융자산 형성</label></li>
+                            </ul>
+
                         </div>
                     </div>
 
@@ -57,8 +53,7 @@
                         <div class="search_box_title">정책명</div>
                         <div class="search_box_option">
                             <input class="search_input" name="keyword" type="text" placeholder="키워드를 입력해주세요">
-                            <input type='hidden' name='make' id='make'>
-                            <button id="final" class="submit_btn" type="submit" onclick='buildup()'>검색</button>
+                            <button id="final" class="submit_btn" type="submit">검색</button>
                         </div>
                     </div>
 
@@ -102,20 +97,6 @@
     </div>
 
     <script>
-
-        function buildup(){
-            var makes=document.getElementsByName('tag[]');
-            var m=document.getElementById('make');
-            m.value='';
-            ms='';
-            for (var i = makes.length - 1; i >= 0; i--) {
-                if(i>0)ms=ms+',';
-                ms=ms+makes[i].value;
-            }
-            m.value=ms;
-            document.getElementById('form').submit();
-        }
-
         // 페이지 링크 요소를 선택
         let current_page = ${currentPage};
         document.getElementById(current_page+"_page").style.color = "#FFCC00FF";
