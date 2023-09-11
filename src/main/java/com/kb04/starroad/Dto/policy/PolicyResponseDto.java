@@ -2,13 +2,11 @@ package com.kb04.starroad.Dto.policy;
 
 import lombok.*;
 
-import javax.persistence.*;
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PolicyDto {
+public class PolicyResponseDto {
 
     private String name;
     private String location;
