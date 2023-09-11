@@ -1,5 +1,6 @@
 package com.kb04.starroad.Entity;
 
+import com.kb04.starroad.Dto.board.CommentDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -32,4 +33,14 @@ public class Comment {
 
     @Column(name = "content", nullable = false, length = 2000)
     private String content;
+
+    public CommentDto toCommentDto() {
+        return CommentDto.builder()
+                .no(no)
+                .board(board.toBoardRequestDto())
+                .member(member.toMemberDto())
+                .regdate(regdate)
+                .content(content)
+                .build();
+    }
 }
