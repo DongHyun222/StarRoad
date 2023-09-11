@@ -1,17 +1,20 @@
 package com.kb04.starroad.Service;
 
+import com.kb04.starroad.Dto.board.CommentDto;
+import com.kb04.starroad.Repository.*;
 import com.kb04.starroad.Dto.MypageResponseDto;
 import com.kb04.starroad.Dto.board.BoardResponseDto;
 import com.kb04.starroad.Entity.Board;
+import com.kb04.starroad.Entity.Comment;
 import com.kb04.starroad.Entity.Member;
-import com.kb04.starroad.Repository.BoardRepository;
-import com.kb04.starroad.Repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -20,24 +23,7 @@ public class MemberService {
     @Autowired
     private final MemberRepository memberRepository;
     private final BoardRepository boardRepository;
-
-    public List<BoardResponseDto> makeWritingResponseDtoList(List<Board> writings) {
-        List<BoardResponseDto> list = new ArrayList<>();
-        for (Board board : writings) {
-            BoardResponseDto dto = BoardResponseDto.builder()
-                    .no(board.getNo())
-                    .title(board.getTitle())
-                    .regdate(board.getRegdate())
-                    .content(board.getContent())
-                    .likes(board.getLikes())
-                    .commentNum(board.getCommentNum())
-                    .type(board.getType())
-                    .detailType(board.getDetailType())
-                    .build();
-            list.add(dto);
-        }
-        return list;
-    }
+    private final CommentRepository commentRepository;
 
     public MypageResponseDto getAssets(int no) {
         MypageResponseDto mypageResponseDto = new MypageResponseDto();
@@ -53,7 +39,14 @@ public class MemberService {
     }
 
     public List<BoardResponseDto> getWritings(int no) {
-        Member member = memberRepository.findByNo(no);
-        return makeWritingResponseDtoList(boardRepository.findAllByMemberNoOrderByRegdate(member));
+        Specification<Board> spec = (root, query, criteriaBuilder) -> null;
+        spec = spec.and(BoardSpecification.writtenByUser(no));
+        return boardRepository.findAll(spec).stream().map(Board::toBoardResponseDto).collect(Collectors.toList());
+    }
+
+    public List<CommentDto> getComments(int no) {
+        Specification<Comment> spec = (root, query, criteriaBuilder) -> null;
+        spec = spec.and(CommentSpecification.writtenByUser(no));
+        return commentRepository.findAll(spec).stream().map(Comment::toCommentDto).collect(Collectors.toList());
     }
 }
