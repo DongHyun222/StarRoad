@@ -5,6 +5,9 @@ import org.springframework.data.jpa.domain.Specification;
 
 public class BoardSpecification {
     public static Specification<Board> writtenByUser(int userNo) {
-        return ((root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("member").get("no"), userNo));
+        return ((root, query, criteriaBuilder) -> {
+            query.orderBy(criteriaBuilder.desc(root.get("regdate")));
+            return criteriaBuilder.equal(root.get("member").get("no"), userNo);
+        });
     }
 }
