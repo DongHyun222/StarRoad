@@ -3,13 +3,36 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>Login</title>
+    <script src="//code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/resources/static/css/login.css">
+    <script type="text/javascript">
+            $(function() {
+                $("#navbar").load("/resources/navbar.jsp");
+            });
+    </script>
 </head>
 <body>
-<form action="/starroad/auth/login" method="post">
-    ID: <input type="text" name="id"><br>
-    Password: <input type="password" name="password"><br>
-    <input type="submit" value="Login">
-</form>
+<div class="container">
+    <div id="navbar"></div>
+    <div class="title">Login</div>
+    <form action="/starroad/login" method="post" class="text-container">
+        <input type="text" name="id" placeholder="아이디"><br>
+        <input type="password" name="password" placeholder="비밀번호">
+        <div class="checkbox-container">
+            <input type="checkbox" name="keepLoggedIn" id="keepLoggedIn">로그인상태유지<br>
+        </div>
+        <input type="submit" value="로그인" class="login-button1">
+        <div class="link-container">
+            <div class="signup-options">
+                <a href="/starroad/signup">회원가입</a>
+            </div>
+            <div class="find-options">
+                <a href="/starroad/findidpassword">아이디 비밀번호 찾기</a>
+            </div>
+        </div>
+    </form>
+</div>
 </body>
 </html>
