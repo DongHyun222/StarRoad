@@ -42,16 +42,16 @@
         <div class="form-container">
             <h1>회원가입</h1>
             <h2>기본정보 <span class="required"><span class="star">*</span>표시는 필수 입력입니다</span></h2>
-            <form>
+            <form action="/starroad/member" method="post" enctype="multipart/form-data">
                 <table>
                     <tr>
                         <th>성명 <span class="star">*</span></th>
-                        <td><input type="text" name="name"></td>
+                        <td><input type="text" name="name" required></td>
                     </tr>
                     <tr>
                         <th>아이디 <span class="star">*</span></th>
                         <td>
-                            <input type="text" name="name">
+                            <input type="text" name="id" required>
                             <button class='memberClick'>중복 확인</button><br>
                             <div class='valid'>6~12자리 영문/숫자 조합</div>
                         </td>
@@ -60,22 +60,21 @@
                     <tr>
                         <th>비밀번호 <span class="star">*</span></th>
                         <td>
-                            <input type="password" name="password">
+                            <input type="password" name="password" required>
                             <div class='valid'>8~12자리 영문/숫자 조합 (대소문자)</div>
                         </td>
                     </tr>
                     <tr>
                         <th>비밀번호 확인 <span class="star">*</span></th>
                         <td>
-                            <input type="password" name="confirm_password" id="confirmPassword">
+                            <input type="password" name="confirm_password" id="confirmPassword" required>
                             <div class='valid'>비밀번호를 다시한번 입력하세요</div>
                         </td>
                     </tr>
                 </table>
-            </form>
-            <br>
-            <h2>추가정보</h2>
-            <form>
+                <br>
+                <h2>추가정보</h2>
+
                 <table>
                     <tr>
                         <th>전화번호 <span class="star">*</span></th>
@@ -94,7 +93,7 @@
                     <tr>
                         <th>자택주소 <span class="star">*</span></th>
                         <td>
-                            <input type="text" name="address">
+                            <input type="text" name="address" required>
                         </td>
                     </tr>
                     <tr>
@@ -142,6 +141,10 @@
                         </td>
                     </tr>
                 </table>
+                <br>
+                <button type="submit" class="submit-button">회원가입</button>
+                <br>
+                <br>
             </form>
         </div>
     </div>

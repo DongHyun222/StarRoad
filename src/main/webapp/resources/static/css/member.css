@@ -60,3 +60,15 @@ table tr th {
 table tr td input[name=phone] {
 	width: 60px;
 }
+
+.submit-button {
+    background-color: #FFBC00;
+    border: none;
+    cursor: pointer;
+    padding: 12px 80px; /* 패딩 크기 조절 (상하 10px, 좌우 20px) */
+    font-weight: bold; /* 글자 굵게 설정 */
+    font-size: 18px; /* 글자 크기 조절 */
+    text-align: center; /* 텍스트 가운데 정렬 */
+    display: block; /* 블록 레벨 요소로 설정하여 가로 전체를 차지하도록 합니다. */
+    margin: 0 auto; /* 가운데 정렬을 위해 좌우 여백을 자동으로 설정 */
+}
