@@ -59,9 +59,13 @@ public class BoardService2 {
         return boardRepository.findByType("1", pageable); // "1"은 인증방 타입에 해당하는 것으로 가정합니다.
     }
 
+
     public List<Board> boardList(){
         List<Board> boardList = boardRepository.findAll();
         return boardList;
+    }
+    public Page<Board> getPopularBoards(Pageable pageable) {
+        return boardRepository.findAllByOrderByLikesDesc(pageable);
     }
 
 }

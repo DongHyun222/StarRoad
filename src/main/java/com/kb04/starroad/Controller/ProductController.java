@@ -1,29 +1,20 @@
 package com.kb04.starroad.Controller;
 
-import com.kb04.starroad.Dto.product.ProductDto;
-import com.kb04.starroad.Entity.Product;
-import com.kb04.starroad.Repository.ProductRepository;
+import com.kb04.starroad.Dto.product.ProductResponseDto;
+import com.kb04.starroad.Service.ProductService;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
-import javax.annotation.PostConstruct;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 public class ProductController {
-
-    private final ProductRepository productRepository;
+    private final ProductService productService;
 
     private static final int ITEMS_PER_PAGE = 3;
 
-    private List<Product> productList;
-
-    public ProductController(ProductRepository productRepository) {
-        this.productRepository = productRepository;
+    public ProductController(ProductService productService) {
+        this.productService = productService;
     }
 
     @GetMapping("/starroad/product")
@@ -31,7 +22,7 @@ public class ProductController {
             Model model,
             @RequestParam(defaultValue = "1") int page) {
 
-        productList  = productRepository.findAll();
+        List<ProductResponseDto> productList = productService.getProductList();
 
         int startIndex = (page - 1) * ITEMS_PER_PAGE;
         int endIndex = Math.min(startIndex + ITEMS_PER_PAGE, productList.size());
@@ -46,33 +37,42 @@ public class ProductController {
         return mav;
     }
 
-    @GetMapping("/api/product")
-    public String product_list(
+    @GetMapping("/starroad/product/result")
+    public ModelAndView product_search_result(
             Model model,
-            @RequestParam(required = false, defaultValue = "1") int page,
-            @RequestParam String type,
-            @RequestParam String period,
-            @RequestParam String query
-            ) {
-        String data = "";
+            @RequestParam(required = false) String type,
+            @RequestParam(required = false) String period,
+            @RequestParam(required = false) String rate,
+            @RequestParam(required = false) String query,
+            @RequestParam(defaultValue = "1") int page) {
 
+        List<ProductResponseDto> productList = null;
+        if(type!=null || period!=null || query != null)
+            productList = productService.findByForm(type.charAt(0), Integer.parseInt(period), query);
+        if(productList == null) {
+            productList  = productService.getProductList();
+        }
 
-        return data;
-    }
+        int startIndex = (page - 1) * ITEMS_PER_PAGE;
+        int endIndex = Math.min(startIndex + ITEMS_PER_PAGE, productList.size());
 
-    @PostConstruct
-    public void initialize() {
-//        productDtos = new ArrayList<>();
-//        ProductDto dto = new ProductDto(1, 'D', "상품1", "상품 설명1", "자유적립식", 3, 6, 10, 1000, "#",3.3, 10 );
-//        ProductDto dto2 = new ProductDto(2, 'D', "상품2", "상품 설명2", "자유적립식", 6, 9, 13, 2000, "#",3.3, 10 );
-//        ProductDto dto3 = new ProductDto(3, 'I', "상품3", "상품 설명3", "추가입금불가", 9, 10, 14, 3000, "#",3.3, 10 );
-//        ProductDto dto4 = new ProductDto(4, 'D', "상품4", "상품 설명1", "자유적립식", 3, 6, 10, 1000, "#",3.3, 10 );
-//        ProductDto dto5 = new ProductDto(5, 'D', "상품5", "상품 설명2", "자유적립식", 6, 9, 13, 2000, "#",3.3, 10 );
-//
-//        productRepository.save(dto);
-//        productRepository.save(dto2);
-//        productRepository.save(dto3);
-//        productRepository.save(dto4);
-//        productRepository.save(dto5);
+        model.addAttribute("productItems", productList.subList(startIndex, endIndex));
+        model.addAttribute("pageEndIndex", Math.ceil(productList.size()/Double.valueOf(ITEMS_PER_PAGE)));
+        model.addAttribute("currentPage", page);
+
+        if(type!=null)
+            model.addAttribute("type", type);
+        if(period!=null)
+            model.addAttribute("period", period);
+        if(rate!=null)
+            model.addAttribute("rate", rate);
+        if(query!=null)
+            model.addAttribute("query", query);
+
+        model.addAttribute("user", "장서우");
+        model.addAttribute("price", 10000);
+
+        ModelAndView mav = new ModelAndView("product/product_result");
+        return mav;
     }
 }

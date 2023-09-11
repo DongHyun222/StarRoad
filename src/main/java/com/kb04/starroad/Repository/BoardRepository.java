@@ -14,4 +14,6 @@ import java.util.List;
 @Repository
 public interface BoardRepository extends JpaRepository<Board, Integer>, JpaSpecificationExecutor<Board> {
     Page<Board> findByType(String type, Pageable pageable);
+    Page<Board> findAllByOrderByLikesDesc(Pageable pageable);
+    List<Board> findAllByMemberNoOrderByRegdate(Member memberNo);
 }
