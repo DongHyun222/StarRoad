@@ -8,7 +8,8 @@ aside {
 }
 
 article {
-    width: 80%;
+    margin: 0 auto;
+    width: 60%;
 }
 
 #sidebar_title {

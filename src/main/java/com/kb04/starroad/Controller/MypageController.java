@@ -22,6 +22,7 @@ public class MypageController {
     @GetMapping("/starroad/mypage/board")
     public ModelAndView board() {
         ModelAndView mav = new ModelAndView("mypage/board");
+        mav.addObject("writings", memberService.getWritings(1));
         return mav;
     }
 
