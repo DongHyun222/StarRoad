@@ -3,9 +3,11 @@ package com.kb04.starroad.Service;
 import com.kb04.starroad.Dto.board.CommentDto;
 import com.kb04.starroad.Repository.*;
 import com.kb04.starroad.Dto.MypageResponseDto;
+
 import com.kb04.starroad.Dto.board.BoardResponseDto;
 import com.kb04.starroad.Entity.Board;
 import com.kb04.starroad.Entity.Comment;
+
 import com.kb04.starroad.Entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +39,12 @@ public class MemberService {
 
         return mypageResponseDto;
     }
+
+    public Member checkId(String id) {
+        return memberRepository.findById(id);
+    }
+
+}
 
     public List<BoardResponseDto> getWritings(int no) {
         Specification<Board> spec = (root, query, criteriaBuilder) -> null;

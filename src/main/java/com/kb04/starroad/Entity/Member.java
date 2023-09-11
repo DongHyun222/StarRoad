@@ -9,6 +9,7 @@ import java.util.Date;
 @Table(name="member")
 @Getter
 @AllArgsConstructor
+@Builder
 @NoArgsConstructor
 public class Member {
 
@@ -68,23 +69,23 @@ public class Member {
 
     public MemberDto toMemberDto() {
         return MemberDto.builder()
-                .no(no)
-                .name(name)
-                .id(id)
-                .password(password)
-                .birthday(birthday)
-                .phone(phone)
-                .email(email)
-                .address(address)
-                .job(job)
-                .purpose(purpose)
-                .source(source)
-                .goal(goal)
-                .status(status)
-                .salary(salary)
-                .agreement(agreement)
-                .point(point)
-                .investment(investment)
-                .build();
+              .no(no)
+              .name(name)
+              .id(id)
+              .password(password)
+              .birthday(birthday)
+              .phone(phone)
+              .email(email)
+              .address(address)
+              .job(job)
+              .purpose(purpose)
+              .source(source)
+              .goal(goal)
+              .status(status)
+              .salary(salary)
+              .agreement(agreement)
+              .point(point)
+              .investment(investment)
+              .build();
     }
 }
