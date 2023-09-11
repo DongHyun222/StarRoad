@@ -99,3 +99,9 @@ body {
 .find-options a:hover, .signup-options a:hover {
     text-decoration: underline; /* 마우스 오버 시 밑줄 추가 */
 }
+
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin: 10px 0;
+}
