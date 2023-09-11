@@ -27,7 +27,7 @@ public class ProductController {
 
         List<ProductResponseDto> productList = null;
         if(type!=null || period!=null || query != null)
-            productList = productService.findByForm(type, Integer.parseInt(period), query);
+            productList = productService.findByForm(type.charAt(0), Integer.parseInt(period), query);
         if(productList == null) {
             productList  = productService.getProductList();
         }

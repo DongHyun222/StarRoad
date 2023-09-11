@@ -1,15 +1,14 @@
 package com.kb04.starroad.Service;
 
-import com.google.common.collect.ImmutableList;
 import com.kb04.starroad.Dto.product.ProductResponseDto;
 import com.kb04.starroad.Entity.Product;
 import com.kb04.starroad.Repository.ProductRepository;
+import com.kb04.starroad.Repository.ProductSpecification;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.google.common.collect.ImmutableList.builder;
 
 @Service
 public class ProductService {
@@ -34,9 +33,21 @@ public class ProductService {
         return list;
     }
 
-    public List<ProductResponseDto> findByForm(String type, int maxPeriod, String query) {
-        List<Product> productListQuery = productRepository.findByName(query);
-        List<ProductResponseDto> list = makeProductResponseDtoList(productListQuery);
+    public List<ProductResponseDto> findByForm(Character type, Integer period, String name) {
+        Specification<Product> spec = (root, query, criteriaBuilder) -> null;
+        System.out.println("type: "+type);
+        System.out.println("period: "+period);
+        System.out.println("name: "+name);
+        if(name != null)
+            spec = spec.and(ProductSpecification.containsName(name));
+        if(period != null)
+            spec = spec.and(ProductSpecification.lessThanOrEqualToMinPeriod(period));
+        if(type != null)
+            spec = spec.and(ProductSpecification.equalsType(type));
+
+        List<Product> productListAll = productRepository.findAll(spec);
+        List<ProductResponseDto> list = makeProductResponseDtoList(productListAll);
+
         return list;
     }
 }
