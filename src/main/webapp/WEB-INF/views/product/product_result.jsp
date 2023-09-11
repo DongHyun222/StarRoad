@@ -13,7 +13,7 @@
     <link rel="stylesheet" type="text/css" href="${path}/resources/static/css/product.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script type="text/javascript">
-        $(function() {
+        $(function () {
             $("#navbar").load("${path}/resources/navbar.jsp");
         });
     </script>
@@ -145,14 +145,14 @@
             event.preventDefault();
             if (link.getAttribute('aria-label') === 'Previous') {
                 if (current_page > 1) {
-                    window.location.href = '/starroad/product?page=' + prev;
+                    window.location.href = '/starroad/product/result?type=${type}&period=${period}&query=${query}&page=' + prev;
                 }
             } else if (link.getAttribute('aria-label') === 'Next') {
                 if (parseInt(${pageEndIndex}) > current_page) {
-                    window.location.href = '/starroad/product?page=' + next;
+                    window.location.href = '/starroad/product/result?type=${type}&period=${period}&query=${query}&page=' + next;
                 }
             } else {
-                window.location.href = '/starroad/product?page=' + link.getAttribute('aria-label');
+                window.location.href = '/starroad/product/result?type=${type}&period=${period}&query=${query}&page=' + link.getAttribute('aria-label');
             }
         });
     });

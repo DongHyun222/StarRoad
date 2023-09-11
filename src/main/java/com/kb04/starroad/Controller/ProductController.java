@@ -20,6 +20,26 @@ public class ProductController {
     @GetMapping("/starroad/product")
     public ModelAndView product(
             Model model,
+            @RequestParam(defaultValue = "1") int page) {
+
+        List<ProductResponseDto> productList = productService.getProductList();
+
+        int startIndex = (page - 1) * ITEMS_PER_PAGE;
+        int endIndex = Math.min(startIndex + ITEMS_PER_PAGE, productList.size());
+
+        model.addAttribute("productItems", productList.subList(startIndex, endIndex));
+        model.addAttribute("pageEndIndex", Math.ceil(productList.size()/Double.valueOf(ITEMS_PER_PAGE)));
+        model.addAttribute("currentPage", page);
+        model.addAttribute("user", "장서우");
+        model.addAttribute("price", 10000);
+
+        ModelAndView mav = new ModelAndView("product/product");
+        return mav;
+    }
+
+    @GetMapping("/starroad/product/result")
+    public ModelAndView product_search_result(
+            Model model,
             @RequestParam(required = false) String type,
             @RequestParam(required = false) String period,
             @RequestParam(required = false) String query,
@@ -31,16 +51,22 @@ public class ProductController {
         if(productList == null) {
             productList  = productService.getProductList();
         }
+
         int startIndex = (page - 1) * ITEMS_PER_PAGE;
         int endIndex = Math.min(startIndex + ITEMS_PER_PAGE, productList.size());
 
         model.addAttribute("productItems", productList.subList(startIndex, endIndex));
         model.addAttribute("pageEndIndex", Math.ceil(productList.size()/Double.valueOf(ITEMS_PER_PAGE)));
         model.addAttribute("currentPage", page);
+
+        model.addAttribute("type", type);
+        model.addAttribute("period", period);
+        model.addAttribute("query", query);
+
         model.addAttribute("user", "장서우");
         model.addAttribute("price", 10000);
 
-        ModelAndView mav = new ModelAndView("product/product");
+        ModelAndView mav = new ModelAndView("product/product_result");
         return mav;
     }
 }
