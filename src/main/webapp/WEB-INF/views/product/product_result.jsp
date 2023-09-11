@@ -15,6 +15,9 @@
     <script type="text/javascript">
         $(function () {
             $("#navbar").load("${path}/resources/navbar.jsp");
+            $("#type_${type}").prop("selected", true);
+            $("#period_${period}").prop("checked", true);
+            $("#searchInput").val("${query}");
         });
     </script>
 </head>
@@ -28,8 +31,8 @@
                 <div>
                     <div class="search_type content">상품 유형</div>
                     <select name="type" id="type" class="content">
-                        <option value="S">적금</option>
-                        <option value="D">예금</option>
+                        <option id="type_S" value="S">적금</option>
+                        <option id="type_D" value="D">예금</option>
                     </select>
                 </div>
 
@@ -129,6 +132,9 @@
     </ul>
 </div>
 <script>
+
+
+
     // 페이지 링크 요소를 선택
     let current_page = ${currentPage};
     document.getElementById(current_page + "_page").style.color = "#FFCC00FF";

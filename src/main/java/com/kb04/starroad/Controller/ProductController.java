@@ -59,9 +59,12 @@ public class ProductController {
         model.addAttribute("pageEndIndex", Math.ceil(productList.size()/Double.valueOf(ITEMS_PER_PAGE)));
         model.addAttribute("currentPage", page);
 
-        model.addAttribute("type", type);
-        model.addAttribute("period", period);
-        model.addAttribute("query", query);
+        if(type!=null)
+            model.addAttribute("type", type);
+        if(period!=null)
+            model.addAttribute("period", period);
+        if(query!=null)
+            model.addAttribute("query", query);
 
         model.addAttribute("user", "장서우");
         model.addAttribute("price", 10000);
