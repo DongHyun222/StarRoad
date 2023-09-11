@@ -18,4 +18,14 @@ public interface PolicyRepository extends JpaRepository<Policy, Integer>{
     List<Policy> findByName(@Param("keyword") String keyword);
 
     List<Policy> findByLocation(String location);
+
+    List<Policy> findByNameContaining(String keyword);
+
+    List<Policy> findByLocationAndNameContaining(String location, String keyword);
+
+    @Query(nativeQuery = true, value = "select * from policy p where p.location = ':location' and p.name like '%:keyword%'")
+    List<Policy> findByLocationAndName(String location, String keyword);
+
+    @Query(nativeQuery = true, value = "select * from policy p where p.tag in :tagList")
+    List<Policy> findByTagList(String tagList);
 }
