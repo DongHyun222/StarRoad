@@ -31,13 +31,15 @@ public class PolicyController {
 
         List<PolicyResponseDto> result = null;
         Map<String, ?> map = model.asMap();
+        List<String> checked = new ArrayList<>();
 
         if(Objects.equals(model.getAttribute("flag"), "none") || !map.containsKey("flag")){
             result = policyService.selectAllPolicies();
         }
         else {
-            System.out.println(map.get("request"));
             result = policyService.selectDetailPolicies((PolicyRequestDto) map.get("request"));
+            PolicyRequestDto d = (PolicyRequestDto) map.get("request");
+            checked.add(d.getLocation());
         }
 
         int totalCount = result.size();
@@ -45,6 +47,7 @@ public class PolicyController {
         int startIndex = (pageIndex - 1) * ITEMS_PER_PAGE;
         int endIndex = Math.min(startIndex + ITEMS_PER_PAGE, totalCount);
 
+        model.addAttribute("checked", checked);
         model.addAttribute("policyList", result.subList(startIndex, endIndex));
         model.addAttribute("pageEndIndex", Math.ceil(totalCount / (double) ITEMS_PER_PAGE));
         model.addAttribute("currentPage", pageIndex);
