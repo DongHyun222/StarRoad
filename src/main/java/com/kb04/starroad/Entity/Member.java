@@ -25,7 +25,7 @@ public class Member {
     @Column(name="id", nullable = false, length = 15, unique = true)
     private String id;
 
-    @Column(name="password", nullable = false, length = 15)
+    @Column(name="password", nullable = false, length = 3000)
     private String password;
 
     @Column(name="birthday" ,nullable = false)
@@ -69,23 +69,23 @@ public class Member {
 
     public MemberDto toMemberDto() {
         return MemberDto.builder()
-            .no(no)
-            .name(name)
-            .id(id)
-            .password(password)
-            .birthday(birthday)
-            .phone(phone)
-            .email(email)
-            .address(address)
-            .job(job)
-            .purpose(purpose)
-            .source(source)
-            .goal(goal)
-            .status(status)
-            .salary(salary)
-            .agreement(agreement)
-            .point(point)
-            .investment(investment)
-            .build();
+              .no(no)
+              .name(name)
+              .id(id)
+              .password(password)
+              .birthday(birthday)
+              .phone(phone)
+              .email(email)
+              .address(address)
+              .job(job)
+              .purpose(purpose)
+              .source(source)
+              .goal(goal)
+              .status(status)
+              .salary(salary)
+              .agreement(agreement)
+              .point(point)
+              .investment(investment)
+              .build();
     }
 }

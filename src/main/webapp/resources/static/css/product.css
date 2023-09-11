@@ -1,6 +1,8 @@
-h1 {
+h3 {
     display: flex;
     justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 div {
@@ -9,12 +11,10 @@ div {
 
 /*노랑 버튼*/
 .btn {
-    background-color: var(--main-kb-yellow);
-    font-size: large;
-    color: var(--sub-kb-dark-gray);
-    /*font-weight: bold;*/
+    background-color: var(--main-kb-yellow-positive);
+    font-size: medium;
     border-radius: 10px;
-    border: none;
+    border: 2px solid var(--main-kb-yellow);
     padding-inline: 10px;
     padding-block: 5px;
 }
@@ -29,7 +29,7 @@ div {
 #product_search {
     display: flex;
     justify-content: center;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
 }
 
 #product_search > div {
@@ -39,7 +39,7 @@ div {
 #product_search_nav {
     display: flex;
     justify-content: center;
-    padding: 24px;
+    padding: 10px;
     border: 1px solid var(--sub-kb-silver);
     border-radius: 10px;
 }
@@ -53,24 +53,38 @@ form > div {
     padding: 5px;
 }
 
-.search_bar {
-    width: 500px;
-}
 
 .search_type {
     width: 100px;
     margin-right: 10px;
     border-right: 3px solid var(--sub-kb-dark-gray);
+    font-size: medium;
 }
+
+#type {
+    border-radius: 10px;
+    border: 1px solid var(--sub-kb-silver);
+    padding: 5px;
+    font-size: medium;
+}
+#period {
+    font-size: medium;
+}
+
 #period > li {
+    margin: 3px;
+}
+
+#rate > li {
     margin: 3px;
 }
 
 label{
     display: inline-block;
     background-color: rgba(255, 255, 255, .9);
-    border: 2px solid rgba(139, 139, 139, .3);
-    color: #adadad;
+    border: 2px solid #d3d3d3;
+    color: var(--sub-kb-dark-gray);
+    font-size: medium;
     border-radius: 25px;
     white-space: nowrap;
     margin: 3px 0px;
@@ -83,47 +97,35 @@ label{
     transition: all .2s;
 }
 
-#period > li label {
-    padding: 8px 12px;
+li label {
+    padding: 5px 12px;
     cursor: pointer;
 }
 
-#period > li label::before {
-    display: inline-block;
-    font-style: normal;
-    font-variant: normal;
-    text-rendering: auto;
-    -webkit-font-smoothing: antialiased;
-    font-family: "Font Awesome 5 Free";
-    font-weight: 900;
-    font-size: 12px;
-    padding: 2px 6px 2px 2px;
-    content: "\f067";
-    transition: transform .3s ease-in-out;
-}
-
-#period > li input[type="checkbox"]:checked + label::before {
-    content: "\f00c";
-    transform: rotate(-360deg);
-    transition: transform .3s ease-in-out;
-}
-
-#period > li input[type="checkbox"]:checked + label {
-    border: 2px solid #1bdbf8;
-    background-color: #12bbd4;
-    color: #fff;
+li input[type="radio"]:checked + label {
+    border: 2px solid var(--main-kb-yellow);
+    background-color: var(--main-kb-yellow-positive);
+    color: black;
     transition: all .2s;
 }
-#period >  li input[type="checkbox"] {
+li input[type="radio"] {
     position: absolute;
 }
-#period >  li input[type="checkbox"] {
+li input[type="radio"] {
     position: absolute;
     opacity: 0;
 }
-#period > li input[type="checkbox"]:focus + label {
+li input[type="radio"]:focus + label {
     border: 2px solid #e9a1ff;
 }
+
+.search_bar {
+    width: 500px;
+    border-radius: 10px;
+    border: 1px solid var(--sub-kb-silver);
+    font-size: medium;
+}
+
 
 /*상품 리스트*/
 #product_list {
@@ -147,21 +149,27 @@ label{
     border-radius: 10px;
     padding-inline: 24px;
     padding-block: 10px;
-    margin-block: 10px;
+    margin-block: 5px;
 }
 
 /*상품 정보*/
+#product {
+    width: 300px;
+}
+
 .sub {
     display: flex;
     flex-flow: row wrap;
-    font-size: small;
     color: var(--sub-kb-silver);
     align-items: baseline;
 }
 
+.type {
+    font-size: small;
+}
+
 .attribute {
-    font-size: smaller;
-    align-items: baseline;
+    font-size: 5px;
 }
 
 .rate {
@@ -192,6 +200,7 @@ label{
 /*자산으로 계산된 만기 예상 금액 어쩌구*/
 #member {
     text-align: center;
+    font-size: 15px;
 }
 
 #member > span {
@@ -203,7 +212,7 @@ label{
 .pagination {
     display: flex;
     justify-content: center;
-
+    margin-top: 15px;
 }
 
 .page-link:hover {

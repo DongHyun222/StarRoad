@@ -1,5 +1,7 @@
 package com.kb04.starroad.Entity;
 
+import com.kb04.starroad.Dto.board.BoardRequestDto;
+import com.kb04.starroad.Dto.board.BoardResponseDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -21,7 +23,7 @@ import java.util.Date;
 
         @ManyToOne(fetch = FetchType.EAGER)
         @JoinColumn(name = "member_no")
-        private Member memberNo;
+        private Member member;
 
         @Column(name = "title", length = 50, nullable = false)
         private String title;
@@ -65,6 +67,31 @@ import java.util.Date;
         @Column(name = "detail_type", length = 100, nullable = false)
         private String detailType;
 
+        public BoardRequestDto toBoardRequestDto() {
+            return BoardRequestDto.builder()
+                    .memberNo(member.toMemberDto())
+                    .title(title)
+                    .regdate(regdate)
+                    .content(content)
+                    .likes(likes)
+                    .commentNum(commentNum)
+                    .status(status)
+                    .type(type)
+                    .image(image)
+                    .detailType(detailType)
+                    .build();
+        }
 
-
+        public BoardResponseDto toBoardResponseDto() {
+            return BoardResponseDto.builder()
+                    .no(no)
+                    .title(title)
+                    .regdate(regdate)
+                    .content(content)
+                    .likes(likes)
+                    .commentNum(commentNum)
+                    .type(type)
+                    .detailType(detailType)
+                    .build();
+        }
     }

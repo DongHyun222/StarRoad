@@ -38,7 +38,7 @@ public class BoardController2 {
         return mav;
     }
 
-    //자유게시판 요청
+    //자유게시판,인증게시판 요청
     @GetMapping("/starroad/freeboard")
     public ModelAndView boardList(
             @RequestParam(name = "page", defaultValue = "0") int page,
@@ -60,7 +60,8 @@ public class BoardController2 {
         } else if ("1".equals(type)) {
             // type이 "1"인 경우 인증방 목록 조회
             boardPage = boardService.findAuthenticatedPaginated(pageable);
-        } else {
+        }
+        else {
             // 잘못된 type 값이 들어온 경우 예외 처리
             throw new IllegalArgumentException("잘못된 type 값입니다.");
         }
@@ -69,6 +70,29 @@ public class BoardController2 {
         mav.addObject("type", type); // View에서 현재 type 값을 사용할 수 있도록 추가
 
         return mav;
+    }
+
+    //인기게시판 요청
+    @GetMapping("/starroad/popular")
+    public ModelAndView popularBoardList(
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "6") int size,
+            HttpServletRequest request) {
+        ModelAndView mav = new ModelAndView("board/freeBoard");
+
+        // 페이징 정보 설정
+        PageRequest pageable = PageRequest.of(page, size, Sort.by("likes").descending());
+
+        // 게시글 목록 조회 (likes 내림차순)
+        Page<Board> boardPage = boardService.getPopularBoards(pageable);
+        //웹 페이지로 데이터를 전달하기 위한 객체로, 이를 통해 뷰(HTML 템플릿)로 데이터를 전송
+        mav.addObject("popularBoardPage", boardPage);
+        //ModelAndView에 "type"이라는 키를 사용하여 "popular" 문자열을 추가
+        mav.addObject("type", "popular"); // 인기 게시판임을 표시하기 위한 값
+
+        return mav;
+        //인기 게시글을 조회하여 해당 게시글 목록을 boardPage에 저장하고,
+        // 이를 ModelAndView에 추가하여 뷰로 전달하는 역할
     }
 
 

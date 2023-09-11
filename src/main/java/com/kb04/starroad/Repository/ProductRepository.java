@@ -1,11 +1,18 @@
 package com.kb04.starroad.Repository;
 
-import com.kb04.starroad.Dto.product.ProductDto;
+import com.kb04.starroad.Dto.product.ProductResponseDto;
 import com.kb04.starroad.Entity.Product;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface ProductRepository extends JpaRepository<Product, Integer> {
+import java.util.List;
 
+@Repository
+public interface ProductRepository extends JpaRepository<Product, Integer>, JpaSpecificationExecutor<Product> {
+
+    public List<Product> findByName(String name);
+
+    List<Product> findAll(Specification<Product> spec);
 }
