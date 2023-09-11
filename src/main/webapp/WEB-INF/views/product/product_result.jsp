@@ -17,6 +17,7 @@
             $("#navbar").load("${path}/resources/navbar.jsp");
             $("#type_${type}").prop("selected", true);
             $("#period_${period}").prop("checked", true);
+            $("#rate_${rate}").prop("checked", true);
             $("#searchInput").val("${query}");
         });
     </script>
@@ -60,6 +61,22 @@
                         <li>
                             <input type="radio" name="period" value="60" id="period_60" class="btn period_btn">
                             <label for="period_60">60개월 이상</label></input>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <div class="search_type content">이자 과세</div>
+                    <ul id="rate" class="content">
+                        <li>
+                            <input type="radio" name="rate" value="basic" id="rate_basic" class="btn period_btn">
+                            <label for="rate_basic">일반과세</label>
+                            </input>
+                        </li>
+                        <li>
+                            <input type="radio" name="rate" value="none" id="rate_none" class="btn period_btn">
+                            <label for="rate_none">비과세</label>
+                            </input>
                         </li>
                     </ul>
                 </div>

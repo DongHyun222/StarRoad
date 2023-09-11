@@ -42,6 +42,7 @@ public class ProductController {
             Model model,
             @RequestParam(required = false) String type,
             @RequestParam(required = false) String period,
+            @RequestParam(required = false) String rate,
             @RequestParam(required = false) String query,
             @RequestParam(defaultValue = "1") int page) {
 
@@ -63,6 +64,8 @@ public class ProductController {
             model.addAttribute("type", type);
         if(period!=null)
             model.addAttribute("period", period);
+        if(rate!=null)
+            model.addAttribute("rate", rate);
         if(query!=null)
             model.addAttribute("query", query);
 

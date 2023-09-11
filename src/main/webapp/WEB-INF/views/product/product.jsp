@@ -62,6 +62,22 @@
                 </div>
 
                 <div>
+                    <div class="search_type content">이자 과세</div>
+                    <ul id="rate" class="content">
+                        <li>
+                            <input type="radio" name="rate" value="basic" id="rate_basic" class="btn period_btn">
+                            <label for="rate_basic">일반과세</label>
+                            </input>
+                        </li>
+                        <li>
+                            <input type="radio" name="rate" value="none" id="rate_none" class="btn period_btn">
+                            <label for="rate_none">비과세</label>
+                            </input>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
                     <div class="search_type content">상품</div>
                     <input id="searchInput" name="query" class="form-control me-2 search_bar" type="text"
                            placeholder="예적금 상품명을 적어주세요"
