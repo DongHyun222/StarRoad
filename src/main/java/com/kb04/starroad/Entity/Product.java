@@ -55,6 +55,10 @@ public class Product {
     @Column(name = "max_rate_period")
     private Integer maxRatePeriod;
 
+    @Nullable
+    @Column(name = "max_condition_rate")
+    private Double maxConditionRate;
+
     public ProductResponseDto toProductResponseDto() {
         return ProductResponseDto.builder()
                 .type(type)

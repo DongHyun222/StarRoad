@@ -21,12 +21,10 @@ public class Condition {
     @JoinColumn(name = "prod_no", nullable = false)
     private Product prodNo;
 
-    @Column(name = "condition_name", nullable = false, length = 50)
+    @Column(name = "condition_name", nullable = false, length = 100)
     private String conditionName;
 
     @Column(name = "rate", nullable = false)
     private Double rate;
 
-    @Column(name = "max_rate", nullable = false)
-    private Double maxRate;
 }
