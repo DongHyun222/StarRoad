@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,7 +43,6 @@ public class MemberService {
         return memberRepository.findById(id);
     }
 
-}
 
     public List<BoardResponseDto> getWritings(int no) {
         Specification<Board> spec = (root, query, criteriaBuilder) -> null;
