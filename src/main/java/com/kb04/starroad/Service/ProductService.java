@@ -19,10 +19,8 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-
-    public List<ProductResponseDto> getProductList() {
+    public List<ProductResponseDto> makeProductResponseDtoList(List<Product> productListAll) {
         List<ProductResponseDto> list = new ArrayList<>();
-        List<Product> productListAll = productRepository.findAll();
         for (Product product : productListAll) {
             ProductResponseDto dto = ProductResponseDto.builder()
                     .type(product.getType())
@@ -35,6 +33,18 @@ public class ProductService {
                     .build();
             list.add(dto);
         }
+        return list;
+    }
+
+    public List<ProductResponseDto> getProductList() {
+        List<Product> productListAll = productRepository.findAll();
+        List<ProductResponseDto> list = makeProductResponseDtoList(productListAll);
+        return list;
+    }
+
+    public List<ProductResponseDto> findByForm(String type, int maxPeriod, String query) {
+        List<Product> productListQuery = productRepository.findByName(query);
+        List<ProductResponseDto> list = makeProductResponseDtoList(productListQuery);
         return list;
     }
 }

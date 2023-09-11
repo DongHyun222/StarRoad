@@ -24,7 +24,7 @@
 <div id="product_search">
     <nav class="navbar navbar-light bg-light" id="product_search_nav">
         <div class="container-fluid">
-            <form id="searchForm" class="d-flex" action="/api/product" method="GET">
+            <form id="searchForm" class="d-flex" action="/starroad/product">
                 <div>
                     <div class="search_type content">상품 유형</div>
                     <select name="type" id="type" class="content">
