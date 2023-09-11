@@ -10,14 +10,16 @@
 </head>
 <body>
 
+
+
 <!-- 네비게이션 바 -->
 <div class="container">
     <div class="row">
         <div class="col-md-9">
             <div class="navbar">
-                <a href="#" id="popularLink"  onclick="showContent('popular')">인기글</a>
-                <a href="#" id="freeLink" onclick="showContent('free', '0')">자유게시판</a>
-                <a href="#" id="authenticationLink" onclick="showContent('authentication', '1')">인증방</a>
+                <a href="popular" id="popularLink"  onclick="showContent('popular','popular')">인기글</a>
+                <a href="freeboard?type=0" id="freeLink" onclick="showContent('free', '0')">자유게시판</a>
+                <a href="freeboard?type=1" id="authenticationLink" onclick="showContent('authentication', '1')">인증방</a>
             </div>
         </div>
         <div class="col-md-3 text-right">
@@ -27,7 +29,6 @@
         </div>
     </div>
 </div>
-
 
 
 
@@ -144,7 +145,7 @@
             </nav>
         </div>
     </div>
-</div>
+
 
 <div class="container">
     <div id="popular" class="menu-content">
@@ -174,24 +175,24 @@
                                 </a>
                             </li>
                             <li class="page-item">
-                                <a class="page-link" href="?page=${popularBoardPage.number - 1}&type=popular" aria-label="이전">
+                                <a class="page-link" href="?page=${popularBoardPage.number - 1}" aria-label="이전">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
                             </li>
                         </c:if>
                         <c:forEach begin="0" end="${popularBoardPage.totalPages - 1}" varStatus="loop">
                             <li class="page-item ${loop.index == popularBoardPage.number ? 'active' : ''}">
-                                <a class="page-link" href="?page=${loop.index}&type=popular">${loop.index + 1}</a>
+                                <a class="page-link" href="?page=${loop.index}">${loop.index + 1}</a>
                             </li>
                         </c:forEach>
                         <c:if test="${popularBoardPage.number + 1 < popularBoardPage.totalPages}">
                             <li class="page-item">
-                                <a class="page-link" href="?page=${popularBoardPage.number + 1}&type=popular" aria-label="다음">
+                                <a class="page-link" href="?page=${popularBoardPage.number + 1}" aria-label="다음">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
                             </li>
                             <li class="page-item">
-                                <a class="page-link" href="?page=${popularBoardPage.totalPages - 1}&type=popular" aria-label="끝">
+                                <a class="page-link" href="?page=${popularBoardPage.totalPages - 1}" aria-label="끝">
                                     <span aria-hidden="true">&raquo;&raquo;</span>
                                 </a>
                             </li>
@@ -201,6 +202,7 @@
             </nav>
         </div>
     </div>
+</div>
 
 <script>
     function showContent(menu, type) {
@@ -220,7 +222,7 @@
         } else if (menu === 'authentication') {
             url = '/starroad/freeboard?type=' + type;
         } else if (menu === 'popular') {
-            url = '/starroad/popular?type=popular'; // Add your endpoint for popular posts here.
+            url = '/starroad/popular';
         }
 
         // AJAX 요청 시작

@@ -86,7 +86,7 @@ public class BoardController2 {
         // 게시글 목록 조회 (likes 내림차순)
         Page<Board> boardPage = boardService.getPopularBoards(pageable);
         //웹 페이지로 데이터를 전달하기 위한 객체로, 이를 통해 뷰(HTML 템플릿)로 데이터를 전송
-        mav.addObject("freeBoardPage", boardPage);
+        mav.addObject("popularBoardPage", boardPage);
         //ModelAndView에 "type"이라는 키를 사용하여 "popular" 문자열을 추가
         mav.addObject("type", "popular"); // 인기 게시판임을 표시하기 위한 값
 
