@@ -38,18 +38,19 @@ public class BoardController2 {
         return mav;
     }
 
-
+    //자유게시판 요청
     @GetMapping("/starroad/freeboard")
     public ModelAndView boardList(
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "6") int size,
+            @RequestParam(name = "type", defaultValue = "0") String type,
             HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("board/freeBoard");
 
         // 페이징 정보 설정
         PageRequest pageable = PageRequest.of(page, size, Sort.by("regdate").descending());
 
-        String type = request.getParameter("type"); // type 값을 직접 읽음
+
 
         Page<Board> boardPage;
 
@@ -69,6 +70,8 @@ public class BoardController2 {
 
         return mav;
     }
+
+
 
     @PostMapping("/starroad/writepro")
     public ResponseEntity<String> boardWritePro(
