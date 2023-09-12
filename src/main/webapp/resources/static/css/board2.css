@@ -1,12 +1,3 @@
-/*#navbar {*/
-/*    position: fixed;*/
-/*    top: 0;*/
-/*    left: 0;   / 화면의 왼쪽에서 시작합니다. /*/
-/*    width: 100%;  / 전체 너비를 차지하게 합니다. /*/
-/*    z-index: 1000;  / 다른 요소 위에 올려놓습니다. /*/
-/*    background: #FFF; / 배경색을 흰색으로 설정 (필요에 따라 수정) /*/
-/*}*/
-
 .navbar a {
     float: left;
     font-size: 16px;
@@ -18,7 +9,6 @@
 .navbar-right { /* 글쓰기 */
     float: right;
     margin-top: 10px; /* 글쓰기 버튼을 아래로 이동 */
-
 }
 .navbar-right a[href="/starroad/boardWrite"] {
     background-color: yellow; /* 배경색 노란색으로 설정 */
@@ -63,4 +53,17 @@
 }
 .icons i + i {
     margin-left: 5px; /* 아이콘과 아이콘 사이 여백 설정 */
+}
+#popular.menu-content {
+
+    padding: 10px; /* 표의 내부 여백을 조절하세요 */
+    margin: 10px; /* 표의 외부 여백을 조절하세요 */
+}
+#boardcontent.menu-content2 {
+
+    padding: 10px; /* 표의 내부 여백을 조절하세요 */
+    margin: 10px; /* 표의 외부 여백을 조절하세요 */
+}
+.page-link {
+    margin-right: 10px;
 }
