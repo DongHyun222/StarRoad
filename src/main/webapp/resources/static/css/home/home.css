@@ -1,11 +1,33 @@
-.container {
-    margin-top : 30px;
+
+.banner_title {
+    margin-bottom: 20px;
 }
 
+.banner_container h2 {
+    font-weight: bold;
+}
+
+.banner_container {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    z-index: 999;
+    color: white;
+}
+
+.banner_container div {
+    margin-top: 50px;
+}
+
+.banner_container img {
+    margin-top: 20px;
+}
+
+
 .d-block {
-    width: 100vw;
-    height : 500px;
-    /*width : 70vw;*/
+height : 360px;
 }
 
 /* 하단 섹션 스타일 */
@@ -14,16 +36,20 @@
     justify-content: space-between;
 }
 
+.content_title {
+    text-align: center;
+    margin-block: 30px;
+}
+
 /* 각 섹션 스타일 */
 .section {
     flex: 1;
     text-align: center;
-    padding: 20px;
+    padding-inline: 20px;
 }
 
 /* 이미지 스타일 */
 .section img {
-
     width : 160px;
     height: 160px;
 }
