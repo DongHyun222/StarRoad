@@ -10,6 +10,7 @@ import java.util.Date;
 @Getter
 @AllArgsConstructor
 @Builder
+
 @NoArgsConstructor
 public class Member {
 

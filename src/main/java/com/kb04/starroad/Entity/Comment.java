@@ -10,6 +10,7 @@ import java.util.Date;
 @Table(name = "comments")
 
 @Getter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Comment {
