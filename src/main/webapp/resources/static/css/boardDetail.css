@@ -40,10 +40,26 @@
     padding: 10px;
 }
 
- .title {
+.title {
       border-bottom: 1px solid #ccc;
       font-weight: bold;
       position: relative; /* relative positioning을 설정해야 child element에 absolute를 적용할 수 있습니다. */
+
+}
+
+.title-text {
+    font-size: 32px;
+    position: relative;
+    top: -10px;
+}
+
+.regdate {
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+.likes {
+    font-size: 20px;
 }
 
 .content {

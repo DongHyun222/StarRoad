@@ -95,6 +95,15 @@ public class BoardController2 {
         // 이를 ModelAndView에 추가하여 뷰로 전달하는 역할
     }
 
+    @GetMapping("/starroad/update")
+    public ModelAndView updateBoard() {
+
+        ModelAndView mav = new ModelAndView("board/boardUpdate");
+
+        return mav;
+
+    }
+
 
 
     @PostMapping("/starroad/writepro")
