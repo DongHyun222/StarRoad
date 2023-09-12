@@ -1,5 +1,6 @@
 package com.kb04.starroad.Service;
 
+import com.kb04.starroad.Dto.MemberDto;
 import com.kb04.starroad.Dto.board.CommentDto;
 import com.kb04.starroad.Repository.*;
 import com.kb04.starroad.Dto.MypageResponseDto;
@@ -54,5 +55,10 @@ public class MemberService {
         Specification<Comment> spec = (root, query, criteriaBuilder) -> null;
         spec = spec.and(CommentSpecification.writtenByUser(no));
         return commentRepository.findAll(spec).stream().map(Comment::toCommentDto).collect(Collectors.toList());
+    }
+
+    public void memberInsert(MemberDto dto) {
+        Member member = dto.toMemberEntity();
+        memberRepository.save(member);
     }
 }

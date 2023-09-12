@@ -3,17 +3,17 @@ package com.kb04.starroad.Controller;
 import com.kb04.starroad.Dto.MemberDto;
 import com.kb04.starroad.Entity.Member;
 import com.kb04.starroad.Service.MemberService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 @RestController
+@RequiredArgsConstructor
 public class MemberController {
 
-    @Autowired
-    private MemberService memberService;
+    private final MemberService memberService;
 
     @GetMapping("/starroad/member")
     public ModelAndView member() {
@@ -22,26 +22,33 @@ public class MemberController {
     }
 
     @PostMapping("/starroad/member")
-    public String member(
-            @ModelAttribute MemberDto dto, RedirectAttributes redirectattributes) {
-        ModelAndView mav = new ModelAndView();
+    public ModelAndView member(
+            @ModelAttribute MemberDto dto) {
+        ModelAndView mav = new ModelAndView("redirect:/starroad/login");
 
+        dto.setStatus('Y');
+        dto.setAgreement('Y');
+        String num = dto.getPhone().replace(",", "-");
+        dto.setPhone(num);
 
-        return "redirect:/login";
+        //System.out.println(dto);
+
+        memberService.memberInsert(dto);
+
+        return mav;
     }
 
     // 아이디 중복 확인을 위한 엔드포인트
     @RequestMapping("/starroad/checkMemberId")
-    //@ResponseBody ajax 값을 바로jsp 로 보내기위해 사용
     public String checkId(@RequestParam("id") String id) {
         String result="Y";
 
         Member optionalMember = memberService.checkId(id);
         if (optionalMember == null) {
-            // 아이디가 존재하는 경우
+            // 아이디가 존재하지 않는 경우
             result = "N";
         }
-        //아이디가 있을시 Y 없을시 N으로jsp view 로 보냄
+        //아이디가 있을시 Y 없을시 N으로 jsp view 로 보냄
         return result;
     }
 
