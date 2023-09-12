@@ -2,7 +2,10 @@ package com.kb04.starroad.Controller;
 
 import com.kb04.starroad.Service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -49,5 +52,14 @@ public class MypageController {
     public ModelAndView password() {
         ModelAndView mav = new ModelAndView("mypage/password");
         return mav;
+    }
+
+    @PostMapping("/api/starroad/mypage/check-password")
+    public String checkPassword(@RequestParam("inputPw") String inputPw) {
+        String msg = "";
+        if (!memberService.checkPassword(1, inputPw)) {
+            msg = "비밀번호를 잘못 입력했습니다. 다시 입력해주세요.";
+        }
+        return msg;
     }
 }
