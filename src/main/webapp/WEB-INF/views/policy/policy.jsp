@@ -11,7 +11,7 @@
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script type="text/javascript">
         $(function () {
-            $("#navbar").load("${pageContext.request.contextPath}/resources/navbar.jsp");
+            $("#navbar").load("${pageContext.request.contextPath}/resources/common_jsp/navbar.jsp");
         })
     </script>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/static/css/common.css">

@@ -15,37 +15,34 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.data.domain.Pageable;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 public class BoardController2 {
 
     @Autowired
     private BoardService2 boardService;
-    @GetMapping("/starroad/boardWrite")
+    @GetMapping("/starroad/board/write")
     public ModelAndView board() {
-        ModelAndView mav = new ModelAndView("board/boardWrite");
+        ModelAndView mav = new ModelAndView("board/write");
         return mav;
     }
-    @GetMapping("/starroad/boardMain")
+    @GetMapping("/starroad/board/main")
     public ModelAndView boardMain() {
-        ModelAndView mav = new ModelAndView("board/boardMain");
+        ModelAndView mav = new ModelAndView("board/main");
         return mav;
     }
 
     //자유게시판,인증게시판 요청
-    @GetMapping("/starroad/freeboard")
+    @GetMapping("/starroad/board/free")
     public ModelAndView boardList(
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "6") int size,
             @RequestParam(name = "type", defaultValue = "0") String type,
             HttpServletRequest request) {
-        ModelAndView mav = new ModelAndView("board/freeBoard");
+        ModelAndView mav = new ModelAndView("board/board");
 
         // 페이징 정보 설정
         PageRequest pageable = PageRequest.of(page, size, Sort.by("regdate").descending());
@@ -73,12 +70,12 @@ public class BoardController2 {
     }
 
     //인기게시판 요청
-    @GetMapping("/starroad/popular")
+    @GetMapping("/starroad/board/popular")
     public ModelAndView popularBoardList(
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "6") int size,
             HttpServletRequest request) {
-        ModelAndView mav = new ModelAndView("board/freeBoard");
+        ModelAndView mav = new ModelAndView("board/board");
 
         // 페이징 정보 설정
         PageRequest pageable = PageRequest.of(page, size, Sort.by("likes").descending());
@@ -95,10 +92,10 @@ public class BoardController2 {
         // 이를 ModelAndView에 추가하여 뷰로 전달하는 역할
     }
 
-    @GetMapping("/starroad/update")
+    @GetMapping("/starroad/board/update")
     public ModelAndView updateBoard() {
 
-        ModelAndView mav = new ModelAndView("board/boardUpdate");
+        ModelAndView mav = new ModelAndView("board/update");
 
         return mav;
 
@@ -106,7 +103,7 @@ public class BoardController2 {
 
 
 
-    @PostMapping("/starroad/writepro")
+    @PostMapping("/starroad/board/writepro")
     public ResponseEntity<String> boardWritePro(
             @RequestParam("type") String type,
             @RequestParam("detailType") String detailType,
@@ -118,7 +115,7 @@ public class BoardController2 {
             boardService.writeBoard(type, detailType, title, content, imageFile);
 
             HttpHeaders headers = new HttpHeaders();
-            headers.add("Location", "/starroad/boardMain");
+            headers.add("Location", "/starroad/board/main");
             return new ResponseEntity<>("", headers, HttpStatus.FOUND);
         } catch (IOException e) {
             e.printStackTrace();

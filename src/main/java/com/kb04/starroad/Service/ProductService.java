@@ -3,7 +3,7 @@ package com.kb04.starroad.Service;
 import com.kb04.starroad.Dto.product.ProductResponseDto;
 import com.kb04.starroad.Entity.Product;
 import com.kb04.starroad.Repository.ProductRepository;
-import com.kb04.starroad.Repository.ProductSpecification;
+import com.kb04.starroad.Repository.Specification.ProductSpecification;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 

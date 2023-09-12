@@ -12,7 +12,7 @@
     <script src="//code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript">
         $(function () {
-            $("#navbar").load("${path}/resources/navbar.jsp");
+            $("#navbar").load("${path}/resources/common_jsp/navbar.jsp");
 
             $("#password").keydown(function (e) {
                 console.log(e.key)
@@ -31,7 +31,7 @@
                             $("#password").css({"border": "red solid 1px", "outline-color": "red"})
                         } else {
                             $("#check_c").css("display", "none")
-                            $("#password_c").load("${path}/resources/password.jsp");
+                            $("#password_c").load("${path}/resources/common_jsp/password.jsp");
                         }
                     },
                     error: function (error) {

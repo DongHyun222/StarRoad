@@ -1,4 +1,4 @@
-package com.kb04.starroad.Repository;
+package com.kb04.starroad.Repository.Specification;
 
 import com.kb04.starroad.Entity.Policy;
 import org.springframework.data.jpa.domain.Specification;

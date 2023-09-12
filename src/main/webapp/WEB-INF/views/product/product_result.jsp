@@ -14,7 +14,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script type="text/javascript">
         $(function () {
-            $("#navbar").load("${path}/resources/navbar.jsp");
+            $("#navbar").load("${path}/resources/common_jsp/navbar.jsp");
             $("#type_${type}").prop("selected", true);
             $("#period_${period}").prop("checked", true);
             $("#rate_${rate}").prop("checked", true);

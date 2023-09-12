@@ -11,7 +11,7 @@
     <link rel="stylesheet" type="text/css" href="${path}/resources/static/css/member.css">
     <script type="text/javascript">
         $(function() {
-            $("#navbar").load("${path}/resources/navbar.jsp");
+            $("#navbar").load("${path}/resources/common_jsp/navbar.jsp");
 
             let idFlag = false;
             $("#checkId").click(function(){

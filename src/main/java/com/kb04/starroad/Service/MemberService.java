@@ -10,6 +10,8 @@ import com.kb04.starroad.Entity.Board;
 import com.kb04.starroad.Entity.Comment;
 
 import com.kb04.starroad.Entity.Member;
+import com.kb04.starroad.Repository.Specification.BoardSpecification;
+import com.kb04.starroad.Repository.Specification.CommentSpecification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;

@@ -25,12 +25,12 @@
             <ul>
                 <li><a href="/starroad/product">금융상품</a></li>
                 <li><a href="/starroad/policy">청년정책</a></li>
-                <li><a href="/starroad/board1">커뮤니티</a></li>
+                <li><a href="/starroad/board/main">커뮤니티</a></li>
             </ul>
         </div>
 
         <!-- 로그인 버튼 -->
-        <button class="login-button"><a href="/starroad/user">로그인</a></button>
+        <button class="login-button"><a href="/starroad/login">로그인</a></button>
     </nav>
 </header>
 

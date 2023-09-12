@@ -4,12 +4,11 @@ import com.kb04.starroad.Dto.policy.PolicyRequestDto;
 import com.kb04.starroad.Dto.policy.PolicyResponseDto;
 import com.kb04.starroad.Entity.Policy;
 import com.kb04.starroad.Repository.PolicyRepository;
-import com.kb04.starroad.Repository.PolicySpecification;
+import com.kb04.starroad.Repository.Specification.PolicySpecification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
