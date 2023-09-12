@@ -14,6 +14,7 @@
             $(function() {
                 $("#navbar").load("/resources/navbar.jsp");
             });
+
     </script>
 </head>
 <body>
@@ -21,10 +22,12 @@
         <div id="navbar"></div>
 
         <div class="title">
-            <h1>제목</h1>
-            <c:out value="${board.title}" />
-            <c:out value="${board.regdate}" />
-            <c:out value="${board.likes}" />
+            <span class="title-text"><c:out value="${board.title}" /></span> <br>
+            <span class="regdate"><c:out value="${board.regdate}" /></span>
+            <span class="likes">
+                <img src="https://ifh.cc/g/aw0vjY.png" alt="Like Icon" style="vertical-align: middle; width: 20px; height: 20px;">
+                <c:out value="${board.likes}" />
+            </span>
 
             <div class="title-buttons">
                 <button id="editBtn">수정</button>
@@ -36,8 +39,9 @@
             <h2>내용<h2>
             <c:out value="${board.content}" />
             <div class="like-section">
-                <h3>좋아요<h3>
+                <img src="https://ifh.cc/g/aw0vjY.png" alt="Like Icon" style="vertical-align: middle; width: 20px; height: 20px;">
                 <c:out value="${board.likes}" />
+                <img src="data:image/jpeg;base64,${board.imageBase64}" alt="Image"width="200" height="200" style="margin-bottom: 30px;"/>
             </div>
         </div>
 
@@ -51,7 +55,7 @@
              </div>
         </div>
 
-        <div class="comments-list">
+<%--        <div class="comments-list">
             <h2>댓글 목록<h2>
             <c:forEach var="comment" items="${board.comments}">
                 <p>
@@ -62,8 +66,20 @@
                     <c:out value="${board.likes}" />
                 </p>
             </c:forEach>
-        </div>
+        </div> --%>
 
     </div>
+   <script>
+     document.getElementById("deleteBtn").addEventListener("click", function() {
+               if (confirm("정말로 삭제하시겠습니까?")) {
+                   location.href = "/starroad/delete?no=" + ${board.no}; // 삭제 API 호출
+               }
+       });
+      document.getElementById("editBtn").addEventListener("click", function() {
+
+                 location.href = "/starroad/update?no=" + ${board.no}; // 수정 API 호출
+
+         });
+   </script>
 </body>
 </html>

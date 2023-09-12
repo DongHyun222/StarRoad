@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -68,4 +69,12 @@ public class BoardService2 {
         return boardRepository.findAllByOrderByLikesDesc(pageable);
     }
 
+    public Optional<Board> findById(Integer no) {
+
+        return boardRepository.findById(no);
+    }
+
+    public void deleteBoard(Integer no) {
+        boardRepository.deleteById(no);
+    }
 }

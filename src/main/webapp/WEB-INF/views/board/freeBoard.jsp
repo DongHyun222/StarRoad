@@ -42,7 +42,7 @@
         <c:forEach items="${freeBoardPage.content}" var="board">
             <div class="col-md-6">
                 <div class="board-item">
-                    <h3>${board.title}</h3>
+                    <h3><a href="/starroad/boardDetail?no=${board.no}">${board.title}</a></h3>
                     <p>${board.content}</p>
                     <div class="icons">
                         <i class="far fa-thumbs-up"></i> ${board.likes} <i class="far fa-comment"></i> ${board.commentNum}

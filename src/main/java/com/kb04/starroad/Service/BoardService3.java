@@ -10,8 +10,4 @@ public class BoardService3 {
 
     @Autowired
     private BoardRepository boardRepository;
-
-    public Board findById(Integer id) {
-        return boardRepository.findById(id).orElse(null);
-    }
 }
