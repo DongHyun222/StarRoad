@@ -1,5 +1,11 @@
+.title {
+    text-align: center;
+    margin-top: 70px;
+    font-size: xx-large;
+    font-weight: bolder;
+}
 .policy_box {
-    border: black 1px solid;
+    border: black 1px;
     display: flex;
     margin: inherit;
     justify-content: space-evenly;
@@ -9,7 +15,7 @@
 }
 
 .policy {
-    border: var(--sub-kb-gold) 1px solid;
+    border: var(--sub-kb-gold) 1.5px solid;
     margin: inherit;
     height: 500px;
     border-radius: 20px;
@@ -93,7 +99,7 @@ a.page-link {
     border-radius: 20px;
     width: 55%;
     padding: 15px;
-    margin-bottom: 40px;
+    margin-bottom: 32px;
     margin-top: 40px;
     justify-content: center;
 }

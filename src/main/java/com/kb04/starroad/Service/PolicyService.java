@@ -4,18 +4,19 @@ import com.kb04.starroad.Dto.policy.PolicyRequestDto;
 import com.kb04.starroad.Dto.policy.PolicyResponseDto;
 import com.kb04.starroad.Entity.Policy;
 import com.kb04.starroad.Repository.PolicyRepository;
+import com.kb04.starroad.Repository.PolicySpecification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
 public class PolicyService {
 
     private final PolicyRepository policyRepository;
+    private static final int ITEMS_PER_PAGE = 3;
 
     public List<PolicyResponseDto> selectAllPolicies(){
 
@@ -36,6 +37,20 @@ public class PolicyService {
         return result;
     }
 
+    public Map<String, Object> returnPoliciesByPage(List<PolicyResponseDto> policyList, int pageIdx) {
+
+        Map<String, Object> result = new HashMap<>();
+
+        int totalCount = policyList.size();
+        int startIndex = (pageIdx - 1) * ITEMS_PER_PAGE;
+        int endIndex = Math.min(startIndex + ITEMS_PER_PAGE, totalCount);
+
+        result.put("policyList", policyList.subList(startIndex, endIndex));
+        result.put("pageEndIndex", Math.ceil(totalCount / (double) ITEMS_PER_PAGE));
+
+        return result;
+    }
+
     public boolean judgePolicies(PolicyRequestDto requestDto) {
 
         PolicyRequestDto dto = PolicyRequestDto.builder()
@@ -50,75 +65,47 @@ public class PolicyService {
         return dto.equals(requestDto);
     }
 
-    public List<PolicyResponseDto> selectDetailPolicies(PolicyRequestDto request) {
+    public Map<String, String> mappingRequest(PolicyRequestDto requestDto) {
 
-        List<PolicyResponseDto> result = new ArrayList<>();
+        Map<String, String> result = new HashMap<>();
 
-        List<Policy> search = null;
-
-        if(request.getLocation() != null && request.getKeyword() != null){
-            search = policyRepository.findByLocationAndNameContaining(request.getLocation(), request.getKeyword());
-        } else if (request.getLocation() == null && request.getKeyword() != null) {
-            search = policyRepository.findByNameContaining(request.getKeyword());
-        } else if (request.getLocation() != null && request.getKeyword() == null) {
-            search = policyRepository.findByLocation(request.getLocation());
-        }
-
-        // 태그 검색
-        StringBuilder stringBuilder = new StringBuilder();
-        List<String> tagList = new ArrayList<>();
-        stringBuilder.append('(');
-        if(request.getTag1() != null) {
-            stringBuilder.append(request.getTag1());
-            tagList.add(request.getTag1());
-        }
-        if(request.getTag2() != null) {
-            stringBuilder.append(request.getTag2());
-            tagList.add(request.getTag2());
-        }
-        if(request.getTag3() != null) {
-            stringBuilder.append(request.getTag3());
-            tagList.add(request.getTag3());
-        }
-        if(request.getTag4() != null) {
-            stringBuilder.append(request.getTag4());
-            tagList.add(request.getTag4());
-        }
-        stringBuilder.append(')');
-
-        if(search.isEmpty()){
-            search = policyRepository.findByTagList(String.valueOf(stringBuilder));
-        } else {
-            if(String.valueOf(stringBuilder).length() > 2)
-                search.removeIf(policy -> !tagList.contains(policy.getTag()));
-        }
-
-        // 변환
-        for (Policy policy:search) {
-            PolicyResponseDto dto = PolicyResponseDto.builder()
-                    .tag(policy.getTag())
-                    .location(policy.getLocation())
-                    .explain(policy.getExplain())
-                    .name(policy.getName())
-                    .link(policy.getLink())
-                    .build();
-            result.add(dto);
-        }
+        result.put("request_location", requestDto.getLocation());
+        result.put("request_keyword", requestDto.getKeyword());
+        result.put("request_tag1", requestDto.getTag1());
+        result.put("request_tag2", requestDto.getTag2());
+        result.put("request_tag3", requestDto.getTag3());
+        result.put("request_tag4", requestDto.getTag4());
 
         return result;
     }
 
-    private List<String> findCriteria(PolicyRequestDto requestDto){
+    public List<PolicyResponseDto> selectDetailPolicies(PolicyRequestDto request) {
 
-        List<String> result = new ArrayList<>();
+        Map<String, Object> searchKeys = new HashMap<>();
+        List<PolicyResponseDto> finalResult = new ArrayList<>();
 
-        if(requestDto.getLocation() != null) result.add("location");
-        if(requestDto.getKeyword() != null) result.add("keyword");
-        if(requestDto.getTag1() != null || requestDto.getTag2() != null ||
-                requestDto.getTag3() != null || requestDto.getTag4() != null)
-            result.add("tag");
+        if(request.getLocation() != null) searchKeys.put("location", request.getLocation());
+        if(request.getKeyword() != null) searchKeys.put("keyword", request.getKeyword());
+        List<String> tags = new ArrayList<>();
+        if(request.getTag1() != null) tags.add(request.getTag1());
+        if(request.getTag2() != null) tags.add(request.getTag2());
+        if(request.getTag3() != null) tags.add(request.getTag3());
+        if(request.getTag4() != null) tags.add(request.getTag4());
 
-        return result;
+        if(tags.size() != 0) searchKeys.put("tag", tags);
+
+        List<Policy> result = policyRepository.findAll(PolicySpecification.searchPolicyWithMultiConditions(searchKeys));
+        for(Policy policy : result){
+            PolicyResponseDto dto = PolicyResponseDto.builder()
+                    .name(policy.getName())
+                    .explain(policy.getExplain())
+                    .tag(policy.getTag())
+                    .link(policy.getLink())
+                    .location(policy.getLocation())
+                    .build();
+            finalResult.add(dto);
+        }
+        return finalResult;
     }
 
 }

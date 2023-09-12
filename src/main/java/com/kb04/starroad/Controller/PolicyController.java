@@ -2,25 +2,17 @@ package com.kb04.starroad.Controller;
 
 import com.kb04.starroad.Dto.policy.PolicyRequestDto;
 import com.kb04.starroad.Dto.policy.PolicyResponseDto;
+import com.kb04.starroad.Entity.Policy;
+import com.kb04.starroad.Repository.PolicyRepository;
 import com.kb04.starroad.Service.PolicyService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.support.RequestContextUtils;
-
-import javax.servlet.http.HttpServletRequest;
-import java.net.URI;
 import java.util.*;
 
 @RequiredArgsConstructor
-@Controller
+@RestController
 public class PolicyController {
 
     private static final int ITEMS_PER_PAGE = 3;
@@ -29,27 +21,11 @@ public class PolicyController {
     @GetMapping("/starroad/policy")
     public ModelAndView policy(Model model, @RequestParam(value = "pageIndex", defaultValue = "1") int pageIndex) {
 
-        List<PolicyResponseDto> result = null;
-        Map<String, ?> map = model.asMap();
-        List<String> checked = new ArrayList<>();
+        List<PolicyResponseDto> result = policyService.selectAllPolicies();
+        Map<String, Object> finalResult = policyService.returnPoliciesByPage(result, pageIndex);
 
-        if(Objects.equals(model.getAttribute("flag"), "none") || !map.containsKey("flag")){
-            result = policyService.selectAllPolicies();
-        }
-        else {
-            result = policyService.selectDetailPolicies((PolicyRequestDto) map.get("request"));
-            PolicyRequestDto d = (PolicyRequestDto) map.get("request");
-            checked.add(d.getLocation());
-        }
-
-        int totalCount = result.size();
-
-        int startIndex = (pageIndex - 1) * ITEMS_PER_PAGE;
-        int endIndex = Math.min(startIndex + ITEMS_PER_PAGE, totalCount);
-
-        model.addAttribute("checked", checked);
-        model.addAttribute("policyList", result.subList(startIndex, endIndex));
-        model.addAttribute("pageEndIndex", Math.ceil(totalCount / (double) ITEMS_PER_PAGE));
+        model.addAttribute("policyList", finalResult.get("policyList"));
+        model.addAttribute("pageEndIndex", finalResult.get("pageEndIndex"));
         model.addAttribute("currentPage", pageIndex);
 
         ModelAndView mav = new ModelAndView("policy/policy");
@@ -57,19 +33,56 @@ public class PolicyController {
         return mav;
     }
 
-    @PostMapping("/api/starroad/policy")
-    public String getPolicyByForm(@ModelAttribute PolicyRequestDto requestDto, RedirectAttributes redirectAttributes) {
+    @GetMapping("/starroad/policy/result")
+    public ModelAndView getPolicyByForm(Model model, @RequestParam(value = "pageIndex", defaultValue = "1") int pageIndex,
+                                        @RequestParam(required = false) String location,
+                                        @RequestParam(required = false) String keyword,
+                                        @RequestParam(required = false) String tag1,
+                                        @RequestParam(required = false) String tag2,
+                                        @RequestParam(required = false) String tag3,
+                                        @RequestParam(required = false) String tag4) {
 
-        if(requestDto.getKeyword().equals("")) requestDto.setKeyword(null);
+        ModelAndView mav = new ModelAndView("policy/policy_result");
+        PolicyRequestDto requestDto = PolicyRequestDto.builder()
+                .location(((location == null || location.equals(""))? null : location))
+                .tag1(((tag1 == null || tag1.equals(""))? null : tag1))
+                .tag2(((tag2 == null || tag2.equals(""))? null : tag2))
+                .tag3(((tag3 == null || tag3.equals(""))? null : tag3))
+                .tag4(((tag4 == null || tag4.equals(""))? null : tag4 + " 형성"))
+                .keyword(((keyword == null || keyword.equals(""))? null : keyword))
+                .build();
 
         if(policyService.judgePolicies(requestDto)){ //아무것도 입력하지 않은 경우
-            redirectAttributes.addFlashAttribute("flag", "none");
+
+            List<PolicyResponseDto> result = policyService.selectAllPolicies();
+            Map<String, Object> finalResult = policyService.returnPoliciesByPage(result, pageIndex);
+
+            model.addAttribute("policyList", finalResult.get("policyList"));
+            model.addAttribute("pageEndIndex", finalResult.get("pageEndIndex"));
+            model.addAttribute("currentPage", pageIndex);
+
         }
         else {
-            redirectAttributes.addFlashAttribute("flag", "search");
-            redirectAttributes.addFlashAttribute("request", requestDto);
+
+            List<PolicyResponseDto> result = policyService.selectDetailPolicies(requestDto);
+            for (PolicyResponseDto dto:result) {
+                System.out.println(dto);
+            }
+            Map<String, Object> finalResult = policyService.returnPoliciesByPage(result, pageIndex);
+
+            model.addAttribute("policyList", finalResult.get("policyList"));
+            model.addAttribute("pageEndIndex", finalResult.get("pageEndIndex"));
+            model.addAttribute("currentPage", pageIndex);
+
+            Map<String, String> requests = policyService.mappingRequest(requestDto);
+            for (String key: requests.keySet()) {
+                if(key.equals("request_tag4") && requests.get(key) != null)
+                    model.addAttribute(key, "금융자산");
+                else
+                    model.addAttribute(key, requests.get(key));
+            }
         }
-        return "redirect:/starroad/policy";
+        return mav;
     }
 
 }
