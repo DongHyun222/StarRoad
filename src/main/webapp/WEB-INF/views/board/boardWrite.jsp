@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +6,7 @@
     <title>게시물 작성 폼</title>
     <style>
         body {
-            text-align: center; /* 텍스트 가운데 정렬 */
+            text-align: center;
         }
 
         .container {
@@ -21,12 +20,13 @@
             width: 500px;
             display: flex;
             flex-direction: column;
-            align-items: flex-start;
+            align-items: center; /* 요소를 수평 중앙에 정렬합니다. */
+            margin: 0 auto; /* 좌우 여백을 자동으로 설정하여 가운데 정렬합니다. */
         }
 
         .layout label {
-            font-size: 12px; /* 폰트 크기 설정 */
-            margin-bottom: 5px; /* 아래쪽 간격 설정 */
+            font-size: 12px;
+            margin-bottom: 5px;
         }
 
         .layout input, .layout select, .layout textarea {
@@ -37,35 +37,32 @@
         }
 
         .layout select {
-            width: 30%; /* 게시판 선택 드롭다운 너비 늘리기 */
-            height: 40px; /* 게시판 선택 드롭다운 높이 줄이기 */
-            margin-top: 5px; /* 드롭다운 간격 설정 */
+            width: 31%;
+            height: 50px;
+            margin-top: 5px;
         }
 
         .layout select#postType {
-            width: 21%; /* 게시글 종류 드롭다운 너비 줄이기 */
-            height: 40px; /* 게시글 종류 드롭다운 높이 줄이기 */
+            width: 15%;
+            height: 50px;
         }
 
         .layout textarea {
             min-height: 300px;
-            margin-top: 10px; /* 내용 입력 칸과의 간격 설정 */
+            margin-top: 10px;
             padding: 10px;
         }
 
-        /* 이미지 업로드 필드 스타일 */
         .layout .image-input {
             width: 100%;
             box-sizing: border-box;
-            margin-top: 10px; /* 이미지 업로드와의 간격 설정 */
+            margin-top: 10px;
         }
 
-        /* 이미지 업로드 버튼 스타일 */
         .layout .image-input input[type="file"] {
-            margin-top: 10px; /* 이미지 업로드 버튼과의 간격 설정 */
+            margin-top: 10px;
         }
 
-        /* 등록 버튼 스타일 */
         .layout .submit-button {
             display: block;
             margin: 20px auto;
@@ -73,45 +70,47 @@
             border: none;
             padding: 10px 20px;
             cursor: pointer;
-        }
-    </style>
 
+    </style>
+    <script src="//code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            $("#navbar").load("${path}/resources/navbar.jsp");
+        });
+    </script>
 </head>
 <body>
+<div id="navbar"></div>
+
 <div class="container">
-    <H1> 글쓰기</H1>
-
+    <h1>글쓰기</h1>
+    <br>
     <div class="layout">
-        <form method="post" action="/starroad/writepro" enctype="multipart/form-data" >
-        <!-- 게시판 선택 드롭다운 -->
-        <label for="type">게시판 선택:</label>
-        <select id="type" name="type" required>
-            <option value="0">자유게시판</option>
-            <option value="1">인증게시판</option>
-        </select>
+        <form method="post" action="/starroad/writepro" enctype="multipart/form-data">
+            <label for="type">게시판 선택:</label>
+            <select id="type" name="type" required>
+                <option value="0">자유게시판</option>
+                <option value="1">인증게시판</option>
+            </select>
 
-        <!-- 게시글 종류 드롭다운 -->
-        <label for="detailType">게시글 종류:</label>
-        <select id="detailType" name="detailType" required>
-            <option value="잡담">잡담</option>
-            <option value="정보">정보</option>
-            <option value="질문">질문</option>
-        </select>
-        <br>
+            <label for="detailType">게시글 종류:</label>
+            <select id="detailType" name="detailType" required>
+                <option value="잡담">잡담</option>
+                <option value="정보">정보</option>
+                <option value="질문">질문</option>
+            </select>
+            <br>
 
-        <input name="title" type="text" id="title" placeholder="제목을 입력하세요" required>
+            <input name="title" type="text" id="title" placeholder="제목을 입력하세요" required>
 
+            <textarea name="content" id="content" placeholder="내용을 입력하세요" required></textarea>
 
-        <textarea name="content" id="content" placeholder="내용을 입력하세요" required></textarea>
-            <!-- 이미지 업로드 필드 -->
-           <div class="image-input">
-               <input type="file" name="image" id="image">
-          </div>
+            <div class="image-input">
+                <input type="file" name="image" id="image">
+            </div>
 
-
-        <!-- 등록 버튼 -->
-        <button type="submit" class="submit-button">등록</button>
-        </form> <!-- 폼 종료 -->
+            <button type="submit" class="submit-button">등록</button>
+        </form>
     </div>
 </div>
 </body>
