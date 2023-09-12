@@ -5,23 +5,67 @@
 <head>
     <meta charset="UTF-8">
     <title>mypage</title>
-    <link rel="stylesheet" href="${path}/resources/static/css/common.css" />
-    <link rel="stylesheet" href="${path}/resources/static/css/mypage/sidebar.css" />
+    <link rel="stylesheet" href="${path}/resources/static/css/common.css">
+    <link rel="stylesheet" href="${path}/resources/static/css/mypage/sidebar.css">
+    <link rel="stylesheet" href="${path}/resources/static/css/mypage/check_password.css">
+    <!-- jquery 링크, navbar -->
+    <script src="//code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#navbar").load("${path}/resources/navbar.jsp");
+
+            $("#password").keydown(function (e) {
+                console.log(e.key)
+                if (e.key === "Enter")
+                    e.preventDefault();
+            })
+
+            document.getElementById("check_btn").addEventListener('click', (e) => {
+                $.ajax({
+                    type: 'post',
+                    url: "/api/starroad/mypage/check-password",
+                    data: {"inputPw": $("#password").val()},
+                    success: function (data) {
+                        if (data !== "") {
+                            $("#check_msg").text(data);
+                            $("#password").css({"border": "red solid 1px", "outline-color": "red"})
+                        } else {
+                            $("#check_c").css("display", "none")
+                            $("#info_c").load("${path}/resources/info.jsp");
+                        }
+                    },
+                    error: function (error) {
+                        alert("잠시 후 시도해주세요.");
+                    }
+                });
+            });
+        });
+    </script>
 </head>
-<body>
-<nav>
-    <main>
-        <aside>
-            <div id='sidebar_title'>마이페이지</div>
-            <ul>
-                <li><a class='sidebar_menu' href='/starroad/mypage/asset'>나의 자산</a></li>
-                <li><a class='sidebar_menu' href='/starroad/mypage/challenge'>적금 챌린지</a></li>
-                <li><a class='sidebar_menu' href='/starroad/mypage/board'>작성한 글 보기</a></li>
-                <li><a class='sidebar_menu' href='/starroad/mypage/info' id='selected'>정보 수정</a></li>
-                <li><a class='sidebar_menu' href='/starroad/mypage/password'>비밀번호 수정</a></li>
-            </ul>
-        </aside>
-        <article></article>
-    </main>
-</body>
+<div id="navbar"></div>
+<main>
+    <aside>
+        <div id='sidebar_title'>마이페이지</div>
+        <ul>
+            <li><a class='sidebar_menu' href='/starroad/mypage/asset'>나의 자산</a></li>
+            <li><a class='sidebar_menu' href='/starroad/mypage/challenge'>적금 챌린지</a></li>
+            <li><a class='sidebar_menu' href='/starroad/mypage/board'>작성한 글 보기</a></li>
+            <li><a class='sidebar_menu' href='/starroad/mypage/info' id='selected'>정보 수정</a></li>
+            <li><a class='sidebar_menu' href='/starroad/mypage/password'>비밀번호 수정</a></li>
+        </ul>
+    </aside>
+    <article>
+        <section id="check_c">
+            <form id="check_m" method="post" action="/starroad/mypage/password">
+                <div id="m_title">비밀번호를 입력해주세요</div>
+                <label>
+                    <input id="password" name="password" type="password" placeholder=" 8~12자리 영문/숫자 조합 (대소문자 구분)">
+                </label>
+                <div id="check_msg"></div>
+                <button id="check_btn" type="button">확인</button>
+            </form>
+        </section>
+        <section id="info_c"></section>
+    </article>
+</main>
 </html>

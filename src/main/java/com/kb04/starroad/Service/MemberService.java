@@ -43,6 +43,9 @@ public class MemberService {
         return memberRepository.findById(id);
     }
 
+    public boolean checkPassword(int no, String inputPw) {
+        return memberRepository.findByNo(no).getPassword().equals(inputPw);
+    }
 
     public List<BoardResponseDto> getWritings(int no) {
         Specification<Board> spec = (root, query, criteriaBuilder) -> null;
