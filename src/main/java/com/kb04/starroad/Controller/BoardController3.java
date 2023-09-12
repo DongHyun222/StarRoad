@@ -2,7 +2,6 @@ package com.kb04.starroad.Controller;
 
 import com.kb04.starroad.Dto.board.BoardResponseDto;
 import com.kb04.starroad.Entity.Board;
-import com.kb04.starroad.Repository.BoardRepository;
 import com.kb04.starroad.Service.BoardService2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +16,7 @@ public class BoardController3 {
     @Autowired
     private BoardService2 boardService2;
 
-    @GetMapping("/starroad/boardDetail")
+    @GetMapping("/starroad/board/detail")
     public ModelAndView BoardDetail(@RequestParam Integer no) {
 
         ModelAndView mav = new ModelAndView();
@@ -35,11 +34,11 @@ public class BoardController3 {
                 boardResponseDto.setImageBase64(imageBase64);
             }
 
-            mav.setViewName("board/boardDetail");
+            mav.setViewName("board/detail");
             mav.addObject("board", boardResponseDto);
         } else {
             // 게시글이 없을 경우 처리
-            mav.setViewName("board/boardDetail");
+            mav.setViewName("board/detail");
             mav.addObject("error", "게시글을 찾을 수 없습니다.");
         }
         return mav;
@@ -47,11 +46,11 @@ public class BoardController3 {
 
 
 
-    @GetMapping("/starroad/delete")
+    @GetMapping("/starroad/board/delete")
     public ModelAndView deleteBoard(@RequestParam Integer no) {
 
         boardService2.deleteBoard(no);
-        ModelAndView mav = new ModelAndView("redirect:/starroad/boardMain");
+        ModelAndView mav = new ModelAndView("redirect:/starroad/board/main");
         return mav;
     }
 

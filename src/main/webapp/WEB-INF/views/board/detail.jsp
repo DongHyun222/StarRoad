@@ -9,10 +9,10 @@
     <meta charset="UTF-8">
     <title>게시물 상세보기</title>
     <script src="//code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="/resources/static/css/boardDetail.css">
+    <link rel="stylesheet" type="text/css" href="/resources/static/css/board/detail.css">
     <script type="text/javascript">
             $(function() {
-                $("#navbar").load("/resources/navbar.jsp");
+                $("#navbar").load("/resources/common_jsp/navbar.jsp");
             });
 
     </script>
@@ -72,12 +72,12 @@
    <script>
      document.getElementById("deleteBtn").addEventListener("click", function() {
                if (confirm("정말로 삭제하시겠습니까?")) {
-                   location.href = "/starroad/delete?no=" + ${board.no}; // 삭제 API 호출
+                   location.href = "/starroad/board/delete?no=" + ${board.no}; // 삭제 API 호출
                }
        });
       document.getElementById("editBtn").addEventListener("click", function() {
 
-                 location.href = "/starroad/update?no=" + ${board.no}; // 수정 API 호출
+                 location.href = "/starroad/board/update?no=" + ${board.no}; // 수정 API 호출
 
          });
    </script>

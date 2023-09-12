@@ -13,7 +13,7 @@
     <script src="//code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript">
         $(function () {
-            $("#navbar").load("${path}/resources/navbar.jsp");
+            $("#navbar").load("${path}/resources/common_jsp/navbar.jsp");
         });
     </script>
 </head>

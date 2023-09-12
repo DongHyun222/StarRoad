@@ -75,7 +75,7 @@
     <script src="//code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript">
         $(function() {
-            $("#navbar").load("${path}/resources/navbar.jsp");
+            $("#navbar").load("${path}/resources/common_jsp/navbar.jsp");
         });
     </script>
 </head>
@@ -86,7 +86,7 @@
     <h1>글쓰기</h1>
     <br>
     <div class="layout">
-        <form method="post" action="/starroad/writepro" enctype="multipart/form-data">
+        <form method="post" action="/starroad/board/writepro" enctype="multipart/form-data">
             <label for="type">게시판 선택:</label>
             <select id="type" name="type" required>
                 <option value="0">자유게시판</option>

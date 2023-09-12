@@ -20,7 +20,7 @@ public class HomeController {
     }
 
     @ApiOperation(value = "home", notes = "홈")
-    @GetMapping("/api/starroad")
+    @GetMapping("/starroad/starroad")
     public String home_api() {
         // prefix: /WEB-INF/views
         // suffix: .jsp

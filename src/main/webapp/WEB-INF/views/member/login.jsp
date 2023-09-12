@@ -10,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="/resources/static/css/login.css">
     <script type="text/javascript">
             $(function() {
-                $("#navbar").load("/resources/navbar.jsp");
+                $("#navbar").load("/resources/common_jsp/navbar.jsp");
             });
     </script>
 </head>
@@ -33,7 +33,7 @@
         <input type="submit" value="로그인" class="login-button1">
         <div class="link-container">
             <div class="signup-options">
-                <a href="/starroad/signup">회원가입</a>
+                <a href="/starroad/member">회원가입</a>
             </div>
             <div class="find-options">
                 <a href="/starroad/findidpassword">아이디 비밀번호 찾기</a>
