@@ -2,9 +2,9 @@ package com.kb04.starroad.Entity;
 
 import com.kb04.starroad.Dto.MemberDto;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
-import java.util.Date;
 @Entity
 @Table(name="member")
 @Getter
@@ -29,7 +29,7 @@ public class Member {
     private String password;
 
     @Column(name="birthday" ,nullable = false)
-    private Date birthday;
+    private String birthday;
 
     @Column(name="phone" ,nullable = false, length = 15)
     private String phone;
@@ -52,19 +52,23 @@ public class Member {
     @Column(name="goal",nullable = false)
     private int goal;
 
-    @Column(columnDefinition = "char(1)", name="status",nullable = false)
+    //@ColumnDefault("'Y'")
+    @Column(name="status",nullable = false)
     private Character status;
 
     @Column(name="salary",nullable = false)
     private int salary;
 
-    @Column(columnDefinition = "char(1)", name="agreement",nullable = false)
+    //@ColumnDefault("'Y'")
+    @Column(name="agreement",nullable = false)
     private Character agreement;
 
     @Column(name="point",nullable = false)
+    @ColumnDefault("0")
     private int point;
 
     @Column(name="investment",nullable = false)
+    @ColumnDefault("0")
     private int investment;
 
     public MemberDto toMemberDto() {

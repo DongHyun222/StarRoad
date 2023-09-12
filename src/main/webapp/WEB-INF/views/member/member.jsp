@@ -13,6 +13,7 @@
         $(function() {
             $("#navbar").load("${path}/resources/navbar.jsp");
 
+            let idFlag = false;
             $("#checkId").click(function(){
                 let id = $("#id").val();
                 // 정규 표현식을 사용하여 아이디 유효성 검사
@@ -27,18 +28,22 @@
                             if (data == "N") {
                                 result = "사용 가능한 아이디입니다.";
                                 $("#result_checkId").html(result).css("color", "green");
+                                id = true;
                                 <%-- $("#password").trigger("focus"); --%>
                             } else {
                                 result = "이미 사용중인 아이디입니다.";
                                 $("#result_checkId").html(result).css("color", "red");
+                                id = false;
                             }
                         },
                         error: function(error) {
+                            id = false;
                             alert("오류 발생");
                         }
                     });
                 } else {
                     alert("아이디는 6~12자의 영문자와 숫자 조합이어야 합니다.");
+                    id = false;
                     $("#id").val("").trigger("focus");
                 }
             });
@@ -80,6 +85,11 @@
                 }
             });
 
+            $(".submit-button").click(function() {
+                if (idFlag && errorFlag) {
+                    alert("회원가입이 완료되었습니다.");
+                }
+            });
 
         });
 
@@ -190,17 +200,20 @@
                     <tr>
                         <th>거래자금의 원천</th>
                         <td>
-                            <input type="text" id="source" list="source_list" name="source">
-                            <datalist id="source_list">
-                                <option value="근로 및 연금소득"></option>
-                                <option value="퇴직소득"></option>
-                                <option value="사업소득"></option>
-                                <option value="임대소득"></option>
-                                <option value="매매소득"></option>
-                                <option value="금융소득"></option>
-                                <option value="용돈/생활비/상속/"></option>
-                                <option value="대출금"></option>
-                            </datalist>
+                            <%--<input type="select" id="source" list="source_list" name="source">
+                            <datalist id="source_list"> --%>
+                            <select name="source" id="source" >
+                                <option disabled selected>원천을 선택하세요</option>
+                                <option >근로 및 연금소득</option>
+                                <option >퇴직소득</option>
+                                <option >사업소득</option>
+                                <option >임대소득</option>
+                                <option >매매소득</option>
+                                <option>금융소득</option>
+                                <option >용돈/생활비/상속</option>
+                                <option >대출금</option>
+                            </select>
+
                         </td>
                     </tr>
                     <tr>
@@ -211,8 +224,11 @@
                         </td>
                     </tr>
                 </table>
+                <div class="agree-check">
+                    <input type="checkbox" required /> 이용약관 개인정보 수집 및 이용, 마케팅 활용선택에 모두 동의합니다.
+                </div>
                 <br>
-                <button type="submit" class="submit-button">회원가입</button>
+                <button type="submit" class="submit-button" >회원가입</button>
                 <br>
                 <br>
             </form>

@@ -21,4 +21,6 @@ public interface MemberRepository extends JpaRepository<Member, Integer> {
     Integer getDeposit(@Param("no") int no);
 
     Member findById(String id);
+
+
 }

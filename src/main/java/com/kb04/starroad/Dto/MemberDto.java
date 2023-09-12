@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
 
 @Data
 @Builder
@@ -18,7 +17,7 @@ public class MemberDto {
     private String name;
     private String id;
     private String password;
-    private Date birthday;
+    private String birthday;
     private String phone;
     private String email;
     private String address;
