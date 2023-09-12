@@ -113,6 +113,13 @@
             <version>6.1.5.Final</version> <!-- Hibernate Validator 버전을 선택하세요 -->
         </dependency>
 
+        <!--spring security-crypto 추가-->
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

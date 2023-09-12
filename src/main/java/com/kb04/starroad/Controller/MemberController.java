@@ -4,9 +4,9 @@ import com.kb04.starroad.Dto.MemberDto;
 import com.kb04.starroad.Entity.Member;
 import com.kb04.starroad.Service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 @RestController
@@ -31,7 +31,10 @@ public class MemberController {
         String num = dto.getPhone().replace(",", "-");
         dto.setPhone(num);
 
-        //System.out.println(dto);
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String encPass = encoder.encode(dto.getPassword());
+        dto.setPassword(encPass);
+        System.out.println(encPass);
 
         memberService.memberInsert(dto);
 
@@ -42,7 +45,7 @@ public class MemberController {
     @RequestMapping("/starroad/checkMemberId")
     public String checkId(@RequestParam("id") String id) {
         String result="Y";
-
+        System.out.println(id);
         Member optionalMember = memberService.checkId(id);
         if (optionalMember == null) {
             // 아이디가 존재하지 않는 경우

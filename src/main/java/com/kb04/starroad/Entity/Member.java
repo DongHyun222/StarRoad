@@ -2,7 +2,7 @@ package com.kb04.starroad.Entity;
 
 import com.kb04.starroad.Dto.MemberDto;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
+
 
 import javax.persistence.*;
 @Entity
@@ -52,24 +52,21 @@ public class Member {
     @Column(name="goal",nullable = false)
     private int goal;
 
-    //@ColumnDefault("'Y'")
+
     @Column(name="status",nullable = false)
-    private Character status;
+    private Character status = 'Y';
 
     @Column(name="salary",nullable = false)
     private int salary;
 
-    //@ColumnDefault("'Y'")
     @Column(name="agreement",nullable = false)
-    private Character agreement;
+    private Character agreement = 'Y';
 
     @Column(name="point",nullable = false)
-    @ColumnDefault("0")
-    private int point;
+    private int point = 0;
 
     @Column(name="investment",nullable = false)
-    @ColumnDefault("0")
-    private int investment;
+    private int investment = 0;
 
     public MemberDto toMemberDto() {
         return MemberDto.builder()

@@ -37,6 +37,7 @@
                             }
                         },
                         error: function(error) {
+                            console.log(id, error)
                             id = false;
                             alert("오류 발생");
                         }
