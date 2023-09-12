@@ -13,6 +13,24 @@
         $(function () {
             $("#navbar").load("${pageContext.request.contextPath}/resources/navbar.jsp");
         })
+        $(function () {
+            $("#location_${request_location}").prop("selected", true)
+        })
+        $(function () {
+            $("#keyword").val("${request_keyword}");
+        })
+        $(function () {
+            $("#${request_tag1}").prop('checked', true);
+        })
+        $(function () {
+            $("#${request_tag2}").prop('checked', true);
+        })
+        $(function () {
+            $("#${request_tag3}").prop('checked', true);
+        })
+        $(function () {
+            $("#${request_tag4}").prop('checked', true);
+        })
     </script>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/static/css/common.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/static/css/policy.css">
@@ -116,14 +134,14 @@
                 event.preventDefault();
                 if (link.getAttribute('aria-label') === 'Previous') {
                     if (current_page > 1) {
-                        window.location.href = '/starroad/policy?pageIndex=' + prev;
+                        window.location.href = '/starroad/policy/result?location=${request_location}&tag1=${request_tag1}&tag2=${request_tag2}&tag3=${request_tag3}&tag4=${request_tag4}&keyword=${request_keyword}&pageIndex=' + prev;
                     }
                 } else if (link.getAttribute('aria-label') === 'Next') {
                     if (parseInt(${pageEndIndex}) > current_page) {
-                        window.location.href = '/starroad/policy?pageIndex=' + next;
+                        window.location.href = '/starroad/policy/result?location=${request_location}&tag1=${request_tag1}&tag2=${request_tag2}&tag3=${request_tag3}&tag4=${request_tag4}&keyword=${request_keyword}&pageIndex=' + next;
                     }
                 } else {
-                    window.location.href = '/starroad/policy?pageIndex=' + link.getAttribute('aria-label');
+                    window.location.href = '/starroad/policy/result?location=${request_location}&tag1=${request_tag1}&tag2=${request_tag2}&tag3=${request_tag3}&tag4=${request_tag4}&keyword=${request_keyword}&pageIndex=' + link.getAttribute('aria-label');
                 }
             });
         });
