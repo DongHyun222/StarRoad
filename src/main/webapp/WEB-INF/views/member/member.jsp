@@ -218,6 +218,7 @@
                     <tr>
                         <th>저금목표치 </th>
                         <td>
+                            <span class="source"> 거래자금의 원천의</span>
                             <input type="number" name="goal" id="goal" min="0" max="100" required>
                             <span class="per">%</span>
                             <div class='valid'>퍼센트단위 (1~100사이 숫자 입력)</div>
