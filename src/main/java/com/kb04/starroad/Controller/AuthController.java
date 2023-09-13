@@ -26,7 +26,9 @@ public class AuthController {
     @PostMapping("/starroad/login")
     public ModelAndView login(LoginRequestDto requestDto, HttpSession session, RedirectAttributes redirectAttributes) {
         ModelAndView mav;
-        Member member = authService.authenticate(requestDto.getId(), requestDto.getPassword());
+
+        Member member;
+        member = authService.authenticate(requestDto);
         if (member != null) {
             session.setAttribute("currentUser", member);
             mav = new ModelAndView("redirect:/starroad"); // 로그인 성공
