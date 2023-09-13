@@ -52,12 +52,12 @@ public class BoardService2 {
         }
 
     public Page<Board> findPaginated(Pageable pageable) {
-        return boardRepository.findByType("0", pageable); // "0"은 자유게시판 타입에 해당하는 것으로 가정합니다.
+        return boardRepository.findByType("F", pageable); // "0"은 자유게시판 타입에 해당하는 것으로 가정합니다.
     }
 
 
     public Page<Board> findAuthenticatedPaginated(Pageable pageable) {
-        return boardRepository.findByType("1", pageable); // "1"은 인증방 타입에 해당하는 것으로 가정합니다.
+        return boardRepository.findByType("C", pageable); // "1"은 인증방 타입에 해당하는 것으로 가정합니다.
     }
 
 
