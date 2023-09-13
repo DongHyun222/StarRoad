@@ -1,5 +1,6 @@
 package com.kb04.starroad.Entity;
 
+import com.kb04.starroad.Dto.product.ProductDto;
 import com.kb04.starroad.Dto.product.ProductResponseDto;
 import lombok.*;
 import org.springframework.lang.Nullable;
@@ -58,6 +59,23 @@ public class Product {
     @Nullable
     @Column(name = "max_condition_rate")
     private Double maxConditionRate;
+
+    public ProductDto toProductDto() {
+        return ProductDto.builder()
+                .type(type)
+                .name(name)
+                .explain(explain)
+                .attribute(attribute)
+                .minPeriod(minPeriod)
+                .maxPeriod(maxPeriod)
+                .minPrice(minPrice)
+                .maxPrice(maxPrice)
+                .link(link)
+                .maxRate(maxRate)
+                .maxRatePeriod(maxRatePeriod)
+                .maxConditionRate(maxConditionRate)
+                .build();
+    }
 
     public ProductResponseDto toProductResponseDto() {
         return ProductResponseDto.builder()

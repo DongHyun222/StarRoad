@@ -1,5 +1,7 @@
 package com.kb04.starroad.Entity;
 
+import com.kb04.starroad.Dto.MemberDto;
+import com.kb04.starroad.Dto.SubscriptionDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -30,4 +32,14 @@ public class Subscription {
 
     @Column(nullable = false)
     private int price;
+
+    public SubscriptionDto toSubscriptionDto() {
+        return SubscriptionDto.builder()
+                .no(no)
+                .memberNo(memberNo.toMemberDto())
+                .prodNo(prodNo.toProductDto())
+                .period(period)
+                .price(price)
+                .build();
+    }
 }

@@ -1,8 +1,13 @@
 package com.kb04.starroad.Repository;
 
+import com.kb04.starroad.Entity.Member;
+import com.kb04.starroad.Entity.Subscription;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface SubscriptionRepository {
+import java.util.List;
 
+@Repository
+public interface SubscriptionRepository extends JpaRepository<Subscription, Integer> {
+    public List<Subscription> findByMemberNo(Member no);
 }
