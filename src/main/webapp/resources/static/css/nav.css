@@ -32,7 +32,7 @@ nav li a:hover {
     color: var(--main-kb-yellow);
 }
 
-.login-button {
+.btn {
     background-color: #fff;
     padding: 8px 16px;
     border: 1px solid var(--sub-kb-dark-gray);
@@ -41,6 +41,10 @@ nav li a:hover {
     font-weight: bold;
 }
 
-.login-button a:hover {
+.btn a:hover {
     color: var(--main-kb-yellow);
+}
+
+.btn:hover {
+    border: 1px solid var(--sub-kb-dark-gray);
 }
