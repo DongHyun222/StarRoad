@@ -30,7 +30,15 @@
         </div>
 
         <!-- 로그인 버튼 -->
-        <button class="login-button"><a href="/starroad/login">로그인</a></button>
+        <button class="btn"><a href="/starroad/login">로그인</a></button>
+
+        <!-- 로그인 시 -->
+        <!--
+        <div>
+            <button class="btn"><a href="/starroad/mypage/asset">마이페이지</a></button>
+            <button class="btn"><a href="/starroad/logout">로그아웃</a></button>
+        </div>
+        -->
     </nav>
 </header>
 
