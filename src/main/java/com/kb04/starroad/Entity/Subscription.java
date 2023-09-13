@@ -6,6 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Getter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @SequenceGenerator(name = "subscription_seq", sequenceName="subscription_seq")

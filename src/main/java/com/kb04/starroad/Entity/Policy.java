@@ -6,6 +6,7 @@ import javax.persistence.*;
 
 @Getter
 @Entity
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @SequenceGenerator(name = "policy_seq", sequenceName = "policy_seq", allocationSize = 1)
