@@ -7,6 +7,7 @@ import java.util.Date;
 
 @Entity
 @Getter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @SequenceGenerator(name = "payment_log_seq", sequenceName="payment_log_seq")

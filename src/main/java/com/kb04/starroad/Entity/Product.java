@@ -9,10 +9,10 @@ import javax.persistence.*;
 @Getter
 @Entity
 @Builder
+@Table(name = "product")
 @NoArgsConstructor
 @AllArgsConstructor
 @SequenceGenerator(name = "product_seq", sequenceName = "product_seq", allocationSize = 50, initialValue = 1)
-@Table(name = "product")
 public class Product {
 
     @Id

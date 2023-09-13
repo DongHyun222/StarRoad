@@ -7,12 +7,11 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "comments")
-
 @Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "comments")
 public class Comment {
 
     @Id

@@ -10,11 +10,11 @@ import java.util.Date;
     @Entity
     @Getter
     @Builder
-    @Table(name = "board")
     @AllArgsConstructor
     @NoArgsConstructor
-
+    @Table(name = "board")
     public class Board {
+
         @Id
         @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "board_seq")
         @SequenceGenerator(name = "board_seq", sequenceName = "BOARD_SEQ", allocationSize = 1)
