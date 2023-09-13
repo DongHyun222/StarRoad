@@ -28,42 +28,50 @@ public class ProductController {
             @RequestParam(defaultValue = "1") int page,
             HttpServletRequest request) {
 
-        List<SubscriptionDto> subscriptionDtoList = findMemberAndSubscriptionInfo(request);
-        System.out.println(subscriptionDtoList);
-        for (SubscriptionDto dto: subscriptionDtoList) {
-            System.out.println(dto);
-        }
+        Member loginMember = getLoginMember(request);
+        Double result = findMemberAndSubscriptionInfo(loginMember);
 
-        List<ProductResponseDto> productList = productService.getProductList();
+        List<ProductResponseDto> productList = productService.getProductList(result, 60);
 
         int startIndex = (page - 1) * ITEMS_PER_PAGE;
         int endIndex = Math.min(startIndex + ITEMS_PER_PAGE, productList.size());
 
         model.addAttribute("productItems", productList.subList(startIndex, endIndex));
-        model.addAttribute("pageEndIndex", Math.ceil(productList.size()/Double.valueOf(ITEMS_PER_PAGE)));
+        model.addAttribute("pageEndIndex", Math.ceil(productList.size() / Double.valueOf(ITEMS_PER_PAGE)));
         model.addAttribute("currentPage", page);
-        model.addAttribute("user", "장서우");
+        model.addAttribute("user", loginMember.getName());
         model.addAttribute("price", 10000);
 
         ModelAndView mav = new ModelAndView("product/product");
         return mav;
     }
 
-    private List<SubscriptionDto> findMemberAndSubscriptionInfo(HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        Member loginMember = (Member) session.getAttribute("currentUser");
-        System.out.println();
+    private Double findMemberAndSubscriptionInfo(Member loginMember) {
 
         int memberNo = loginMember.getNo();
         int memberSalary = loginMember.getSalary();
         int memberGoal = loginMember.getGoal();
-        Double monthGoal = (1.0 * memberSalary) *  (1.0 * memberGoal) / 100;
-        System.out.println("monthGoal: "+ monthGoal);
-        System.out.println("memberNo: "+memberNo);
+        Double monthGoal = (1.0 * memberSalary) * (1.0 * memberGoal) / 100;
+        System.out.println("monthGoal: " + monthGoal); // 달마다 저축할 금액 총액
+        System.out.println("memberNo: " + memberNo);
 
         List<SubscriptionDto> subscriptionList = productService.getSubscriptions(loginMember.toMemberDto());
+        int sum = 0; // 매달 이미 나가고 있는 적금의 양
+        for (SubscriptionDto dto : subscriptionList) {
+            if (dto.getProd().getType() == 'S') // 적금인 상품에 대해서 매달 나가는 비용 계산
+                sum += dto.getPrice();
+        }
+        System.out.println("sum: " + sum);
+        Double result = monthGoal - sum;
+//        System.out.println("result: " + (monthGoal - sum)); // 현재 추가로 더 입금할 수 있는 금액
 
-        return subscriptionList;
+        return result;
+    }
+
+    private static Member getLoginMember(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        Member loginMember = (Member) session.getAttribute("currentUser");
+        return loginMember;
     }
 
     @GetMapping("/starroad/product/result")
@@ -76,26 +84,26 @@ public class ProductController {
             @RequestParam(defaultValue = "1") int page) {
 
         List<ProductResponseDto> productList = null;
-        if(type!=null || period!=null || query != null)
+        if (type != null || period != null || query != null)
             productList = productService.findByForm(type.charAt(0), Integer.parseInt(period), query);
-        if(productList == null) {
-            productList  = productService.getProductList();
+        if (productList == null) {
+            productList = productService.getProductList(0.0, 60);
         }
 
         int startIndex = (page - 1) * ITEMS_PER_PAGE;
         int endIndex = Math.min(startIndex + ITEMS_PER_PAGE, productList.size());
 
         model.addAttribute("productItems", productList.subList(startIndex, endIndex));
-        model.addAttribute("pageEndIndex", Math.ceil(productList.size()/Double.valueOf(ITEMS_PER_PAGE)));
+        model.addAttribute("pageEndIndex", Math.ceil(productList.size() / Double.valueOf(ITEMS_PER_PAGE)));
         model.addAttribute("currentPage", page);
 
-        if(type!=null)
+        if (type != null)
             model.addAttribute("type", type);
-        if(period!=null)
+        if (period != null)
             model.addAttribute("period", period);
-        if(rate!=null)
+        if (rate != null)
             model.addAttribute("rate", rate);
-        if(query!=null)
+        if (query != null)
             model.addAttribute("query", query);
 
         model.addAttribute("user", "장서우");

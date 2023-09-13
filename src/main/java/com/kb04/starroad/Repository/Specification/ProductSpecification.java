@@ -15,4 +15,12 @@ public class ProductSpecification {
     public static Specification<Product> equalsType(Character type) {
         return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("type"), type);
     }
+
+    public static Specification<Product> lessThanOrEqualToMinPrice(Double price) {
+        return (root, query, criteriaBuilder) -> criteriaBuilder.lessThanOrEqualTo(root.get("minPrice"), price);
+    }
+
+    public static Specification<Product> greaterThanOrEqualToMaxPrice(Double price) {
+        return (root, query, criteriaBuilder) -> criteriaBuilder.greaterThanOrEqualTo(root.get("maxPrice"), price);
+    }
 }

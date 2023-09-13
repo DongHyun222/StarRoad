@@ -35,8 +35,12 @@ public class ProductService {
         return list;
     }
 
-    public List<ProductResponseDto> getProductList() {
-        List<Product> productListAll = productRepository.findAll();
+    public List<ProductResponseDto> getProductList(Double result, Integer period) {
+        Specification<Product> spec = (root, query, criteriaBuilder) -> null;
+        spec = spec.and(ProductSpecification.lessThanOrEqualToMinPrice(result));
+        spec = spec.and(ProductSpecification.greaterThanOrEqualToMaxPrice(result));
+
+        List<Product> productListAll = productRepository.findAll(spec);
         List<ProductResponseDto> list = makeProductResponseDtoList(productListAll);
         return list;
     }
