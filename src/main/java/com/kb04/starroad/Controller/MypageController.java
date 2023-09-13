@@ -1,6 +1,7 @@
 package com.kb04.starroad.Controller;
 
 import com.kb04.starroad.Dto.MemberDto;
+import com.kb04.starroad.Dto.SubProdDto;
 import com.kb04.starroad.Dto.SubscriptionDto;
 import com.kb04.starroad.Service.MemberService;
 import com.kb04.starroad.Service.ProductService;
@@ -19,6 +20,7 @@ import java.util.List;
 public class MypageController {
 
     private final MemberService memberService;
+    private final ProductService productService;
 
     @GetMapping("/starroad/mypage/asset")
     public ModelAndView asset() {
@@ -41,31 +43,37 @@ public class MypageController {
         return mav;
     }
 
+    private MemberDto kiki = new MemberDto().builder()
+            .investment(100)
+            .address("서울 강남구 선릉로 428, 108동 101호")
+            .birthday("97/12/04")
+            .phone("010-1234-5678")
+            .email("imki@gmail.com")
+            .password("skzlzl04")
+            .id("imkiki")
+            .name("나키키")
+            .job("직장인")
+            .point(1000)
+            .agreement('Y')
+            .salary(1000)
+            .status('Y')
+            .goal(1000)
+            .no(1)
+            .source("근로 및 연금소득")
+            .purpose("급여 및 생활비")
+            .build();
+
     @GetMapping("/starroad/mypage/challenge")
-    public ModelAndView challenge() {
-        ModelAndView mav = new ModelAndView("mypage/challenge");
-        List<SubscriptionDto> subscriptions = memberService.getSubscriptions(
-                new MemberDto().builder()
-                        .investment(100)
-                        .address("서울 강남구 선릉로 428, 108동 101호")
-                        .birthday("97/12/04")
-                        .phone("010-1234-5678")
-                        .email("imki@gmail.com")
-                        .password("skzlzl04")
-                        .id("imkiki")
-                        .name("나키키")
-                        .job("직장인")
-                        .point(1000)
-                        .agreement('Y')
-                        .salary(1000)
-                        .status('Y')
-                        .goal(1000)
-                        .no(1)
-                        .source("근로 및 연금소득")
-                        .purpose("급여 및 생활비")
-                        .build());
+        public ModelAndView challenge() {
+            ModelAndView mav = new ModelAndView("mypage/challenge");
+        List<SubscriptionDto> subscriptions = memberService.getSubscriptions(kiki);
         mav.addObject("subscriptions", subscriptions);
         return mav;
+    }
+
+    @PostMapping("/api/starroad/mypage/subInfo")
+    public SubProdDto subInfo(@RequestParam("sub") String sub_name) {
+        return productService.getProductInfo(sub_name);
     }
 
     @GetMapping("/starroad/mypage/info")

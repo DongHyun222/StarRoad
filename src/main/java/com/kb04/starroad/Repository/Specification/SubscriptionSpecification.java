@@ -12,6 +12,5 @@ public class SubscriptionSpecification {
             query.orderBy(criteriaBuilder.desc(root.get("no")));
             return criteriaBuilder.equal(root.get("memberNo"), userNo);
         });
-
     }
 }
