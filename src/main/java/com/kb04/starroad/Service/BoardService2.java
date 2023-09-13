@@ -74,6 +74,19 @@ public class BoardService2 {
         return boardRepository.findById(no);
     }
 
+    public void updateBoard(BoardRequestDto boardRequestDto) {
+        // 게시물 번호를 이용하여 해당 게시물을 조회합니다.
+        Optional<Board> optionalBoard = boardRepository.findById(boardRequestDto.getNo());
+
+
+            Board existingBoard = optionalBoard.get();
+
+
+            // 업데이트된 게시물을 저장합니다.
+            boardRepository.save(existingBoard);
+
+    }
+
     public void deleteBoard(Integer no) {
         boardRepository.deleteById(no);
     }
