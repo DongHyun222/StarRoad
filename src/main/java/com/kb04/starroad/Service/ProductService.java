@@ -60,6 +60,6 @@ public class ProductService {
     }
 
     public List<SubscriptionDto> getSubscriptions(MemberDto memberDto) {
-        return subscriptionRepository.findByMemberNo(memberDto.toMemberEntity()).stream().map(Subscription::toSubscriptionDto).collect(Collectors.toList());
+        return subscriptionRepository.findByMember(memberDto.toMemberEntity()).stream().map(Subscription::toSubscriptionDto).collect(Collectors.toList());
     }
 }

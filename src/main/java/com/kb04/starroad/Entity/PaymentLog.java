@@ -20,7 +20,7 @@ public class PaymentLog {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "subscription_no", nullable = false)
-    private Subscription subscriptionNo;
+    private Subscription subscription;
 
     @Column(nullable = false)
     private Date paymentDate;

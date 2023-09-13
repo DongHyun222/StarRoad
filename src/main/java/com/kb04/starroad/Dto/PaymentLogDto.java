@@ -16,6 +16,6 @@ import java.util.Date;
 public class PaymentLogDto {
 
     private int no;
-    private SubscriptionDto subscriptionNo;
+    private SubscriptionDto subscription;
     private Date paymentDate;
 }

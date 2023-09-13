@@ -21,11 +21,11 @@ public class Subscription {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_no", nullable = false)
-    private Member memberNo;
+    private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "prod_no", nullable = false)
-    private Product prodNo;
+    private Product prod;
 
     @Column(nullable = false)
     private int period;
@@ -36,8 +36,8 @@ public class Subscription {
     public SubscriptionDto toSubscriptionDto() {
         return SubscriptionDto.builder()
                 .no(no)
-                .memberNo(memberNo.toMemberDto())
-                .prodNo(prodNo.toProductDto())
+                .member(member.toMemberDto())
+                .prod(prod.toProductDto())
                 .period(period)
                 .price(price)
                 .build();

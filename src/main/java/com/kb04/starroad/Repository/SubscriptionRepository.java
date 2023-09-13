@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface SubscriptionRepository extends JpaRepository<Subscription, Integer> {
-    public List<Subscription> findByMemberNo(Member no);
+    public List<Subscription> findByMember(Member no);
 }

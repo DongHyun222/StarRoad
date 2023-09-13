@@ -13,8 +13,8 @@ import lombok.NoArgsConstructor;
 public class SubscriptionDto {
 
     private int no;
-    private MemberDto memberNo;
-    private ProductDto prodNo;
+    private MemberDto member;
+    private ProductDto prod;
     private int period;
     private int price;
 

@@ -1,17 +1,17 @@
 package com.kb04.starroad.Service;
 
 import com.kb04.starroad.Dto.MemberDto;
+import com.kb04.starroad.Dto.SubscriptionDto;
 import com.kb04.starroad.Dto.board.CommentDto;
+import com.kb04.starroad.Entity.*;
 import com.kb04.starroad.Repository.*;
 import com.kb04.starroad.Dto.MypageResponseDto;
 
 import com.kb04.starroad.Dto.board.BoardResponseDto;
-import com.kb04.starroad.Entity.Board;
-import com.kb04.starroad.Entity.Comment;
 
-import com.kb04.starroad.Entity.Member;
 import com.kb04.starroad.Repository.Specification.BoardSpecification;
 import com.kb04.starroad.Repository.Specification.CommentSpecification;
+import com.kb04.starroad.Repository.Specification.SubscriptionSpecification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
@@ -28,6 +28,7 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final BoardRepository boardRepository;
     private final CommentRepository commentRepository;
+    private final SubscriptionRepository subscriptionRepository;
 
     public MypageResponseDto getAssets(int no) {
         MypageResponseDto mypageResponseDto = new MypageResponseDto();
@@ -60,6 +61,10 @@ public class MemberService {
         Specification<Comment> spec = (root, query, criteriaBuilder) -> null;
         spec = spec.and(CommentSpecification.writtenByUser(no));
         return commentRepository.findAll(spec).stream().map(Comment::toCommentDto).collect(Collectors.toList());
+    }
+
+    public List<SubscriptionDto> getSubscriptions(MemberDto memberDto) {
+        return subscriptionRepository.findByMember(memberDto.toMemberEntity()).stream().map(Subscription::toSubscriptionDto).collect(Collectors.toList());
     }
 
     public void memberInsert(MemberDto dto) {
