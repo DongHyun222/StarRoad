@@ -1,6 +1,7 @@
 package com.kb04.starroad.Controller;
 
 import com.kb04.starroad.Dto.SubscriptionDto;
+import com.kb04.starroad.Dto.product.ProductDto;
 import com.kb04.starroad.Dto.product.ProductResponseDto;
 import com.kb04.starroad.Entity.Member;
 import com.kb04.starroad.Service.ProductService;
@@ -29,9 +30,12 @@ public class ProductController {
             HttpServletRequest request) {
 
         Member loginMember = getLoginMember(request);
-        Double result = findMemberAndSubscriptionInfo(loginMember);
+        Double monthlyAvailablePrice = getMonthlyAvailablePricePerMember(loginMember);
+        List<ProductResponseDto> productList = productService.getProductList(monthlyAvailablePrice);
 
-        List<ProductResponseDto> productList = productService.getProductList(result, 60);
+        // 최대 기본 이율 = max_rate - max_condition_rate
+        // 회원 우대 이율 들어가야됨
+        // 최대 이율 기간 = max_rate_period
 
         int startIndex = (page - 1) * ITEMS_PER_PAGE;
         int endIndex = Math.min(startIndex + ITEMS_PER_PAGE, productList.size());
@@ -40,20 +44,17 @@ public class ProductController {
         model.addAttribute("pageEndIndex", Math.ceil(productList.size() / Double.valueOf(ITEMS_PER_PAGE)));
         model.addAttribute("currentPage", page);
         model.addAttribute("user", loginMember.getName());
-        model.addAttribute("price", 10000);
+        model.addAttribute("monthlyAvaiablePrice", monthlyAvailablePrice);
+//        model.addAttribute("price", 10000);
 
         ModelAndView mav = new ModelAndView("product/product");
         return mav;
     }
 
-    private Double findMemberAndSubscriptionInfo(Member loginMember) {
-
-        int memberNo = loginMember.getNo();
+    private Double getMonthlyAvailablePricePerMember(Member loginMember) {
         int memberSalary = loginMember.getSalary();
         int memberGoal = loginMember.getGoal();
         Double monthGoal = (1.0 * memberSalary) * (1.0 * memberGoal) / 100;
-        System.out.println("monthGoal: " + monthGoal); // 달마다 저축할 금액 총액
-        System.out.println("memberNo: " + memberNo);
 
         List<SubscriptionDto> subscriptionList = productService.getSubscriptions(loginMember.toMemberDto());
         int sum = 0; // 매달 이미 나가고 있는 적금의 양
@@ -61,11 +62,19 @@ public class ProductController {
             if (dto.getProd().getType() == 'S') // 적금인 상품에 대해서 매달 나가는 비용 계산
                 sum += dto.getPrice();
         }
-        System.out.println("sum: " + sum);
         Double result = monthGoal - sum;
-//        System.out.println("result: " + (monthGoal - sum)); // 현재 추가로 더 입금할 수 있는 금액
 
         return result;
+    }
+
+    // 검색했을 때 기간 적용 -> 최대 기본 이율
+    private Double getRate(List<ProductResponseDto> productList, int period) {
+        // base rate
+
+        // condition rate
+
+
+        return 0.0;
     }
 
     private static Member getLoginMember(HttpServletRequest request) {
@@ -87,7 +96,7 @@ public class ProductController {
         if (type != null || period != null || query != null)
             productList = productService.findByForm(type.charAt(0), Integer.parseInt(period), query);
         if (productList == null) {
-            productList = productService.getProductList(0.0, 60);
+            productList = productService.getProductList(0.0);
         }
 
         int startIndex = (page - 1) * ITEMS_PER_PAGE;

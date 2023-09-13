@@ -19,8 +19,11 @@ public class ProductResponseDto {
     private String name;
     private String explain;
 
+    private Integer maxPrice;
+
     private Double maxRate;
     private Integer maxRatePeriod;
+    private Double maxConditionRate;
 
     private String link;
 
@@ -32,7 +35,9 @@ public class ProductResponseDto {
                 .explain(explain)
                 .maxRate(maxRate)
                 .maxRatePeriod(maxRatePeriod)
+                .maxConditionRate(maxConditionRate)
                 .link(link)
+                .maxPrice(maxPrice)
                 .build();
     }
 

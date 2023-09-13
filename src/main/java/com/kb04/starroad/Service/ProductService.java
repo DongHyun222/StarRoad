@@ -3,7 +3,6 @@ package com.kb04.starroad.Service;
 import com.kb04.starroad.Dto.MemberDto;
 import com.kb04.starroad.Dto.SubscriptionDto;
 import com.kb04.starroad.Dto.product.ProductResponseDto;
-import com.kb04.starroad.Entity.Member;
 import com.kb04.starroad.Entity.Product;
 import com.kb04.starroad.Entity.Subscription;
 import com.kb04.starroad.Repository.ProductRepository;
@@ -35,7 +34,7 @@ public class ProductService {
         return list;
     }
 
-    public List<ProductResponseDto> getProductList(Double result, Integer period) {
+    public List<ProductResponseDto> getProductList(Double result) {
         Specification<Product> spec = (root, query, criteriaBuilder) -> null;
         spec = spec.and(ProductSpecification.lessThanOrEqualToMinPrice(result));
         spec = spec.and(ProductSpecification.greaterThanOrEqualToMaxPrice(result));
