@@ -1,5 +1,6 @@
 package com.kb04.starroad.Controller;
 
+import com.kb04.starroad.Dto.board.BoardRequestDto;
 import com.kb04.starroad.Dto.board.BoardResponseDto;
 import com.kb04.starroad.Entity.Board;
 import com.kb04.starroad.Service.BoardService2;
@@ -19,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @RestController
@@ -110,6 +112,7 @@ public class BoardController2 {
         return mav;
 
     }
+
 
 
 

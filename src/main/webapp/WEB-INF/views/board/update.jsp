@@ -42,17 +42,17 @@
 
     <div class="content">
         <textarea name="content" class="contentStyle" id="content" placeholder="내용을 입력하세요" required>${board.content}</textarea>
-            <div class="like-section">
-                <img src="https://ifh.cc/g/aw0vjY.png" alt="Like Icon" style="vertical-align: middle; width: 20px; height: 20px;">
-                <c:out value="${board.likes}" />
-                <img src="data:image/jpeg;base64,${board.imageBase64}" alt="Image"width="200" height="200" style="margin-bottom: 30px;"/>
-            </div>
+        <div class="image-input">
+            <input type="file" name="image" id="image">
+        </div>
+        <div class="update-button">
+            <button type="submit" class="buttonStyle" id="updateBtn" class="submit-button">등록</button>
+        </div>
     </div>
-
 </div>
-    <div class="update-button">
-    <button type="submit" id="updateBtn" class="submit-button">등록</button>
-    </div>
+
+
+
 
 </form>
 <script>
