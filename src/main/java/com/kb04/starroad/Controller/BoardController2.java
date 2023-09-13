@@ -147,6 +147,7 @@ public class BoardController2 {
 
         ModelAndView modelAndView = new ModelAndView("redirect:/starroad/board/detail?no=" + no); // 수정된 게시물로 이동하는 예시
         return modelAndView;
+
     }
 
 
