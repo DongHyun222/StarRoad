@@ -5,18 +5,24 @@ import com.kb04.starroad.Dto.policy.PolicyResponseDto;
 import com.kb04.starroad.Entity.Policy;
 import com.kb04.starroad.Repository.PolicyRepository;
 import com.kb04.starroad.Service.PolicyService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import java.util.*;
 
+@Api(tags = "청년정책 API")
 @RequiredArgsConstructor
 @RestController
 public class PolicyController {
 
     private final PolicyService policyService;
 
+    @ApiOperation(value = "청년정책 조회", notes = "청년정책을 조회할 수 있다")
     @GetMapping("/starroad/policy")
     public ModelAndView policy(Model model, @RequestParam(value = "pageIndex", defaultValue = "1") int pageIndex) {
 
@@ -32,6 +38,7 @@ public class PolicyController {
         return mav;
     }
 
+    @ApiOperation(value = "청년정책 검색", notes = "청년정책을 조건을 이용하여 검색할 수 있다")
     @GetMapping("/starroad/policy/result")
     public ModelAndView getPolicyByForm(Model model, @RequestParam(value = "pageIndex", defaultValue = "1") int pageIndex,
                                         @RequestParam(required = false) String location,
