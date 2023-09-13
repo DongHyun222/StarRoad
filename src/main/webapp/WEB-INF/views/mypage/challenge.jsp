@@ -21,7 +21,8 @@
                     url: "/api/starroad/mypage/subInfo",
                     data: {"sub": $("#sel_sub").val()},
                     success: function (data) {
-                        alert(data);
+                        // alert(data);
+                        alert("${subscriptions}");
                     },
                     error: function (error) {
                         alert("잠시 후 시도해주세요.");

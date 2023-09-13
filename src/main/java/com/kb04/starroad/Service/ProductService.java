@@ -70,7 +70,7 @@ public class ProductService {
 
     public SubProdDto getProductInfo(String sub_name) {
         Specification<Subscription> spec = (root, query, criteriaBuilder) -> null;
-        spec = spec.and(ProductSpecification.getProdInfo(sub_name));
+        spec = spec.and(ProductSpecification.getProdInfo(productRepository.findOneByName(sub_name)));
         return subscriptionRepository.findOne(spec).map(Subscription::toSubProdDto).orElse(new SubProdDto());
     }
 }

@@ -17,7 +17,7 @@ public class ProductSpecification {
         return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("type"), type);
     }
 
-    public static Specification<Subscription> getProdInfo(String sub_name) {
-        return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("prodName"), sub_name);
+    public static Specification<Subscription> getProdInfo(Product sub_name) {
+        return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("prod"), sub_name);
     }
 }
