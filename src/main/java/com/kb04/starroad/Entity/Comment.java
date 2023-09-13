@@ -34,6 +34,9 @@ public class Comment {
     @Column(name = "content", nullable = false, length = 2000)
     private String content;
 
+    @Column(columnDefinition = "char(1)  default 'Y'", name = "status", nullable = false)
+    private Character status;
+
     public CommentDto toCommentDto() {
         return CommentDto.builder()
                 .no(no)
