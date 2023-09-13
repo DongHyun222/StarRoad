@@ -78,3 +78,13 @@ input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
+
+table tr td input[name=goal] {
+    width: 40px;
+    text-align: right; /* 숫자를 오른쪽으로 정렬합니다. */
+    padding-right: 5px; /* 오른쪽 여백을 조정합니다. */
+}
+
+.per{
+    color : gray;
+}
