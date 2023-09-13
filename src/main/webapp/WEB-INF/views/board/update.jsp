@@ -20,7 +20,7 @@
 </head>
 <body>
 
-<form method="post" action="/starroad/board/updatepro">
+<form method="post" action="/starroad/board/updatepro?no=${board.no}"   >
 <div class="container">
     <div id="navbar"></div>
     <div class="title">
@@ -46,7 +46,7 @@
             <input type="file" name="image" id="image">
         </div>
         <div class="update-button">
-            <button type="submit" class="buttonStyle" id="updateBtn" class="submit-button">등록</button>
+            <button type="submit" class="buttonStyle" id="updateBtn">등록</button>
         </div>
     </div>
 </div>
@@ -55,13 +55,6 @@
 
 
 </form>
-<script>
-    document.getElementById("updateBtn").addEventListener("click", function() {
 
-            location.href = "/starroad/board/updatePro" ; // 삭제 API 호출
-
-    });
-
-</script>
 </body>
 </html>
