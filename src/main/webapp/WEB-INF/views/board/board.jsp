@@ -24,8 +24,8 @@
             <div class="navbar">
                 <div class="navbar-left">
                     <a href="popular" id="popularLink"  onclick="showContent('popular','popular')">인기글</a>
-                    <a href="free?type=0" id="freeLink" onclick="showContent('free', '0')">자유게시판</a>
-                    <a href="free?type=1" id="authenticationLink" onclick="showContent('authentication', '1')">인증방</a>
+                    <a href="free?type=F" id="freeLink" onclick="showContent('free', 'F')">자유게시판</a>
+                    <a href="free?type=C" id="authenticationLink" onclick="showContent('authentication', 'C')">인증방</a>
                 </div>
                 <div class="navbar-right">
                     <a href="/starroad/board/write">글쓰기</a>
@@ -36,7 +36,7 @@
 </div>
 
 
-<!-- 자유게시판 내용 -->
+<!-- 게시판 내용 -->
 <div id="boardcontent" class="menu-content2">
     <div class="row no-gutters">
         <c:forEach items="${freeBoardPage.content}" var="board">
@@ -89,13 +89,13 @@
         </ul>
     </nav>
 </div>
-
+<!-- 자유게시판 내용 -->
 <div id="popular" class="menu-content">
     <div class="row no-gutters">
         <c:forEach items="${popularBoardPage.content}" var="board">
             <div class="col-md-6">
                 <div class="board-item">
-                    <h3>${board.title}</h3>
+                    <h3><a href="/starroad/board/detail?no=${board.no}">${board.title}</a></h3>
                     <p>${board.content}</p>
                     <div class="icons">
                         <i class="far fa-thumbs-up"></i> ${board.likes} <i class="far fa-comment"></i> ${board.commentNum}
@@ -156,9 +156,9 @@
         // AJAX 요청 URL 정의
         let url;
         if (menu === 'free') {
-            url = '/starroad/freeboard?type=' + type;
+            url = '/starroad/board?type=' + type;
         } else if (menu === 'authentication') {
-            url = '/starroad/freeboard?type=' + type;
+            url = '/starroad/board?type=' + type;
         } else if (menu === 'popular') {
             url = '/starroad/popular';
         }

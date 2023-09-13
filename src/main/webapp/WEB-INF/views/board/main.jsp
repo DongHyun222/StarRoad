@@ -13,8 +13,8 @@
 
 <body>
 
-<a href="/starroad/board/free?type=0">자유게시판 더보기</a>
-<a href="/starroad/board/free?type=1">인증글 더보기</a>
+<a href="/starroad/board/free?type=F">자유게시판 더보기</a>
+<a href="/starroad/board/free?type=C">인증글 더보기</a>
 <a href="/starroad/board/popular"> 인기글 더보기</a>
 
 
