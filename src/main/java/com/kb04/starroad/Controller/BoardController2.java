@@ -1,5 +1,6 @@
 package com.kb04.starroad.Controller;
 
+import com.kb04.starroad.Dto.board.BoardResponseDto;
 import com.kb04.starroad.Entity.Board;
 import com.kb04.starroad.Service.BoardService2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.Optional;
 
 @RestController
 public class BoardController2 {
@@ -40,7 +42,7 @@ public class BoardController2 {
     public ModelAndView boardList(
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "6") int size,
-            @RequestParam(name = "type", defaultValue = "0") String type,
+            @RequestParam(name = "type", defaultValue = "F") String type,
             HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("board/board");
 
@@ -51,11 +53,11 @@ public class BoardController2 {
 
         Page<Board> boardPage;
 
-        if ("0".equals(type)) {
-            // type이 "0"인 경우 자유게시판 목록 조회
+        if ("F".equals(type)) {
+            // type이 "F"인 경우 자유게시판 목록 조회
             boardPage = boardService.findPaginated(pageable);
-        } else if ("1".equals(type)) {
-            // type이 "1"인 경우 인증방 목록 조회
+        } else if ("C".equals(type)) {
+            // type이 "C"인 경우 인증방 목록 조회
             boardPage = boardService.findAuthenticatedPaginated(pageable);
         }
         else {
@@ -93,9 +95,17 @@ public class BoardController2 {
     }
 
     @GetMapping("/starroad/board/update")
-    public ModelAndView updateBoard() {
+    public ModelAndView updateBoard(@RequestParam("no") Integer no) {
 
         ModelAndView mav = new ModelAndView("board/update");
+
+        Optional<Board> boardOptional = boardService.findById(no);
+
+
+        Board board = boardOptional.get();
+        BoardResponseDto boardResponseDto = board.toBoardResponseDto();
+
+        mav.addObject("board", boardResponseDto);
 
         return mav;
 
