@@ -119,7 +119,7 @@
                         최고 연 <span class="max_rate"><span>${item.maxRate}</span>%</span> (${item.maxRatePeriod}개월)
                     </div>
                 </div>
-                <c:if test="${empty user}">
+                <c:if test="${user ne null}">
                     <div id="member" class="content">
                         현재 ${user}님의 자산으로 계산된<br>
                         만기 예상 금액은<br>
