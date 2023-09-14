@@ -1,16 +1,16 @@
-package com.kb04.starroad.Dto;
+package com.kb04.starroad.Entity;
 
 import lombok.*;
 
 import javax.persistence.*;
 
-@Data
+@Getter
 @Entity
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @SequenceGenerator(name = "policy_seq", sequenceName = "policy_seq", allocationSize = 1)
-public class PolicyDto {
+public class Policy {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "policy_seq")

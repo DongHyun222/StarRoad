@@ -1,20 +1,19 @@
-package com.kb04.starroad.Dto;
+package com.kb04.starroad.Entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.kb04.starroad.Dto.product.ProductResponseDto;
+import lombok.*;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 
-@Data
+@Getter
 @Entity
 @Builder
+@Table(name = "product")
 @NoArgsConstructor
 @AllArgsConstructor
-@SequenceGenerator(name = "product_seq", sequenceName = "product_seq")
-@Table(name = "product")
-public class ProductDto {
+@SequenceGenerator(name = "product_seq", sequenceName = "product_seq", allocationSize = 50, initialValue = 1)
+public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_seq")
@@ -42,8 +41,9 @@ public class ProductDto {
     @Column(name = "min_price", nullable = false)
     private int minPrice;
 
+    @Nullable
     @Column(name = "max_price")
-    private int maxPrice;
+    private Integer maxPrice;
 
     @Column(length = 5000, nullable = false)
     private String link;
@@ -51,8 +51,24 @@ public class ProductDto {
     @Column(name = "max_rate", nullable = false)
     private Double maxRate;
 
+    @Nullable
     @Column(name = "max_rate_period")
-    private int maxRatePeriod;
+    private Integer maxRatePeriod;
 
+    @Nullable
+    @Column(name = "max_condition_rate")
+    private Double maxConditionRate;
+
+    public ProductResponseDto toProductResponseDto() {
+        return ProductResponseDto.builder()
+                .type(type)
+                .attribute(attribute)
+                .name(name)
+                .explain(explain)
+                .maxRate(maxRate)
+                .maxRatePeriod(maxRatePeriod)
+                .link(link)
+                .build();
+    }
 
 }

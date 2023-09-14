@@ -1,0 +1,49 @@
+main {
+    display:flex;
+    margin-top: 80px;
+}
+
+aside {
+    width: 280px;
+}
+
+article {
+    margin: 0 auto;
+    width: 60%;
+}
+
+#sidebar_title {
+    background-color: var(--sub-kb-dark-gray);
+    color: white;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+li {
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sidebar_menu {
+    background-repeat: no-repeat;
+    background-size: 0%;
+    transition: background-size 0.5s;
+    background-image: linear-gradient(transparent 55%, var(--main-kb-yellow) 45%);
+}
+
+#selected {
+    background-size: 100%;
+    font-weight: bold;
+}
+
+ul:hover #selected {
+    background-size: 0%;
+}
+
+.sidebar_menu:hover {
+    background-size: 100%;
+}

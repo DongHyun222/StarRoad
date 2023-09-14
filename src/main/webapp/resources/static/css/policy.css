@@ -1,18 +1,223 @@
-.policyBox {
-    border: black 1px solid;
-    background-color: darkgrey;
+.title {
+    text-align: center;
+    margin-top: 70px;
+    font-size: xx-large;
+    font-weight: bolder;
+}
+.policy_box {
+    border: black 1px;
     display: flex;
     margin: inherit;
     justify-content: space-evenly;
+    height: 100%;
+    align-items: center;
+    width: 80%;
 }
 
 .policy {
-    border: black 1px solid;
-    background-color: cornflowerblue;
+    border: var(--sub-kb-gold) 1.5px solid;
     margin: inherit;
+    height: 500px;
+    border-radius: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+    width: 30%;
 }
 
 .policy > div {
     margin: inherit;
+}
+
+.name {
+    font-weight: bold;
+    font-size: larger;
+    height: 13%;
+    padding: 30px;
+    word-break: keep-all;
+}
+
+.explain {
+    font-size: medium;
+    height: 35%;
+    padding: 40px;
+}
+
+.btn_div {
+    padding: 20px;
+}
+
+.tag {
+    color: var(--sub-kb-gold);
+    padding: 20px;
+    height: 10%;
+}
+
+.link_btn {
+    border: var(--main-kb-yellow) 1px solid;
+    background: var(--main-kb-yellow);
+    border-radius: 15px;
+    width: 35%;
+    height: 50px;
+}
+
+
+.link_btn > a {
+    color: black;
+    text-decoration: none;
+    font-size: larger;
+}
+
+.link_btn:hover {
+    background: #eea419;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+
+}
+
+.page-link:hover {
+    color: var(--main-kb-yellow-positive);
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+a.page-link {
+    color: black;
+}
+
+.search_box {
+    border: var(--sub-kb-dark-gray) 1.5px solid;
+    border-radius: 20px;
+    width: 55%;
+    padding: 15px;
+    margin-bottom: 32px;
+    margin-top: 40px;
+    justify-content: center;
+}
+
+.search_small_box {
+    display: flex;
+    margin: 15px;
+    justify-content: center;
+}
+
+.search_box_title {
+    width: 20%;
+    border-right: var(--sub-kb-dark-gray) 2px solid;
+    margin-right: 5px;
+    font-weight: bold;
+    color: var(--sub-kb-dark-gray);
+}
+
+.search_box_option {
+    width: 70%;
+    margin-left: 15px;
+}
+
+
+
+
+ul.ks-cboxtags {
+    list-style: none;
+}
+ul.ks-cboxtags li{
+    display: inline;
+}
+ul.ks-cboxtags li label{
+    display: inline-block;
+    background-color: rgba(255, 255, 255, .9);
+    border: 2px solid rgba(139, 139, 139, .3);
+    color: #adadad;
+    border-radius: 25px;
+    white-space: nowrap;
+    margin: 3px 0px;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: all .2s;
+}
+
+ul.ks-cboxtags li label {
+    padding: 2px 12px;
+    cursor: pointer;
+}
+
+ul.ks-cboxtags li label::before {
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    font-size: 12px;
+    padding: 2px 6px 12px 2px;
+    /*content: "\2796";*/
+    transition: transform .3s ease-in-out;
+}
+
+ul.ks-cboxtags li input[type="checkbox"]:checked + label::before {
+    /*content: "\2795";*/
+    transform: rotate(-360deg);
+    transition: transform .3s ease-in-out;
+}
+
+ul.ks-cboxtags li input[type="checkbox"]:checked + label {
+    border: 2px solid var(--main-kb-yellow);
+    background-color: var(--main-kb-yellow);
+    color: black;
+    transition: all .2s;
+}
+
+ul.ks-cboxtags li input[type="checkbox"] {
+    display: absolute;
+}
+ul.ks-cboxtags li input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+}
+ul.ks-cboxtags li input[type="checkbox"]:focus + label {
+    border: 2px solid var(--main-kb-yellow);
+}
+
+
+
+
+
+.location_select_box {
+    color: var(--sub-kb-dark-gray);
+    border: var(--sub-kb-silver) 1px solid;
+    border-radius: 7px;
+}
+
+.search_btn {
+    font-size: 16px;
+    margin-right: 7px;
+}
+
+ .search_input {
+     border: var(--sub-kb-silver) 1px solid;
+     border-radius: 7px;
+ }
+
+.submit_btn {
+    border-radius: 10px;
+    border: var(--main-kb-yellow) 1px solid;
+    background: var(--main-kb-yellow);
+    margin-left: 20px;
+    width: 15%;
+    font-weight: bold;
 }
 

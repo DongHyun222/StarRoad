@@ -1,0 +1,228 @@
+h3 {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+div {
+    padding: 1px;
+}
+
+/*노랑 버튼*/
+.btn {
+    background-color: var(--main-kb-yellow-positive);
+    font-size: medium;
+    border-radius: 10px;
+    border: 2px solid var(--main-kb-yellow);
+    padding-inline: 10px;
+    padding-block: 5px;
+}
+
+/*세로 정렬*/
+.content {
+    display: flex;
+    align-items: center;
+}
+
+/*상품 검색 창*/
+#product_search {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+#product_search > div {
+    width: 80%;
+}
+
+#product_search_nav {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    border: 1px solid var(--sub-kb-silver);
+    border-radius: 10px;
+}
+
+form {
+    flex-direction: column;
+}
+
+form > div {
+    display: flex;
+    padding: 5px;
+}
+
+
+.search_type {
+    width: 100px;
+    margin-right: 10px;
+    border-right: 3px solid var(--sub-kb-dark-gray);
+    font-size: medium;
+}
+
+#type {
+    border-radius: 10px;
+    border: 1px solid var(--sub-kb-silver);
+    padding: 5px;
+    font-size: medium;
+}
+#period {
+    font-size: medium;
+}
+
+#period > li {
+    margin: 3px;
+}
+
+#rate > li {
+    margin: 3px;
+}
+
+label{
+    display: inline-block;
+    background-color: rgba(255, 255, 255, .9);
+    border: 2px solid #d3d3d3;
+    color: var(--sub-kb-dark-gray);
+    font-size: medium;
+    border-radius: 25px;
+    white-space: nowrap;
+    margin: 3px 0px;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: all .2s;
+}
+
+li label {
+    padding: 5px 12px;
+    cursor: pointer;
+}
+
+li input[type="radio"]:checked + label {
+    border: 2px solid var(--main-kb-yellow);
+    background-color: var(--main-kb-yellow-positive);
+    color: black;
+    transition: all .2s;
+}
+li input[type="radio"] {
+    position: absolute;
+}
+li input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+}
+li input[type="radio"]:focus + label {
+    border: 2px solid #e9a1ff;
+}
+
+.search_bar {
+    width: 500px;
+    border-radius: 10px;
+    border: 1px solid var(--sub-kb-silver);
+    font-size: medium;
+}
+
+
+/*상품 리스트*/
+#product_list {
+    display: flex;
+    justify-content: center;
+}
+
+#product_list > ul {
+    width: 80%;
+    padding: 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#product_item {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    border: 1px solid var(--sub-kb-gold);
+    border-radius: 10px;
+    padding-inline: 24px;
+    padding-block: 10px;
+    margin-block: 5px;
+}
+
+/*상품 정보*/
+#product {
+    width: 300px;
+}
+
+.sub {
+    display: flex;
+    flex-flow: row wrap;
+    color: var(--sub-kb-silver);
+    align-items: baseline;
+}
+
+.type {
+    font-size: small;
+}
+
+.attribute {
+    font-size: 5px;
+}
+
+.rate {
+    color: var(--sub-kb-dark-gray);
+    font-size: small;
+}
+
+.name {
+    font-size: large;
+    font-weight: bold;
+}
+
+.explain {
+    font-size: small;
+}
+
+.max_rate {
+    color: orangered;
+    font-size: small;
+    font-weight: bold;
+}
+
+.max_rate > span {
+    color: orangered;
+    font-size: large;
+}
+
+/*자산으로 계산된 만기 예상 금액 어쩌구*/
+#member {
+    text-align: center;
+    font-size: 15px;
+}
+
+#member > span {
+    color: orangered;
+    display: contents;
+}
+
+/*페이지네이션*/
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.page-link:hover {
+    color: var(--main-kb-yellow-positive);
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+a.page-link {
+    color: black;
+}
+
+
