@@ -48,8 +48,6 @@ public class ProductController {
             productList = productService.getProductList(monthlyAvailablePrice);
 
             List<ConditionDto> memberConditions = productService.getMemberConditions(loginMember);
-//            System.out.println(memberConditions);
-//            productService.groupByProdNoAndSumRate();
             Map<Integer, Double> groupedData = new HashMap<>();
             for (ConditionDto condition : memberConditions) {
                 int prodNo = condition.getProd().getNo();

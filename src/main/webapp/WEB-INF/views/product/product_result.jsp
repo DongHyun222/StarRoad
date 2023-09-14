@@ -116,7 +116,8 @@
                         <div class="explain">${item.explain}</div>
                     </div>
                     <div class="rate">
-                        최고 연 <span class="max_rate"><span>${item.maxRate}</span>%</span> (${item.maxRatePeriod}개월)
+                        최고 연 <span class="max_rate"><span>${item.maxRate}</span>%</span><c:if
+                            test="${item.maxRatePeriod ne null}"> (${item.maxRatePeriod}개월)</c:if>
                     </div>
                 </div>
                 <c:if test="${user ne null}">
