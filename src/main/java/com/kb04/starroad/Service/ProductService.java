@@ -67,9 +67,6 @@ public class ProductService {
 
     public List<ProductResponseDto> findByForm(Character type, Integer period, String name) {
         Specification<Product> spec = (root, query, criteriaBuilder) -> null;
-        System.out.println("type: " + type);
-        System.out.println("period: " + period);
-        System.out.println("name: " + name);
         if (name != null)
             spec = spec.and(ProductSpecification.containsName(name));
         if (period != null)
@@ -100,4 +97,21 @@ public class ProductService {
         return result;
     }
 
+    public List<ProductResponseDto> findByFormAndMember(Character type, Integer period, String name, Double monthlyAvailablePrice) {
+
+        Specification<Product> spec = (root, query, criteriaBuilder) -> null;
+        if (name != null)
+            spec = spec.and(ProductSpecification.containsName(name));
+        if (period != null)
+            spec = spec.and(ProductSpecification.lessThanOrEqualToMinPeriod(period));
+        if (type != null)
+            spec = spec.and(ProductSpecification.equalsType(type));
+        spec = spec.and(ProductSpecification.lessThanOrEqualToMinPrice(monthlyAvailablePrice));
+        spec = spec.and(ProductSpecification.orderByMaxRateDescMaxRatePeriodDesc(spec));
+
+        List<Product> productListAll = productRepository.findAll(spec);
+        List<ProductResponseDto> list = makeProductResponseDtoList(productListAll);
+
+        return list;
+    }
 }

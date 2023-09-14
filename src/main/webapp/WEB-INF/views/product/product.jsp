@@ -66,12 +66,12 @@
                     <div class="search_type content">이자 과세</div>
                     <ul id="rate" class="content">
                         <li>
-                            <input type="radio" name="rate" value="basic" id="rate_basic" class="btn period_btn">
+                            <input type="radio" name="rate" value="0.154" id="rate_basic" class="btn period_btn">
                             <label for="rate_basic">일반과세</label>
                             </input>
                         </li>
                         <li>
-                            <input type="radio" name="rate" value="none" id="rate_none" class="btn period_btn">
+                            <input type="radio" name="rate" value="0" id="rate_none" class="btn period_btn">
                             <label for="rate_none">비과세</label>
                             </input>
                         </li>

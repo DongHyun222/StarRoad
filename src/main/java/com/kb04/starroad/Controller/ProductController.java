@@ -73,8 +73,6 @@ public class ProductController {
         model.addAttribute("pageEndIndex", Math.ceil(productList.size() / Double.valueOf(ITEMS_PER_PAGE)));
         model.addAttribute("currentPage", page);
 
-//        model.addAttribute("price", 10000);
-
         ModelAndView mav = new ModelAndView("product/product");
         return mav;
     }
@@ -120,17 +118,38 @@ public class ProductController {
             @RequestParam(required = false) String query,
             @RequestParam(defaultValue = "1") int page,
             HttpServletRequest request) {
-
         Member member = getLoginMember(request);
-        MemberDto loginMember = member.toMemberDto();
-        Double monthlyAvailablePrice = getMonthlyAvailablePricePerMember(loginMember);
 
         List<ProductResponseDto> productList = null;
-        if (type != null || period != null || query != null)
-            productList = productService.findByForm(type.charAt(0), Integer.parseInt(period), query);
-        if (productList == null) {
-            productList = productService.getProductList(monthlyAvailablePrice);
+        if (member == null) {
+            if (type != null || period != null || query != null){
+                productList = productService.findByForm(type.charAt(0), Integer.parseInt(period), query);
+            } else {
+                productList = productService.getProductList();
+            }
+            model.addAttribute("user", null);
+        } else {
+            MemberDto loginMember = member.toMemberDto();
+            Double monthlyAvailablePrice = getMonthlyAvailablePricePerMember(loginMember);
+
+            if (type != null || period != null || query != null){
+                productList = productService.findByFormAndMember(type.charAt(0), Integer.parseInt(period), query, monthlyAvailablePrice);
+            } else {
+                productList = productService.getProductList(monthlyAvailablePrice);
+            }
+
+            List<ConditionDto> memberConditions = productService.getMemberConditions(loginMember);
+            Map<Integer, Double> groupedData = new HashMap<>();
+            for (ConditionDto condition : memberConditions) {
+                int prodNo = condition.getProd().getNo();
+                double conditionRate = condition.getRate();
+                groupedData.put(prodNo, groupedData.getOrDefault(prodNo, 0.0) + conditionRate);
+            }
+            model.addAttribute("user", loginMember.getName());
+            model.addAttribute("monthlyAvaiablePrice", monthlyAvailablePrice);
+            model.addAttribute("memberConditionRates", groupedData);
         }
+
 
         int startIndex = (page - 1) * ITEMS_PER_PAGE;
         int endIndex = Math.min(startIndex + ITEMS_PER_PAGE, productList.size());
@@ -138,20 +157,24 @@ public class ProductController {
         model.addAttribute("productItems", productList.subList(startIndex, endIndex));
         model.addAttribute("pageEndIndex", Math.ceil(productList.size() / Double.valueOf(ITEMS_PER_PAGE)));
         model.addAttribute("currentPage", page);
-        model.addAttribute("user", loginMember.getName());
-        model.addAttribute("monthlyAvaiablePrice", monthlyAvailablePrice);
+
 
         if (type != null)
             model.addAttribute("type", type);
         if (period != null)
             model.addAttribute("period", period);
-        if (rate != null)
+        if (rate != null){
             model.addAttribute("rate", rate);
+            if(rate.equals("base"))
+                model.addAttribute("rate_value", 0.154);
+            else
+                model.addAttribute("rate_value", 0.0);
+        }
+
+
         if (query != null)
             model.addAttribute("query", query);
 
-        model.addAttribute("user", "장서우");
-        model.addAttribute("price", 10000);
 
         ModelAndView mav = new ModelAndView("product/product_result");
         return mav;

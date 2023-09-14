@@ -70,8 +70,8 @@
                     <div class="search_type content">이자 과세</div>
                     <ul id="rate" class="content">
                         <li>
-                            <input type="radio" name="rate" value="basic" id="rate_basic" class="btn period_btn">
-                            <label for="rate_basic">일반과세</label>
+                            <input type="radio" name="rate" value="base" id="rate_base" class="btn period_btn" checked>
+                            <label for="rate_base">일반과세</label>
                             </input>
                         </li>
                         <li>
@@ -123,10 +123,20 @@
                 <c:if test="${user ne null}">
                     <div id="member" class="content">
                         현재 ${user}님의 자산으로 계산된<br>
-                        만기 예상 금액은<br>
-                        세후 <span><fmt:formatNumber type="number" pattern="###,###,###,###,###,###"
-                                                   value="${((monthlyAvaiablePrice *1000 * Math.max(item.maxRatePeriod, period)) * (1 + (((item.maxRate-item.maxConditionRate)*(item.maxRatePeriod+1)/24)*(1-0.154))/100 ))}"/></span>원
-                        입니다.
+                        <c:choose>
+                            <c:when test="${memberConditionRates.containsKey(item.no)}">
+                                만기 예상 금액은<br>
+                                세후 <span><fmt:formatNumber type="number" pattern="###,###,###,###,###,###"
+                                                           value="${((monthlyAvaiablePrice * 1000 * item.maxPeriod) * (1 + (((item.maxRate - item.maxConditionRate + memberConditionRates.get(item.no))*(item.maxRatePeriod + 1) / 24) * (1 - rate_value)) / 100))}"/></span>원
+                                입니다.
+                            </c:when>
+                            <c:otherwise>
+                                만기 예상 금액은<br>
+                                세후 <span><fmt:formatNumber type="number" pattern="###,###,###,###,###,###"
+                                                           value="${((monthlyAvaiablePrice * 1000 * item.maxPeriod) * (1 + (((item.maxRate - item.maxConditionRate)*(item.maxRatePeriod + 1) / 24) * (1 - rate_value)) / 100))}"/></span>원
+                                입니다.
+                            </c:otherwise>
+                        </c:choose>
                     </div>
                 </c:if>
                 <div class="content">
