@@ -6,7 +6,6 @@ import com.kb04.starroad.Dto.SubscriptionDto;
 import com.kb04.starroad.Service.MemberService;
 import com.kb04.starroad.Service.ProductService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -64,16 +63,11 @@ public class MypageController {
             .build();
 
     @GetMapping("/starroad/mypage/challenge")
-        public ModelAndView challenge() {
-            ModelAndView mav = new ModelAndView("mypage/challenge");
+    public ModelAndView challenge() {
+        ModelAndView mav = new ModelAndView("mypage/challenge");
         List<SubscriptionDto> subscriptions = memberService.getSubscriptions(kiki);
         mav.addObject("subscriptions", subscriptions);
         return mav;
-    }
-
-    @PostMapping("/api/starroad/mypage/subInfo")
-    public SubProdDto subInfo(@RequestParam("sub") String sub_name) {
-        return productService.getProductInfo(sub_name);
     }
 
     @GetMapping("/starroad/mypage/info")

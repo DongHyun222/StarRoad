@@ -13,21 +13,25 @@
     <script src="//code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript">
         $(function () {
-            $("#navbar").load("${path}/resources/common_jsp/navbar.jsp");
+            $("#navbar").load("${path}/resources/common_jsp/navbar.jsp")
 
-            $("#sel_sub").blur(function () {
-                $.ajax({
-                    type: 'post',
-                    url: "/api/starroad/mypage/subInfo",
-                    data: {"sub": $("#sel_sub").val()},
-                    success: function (data) {
-                        // alert(data);
-                        alert("${subscriptions}");
-                    },
-                    error: function (error) {
-                        alert("잠시 후 시도해주세요.");
+            $("#sel_sub").change(function () {
+                let sel_sub_name = $("#sel_sub").val().trim()
+                <%--console.log(typeof "${subscriptions}")  // String--%>
+                let arr = "${subscriptions}".substring(1, "${subscriptions}".length - 1).split("SubscriptionDto")
+                arr.shift()
+                arr.forEach(function (sub) {
+                    let prodSub = sub.split("ProductDto")[1].split(", ")
+                    let name = prodSub[2].split("=")[1]
+                    if (name === sel_sub_name) {
+                        $("#sub_name").text(name)
+                        $("#sub_attr").text(prodSub[4].split("=")[1])
+                        $("#sub_exp").text(prodSub[3].split("=")[1])
+                        $("#sub_period").text(prodSub[13].split("=")[1] + "개월")
+                        $("#sub_price").text(prodSub[14].split("=")[1].substring(0, prodSub[14].split("=")[1].length - 2) + "만원")
                     }
-                });
+                })
+                $("#sub_info_s").css("display", "block")
             })
         });
     </script>
@@ -46,21 +50,23 @@
     </aside>
     <article>
         <select name="subscription" id="sel_sub">
+            <option disabled selected>가입하신 적금을 선택해주세요</option>
             <c:forEach items="${subscriptions}" var="subscription">
                 <option>&nbsp;${subscription.prod.name}</option>
             </c:forEach>
         </select>
         <section id="sub_info_s">
-            <div id="sub_name"></div>
-            <div id="sub_type"></div>
-            <div id="sub_attr"></div>
-
-            <div id="sub_pay"></div>
-            <div id="sub_period"></div>
-
-
-            <div id="sub_exp"></div>
-
+            <div id="sub_na_c">
+                <span id="sub_name"></span> <span id="sub_attr"></span>
+            </div>
+            <div id="sub_be_c">
+                <div id="bef_exp"></div>
+                <div id="sub_exp"></div>
+            </div>
+            <div id="sub_pp_c">
+                <div id="sub_period"></div>
+                <div id="sub_price"></div>
+            </div>
         </section>
 
     </article>
