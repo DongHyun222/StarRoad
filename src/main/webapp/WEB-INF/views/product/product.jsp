@@ -115,13 +115,15 @@
                         최고 연 <span class="max_rate"><span>${item.maxRate}</span>%</span> (${item.maxRatePeriod}개월)
                     </div>
                 </div>
-                <div id="member" class="content">
-                    현재 ${user}님의 자산으로 계산된<br>
-                    만기 예상 금액은<br>
-                    세후 <span><fmt:formatNumber type="number" pattern="###,###,###,###,###,###"
-                                              value="${((monthlyAvaiablePrice *1000 * item.maxRatePeriod) * (1 + (((item.maxRate-item.maxConditionRate)*(item.maxRatePeriod+1)/24)*(1-0.154))/100 ))}"/></span>원
-                    입니다.
-                </div>
+                <c:if test="${user ne null}">
+                    <div id="member" class="content">
+                        현재 ${user}님의 자산으로 계산된<br>
+                        만기 예상 금액은<br>
+                        세후 <span><fmt:formatNumber type="number" pattern="###,###,###,###,###,###"
+                                                   value="${((monthlyAvaiablePrice * 1000 * item.maxRatePeriod) * (1 + (((item.maxRate - item.maxConditionRate)*(item.maxRatePeriod + 1) / 24) * (1 - 0.154)) / 100))}"/></span>원
+                        입니다.
+                    </div>
+                </c:if>
                 <div class="content">
                     <button class="btn"><a href="${item.link}">자세히</a></button>
                 </div>

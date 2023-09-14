@@ -30,22 +30,27 @@ public class ProductController {
             HttpServletRequest request) {
 
         Member loginMember = getLoginMember(request);
-        Double monthlyAvailablePrice = getMonthlyAvailablePricePerMember(loginMember);
-        List<ProductResponseDto> productList = productService.getProductList(monthlyAvailablePrice);
+        List<ProductResponseDto> productList = null;
+        if(loginMember == null) {
+            productList = productService.getProductList();
+            model.addAttribute("user", null);
+        } else {
+            Double monthlyAvailablePrice = getMonthlyAvailablePricePerMember(loginMember);
+            productList = productService.getProductList(monthlyAvailablePrice);
+            model.addAttribute("user", loginMember.getName());
+            model.addAttribute("monthlyAvaiablePrice", monthlyAvailablePrice);
+        }
 
         // 최대 기본 이율 = max_rate - max_condition_rate
         // 최대 이율 기간 = max_rate_period
         // 회원 우대 이율 들어가야됨
-
-
         int startIndex = (page - 1) * ITEMS_PER_PAGE;
         int endIndex = Math.min(startIndex + ITEMS_PER_PAGE, productList.size());
 
         model.addAttribute("productItems", productList.subList(startIndex, endIndex));
         model.addAttribute("pageEndIndex", Math.ceil(productList.size() / Double.valueOf(ITEMS_PER_PAGE)));
         model.addAttribute("currentPage", page);
-        model.addAttribute("user", loginMember.getName());
-        model.addAttribute("monthlyAvaiablePrice", monthlyAvailablePrice);
+
 //        model.addAttribute("price", 10000);
 
         ModelAndView mav = new ModelAndView("product/product");

@@ -34,6 +34,16 @@ public class ProductService {
         return list;
     }
 
+    public List<ProductResponseDto> getProductList() {
+        Specification<Product> spec = (root, query, criteriaBuilder) -> null;
+        spec = spec.and(ProductSpecification.orderByMaxRateDescMaxRatePeriodDesc(spec));
+
+        List<Product> productListAll = productRepository.findAll(spec);
+        List<ProductResponseDto> list = makeProductResponseDtoList(productListAll);
+        return list;
+    }
+
+
     public List<ProductResponseDto> getProductList(Double monthlyAvailablePrice) {
         Specification<Product> spec = (root, query, criteriaBuilder) -> null;
         spec = spec.and(ProductSpecification.lessThanOrEqualToMinPrice(monthlyAvailablePrice));
