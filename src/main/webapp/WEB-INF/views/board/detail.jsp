@@ -36,7 +36,7 @@
         </div>
 
         <div class="content">
-            <h2>내용<h2>
+
             <c:out value="${board.content}" />
             <div class="like-section">
                 <img src="https://ifh.cc/g/aw0vjY.png" alt="Like Icon" style="vertical-align: middle; width: 20px; height: 20px;">

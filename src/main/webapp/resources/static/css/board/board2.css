@@ -31,10 +31,10 @@
 /* 게시글 스타일 */
 .board-item {
     flex: 0 0 calc(50% - 10px);
-    margin-right: 0; /* 가운데 간격을 없애려면 여기를 0으로 설정 */
-    margin-bottom: 0; /* 게시글 사이 간격을 없애려면 여기를 0으로 설정 */
+    margin-right: -20px; /* 가운데 간격을 없애려면 여기를 0으로 설정 */
+    margin-bottom:  10px; /* 게시글 사이 간격을 없애려면 여기를 0으로 설정 */
     border: 1px solid #ddd;
-    padding: 10px;
+    padding: 50px;
     text-align: center;
 }
 .icons {
@@ -56,13 +56,13 @@
 }
 #popular.menu-content {
 
-    padding: 10px; /* 표의 내부 여백을 조절하세요 */
-    margin: 10px; /* 표의 외부 여백을 조절하세요 */
+    padding: 50px; /* 표의 내부 여백을 조절하세요 */
+    margin: 80px; /* 표의 외부 여백을 조절하세요 */
 }
 #boardcontent.menu-content2 {
 
-    padding: 10px; /* 표의 내부 여백을 조절하세요 */
-    margin: 10px; /* 표의 외부 여백을 조절하세요 */
+    padding:120px; /* 표의 내부 여백을 조절하세요 */
+    margin: 90px; /* 표의 외부 여백을 조절하세요 */
 }
 .page-link {
     margin-right: 10px;

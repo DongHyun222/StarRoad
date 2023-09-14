@@ -67,10 +67,9 @@ table tr td input[name=phone] {
     cursor: pointer;
     padding: 12px 80px; /* 패딩 크기 조절 (상하 10px, 좌우 20px) */
     font-weight: bold; /* 글자 굵게 설정 */
-    font-size: 18px; /* 글자 크기 조절 */
+    font-size: 24px; /* 글자 크기 조절 */
     text-align: center; /* 텍스트 가운데 정렬 */
     display: block; /* 블록 레벨 요소로 설정하여 가로 전체를 차지하도록 합니다. */
-    margin: 0 auto; /* 가운데 정렬을 위해 좌우 여백을 자동으로 설정 */
 }
 
 input[type="number"]::-webkit-outer-spin-button,
@@ -86,5 +85,24 @@ table tr td input[name=goal] {
 }
 
 .per{
-    color : gray;
+    color : #808080;
+}
+
+.source {
+    color : #808080;
+    font-size: 18px;
+}
+
+.info_h1{
+    font-size : 30px;
+    font-weight: bold;
+}
+
+div.info_div {
+    display: flex;
+    justify-content: center;
+}
+
+#update_btn {
+    margin: 0 auto;
 }

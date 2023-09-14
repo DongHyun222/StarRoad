@@ -1,5 +1,6 @@
 package com.kb04.starroad.Controller;
 
+import com.kb04.starroad.Dto.board.BoardRequestDto;
 import com.kb04.starroad.Dto.board.BoardResponseDto;
 import com.kb04.starroad.Entity.Board;
 import com.kb04.starroad.Service.BoardService2;
@@ -10,15 +11,13 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @RestController
@@ -110,6 +109,40 @@ public class BoardController2 {
         return mav;
 
     }
+
+
+    @PostMapping("/starroad/board/updatepro")
+    public ModelAndView updateBoardPro(@ModelAttribute BoardRequestDto boardRequestDto,
+                                       @RequestParam(value = "image", required = false) MultipartFile image) {
+
+
+
+        if (image != null && !image.isEmpty()) {
+            try {
+                // 이미지가 업로드된 경우에만 이미지 데이터를 설정합니다.
+                byte[] imageBytes = image.getBytes();
+                boardRequestDto.setImage(imageBytes);
+            } catch (IOException e) {
+                // 이미지 처리 중 예외 발생 시 처리 로직을 추가합니다.
+                e.printStackTrace();
+                // 예외 처리 방법에 따라 적절한 응답을 반환할 수 있습니다.
+                ModelAndView errorModelAndView = new ModelAndView("error"); // 에러 페이지로 이동하는 예시
+                return errorModelAndView;
+            }
+        }
+
+        // 게시물 수정을 위해 서비스 메서드를 호출합니다.
+        // BoardService의 메서드에 해당하는 로직을 호출해야 합니다.
+        boardService.updateBoard(boardRequestDto); // 이 부분은 실제 서비스 메서드로 대체되어야 합니다.
+
+        // 수정이 완료되면 원하는 페이지로 리다이렉트할 수 있습니다.
+
+        ModelAndView modelAndView = new ModelAndView("redirect:/starroad/board/detail?no=" + boardRequestDto.getNo()); // 수정된 게시물로 이동하는 예시
+        return modelAndView;
+
+    }
+
+
 
 
 
