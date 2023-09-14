@@ -34,8 +34,9 @@ public class ProductController {
         List<ProductResponseDto> productList = productService.getProductList(monthlyAvailablePrice);
 
         // 최대 기본 이율 = max_rate - max_condition_rate
-        // 회원 우대 이율 들어가야됨
         // 최대 이율 기간 = max_rate_period
+        // 회원 우대 이율 들어가야됨
+
 
         int startIndex = (page - 1) * ITEMS_PER_PAGE;
         int endIndex = Math.min(startIndex + ITEMS_PER_PAGE, productList.size());
@@ -90,13 +91,17 @@ public class ProductController {
             @RequestParam(required = false) String period,
             @RequestParam(required = false) String rate,
             @RequestParam(required = false) String query,
-            @RequestParam(defaultValue = "1") int page) {
+            @RequestParam(defaultValue = "1") int page,
+            HttpServletRequest request) {
+
+        Member loginMember = getLoginMember(request);
+        Double monthlyAvailablePrice = getMonthlyAvailablePricePerMember(loginMember);
 
         List<ProductResponseDto> productList = null;
         if (type != null || period != null || query != null)
             productList = productService.findByForm(type.charAt(0), Integer.parseInt(period), query);
         if (productList == null) {
-            productList = productService.getProductList(0.0);
+            productList = productService.getProductList(monthlyAvailablePrice);
         }
 
         int startIndex = (page - 1) * ITEMS_PER_PAGE;
@@ -105,6 +110,8 @@ public class ProductController {
         model.addAttribute("productItems", productList.subList(startIndex, endIndex));
         model.addAttribute("pageEndIndex", Math.ceil(productList.size() / Double.valueOf(ITEMS_PER_PAGE)));
         model.addAttribute("currentPage", page);
+        model.addAttribute("user", loginMember.getName());
+        model.addAttribute("monthlyAvaiablePrice", monthlyAvailablePrice);
 
         if (type != null)
             model.addAttribute("type", type);

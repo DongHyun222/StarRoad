@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -121,7 +122,9 @@
                 <div id="member" class="content">
                     현재 ${user}님의 자산으로 계산된<br>
                     만기 예상 금액은<br>
-                    세후 <span>${price}</span>원 입니다.
+                    세후 <span><fmt:formatNumber type="number" pattern="###,###,###,###,###,###"
+                                               value="${((monthlyAvaiablePrice *1000 * Math.max(item.maxRatePeriod, period)) * (1 + (((item.maxRate-item.maxConditionRate)*(item.maxRatePeriod+1)/24)*(1-0.154))/100 ))}"/></span>원
+                    입니다.
                 </div>
                 <div class="content">
                     <button class="btn"><a href="${item.link}">자세히</a></button>
