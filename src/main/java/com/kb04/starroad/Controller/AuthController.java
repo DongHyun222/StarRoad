@@ -2,7 +2,7 @@ package com.kb04.starroad.Controller;
 
 import com.kb04.starroad.Dto.auth.LoginRequestDto;
 import com.kb04.starroad.Entity.Member;
-import com.kb04.starroad.login.AuthService;
+import com.kb04.starroad.Service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,9 +26,7 @@ public class AuthController {
     @PostMapping("/starroad/login")
     public ModelAndView login(LoginRequestDto requestDto, HttpSession session, RedirectAttributes redirectAttributes) {
         ModelAndView mav;
-
-        Member member;
-        member = authService.authenticate(requestDto);
+        Member member = authService.authenticate(requestDto);
         if (member != null) {
             session.setAttribute("currentUser", member);
             mav = new ModelAndView("redirect:/starroad"); // 로그인 성공

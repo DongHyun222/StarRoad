@@ -1,15 +1,30 @@
 package com.kb04.starroad.Controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.kb04.starroad.Dto.board.CommentDto;
+import com.kb04.starroad.Service.BoardService2;
+import com.kb04.starroad.Service.CommentService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
 
 @RestController
 public class CommentController {
-    @GetMapping("/starroad/comment")
-    public ModelAndView comment() {
-        ModelAndView mav = new ModelAndView("comment/comment");
+
+    @Autowired
+    private CommentService commentService;
+
+    @Autowired
+    private BoardService2 boardService;
+
+    @PostMapping("/starroad/comment")
+    public ModelAndView createComment(@RequestParam("content") String content, @RequestParam("board") int boardNo) {
+
+
+        int number = commentService.createComment(content, boardNo);
+        ModelAndView mav = new ModelAndView("redirect:/starroad/board/detail?no=" + number);
         return mav;
     }
+//   @PutMapping("/starroad/comment/no")
+//   public ModelAndView updateComent(@Param)
 }
