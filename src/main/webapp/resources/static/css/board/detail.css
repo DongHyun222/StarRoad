@@ -29,9 +29,9 @@
       border: 1px solid #ccc;
       margin: auto;
       margin-top: 140px;
-      height: 800px; /* 원하는 높이로 조절 가능 */
       display: flex;
       flex-direction: column;
+      max-height: calc(100vh - 160px); /* 전체 뷰포트 높이에서 상단 여백과 여백을 제외 */
  }
 
 .title, .content, .comments-list {
@@ -110,18 +110,15 @@
 }
 
 .like-section {
-      margin-top: 150px;  /* 여기서 간격을 조절할 수 있습니다. 원하는 간격으로 값을 변경하세요. */
+      margin-top: 150px;
 }
 
 .comments-list {
-      margin-top: 0px;
-      padding-top: 0px;
       padding-left: 10px;
       font-size: 1.5em;
       border-bottom: 1px solid #ccc;
       width: 100%;  /* 제목의 너비를 전체 섹션의 너비와 같게 조절 */
       box-sizing: border-box;  /* 패딩과 테두리를 포함한 전체 너비가 width 값과 동일하도록 설정 */
-      height: 800px;
 }
 
 

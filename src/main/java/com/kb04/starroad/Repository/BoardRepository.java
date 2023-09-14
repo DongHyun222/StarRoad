@@ -17,6 +17,9 @@ public interface BoardRepository extends JpaRepository<Board, Integer>, JpaSpeci
     Page<Board> findByType(String type, Pageable pageable);
     Page<Board> findAllByOrderByLikesDesc(Pageable pageable);
     List<Board> findAllByMemberNoOrderByRegdate(Member memberNo);
+
     Optional<Board> findById(Integer no);
+
+    Board findByNo(int no);
 
 }

@@ -46,27 +46,28 @@
         </div>
 
         <div class="comment">
-             <h2>댓글<h2>
-             <c:out value="${board.commentNum}" />
+
+             댓글<c:out value="${board.commentNum}" />
 
              <div class="comment-input">
-                 <textarea id="commentText" placeholder="댓글을 입력하세요" rows="4" cols="50"></textarea>
-                 <button id="submitComment">등록</button>
+                 <form action="/starroad/comment" method="post">
+                     <textarea id="commentText" name="content" placeholder="댓글을 입력하세요" rows="4" cols="50"></textarea>
+                     <input type="hidden" name="board" value="${board.no}" />
+                     <button id="submitComment" type="submit">등록</button>
+                 </form>
              </div>
         </div>
 
-<%--        <div class="comments-list">
-            <h2>댓글 목록<h2>
-            <c:forEach var="comment" items="${board.comments}">
-                <p>
-                    <c:out value="${comment.no}" />:
-                    <c:out value="${comment.content}" />:
-                    <c:out value="${comment.regdate}" />:
-                    <c:out value="${comment.board_no}" />:
-                    <c:out value="${board.likes}" />
-                </p>
+        <div class="comments-list">
+        <h2>댓글 목록<h2>
+         <c:forEach var="comment" items="${board.comments}">
+                <div class="comment-item">
+                    <strong><c:out value="${comment.member.id}" /></strong>: <br>
+                    <c:out value="${comment.content}" /> <br>
+                    <span class="comment-date"><c:out value="${comment.regdate}" /></span>
+                </div>
             </c:forEach>
-        </div> --%>
+        </div>
 
     </div>
    <script>
@@ -75,11 +76,16 @@
                    location.href = "/starroad/board/delete?no=" + ${board.no}; // 삭제 API 호출
                }
        });
-      document.getElementById("editBtn").addEventListener("click", function() {
+     document.getElementById("editBtn").addEventListener("click", function() {
 
                  location.href = "/starroad/board/update?no=" + ${board.no}; // 수정 API 호출
 
-         });
+       });
+     document.getElementById("submitComment").addEventListener("click", function() {
+
+                      location.href = "/starroad/board/update?no=" + ${board.no}; // 수정 API 호출
+
+            });
    </script>
 </body>
 </html>
