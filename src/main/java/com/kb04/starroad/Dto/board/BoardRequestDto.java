@@ -2,6 +2,7 @@ package com.kb04.starroad.Dto.board;
 
 import com.kb04.starroad.Dto.MemberDto;
 import com.kb04.starroad.Entity.Board;
+import com.kb04.starroad.Entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,6 +31,8 @@ import java.util.Date;
 
             public Board toEntity() { //Dto를 Entity로 변환
                 return Board.builder()
+
+                        .no(this.no)
                         .title(this.title)
                         .content(this.content)
                         .likes(this.likes)

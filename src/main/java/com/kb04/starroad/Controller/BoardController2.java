@@ -11,10 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -113,17 +110,12 @@ public class BoardController2 {
 
     }
 
+
     @PostMapping("/starroad/board/updatepro")
-    public ModelAndView updateBoardPro(@RequestParam("no") Integer no,
-                                       @RequestParam("title") String title,
-                                       @RequestParam("content") String content,
+    public ModelAndView updateBoardPro(@ModelAttribute BoardRequestDto boardRequestDto,
                                        @RequestParam(value = "image", required = false) MultipartFile image) {
 
-        // 수정에 필요한 데이터를 BoardRequestDto에 저장합니다.
-        BoardRequestDto boardRequestDto = new BoardRequestDto();
-        boardRequestDto.setNo(no);
-        boardRequestDto.setTitle(title);
-        boardRequestDto.setContent(content);
+
 
         if (image != null && !image.isEmpty()) {
             try {
@@ -145,10 +137,13 @@ public class BoardController2 {
 
         // 수정이 완료되면 원하는 페이지로 리다이렉트할 수 있습니다.
 
-        ModelAndView modelAndView = new ModelAndView("redirect:/starroad/board/detail?no=" + no); // 수정된 게시물로 이동하는 예시
+        ModelAndView modelAndView = new ModelAndView("redirect:/starroad/board/detail?no=" + boardRequestDto.getNo()); // 수정된 게시물로 이동하는 예시
         return modelAndView;
 
     }
+
+
+
 
 
     @PostMapping("/starroad/board/writepro")
