@@ -24,10 +24,6 @@ public class ProductSpecification {
         return (root, query, criteriaBuilder) -> criteriaBuilder.lessThanOrEqualTo(root.get("minPrice"), price);
     }
 
-    public static Specification<Product> greaterThanOrEqualToMaxPrice(Double price) {
-        return (root, query, criteriaBuilder) -> criteriaBuilder.greaterThanOrEqualTo(root.get("maxPrice"), price);
-    }
-
     public static Specification<Product> orderByMaxRateDescMaxRatePeriodDesc(Specification<Product> spec) {
         return (root, query, builder) -> {
             query.orderBy(builder.desc(root.get("maxRateTimesPeriod")));

@@ -1,5 +1,7 @@
 package com.kb04.starroad.Entity;
 
+import com.kb04.starroad.Dto.ConditionDto;
+import com.kb04.starroad.Dto.product.ProductDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -27,5 +29,15 @@ public class Condition {
 
     @Column(name = "rate", nullable = false)
     private Double rate;
+
+    public ConditionDto toConditionDto() {
+        return ConditionDto.builder()
+                .no(no)
+                .prod(prod.toProductDto())
+                .conditionName(conditionName)
+                .rate(rate)
+                .build();
+
+    }
 
 }

@@ -1,5 +1,8 @@
 package com.kb04.starroad.Controller;
 
+import com.kb04.starroad.Dto.ConditionDto;
+import com.kb04.starroad.Dto.MemberConditionDto;
+import com.kb04.starroad.Dto.MemberDto;
 import com.kb04.starroad.Dto.SubscriptionDto;
 import com.kb04.starroad.Dto.product.ProductDto;
 import com.kb04.starroad.Dto.product.ProductResponseDto;
@@ -11,7 +14,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import static java.lang.System.in;
 
 @RestController
 public class ProductController {
@@ -29,16 +36,33 @@ public class ProductController {
             @RequestParam(defaultValue = "1") int page,
             HttpServletRequest request) {
 
-        Member loginMember = getLoginMember(request);
+        Member member = getLoginMember(request);
+
         List<ProductResponseDto> productList = null;
-        if(loginMember == null) {
+        if (member == null) {
             productList = productService.getProductList();
             model.addAttribute("user", null);
         } else {
+            MemberDto loginMember = member.toMemberDto();
             Double monthlyAvailablePrice = getMonthlyAvailablePricePerMember(loginMember);
             productList = productService.getProductList(monthlyAvailablePrice);
+
+            List<ConditionDto> memberConditions = productService.getMemberConditions(loginMember);
+//            System.out.println(memberConditions);
+//            productService.groupByProdNoAndSumRate();
+            Map<Integer, Double> groupedData = new HashMap<>();
+            for (ConditionDto condition : memberConditions) {
+                int prodNo = condition.getProd().getNo();
+                double rate = condition.getRate();
+                groupedData.put(prodNo, groupedData.getOrDefault(prodNo, 0.0) + rate);
+            }
+            if (groupedData.containsKey(1)){
+                System.out.println(groupedData);
+            }
+
             model.addAttribute("user", loginMember.getName());
             model.addAttribute("monthlyAvaiablePrice", monthlyAvailablePrice);
+            model.addAttribute("memberConditionRates", groupedData);
         }
 
         // 최대 기본 이율 = max_rate - max_condition_rate
@@ -57,12 +81,12 @@ public class ProductController {
         return mav;
     }
 
-    private Double getMonthlyAvailablePricePerMember(Member loginMember) {
+    private Double getMonthlyAvailablePricePerMember(MemberDto loginMember) {
         int memberSalary = loginMember.getSalary();
         int memberGoal = loginMember.getGoal();
         Double monthGoal = (1.0 * memberSalary) * (1.0 * memberGoal) / 100;
 
-        List<SubscriptionDto> subscriptionList = productService.getSubscriptions(loginMember.toMemberDto());
+        List<SubscriptionDto> subscriptionList = productService.getSubscriptions(loginMember);
         int sum = 0; // 매달 이미 나가고 있는 적금의 양
         for (SubscriptionDto dto : subscriptionList) {
             if (dto.getProd().getType() == 'S') // 적금인 상품에 대해서 매달 나가는 비용 계산
@@ -99,7 +123,8 @@ public class ProductController {
             @RequestParam(defaultValue = "1") int page,
             HttpServletRequest request) {
 
-        Member loginMember = getLoginMember(request);
+        Member member = getLoginMember(request);
+        MemberDto loginMember = member.toMemberDto();
         Double monthlyAvailablePrice = getMonthlyAvailablePricePerMember(loginMember);
 
         List<ProductResponseDto> productList = null;

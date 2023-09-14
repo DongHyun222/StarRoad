@@ -61,11 +61,12 @@ public class Product {
     @Column(name = "max_condition_rate")
     private Double maxConditionRate;
 
-    @Formula("(max_rate - max_condition_rate) * (max_rate_period + 1)")
+    @Formula("((max_rate - nvl(max_condition_rate,0)) * (nvl(max_rate_period, max_period) + 1)) * (max_period * 1000)")
     private Double maxRateTimesPeriod;
 
     public ProductDto toProductDto() {
         return ProductDto.builder()
+                .no(no)
                 .type(type)
                 .name(name)
                 .explain(explain)
@@ -83,12 +84,14 @@ public class Product {
 
     public ProductResponseDto toProductResponseDto() {
         return ProductResponseDto.builder()
+                .no(no)
                 .type(type)
                 .attribute(attribute)
                 .name(name)
                 .explain(explain)
                 .maxRate(maxRate)
                 .maxRatePeriod(maxRatePeriod)
+                .maxPeriod(maxPeriod)
                 .link(link)
                 .build();
     }

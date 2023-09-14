@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ProductResponseDto {
     
-//    private int no;
+    private int no;
     private Character type;
     private String attribute;
 
@@ -25,16 +25,20 @@ public class ProductResponseDto {
     private Integer maxRatePeriod;
     private Double maxConditionRate;
 
+    private int maxPeriod;
+
     private String link;
 
     public Product toEntity() {
         return Product.builder()
+                .no(no)
                 .type(type)
                 .attribute(attribute)
                 .name(name)
                 .explain(explain)
                 .maxRate(maxRate)
                 .maxRatePeriod(maxRatePeriod)
+                .maxPeriod(maxPeriod)
                 .maxConditionRate(maxConditionRate)
                 .link(link)
                 .maxPrice(maxPrice)
