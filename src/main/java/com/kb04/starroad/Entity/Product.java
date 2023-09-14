@@ -3,6 +3,7 @@ package com.kb04.starroad.Entity;
 import com.kb04.starroad.Dto.product.ProductDto;
 import com.kb04.starroad.Dto.product.ProductResponseDto;
 import lombok.*;
+import org.hibernate.annotations.Formula;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
@@ -59,6 +60,9 @@ public class Product {
     @Nullable
     @Column(name = "max_condition_rate")
     private Double maxConditionRate;
+
+    @Formula("(max_rate - max_condition_rate) * (max_rate_period + 1)")
+    private Double maxRateTimesPeriod;
 
     public ProductDto toProductDto() {
         return ProductDto.builder()

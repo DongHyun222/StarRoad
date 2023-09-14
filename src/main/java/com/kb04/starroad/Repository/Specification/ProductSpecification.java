@@ -4,6 +4,10 @@ import com.kb04.starroad.Dto.product.ProductResponseDto;
 import com.kb04.starroad.Entity.Product;
 import org.springframework.data.jpa.domain.Specification;
 
+import javax.persistence.criteria.Order;
+import java.util.ArrayList;
+import java.util.List;
+
 public class ProductSpecification {
 
     public static Specification<Product> containsName(String name) {
@@ -22,5 +26,12 @@ public class ProductSpecification {
 
     public static Specification<Product> greaterThanOrEqualToMaxPrice(Double price) {
         return (root, query, criteriaBuilder) -> criteriaBuilder.greaterThanOrEqualTo(root.get("maxPrice"), price);
+    }
+
+    public static Specification<Product> orderByMaxRateDescMaxRatePeriodDesc(Specification<Product> spec) {
+        return (root, query, builder) -> {
+            query.orderBy(builder.desc(root.get("maxRateTimesPeriod")));
+            return spec.toPredicate(root, query, builder);
+        };
     }
 }
