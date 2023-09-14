@@ -4,7 +4,9 @@ import com.kb04.starroad.Dto.board.BoardRequestDto;
 import com.kb04.starroad.Entity.Board;
 import com.kb04.starroad.Repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.data.domain.Page;
 
 
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -74,18 +77,17 @@ public class BoardService2 {
         return boardRepository.findById(no);
     }
 
+    @Transactional
     public void updateBoard(BoardRequestDto boardRequestDto) {
         // 게시물 번호를 이용하여 해당 게시물을 조회합니다.
+
         Optional<Board> optionalBoard = boardRepository.findById(boardRequestDto.getNo());
 
 
-            Board existingBoard = optionalBoard.get();
+        Board board2 =optionalBoard.get();
+        board2.update(boardRequestDto.getTitle(),boardRequestDto.getContent());
 
-
-            // 업데이트된 게시물을 저장합니다.
-            boardRepository.save(existingBoard);
-
-    }
+        }
 
     public void deleteBoard(Integer no) {
         boardRepository.deleteById(no);
