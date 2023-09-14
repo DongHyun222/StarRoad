@@ -56,19 +56,17 @@
                 const passwordPattern = /^[a-zA-Z0-9]{8,12}$/;
 
                 if (passwordPattern.test(password)) {
-                    if (password !== confirmPassword) {
-                        $("#result_checkPassword").text("비밀번호를 다시 입력해주세요");
-                        errorFlag = true;
-                    } else {
-                        $("#result_checkPassword").text("비밀번호가 일치합니다."); // 메시지를 비웁니다.
-                        errorFlag = false; // 비밀번호가 일치하면 오류 플래그를 리셋합니다.
-                    }
+                    result = "비밀번호가 조건에 일치합니다";
+                    $("#result_Password").html(result).css("color", "green");
+                    errorFlag = true; // 비밀번호가 일치하면 오류 플래그를 리셋합니다.
                 } else {
-                    if (!errorFlag) { // 오류 플래그가 false인 경우에만 alert를 띄웁니다.
-                        alert("비밀번호는 8~12자의 영문자와 숫자 조합이어야 합니다");
-                        errorFlag = true;
-                    }
-                    $("#password").val("").trigger("focus");
+                    result = "비밀번호를 다시 입력해주세요 (8~12자리 영문/숫자 조합)";
+                    $("#result_Password").html(result).css("color", "red");
+                    errorFlag = false;
+                }
+
+                if (!errorFlag) { // 오류 플래그가 false인 경우에만 alert를 띄웁니다.
+                    alert("비밀번호는 8~12자의 영문자와 숫자 조합이어야 합니다");
                 }
             });
 
@@ -125,7 +123,7 @@
                         <th>비밀번호 <span class="star">*</span></th>
                         <td>
                             <input type="password" name="password" id="password" required>
-                            <div class='valid'>8~12자리 영문/숫자 조합 (대소문자)</div>
+                            <div class='valid' id="result_Password">8~12자리 영문/숫자 조합 (대소문자)</div>
                         </td>
                     </tr>
                     <tr>
@@ -220,11 +218,14 @@
                     <tr>
                         <th>저금목표치 </th>
                         <td>
+                            <span class="source"> 거래자금의 원천의</span>
                             <input type="number" name="goal" id="goal" min="0" max="100" required>
+                            <span class="per">%</span>
                             <div class='valid'>퍼센트단위 (1~100사이 숫자 입력)</div>
                         </td>
                     </tr>
                 </table>
+                <br>
                 <div class="agree-check">
                     <input type="checkbox" required /> 이용약관 개인정보 수집 및 이용, 마케팅 활용선택에 모두 동의합니다.
                 </div>
