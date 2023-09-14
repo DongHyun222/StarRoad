@@ -112,7 +112,23 @@ public class BoardController2 {
         return mav;
 
     }
+    @PostMapping("/starroad/board/updatePro")
+    public ModelAndView updateAction(@RequestParam("no") Integer no,
+                                     @RequestParam("title") String title,
+                                     @RequestParam("content") String content,
+                                     @RequestParam(value = "image", required = false) MultipartFile imageFile) {
 
+
+
+        ModelAndView mav = new ModelAndView("board/update");
+
+
+        // 5. 수정된 게시글 상세보기 페이지로 이동
+        mav.setViewName("redirect:/starroad/board/detail?no=" + no);
+
+        return mav;
+
+    }
 
 
 
