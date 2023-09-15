@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -67,6 +68,11 @@ public class MypageController {
         ModelAndView mav = new ModelAndView("mypage/challenge");
         List<SubscriptionDto> subscriptions = memberService.getSubscriptions(kiki);
         mav.addObject("subscriptions", subscriptions);
+        List<String> paymentLogs = new ArrayList<>();
+        for (SubscriptionDto sub:subscriptions) {
+            paymentLogs.add(memberService.getPayLog(sub.getNo(), sub.getPeriod()));
+        }
+        mav.addObject("paymentLogs",paymentLogs);
         return mav;
     }
 

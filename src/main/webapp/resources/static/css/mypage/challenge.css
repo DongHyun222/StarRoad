@@ -63,3 +63,13 @@
     vertical-align: middle;
     margin-right: 10px;
 }
+
+#flower_container {
+    width: 700px;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    background: #92d85a;
+    border-radius: 5px;
+    display: none;
+    margin: 0 auto;
+}

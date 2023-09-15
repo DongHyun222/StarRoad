@@ -1,5 +1,6 @@
 package com.kb04.starroad.Entity;
 
+import com.kb04.starroad.Dto.PaymentLogDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -24,4 +25,12 @@ public class PaymentLog {
 
     @Column(nullable = false)
     private Date paymentDate;
+
+    public PaymentLogDto toPaymentLogDto() {
+        return PaymentLogDto.builder()
+                .no(no)
+                .subscription(subscription.toSubscriptionDto())
+                .paymentDate(paymentDate)
+                .build();
+    }
 }

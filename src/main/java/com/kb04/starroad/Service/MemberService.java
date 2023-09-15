@@ -1,6 +1,7 @@
 package com.kb04.starroad.Service;
 
 import com.kb04.starroad.Dto.MemberDto;
+import com.kb04.starroad.Dto.PaymentLogDto;
 import com.kb04.starroad.Dto.SubscriptionDto;
 import com.kb04.starroad.Dto.board.CommentDto;
 import com.kb04.starroad.Entity.*;
@@ -11,12 +12,15 @@ import com.kb04.starroad.Dto.board.BoardResponseDto;
 
 import com.kb04.starroad.Repository.Specification.BoardSpecification;
 import com.kb04.starroad.Repository.Specification.CommentSpecification;
-import com.kb04.starroad.Repository.Specification.SubscriptionSpecification;
+import com.kb04.starroad.Repository.Specification.PaymentLogSpecification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,6 +33,7 @@ public class MemberService {
     private final BoardRepository boardRepository;
     private final CommentRepository commentRepository;
     private final SubscriptionRepository subscriptionRepository;
+    private final PaymentLogRepository paymentLogRepository;
 
     public MypageResponseDto getAssets(int no) {
         MypageResponseDto mypageResponseDto = new MypageResponseDto();
@@ -65,6 +70,23 @@ public class MemberService {
 
     public List<SubscriptionDto> getSubscriptions(MemberDto memberDto) {
         return subscriptionRepository.findByMember(memberDto.toMemberEntity()).stream().map(Subscription::toSubscriptionDto).collect(Collectors.toList());
+    }
+
+    public String getPayLog(int sub_no, int period) {
+        Specification<PaymentLog> spec = (root, query, criteriaBuilder) -> null;
+        spec = spec.and(PaymentLogSpecification.getPayLogsBySubNo(sub_no));
+
+        int[] result = new int[period];
+        List<PaymentLogDto> paylogs = paymentLogRepository.findAll(spec).stream().map(PaymentLog::toPaymentLogDto).collect(Collectors.toList());
+        LocalDate first = null;    // 처음 납부 날짜
+        for(PaymentLogDto paylog:paylogs) {
+            LocalDate day = new java.sql.Date(paylog.getPaymentDate().getTime()).toLocalDate();
+            if (first == null) {
+                first = day;
+            }
+            result[(int) ChronoUnit.MONTHS.between(first,day)] = day.getDayOfWeek().getValue();
+        }
+        return Arrays.toString(result);
     }
 
     public void memberInsert(MemberDto dto) {

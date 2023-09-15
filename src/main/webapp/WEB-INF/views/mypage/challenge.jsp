@@ -16,22 +16,32 @@
             $("#navbar").load("${path}/resources/common_jsp/navbar.jsp")
 
             $("#sel_sub").change(function () {
-                let sel_sub_name = $("#sel_sub").val().trim()
-                <%--console.log(typeof "${subscriptions}")  // String--%>
-                let arr = "${subscriptions}".substring(1, "${subscriptions}".length - 1).split("SubscriptionDto")
-                arr.shift()
-                arr.forEach(function (sub) {
-                    let prodSub = sub.split("ProductDto")[1].split(", ")
-                    let name = prodSub[2].split("=")[1]
-                    if (name === sel_sub_name) {
-                        $("#sub_name").text(name)
-                        $("#sub_attr").text(prodSub[4].split("=")[1])
-                        $("#sub_exp").text(prodSub[3].split("=")[1])
-                        $("#sub_period").text(prodSub[13].split("=")[1] + "개월")
-                        $("#sub_price").text(prodSub[14].split("=")[1].substring(0, prodSub[14].split("=")[1].length - 2) + "만원")
-                    }
+                let idx = document.getElementById("sel_sub").selectedIndex - 1
+                let subscriptions = "${subscriptions}".split("SubscriptionDto(")
+                subscriptions.shift()
+                let paymentLogs = "${paymentLogs}".substring(2, "${paymentLogs}".length - 2).split("], [")
+
+                let sub = subscriptions[idx].split(", ")
+                $("#sub_name").text(sub[21].split("=")[1])
+                $("#sub_attr").text(sub[23].split("=")[1])
+                $("#sub_exp").text(sub[22].split("=")[1])
+                $("#sub_period").text(sub[32].split("=")[1] + "개월")
+                $("#sub_price").text(sub[33].split("=")[1].split(")")[0] * 0.1 + "만원")
+
+                let logs = paymentLogs[idx].split(", ")
+                const fl_cont = document.querySelector('#flower_container')
+                fl_cont.innerHTML = ''
+                logs.forEach((fl) => {
+                    let flower = document.createElement("img")
+                    flower.src = "${path}/resources/static/image/mypage/flowers/" + fl + ".png"
+                    flower.width = 100
+                    flower.height = 100
+                    flower.style.margin = "10px 5px"
+                    document.querySelector('#flower_container').appendChild(flower)
                 })
+
                 $("#sub_info_s").css("display", "block")
+                $("#flower_container").css("display", "flex")
             })
         });
     </script>
@@ -51,13 +61,15 @@
     <article>
         <select name="subscription" id="sel_sub">
             <option disabled selected>가입하신 적금을 선택해주세요</option>
-            <c:forEach items="${subscriptions}" var="subscription">
-                <option>&nbsp;${subscription.prod.name}</option>
+            <c:forEach items="${subscriptions}" var="subscription" varStatus="status">
+                <option value="${status.index}">&nbsp;${subscription.prod.name}</option>
             </c:forEach>
         </select>
+
         <section id="sub_info_s">
             <div id="sub_na_c">
-                <span id="sub_name"></span> <span id="sub_attr"></span>
+                <span id="sub_name"></span>
+                <span id="sub_attr"></span>
             </div>
             <div id="sub_be_c">
                 <div id="bef_exp"></div>
@@ -68,7 +80,9 @@
                 <div id="sub_price"></div>
             </div>
         </section>
-
+        <section>
+            <div id="flower_container"></div>
+        </section>
     </article>
 </main>
 </html>
