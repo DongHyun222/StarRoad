@@ -140,6 +140,7 @@
                     <div id="member" class="content">
                         현재 ${user}님의 자산으로 계산된<br>
                         <c:choose>
+<%--                            회원우대적용--%>
                             <c:when test="${memberConditionRates.containsKey(item.no)}">
                                 만기 예상 금액은<br>
                                 세후 <span><fmt:formatNumber type="number" pattern="###,###,###,###,###,###"

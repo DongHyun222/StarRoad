@@ -143,20 +143,36 @@
                 <c:if test="${user ne null}">
                     <div id="member" class="content">
                         현재 ${user}님의 자산으로 계산된<br>
+                        만기 예상 금액은<br>
                         <c:choose>
                             <c:when test="${memberConditionRates.containsKey(item.no)}">
-                                만기 예상 금액은<br>
-                                세후 <span><fmt:formatNumber type="number" pattern="###,###,###,###,###,###"
-                                                           value="${((monthlyAvaiablePrice * 1000 * item.maxPeriod) * (1 + (((item.maxRate - item.maxConditionRate + memberConditionRates.get(item.no))*(item.maxRatePeriod + 1) / 24) * (1 - rate_value)) / 100))}"/></span>원
-                                입니다.
+                                <c:choose>
+                                    <c:when test="${item.baseRate ne null}">
+                                        세후 <span><fmt:formatNumber type="number" pattern="###,###,###,###,###,###"
+                                                                   value="${((monthlyAvaiablePrice * 1000 * item.maxPeriod) * (1 + (((item.baseRate + memberConditionRates.get(item.no))*(item.maxRatePeriod + 1) / 24) * (1 - rate_value)) / 100))}"/></span>원
+
+                                    </c:when>
+                                    <c:otherwise>
+                                        세후 <span><fmt:formatNumber type="number" pattern="###,###,###,###,###,###"
+                                                                   value="${((monthlyAvaiablePrice * 1000 * item.maxPeriod) * (1 + (((item.maxRate - item.maxConditionRate + memberConditionRates.get(item.no))*(item.maxRatePeriod + 1) / 24) * (1 - rate_value)) / 100))}"/></span>원
+                                    </c:otherwise>
+                                </c:choose>
                             </c:when>
                             <c:otherwise>
-                                만기 예상 금액은<br>
-                                세후 <span><fmt:formatNumber type="number" pattern="###,###,###,###,###,###"
-                                                           value="${((monthlyAvaiablePrice * 1000 * item.maxPeriod) * (1 + (((item.maxRate - item.maxConditionRate)*(item.maxRatePeriod + 1) / 24) * (1 - rate_value)) / 100))}"/></span>원
-                                입니다.
+                                <c:choose>
+                                    <c:when test="${item.baseRate ne null}">
+                                        세후 <span><fmt:formatNumber type="number" pattern="###,###,###,###,###,###"
+                                                                   value="${((monthlyAvaiablePrice * 1000 * item.maxPeriod) * (1 + (((item.baseRate + memberConditionRates.get(item.no))*(item.maxRatePeriod + 1) / 24) * (1 - rate_value)) / 100))}"/></span>원
+
+                                    </c:when>
+                                    <c:otherwise>
+                                        세후 <span><fmt:formatNumber type="number" pattern="###,###,###,###,###,###"
+                                                                   value="${((monthlyAvaiablePrice * 1000 * item.maxPeriod) * (1 + (((item.maxRate - item.maxConditionRate + memberConditionRates.get(item.no))*(item.maxRatePeriod + 1) / 24) * (1 - rate_value)) / 100))}"/></span>원
+                                    </c:otherwise>
+                                </c:choose>
                             </c:otherwise>
                         </c:choose>
+                        입니다.
                     </div>
                 </c:if>
                 <div class="content">
