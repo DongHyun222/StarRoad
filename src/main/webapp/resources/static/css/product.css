@@ -79,6 +79,16 @@ form > div {
     margin: 3px;
 }
 
+#rate {
+    align-items: baseline;
+}
+
+#searchForm span {
+    margin-left: 5px;
+    color: var(--sub-kb-silver);
+    font-size: small;
+}
+
 label{
     display: inline-block;
     background-color: rgba(255, 255, 255, .9);

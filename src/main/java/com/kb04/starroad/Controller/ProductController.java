@@ -39,10 +39,11 @@ public class ProductController {
         Member member = getLoginMember(request);
 
         List<ProductResponseDto> productList = null;
+        // 로그인 안한 경우 첫 페이지
         if (member == null) {
             productList = productService.getProductList();
             model.addAttribute("user", null);
-        } else {
+        } else { // 로그인 한 경우 첫 페이지
             MemberDto loginMember = member.toMemberDto();
             Double monthlyAvailablePrice = getMonthlyAvailablePricePerMember(loginMember);
             productList = productService.getProductList(monthlyAvailablePrice);
@@ -121,6 +122,7 @@ public class ProductController {
         Member member = getLoginMember(request);
 
         List<ProductResponseDto> productList = null;
+        // 로그인 안한 경우 검색
         if (member == null) {
             if (type != null || period != null || query != null){
                 productList = productService.findByForm(type.charAt(0), Integer.parseInt(period), query);

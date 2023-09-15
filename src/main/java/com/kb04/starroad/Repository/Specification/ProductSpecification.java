@@ -26,6 +26,21 @@ public class ProductSpecification {
 
     public static Specification<Product> orderByMaxRateDescMaxRatePeriodDesc(Specification<Product> spec) {
         return (root, query, builder) -> {
+            List<Order> orderList = new ArrayList<>();
+            orderList.add(builder.desc(root.get("maxRate")));
+            orderList.add(builder.desc(root.get("maxRatePeriod")));
+            query.orderBy(orderList);
+//            query.orderBy(builder.desc(root.get("maxRateTimesPeriod")));
+            return spec.toPredicate(root, query, builder);
+        };
+    }
+
+    public static Specification<Product> orderByMaxRateTimesPeriodDesc(Specification<Product> spec) {
+        return (root, query, builder) -> {
+//            List<Order> orderList = new ArrayList<>();
+//            orderList.add();
+//            orderList.add(builder.desc(root.get("maxRatePeriod")));
+//            query.orderBy(builder.desc(root.get("expectedAmount")));
             query.orderBy(builder.desc(root.get("maxRateTimesPeriod")));
             return spec.toPredicate(root, query, builder);
         };

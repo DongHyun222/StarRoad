@@ -58,7 +58,7 @@ public class ProductService {
     public List<ProductResponseDto> getProductList(Double monthlyAvailablePrice) {
         Specification<Product> spec = (root, query, criteriaBuilder) -> null;
         spec = spec.and(ProductSpecification.lessThanOrEqualToMinPrice(monthlyAvailablePrice));
-        spec = spec.and(ProductSpecification.orderByMaxRateDescMaxRatePeriodDesc(spec));
+        spec = spec.and(ProductSpecification.orderByMaxRateTimesPeriodDesc(spec));
 
         List<Product> productListAll = productRepository.findAll(spec);
         List<ProductResponseDto> list = makeProductResponseDtoList(productListAll);
@@ -73,8 +73,26 @@ public class ProductService {
             spec = spec.and(ProductSpecification.lessThanOrEqualToMinPeriod(period));
         if (type != null)
             spec = spec.and(ProductSpecification.equalsType(type));
-
         spec = spec.and(ProductSpecification.orderByMaxRateDescMaxRatePeriodDesc(spec));
+
+        List<Product> productListAll = productRepository.findAll(spec);
+        List<ProductResponseDto> list = makeProductResponseDtoList(productListAll);
+
+        return list;
+    }
+
+    public List<ProductResponseDto> findByFormAndMember(Character type, Integer period, String name, Double monthlyAvailablePrice) {
+
+        Specification<Product> spec = (root, query, criteriaBuilder) -> null;
+        if (name != null)
+            spec = spec.and(ProductSpecification.containsName(name));
+        if (period != null)
+            spec = spec.and(ProductSpecification.lessThanOrEqualToMinPeriod(period));
+        if (type != null)
+            spec = spec.and(ProductSpecification.equalsType(type));
+        spec = spec.and(ProductSpecification.lessThanOrEqualToMinPrice(monthlyAvailablePrice));
+        spec = spec.and(ProductSpecification.orderByMaxRateTimesPeriodDesc(spec));
+
         List<Product> productListAll = productRepository.findAll(spec);
         List<ProductResponseDto> list = makeProductResponseDtoList(productListAll);
 
@@ -97,21 +115,5 @@ public class ProductService {
         return result;
     }
 
-    public List<ProductResponseDto> findByFormAndMember(Character type, Integer period, String name, Double monthlyAvailablePrice) {
 
-        Specification<Product> spec = (root, query, criteriaBuilder) -> null;
-        if (name != null)
-            spec = spec.and(ProductSpecification.containsName(name));
-        if (period != null)
-            spec = spec.and(ProductSpecification.lessThanOrEqualToMinPeriod(period));
-        if (type != null)
-            spec = spec.and(ProductSpecification.equalsType(type));
-        spec = spec.and(ProductSpecification.lessThanOrEqualToMinPrice(monthlyAvailablePrice));
-        spec = spec.and(ProductSpecification.orderByMaxRateDescMaxRatePeriodDesc(spec));
-
-        List<Product> productListAll = productRepository.findAll(spec);
-        List<ProductResponseDto> list = makeProductResponseDtoList(productListAll);
-
-        return list;
-    }
 }

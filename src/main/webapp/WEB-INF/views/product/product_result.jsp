@@ -68,18 +68,38 @@
 
                 <div>
                     <div class="search_type content">이자 과세</div>
-                    <ul id="rate" class="content">
-                        <li>
-                            <input type="radio" name="rate" value="base" id="rate_base" class="btn period_btn" checked>
-                            <label for="rate_base">일반과세</label>
-                            </input>
-                        </li>
-                        <li>
-                            <input type="radio" name="rate" value="none" id="rate_none" class="btn period_btn">
-                            <label for="rate_none">비과세</label>
-                            </input>
-                        </li>
-                    </ul>
+                    <c:choose>
+                        <c:when test="${user ne null}">
+                            <ul id="rate" class="content">
+                                <li>
+                                    <input type="radio" name="rate" value="base" id="rate_base" class="btn period_btn"
+                                           checked>
+                                    <label for="rate_base">일반과세</label>
+                                    </input>
+                                </li>
+                                <li>
+                                    <input type="radio" name="rate" value="none" id="rate_none" class="btn period_btn">
+                                    <label for="rate_none">비과세</label>
+                                    </input>
+                                </li>
+                            </ul>
+                        </c:when>
+                        <c:otherwise>
+                            <ul id="rate" class="content">
+                                <li>
+                                    <input type="radio" name="rate" value="base" class="btn period_btn" disabled>
+                                    <label for="rate_base">일반과세</label>
+                                    </input>
+                                </li>
+                                <li>
+                                    <input type="radio" name="rate" value="none" class="btn period_btn" disabled>
+                                    <label for="rate_none">비과세</label>
+                                    </input>
+                                </li>
+                                <span>로그인하시면 이자 과세를 적용한 만기예상금액을 보실 수 있습니다.</span>
+                            </ul>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
 
                 <div>
@@ -165,7 +185,6 @@
     </ul>
 </div>
 <script>
-
 
 
     // 페이지 링크 요소를 선택
