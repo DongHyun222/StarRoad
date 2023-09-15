@@ -29,7 +29,7 @@ public class ProductService {
     private final BaseRateRepository baseRateRepository;
 
     public ProductService(ProductRepository productRepository, SubscriptionRepository subscriptionRepository,
-                          MemberConditionRepository memberConditionRepository, ConditionRepository conditionRepository, BaseRateRepository baseRateRepository) {
+                          MemberConditionRepository memberConditionRepository, BaseRateRepository baseRateRepository) {
         this.productRepository = productRepository;
         this.subscriptionRepository = subscriptionRepository;
         this.memberConditionRepository = memberConditionRepository;
