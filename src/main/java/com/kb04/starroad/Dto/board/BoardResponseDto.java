@@ -22,4 +22,5 @@ public class BoardResponseDto {
     private String type;
     private String detailType;
     private String imageBase64; // 이미지 데이터를 저장할 필드 추가
+
 }
