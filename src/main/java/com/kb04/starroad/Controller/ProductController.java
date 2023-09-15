@@ -124,7 +124,7 @@ public class ProductController {
     // 검색했을 때 기간 적용 -> 최대 기본 이율
     private List<ProductResponseDto> setBaseRate(List<ProductResponseDto> productList, int period) {
         List<BaseRateDto> baseRates = productService.getBaseRates(period);
-        System.out.println(baseRates);
+//        System.out.println(baseRates);
         for (BaseRateDto dto : baseRates){
             for (ProductResponseDto prodDto: productList) {
                 if(prodDto.getNo() == dto.getProd().getNo())
