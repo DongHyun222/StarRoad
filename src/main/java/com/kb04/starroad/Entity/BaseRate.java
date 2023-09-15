@@ -34,9 +34,6 @@ public class BaseRate {
     @JoinColumn(name = "prod_no", nullable = false)
     private Product prod;
 
-    private Double max_rate;
-
-
     public BaseRateDto toBaseRateDto() {
         return BaseRateDto.builder()
                 .no(no)
@@ -44,13 +41,7 @@ public class BaseRate {
                 .maxPeriod(maxPeriod)
                 .rate(rate)
                 .prod(prod.toProductDto())
-                .max_rate(max_rate)
                 .build();
     }
 
-    public ProductResponseDto toProductResponseDto() {
-        return ProductResponseDto.builder()
-                .baseRate(rate)
-                .build();
-    }
 }

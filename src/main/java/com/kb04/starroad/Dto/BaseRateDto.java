@@ -18,6 +18,6 @@ public class BaseRateDto {
     private Double rate;
     private ProductDto prod;
 
-    private Double max_rate;
+//    private Double max_rate;
 
 }
