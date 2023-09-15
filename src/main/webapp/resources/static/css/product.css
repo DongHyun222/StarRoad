@@ -86,7 +86,7 @@ form > div {
 #searchForm span {
     margin-left: 5px;
     color: var(--sub-kb-silver);
-    font-size: small;
+    font-size: 12px;
 }
 
 label{

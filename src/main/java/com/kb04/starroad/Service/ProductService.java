@@ -65,12 +65,12 @@ public class ProductService {
         return list;
     }
 
-    public List<ProductResponseDto> findByForm(Character type, Integer period, String name) {
+    public List<ProductResponseDto> findByForm(Character type, String period, String name) {
         Specification<Product> spec = (root, query, criteriaBuilder) -> null;
         if (name != null)
             spec = spec.and(ProductSpecification.containsName(name));
         if (period != null)
-            spec = spec.and(ProductSpecification.lessThanOrEqualToMinPeriod(period));
+            spec = spec.and(ProductSpecification.lessThanOrEqualToMinPeriod(Integer.parseInt(period)));
         if (type != null)
             spec = spec.and(ProductSpecification.equalsType(type));
         spec = spec.and(ProductSpecification.orderByMaxRateDescMaxRatePeriodDesc(spec));
@@ -81,13 +81,13 @@ public class ProductService {
         return list;
     }
 
-    public List<ProductResponseDto> findByFormAndMember(Character type, Integer period, String name, Double monthlyAvailablePrice) {
+    public List<ProductResponseDto> findByFormAndMember(Character type, String period, String name, Double monthlyAvailablePrice) {
 
         Specification<Product> spec = (root, query, criteriaBuilder) -> null;
         if (name != null)
             spec = spec.and(ProductSpecification.containsName(name));
         if (period != null)
-            spec = spec.and(ProductSpecification.lessThanOrEqualToMinPeriod(period));
+            spec = spec.and(ProductSpecification.lessThanOrEqualToMinPeriod(Integer.parseInt(period)));
         if (type != null)
             spec = spec.and(ProductSpecification.equalsType(type));
         spec = spec.and(ProductSpecification.lessThanOrEqualToMinPrice(monthlyAvailablePrice));

@@ -92,7 +92,7 @@
                                     <label for="rate_none">비과세</label>
                                     </input>
                                 </li>
-                                <span>로그인하시면 이자 과세를 적용한 만기예상금액을 보실 수 있습니다.</span>
+                                <span>로그인하시면 회원 정보와 이자 과세를 적용한 만기예상금액을 보실 수 있습니다.</span>
                             </ul>
                         </c:otherwise>
                     </c:choose>

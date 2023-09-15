@@ -125,7 +125,7 @@ public class ProductController {
         // 로그인 안한 경우 검색
         if (member == null) {
             if (type != null || period != null || query != null){
-                productList = productService.findByForm(type.charAt(0), Integer.parseInt(period), query);
+                productList = productService.findByForm(type.charAt(0), period, query);
             } else {
                 productList = productService.getProductList();
             }
@@ -135,7 +135,7 @@ public class ProductController {
             Double monthlyAvailablePrice = getMonthlyAvailablePricePerMember(loginMember);
 
             if (type != null || period != null || query != null){
-                productList = productService.findByFormAndMember(type.charAt(0), Integer.parseInt(period), query, monthlyAvailablePrice);
+                productList = productService.findByFormAndMember(type.charAt(0), period, query, monthlyAvailablePrice);
             } else {
                 productList = productService.getProductList(monthlyAvailablePrice);
             }
