@@ -103,7 +103,7 @@
                 </div>
 
                 <div>
-                    <div class="search_type content">상품</div>
+                    <div class="search_type content">상품명</div>
                     <input id="searchInput" name="query" class="form-control me-2 search_bar" type="text"
                            placeholder="예적금 상품명을 적어주세요"
                            aria-label="Search">
