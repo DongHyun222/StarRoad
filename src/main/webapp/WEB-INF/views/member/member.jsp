@@ -4,7 +4,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>MEMBER</title>
+    <title>Member</title>
     <script src="//code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="//code.jquery.com/jquery-latest.min.js"></script>
     <link rel="stylesheet" type="text/css" href="${path}/resources/static/css/common.css">
@@ -165,16 +165,16 @@
                     <tr>
                         <th>직업구분</th>
                         <td>
-                            <input type="text" id="job" list="job_list" name="job">
-                            <datalist id="job_list">
-                                <option value="학생"></option>
-                                <option value="직장인"></option>
-                                <option value="사업주"></option>
-                                <option value="프리랜서"></option>
-                                <option value="전문직"></option>
-                                <option value="주부"></option>
-                                <option value="기타"></option>
-                            </datalist>
+                            <select name="job" id="job">
+                                <option disabled selected>직업을 선택하세요</option>
+                                <option>학생</option>
+                                <option>직장인</option>
+                                <option>사업주</option>
+                                <option>프리랜서</option>
+                                <option>전문직</option>
+                                <option>주부</option>
+                                <option>기타</option>
+                            </select>
                         </td>
                     </tr>
                     <tr>
@@ -186,21 +186,19 @@
                     </tr>
                         <th>거래목적</th>
                         <td>
-                            <input type="text" id="purpose" list="purpose_list" name="purpose">
-                            <datalist id="purpose_list">
-                                <option value="급여 및 생활비"></option>
-                                <option value="저축 및 투자"></option>
-                                <option value="사업상 거래"></option>
-                                <option value="결제"></option>
-                                <option value="대출"></option>
-                            </datalist>
+                            <select name="purpose" id="purpose">
+                                <option disabled selected>거래목적을 선택하세요</option>
+                                <option >급여 및 생활비</option>
+                                <option >저축 및 투자</option>
+                                <option >사업상 거래</option>
+                                <option >결제</option>
+                                <option >대출</option>
+                            </select>
                         </td>
                     </tr>
                     <tr>
                         <th>거래자금의 원천</th>
                         <td>
-                            <%--<input type="select" id="source" list="source_list" name="source">
-                            <datalist id="source_list"> --%>
                             <select name="source" id="source" >
                                 <option disabled selected>원천을 선택하세요</option>
                                 <option >근로 및 연금소득</option>
@@ -212,7 +210,6 @@
                                 <option >용돈/생활비/상속</option>
                                 <option >대출금</option>
                             </select>
-
                         </td>
                     </tr>
                     <tr>

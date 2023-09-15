@@ -1,4 +1,4 @@
-package com.kb04.starroad.login;
+package com.kb04.starroad.Service;
 
 import com.kb04.starroad.Dto.auth.LoginRequestDto;
 import com.kb04.starroad.Entity.Member;

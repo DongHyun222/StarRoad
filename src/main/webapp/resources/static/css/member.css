@@ -49,8 +49,12 @@ table th {
     align-items: center;
 }
 
-table tr td input {
+table tr td input { /*테이블 인풋 길이 */
 	width: 240px;
+}
+
+table tr td select { /*테이블 인풋 길이 */
+	width: 248px;
 }
 
 table tr th {
@@ -70,6 +74,7 @@ table tr td input[name=phone] {
     font-size: 24px; /* 글자 크기 조절 */
     text-align: center; /* 텍스트 가운데 정렬 */
     display: block; /* 블록 레벨 요소로 설정하여 가로 전체를 차지하도록 합니다. */
+    margin: 0 auto; /* 가운데 정렬을 위해 좌우 여백을 자동으로 설정 */
 }
 
 input[type="number"]::-webkit-outer-spin-button,
