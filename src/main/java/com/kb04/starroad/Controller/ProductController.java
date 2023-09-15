@@ -48,66 +48,13 @@ public class ProductController {
             Double monthlyAvailablePrice = getMonthlyAvailablePricePerMember(loginMember);
             productList = productService.getProductList(monthlyAvailablePrice);
 
-            List<ConditionDto> memberConditions = productService.getMemberConditions(loginMember);
-            Map<Integer, Double> groupedData = new HashMap<>();
-            for (ConditionDto condition : memberConditions) {
-                int prodNo = condition.getProd().getNo();
-                double rate = condition.getRate();
-                groupedData.put(prodNo, groupedData.getOrDefault(prodNo, 0.0) + rate);
-            }
-            if (groupedData.containsKey(1)){
-                System.out.println(groupedData);
-            }
-
-            model.addAttribute("user", loginMember.getName());
-            model.addAttribute("monthlyAvaiablePrice", monthlyAvailablePrice);
-            model.addAttribute("memberConditionRates", groupedData);
+            setUserInfoInModel(model, loginMember, monthlyAvailablePrice);
         }
 
-        // 최대 기본 이율 = max_rate - max_condition_rate
-        // 최대 이율 기간 = max_rate_period
-        // 회원 우대 이율 들어가야됨
-        int startIndex = (page - 1) * ITEMS_PER_PAGE;
-        int endIndex = Math.min(startIndex + ITEMS_PER_PAGE, productList.size());
-
-        model.addAttribute("productItems", productList.subList(startIndex, endIndex));
-        model.addAttribute("pageEndIndex", Math.ceil(productList.size() / Double.valueOf(ITEMS_PER_PAGE)));
-        model.addAttribute("currentPage", page);
+        setPageIndexInModel(model, page, productList);
 
         ModelAndView mav = new ModelAndView("product/product");
         return mav;
-    }
-
-    private Double getMonthlyAvailablePricePerMember(MemberDto loginMember) {
-        int memberSalary = loginMember.getSalary();
-        int memberGoal = loginMember.getGoal();
-        Double monthGoal = (1.0 * memberSalary) * (1.0 * memberGoal) / 100;
-
-        List<SubscriptionDto> subscriptionList = productService.getSubscriptions(loginMember);
-        int sum = 0; // 매달 이미 나가고 있는 적금의 양
-        for (SubscriptionDto dto : subscriptionList) {
-            if (dto.getProd().getType() == 'S') // 적금인 상품에 대해서 매달 나가는 비용 계산
-                sum += dto.getPrice();
-        }
-        Double result = monthGoal - sum;
-
-        return result;
-    }
-
-    // 검색했을 때 기간 적용 -> 최대 기본 이율
-    private Double getRate(List<ProductResponseDto> productList, int period) {
-        // base rate
-
-        // condition rate
-
-
-        return 0.0;
-    }
-
-    private static Member getLoginMember(HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        Member loginMember = (Member) session.getAttribute("currentUser");
-        return loginMember;
     }
 
     @GetMapping("/starroad/product/result")
@@ -140,26 +87,10 @@ public class ProductController {
                 productList = productService.getProductList(monthlyAvailablePrice);
             }
 
-            List<ConditionDto> memberConditions = productService.getMemberConditions(loginMember);
-            Map<Integer, Double> groupedData = new HashMap<>();
-            for (ConditionDto condition : memberConditions) {
-                int prodNo = condition.getProd().getNo();
-                double conditionRate = condition.getRate();
-                groupedData.put(prodNo, groupedData.getOrDefault(prodNo, 0.0) + conditionRate);
-            }
-            model.addAttribute("user", loginMember.getName());
-            model.addAttribute("monthlyAvaiablePrice", monthlyAvailablePrice);
-            model.addAttribute("memberConditionRates", groupedData);
+            setUserInfoInModel(model, loginMember, monthlyAvailablePrice);
         }
 
-
-        int startIndex = (page - 1) * ITEMS_PER_PAGE;
-        int endIndex = Math.min(startIndex + ITEMS_PER_PAGE, productList.size());
-
-        model.addAttribute("productItems", productList.subList(startIndex, endIndex));
-        model.addAttribute("pageEndIndex", Math.ceil(productList.size() / Double.valueOf(ITEMS_PER_PAGE)));
-        model.addAttribute("currentPage", page);
-
+        setPageIndexInModel(model, page, productList);
 
         if (type != null)
             model.addAttribute("type", type);
@@ -172,13 +103,66 @@ public class ProductController {
             else
                 model.addAttribute("rate_value", 0.0);
         }
-
-
         if (query != null)
             model.addAttribute("query", query);
 
 
         ModelAndView mav = new ModelAndView("product/product_result");
         return mav;
+    }
+
+    private static Member getLoginMember(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        Member loginMember = (Member) session.getAttribute("currentUser");
+        return loginMember;
+    }
+
+    private Double getMonthlyAvailablePricePerMember(MemberDto loginMember) {
+        int memberSalary = loginMember.getSalary();
+        int memberGoal = loginMember.getGoal();
+        Double monthGoal = (1.0 * memberSalary) * (1.0 * memberGoal) / 100;
+
+        List<SubscriptionDto> subscriptionList = productService.getSubscriptions(loginMember);
+        int sum = 0; // 매달 이미 나가고 있는 적금의 양
+        for (SubscriptionDto dto : subscriptionList) {
+            if (dto.getProd().getType() == 'S') // 적금인 상품에 대해서 매달 나가는 비용 계산
+                sum += dto.getPrice();
+        }
+        Double result = monthGoal - sum;
+
+        return result;
+    }
+
+    // 검색했을 때 기간 적용 -> 최대 기본 이율
+    private Double getRate(List<ProductResponseDto> productList, int period) {
+        // base rate
+
+        // condition rate
+
+
+        return 0.0;
+    }
+
+
+    private void setPageIndexInModel(Model model, @RequestParam(defaultValue = "1") int page, List<ProductResponseDto> productList) {
+        int startIndex = (page - 1) * ITEMS_PER_PAGE;
+        int endIndex = Math.min(startIndex + ITEMS_PER_PAGE, productList.size());
+
+        model.addAttribute("productItems", productList.subList(startIndex, endIndex));
+        model.addAttribute("pageEndIndex", Math.ceil(productList.size() / Double.valueOf(ITEMS_PER_PAGE)));
+        model.addAttribute("currentPage", page);
+    }
+
+    private void setUserInfoInModel(Model model, MemberDto loginMember, Double monthlyAvailablePrice) {
+        List<ConditionDto> memberConditions = productService.getMemberConditions(loginMember);
+        Map<Integer, Double> groupedData = new HashMap<>();
+        for (ConditionDto condition : memberConditions) {
+            int prodNo = condition.getProd().getNo();
+            double conditionRate = condition.getRate();
+            groupedData.put(prodNo, groupedData.getOrDefault(prodNo, 0.0) + conditionRate);
+        }
+        model.addAttribute("user", loginMember.getName());
+        model.addAttribute("monthlyAvaiablePrice", monthlyAvailablePrice);
+        model.addAttribute("memberConditionRates", groupedData);
     }
 }
