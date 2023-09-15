@@ -40,8 +40,8 @@ import java.util.Date;
         @Column(name = "comment_num", nullable = false)
         private int commentNum = 0;
 
-        @Column(columnDefinition = "char(1)  default 'Y'", name = "status", nullable = false)
-        private Character status;
+        @Column(name = "status", nullable = false)
+        private Character status = 'Y';
 
         @Column(name = "type", length = 1, nullable = false)
         private String type;
