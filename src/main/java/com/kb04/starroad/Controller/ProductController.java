@@ -152,7 +152,7 @@ public class ProductController {
             groupedData.put(prodNo, groupedData.getOrDefault(prodNo, 0.0) + conditionRate);
         }
         model.addAttribute("user", loginMember.getName());
-        model.addAttribute("monthlyAvaiablePrice", monthlyAvailablePrice);
+        model.addAttribute("monthlyAvailablePrice", monthlyAvailablePrice);
         model.addAttribute("memberConditionRates", groupedData);
     }
 }

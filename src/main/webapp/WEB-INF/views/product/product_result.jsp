@@ -149,12 +149,12 @@
                                 <c:choose>
                                     <c:when test="${item.baseRate ne null}">
                                         세후 <span><fmt:formatNumber type="number" pattern="###,###,###,###,###,###"
-                                                                   value="${((monthlyAvaiablePrice * 1000 * item.maxPeriod) * (1 + (((item.baseRate + memberConditionRates.get(item.no))*(item.maxRatePeriod + 1) / 24) * (1 - rate_value)) / 100))}"/></span>원
+                                                                   value="${((monthlyAvailablePrice * 1000 * item.maxPeriod) * (1 + (((item.baseRate + memberConditionRates.get(item.no))*(item.maxRatePeriod + 1) / 24) * (1 - rate_value)) / 100))}"/></span>원
 
                                     </c:when>
                                     <c:otherwise>
                                         세후 <span><fmt:formatNumber type="number" pattern="###,###,###,###,###,###"
-                                                                   value="${((monthlyAvaiablePrice * 1000 * item.maxPeriod) * (1 + (((item.maxRate - item.maxConditionRate + memberConditionRates.get(item.no))*(item.maxRatePeriod + 1) / 24) * (1 - rate_value)) / 100))}"/></span>원
+                                                                   value="${((monthlyAvailablePrice * 1000 * item.maxPeriod) * (1 + (((item.maxRate - item.maxConditionRate + memberConditionRates.get(item.no))*(item.maxRatePeriod + 1) / 24) * (1 - rate_value)) / 100))}"/></span>원
                                     </c:otherwise>
                                 </c:choose>
                             </c:when>
@@ -162,12 +162,12 @@
                                 <c:choose>
                                     <c:when test="${item.baseRate ne null}">
                                         세후 <span><fmt:formatNumber type="number" pattern="###,###,###,###,###,###"
-                                                                   value="${((monthlyAvaiablePrice * 1000 * item.maxPeriod) * (1 + (((item.baseRate + memberConditionRates.get(item.no))*(item.maxRatePeriod + 1) / 24) * (1 - rate_value)) / 100))}"/></span>원
+                                                                   value="${((monthlyAvailablePrice * 1000 * item.maxPeriod) * (1 + (((item.baseRate + memberConditionRates.get(item.no))*(item.maxRatePeriod + 1) / 24) * (1 - rate_value)) / 100))}"/></span>원
 
                                     </c:when>
                                     <c:otherwise>
                                         세후 <span><fmt:formatNumber type="number" pattern="###,###,###,###,###,###"
-                                                                   value="${((monthlyAvaiablePrice * 1000 * item.maxPeriod) * (1 + (((item.maxRate - item.maxConditionRate + memberConditionRates.get(item.no))*(item.maxRatePeriod + 1) / 24) * (1 - rate_value)) / 100))}"/></span>원
+                                                                   value="${((monthlyAvailablePrice * 1000 * item.maxPeriod) * (1 + (((item.maxRate - item.maxConditionRate + memberConditionRates.get(item.no))*(item.maxRatePeriod + 1) / 24) * (1 - rate_value)) / 100))}"/></span>원
                                     </c:otherwise>
                                 </c:choose>
                             </c:otherwise>

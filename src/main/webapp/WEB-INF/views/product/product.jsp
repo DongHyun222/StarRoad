@@ -144,13 +144,13 @@
                             <c:when test="${memberConditionRates.containsKey(item.no)}">
                                 만기 예상 금액은<br>
                                 세후 <span><fmt:formatNumber type="number" pattern="###,###,###,###,###,###"
-                                                           value="${((monthlyAvaiablePrice * 1000 * item.maxPeriod) * (1 + (((item.maxRate - item.maxConditionRate + memberConditionRates.get(item.no))*(item.maxRatePeriod + 1) / 24) * (1 - 0.154)) / 100))}"/></span>원
+                                                           value="${((monthlyAvailablePrice * 1000 * item.maxPeriod) * (1 + (((item.maxRate - item.maxConditionRate + memberConditionRates.get(item.no))*(item.maxRatePeriod + 1) / 24) * (1 - 0.154)) / 100))}"/></span>원
                                 입니다.
                             </c:when>
                             <c:otherwise>
                                 만기 예상 금액은<br>
                                 세후 <span><fmt:formatNumber type="number" pattern="###,###,###,###,###,###"
-                                                           value="${((monthlyAvaiablePrice * 1000 * item.maxPeriod) * (1 + (((item.maxRate - item.maxConditionRate)*(item.maxRatePeriod + 1) / 24) * (1 - 0.154)) / 100))}"/></span>원
+                                                           value="${((monthlyAvailablePrice * 1000 * item.maxPeriod) * (1 + (((item.maxRate - item.maxConditionRate)*(item.maxRatePeriod + 1) / 24) * (1 - 0.154)) / 100))}"/></span>원
                                 입니다.
                             </c:otherwise>
                         </c:choose>
