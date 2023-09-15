@@ -1,10 +1,6 @@
 package com.kb04.starroad.Controller;
 
-import com.kb04.starroad.Dto.ConditionDto;
-import com.kb04.starroad.Dto.MemberConditionDto;
-import com.kb04.starroad.Dto.MemberDto;
-import com.kb04.starroad.Dto.SubscriptionDto;
-import com.kb04.starroad.Dto.product.ProductDto;
+import com.kb04.starroad.Dto.*;
 import com.kb04.starroad.Dto.product.ProductResponseDto;
 import com.kb04.starroad.Entity.Member;
 import com.kb04.starroad.Service.ProductService;
@@ -17,8 +13,6 @@ import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static java.lang.System.in;
 
 @RestController
 public class ProductController {
@@ -35,24 +29,19 @@ public class ProductController {
             Model model,
             @RequestParam(defaultValue = "1") int page,
             HttpServletRequest request) {
-
         Member member = getLoginMember(request);
-
         List<ProductResponseDto> productList = null;
         // 로그인 안한 경우 첫 페이지
         if (member == null) {
-            productList = productService.getProductList();
             model.addAttribute("user", null);
+            productList = productService.getProductList();
         } else { // 로그인 한 경우 첫 페이지
             MemberDto loginMember = member.toMemberDto();
             Double monthlyAvailablePrice = getMonthlyAvailablePricePerMember(loginMember);
-            productList = productService.getProductList(monthlyAvailablePrice);
-
             setUserInfoInModel(model, loginMember, monthlyAvailablePrice);
+            productList = productService.getProductList(monthlyAvailablePrice);
         }
-
         setPageIndexInModel(model, page, productList);
-
         ModelAndView mav = new ModelAndView("product/product");
         return mav;
     }
@@ -66,27 +55,25 @@ public class ProductController {
             @RequestParam(required = false) String query,
             @RequestParam(defaultValue = "1") int page,
             HttpServletRequest request) {
-        Member member = getLoginMember(request);
 
+        Member member = getLoginMember(request);
         List<ProductResponseDto> productList = null;
         // 로그인 안한 경우 검색
         if (member == null) {
-            if (type != null || period != null || query != null){
+            model.addAttribute("user", null);
+            if (type != null || period != null || query != null) {
                 productList = productService.findByForm(type.charAt(0), period, query);
             } else {
                 productList = productService.getProductList();
             }
-            model.addAttribute("user", null);
-        } else {
+        } else { // 로그인 한 경우 검색
             MemberDto loginMember = member.toMemberDto();
             Double monthlyAvailablePrice = getMonthlyAvailablePricePerMember(loginMember);
-
-            if (type != null || period != null || query != null){
+            if (type != null || period != null || query != null) {
                 productList = productService.findByFormAndMember(type.charAt(0), period, query, monthlyAvailablePrice);
             } else {
                 productList = productService.getProductList(monthlyAvailablePrice);
             }
-
             setUserInfoInModel(model, loginMember, monthlyAvailablePrice);
         }
 
@@ -94,11 +81,14 @@ public class ProductController {
 
         if (type != null)
             model.addAttribute("type", type);
-        if (period != null)
+        if (period != null) {
             model.addAttribute("period", period);
-        if (rate != null){
+            productList = setBaseRate(productList, Integer.parseInt(period));
+            System.out.println(productList);
+        }
+        if (rate != null) {
             model.addAttribute("rate", rate);
-            if(rate.equals("base"))
+            if (rate.equals("base"))
                 model.addAttribute("rate_value", 0.154);
             else
                 model.addAttribute("rate_value", 0.0);
@@ -134,15 +124,17 @@ public class ProductController {
     }
 
     // 검색했을 때 기간 적용 -> 최대 기본 이율
-    private Double getRate(List<ProductResponseDto> productList, int period) {
-        // base rate
-
-        // condition rate
-
-
-        return 0.0;
+    private List<ProductResponseDto> setBaseRate(List<ProductResponseDto> productList, int period) {
+        List<BaseRateDto> baseRates = productService.getBaseRates(period);
+        System.out.println(baseRates);
+        for (BaseRateDto dto : baseRates){
+            for (ProductResponseDto prodDto: productList) {
+                if(prodDto.getNo() == dto.getProd().getNo())
+                    prodDto.setBaseRate(dto.getRate());
+            }
+        }
+        return productList;
     }
-
 
     private void setPageIndexInModel(Model model, @RequestParam(defaultValue = "1") int page, List<ProductResponseDto> productList) {
         int startIndex = (page - 1) * ITEMS_PER_PAGE;

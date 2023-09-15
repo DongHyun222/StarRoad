@@ -1,18 +1,18 @@
 package com.kb04.starroad.Service;
 
+import com.kb04.starroad.Dto.BaseRateDto;
 import com.kb04.starroad.Dto.ConditionDto;
 import com.kb04.starroad.Dto.MemberDto;
 import com.kb04.starroad.Dto.SubscriptionDto;
 import com.kb04.starroad.Dto.product.ProductResponseDto;
+import com.kb04.starroad.Entity.BaseRate;
 import com.kb04.starroad.Entity.MemberCondition;
 import com.kb04.starroad.Entity.Product;
 import com.kb04.starroad.Entity.Subscription;
-import com.kb04.starroad.Repository.ConditionRepository;
-import com.kb04.starroad.Repository.MemberConditionRepository;
-import com.kb04.starroad.Repository.ProductRepository;
+import com.kb04.starroad.Repository.*;
+import com.kb04.starroad.Repository.Specification.BaseRateSpecification;
 import com.kb04.starroad.Repository.Specification.MemberConditionSpecification;
 import com.kb04.starroad.Repository.Specification.ProductSpecification;
-import com.kb04.starroad.Repository.SubscriptionRepository;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -28,12 +28,15 @@ public class ProductService {
     private final MemberConditionRepository memberConditionRepository;
     private final ConditionRepository conditionRepository;
 
+    private final BaseRateRepository baseRateRepository;
+
     public ProductService(ProductRepository productRepository, SubscriptionRepository subscriptionRepository,
-                          MemberConditionRepository memberConditionRepository, ConditionRepository conditionRepository) {
+                          MemberConditionRepository memberConditionRepository, ConditionRepository conditionRepository, BaseRateRepository baseRateRepository) {
         this.productRepository = productRepository;
         this.subscriptionRepository = subscriptionRepository;
         this.memberConditionRepository = memberConditionRepository;
         this.conditionRepository = conditionRepository;
+        this.baseRateRepository = baseRateRepository;
     }
 
     public List<ProductResponseDto> makeProductResponseDtoList(List<Product> productListAll) {
@@ -114,6 +117,27 @@ public class ProductService {
         }
         return result;
     }
+
+    public List<BaseRateDto> getBaseRates(int period) {
+        Specification<BaseRate> spec = (root, query, criteriaBuilder) -> null;
+//        spec = spec.and(BaseRateSpecification.greaterThanOrEqualToMaxPeriod(period));
+//        spec = spec.and(BaseRateSpecification.groupByProdNo());
+        spec = spec.and(BaseRateSpecification.maxRateSpecification(period));
+        List<BaseRate> groupedResults = baseRateRepository.findAll(spec);
+        System.out.println(groupedResults);
+        List<BaseRateDto> list = new ArrayList<>();
+        if (groupedResults != null && !groupedResults.isEmpty()) {
+            for (BaseRate baseRate : groupedResults) {
+                BaseRateDto dto = baseRate.toBaseRateDto();
+                // max_rate 값을 DTO에 설정
+                dto.setMax_rate(baseRate.getMax_rate());
+                list.add(dto);
+            }
+        }
+        return list;
+    }
+
+
 
 
 }

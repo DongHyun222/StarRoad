@@ -1,5 +1,9 @@
 package com.kb04.starroad.Entity;
 
+import com.kb04.starroad.Dto.BaseRateDto;
+import com.kb04.starroad.Dto.board.BoardResponseDto;
+import com.kb04.starroad.Dto.product.ProductDto;
+import com.kb04.starroad.Dto.product.ProductResponseDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -24,10 +28,29 @@ public class BaseRate {
     private int maxPeriod;
 
     @Column(nullable = false)
-    private double rate;
+    private Double rate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "prod_no", nullable = false)
     private Product prod;
 
+    private Double max_rate;
+
+
+    public BaseRateDto toBaseRateDto() {
+        return BaseRateDto.builder()
+                .no(no)
+                .minPeriod(minPeriod)
+                .maxPeriod(maxPeriod)
+                .rate(rate)
+                .prod(prod.toProductDto())
+                .max_rate(max_rate)
+                .build();
+    }
+
+    public ProductResponseDto toProductResponseDto() {
+        return ProductResponseDto.builder()
+                .baseRate(rate)
+                .build();
+    }
 }

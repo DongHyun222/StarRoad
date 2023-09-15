@@ -26,6 +26,7 @@ public class ProductResponseDto {
     private Double maxConditionRate;
 
     private int maxPeriod;
+    private Double baseRate;
 
     private String link;
 
