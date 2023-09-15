@@ -14,7 +14,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 import java.io.IOException;
-import java.util.List;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Optional;
 
 @Service
@@ -61,10 +62,35 @@ public class BoardService2 {
     }
 
 
-    public List<Board> boardList(){
-        List<Board> boardList = boardRepository.findAll();
+    //0914 여기 수정중
+    public Page<Board> boardListFree(Pageable pageable) {
+        Page<Board> boardList;
+
+        boardList = boardRepository.findAllByTypeAndStatusOrderByRegdateDesc("F", 'Y', pageable);
+
         return boardList;
     }
+
+    public Page<Board> boardListAuth(Pageable pageable) {
+        Page<Board> boardList;
+
+        boardList = boardRepository.findAllByTypeAndStatusOrderByRegdateDesc("C", 'Y', pageable);
+
+        return boardList;
+    }
+
+    public Page<Board> boardListpopular(Pageable pageable) {
+        Page<Board> boardList;
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_YEAR, -7);
+        Date oneWeekAgo = calendar.getTime();
+        boardList = boardRepository.findAllByStatusAndLikesGreaterThanEqualAndRegdateAfterOrderByLikesDesc('Y', 10, oneWeekAgo,pageable);
+
+        return boardList;
+    }
+
+
     public Page<Board> getPopularBoards(Pageable pageable) {
         return boardRepository.findAllByOrderByLikesDesc(pageable);
     }

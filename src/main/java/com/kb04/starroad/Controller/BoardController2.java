@@ -20,7 +20,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @RestController
@@ -33,7 +32,7 @@ public class BoardController2 {
         ModelAndView mav = new ModelAndView("board/write");
         return mav;
     }
-    @GetMapping("/starroad/board/main")
+    @GetMapping("/starroad/board/main1")
     public ModelAndView boardMain() {
         ModelAndView mav = new ModelAndView("board/main");
         return mav;
