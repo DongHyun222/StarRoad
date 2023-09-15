@@ -84,7 +84,7 @@
 }
 .titleStyle{
 
-    transform: translate(-6px,-20px); /* 원하는 값으로 조절 */
+    transform: translate(-6px,-15px); /* 원하는 값으로 조절 */
 }
 .titleStyle a {
     font-weight: bold;
