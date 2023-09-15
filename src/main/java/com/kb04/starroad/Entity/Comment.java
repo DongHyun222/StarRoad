@@ -40,10 +40,11 @@ public class Comment {
     public CommentDto toCommentDto() {
         return CommentDto.builder()
                 .no(no)
-                .board(board.toBoardRequestDto())
-                .member(member.toMemberDto())
+                .board(board)
+                .member(member)
                 .regdate(regdate)
                 .content(content)
                 .build();
     }
+
 }

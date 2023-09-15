@@ -62,7 +62,7 @@ import java.util.Date;
             }
         }
 
-        public BoardRequestDto toBoardRequestDto() {
+        public BoardRequestDto toBoardRequestDto() { //entity를 dto로 변환
             return BoardRequestDto.builder()
                     .memberNo(member.toMemberDto())
                     .title(title)
@@ -88,5 +88,9 @@ import java.util.Date;
                     .type(type)
                     .detailType(detailType)
                     .build();
+        }
+        public void update(String title, String content){
+            this.title=title;
+            this.content=content;
         }
     }

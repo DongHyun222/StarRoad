@@ -1,10 +1,15 @@
 package com.kb04.starroad.Service;
 
 import com.kb04.starroad.Dto.board.BoardRequestDto;
+import com.kb04.starroad.Dto.board.BoardResponseDto;
+import com.kb04.starroad.Dto.board.CommentDto;
 import com.kb04.starroad.Entity.Board;
 import com.kb04.starroad.Repository.BoardRepository;
+import com.kb04.starroad.Repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.data.domain.Page;
 
 
@@ -13,6 +18,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 
+import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
@@ -26,9 +33,11 @@ public class BoardService2 {
     @Autowired
     private BoardRepository boardRepository;
 
+    @Autowired
+    private CommentRepository commentRepository;
     public void write(Board board) {  //entity를 매개변수로 받음
 
-        boardRepository.save(board);        //새로운 게시물이 데이터베이스에 추가됩니다.
+        boardRepository.save(board);  //새로운 게시물이 데이터베이스에 추가됩니다.
     }
 
 
@@ -100,20 +109,20 @@ public class BoardService2 {
         return boardRepository.findById(no);
     }
 
+    @Transactional
     public void updateBoard(BoardRequestDto boardRequestDto) {
         // 게시물 번호를 이용하여 해당 게시물을 조회합니다.
+
         Optional<Board> optionalBoard = boardRepository.findById(boardRequestDto.getNo());
 
 
-            Board existingBoard = optionalBoard.get();
+        Board board2 =optionalBoard.get();
+        board2.update(boardRequestDto.getTitle(),boardRequestDto.getContent());
 
-
-            // 업데이트된 게시물을 저장합니다.
-            boardRepository.save(existingBoard);
-
-    }
+        }
 
     public void deleteBoard(Integer no) {
         boardRepository.deleteById(no);
     }
+
 }
