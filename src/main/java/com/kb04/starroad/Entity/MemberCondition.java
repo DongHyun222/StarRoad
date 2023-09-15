@@ -20,9 +20,9 @@ public class MemberCondition {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "condition_no", nullable = false)
-    private Condition conditionNo;
+    private Condition condition;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_no", nullable = false)
-    private Member memberNo;
+    private Member member;
 }

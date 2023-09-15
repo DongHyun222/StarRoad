@@ -13,6 +13,6 @@ import javax.persistence.*;
 @AllArgsConstructor
 public class MemberConditionDto {
     private int no;
-    private ConditionDto conditionNo;
-    private MemberDto memberNo;
+    private ConditionDto condition;
+    private MemberDto member;
 }

@@ -1,21 +1,34 @@
 package com.kb04.starroad.Service;
 
+import com.kb04.starroad.Dto.MemberDto;
+import com.kb04.starroad.Dto.SubProdDto;
+import com.kb04.starroad.Dto.SubscriptionDto;
+import com.kb04.starroad.Dto.product.ProductDto;
 import com.kb04.starroad.Dto.product.ProductResponseDto;
+import com.kb04.starroad.Entity.Comment;
+import com.kb04.starroad.Entity.Member;
 import com.kb04.starroad.Entity.Product;
+import com.kb04.starroad.Entity.Subscription;
 import com.kb04.starroad.Repository.ProductRepository;
+import com.kb04.starroad.Repository.Specification.CommentSpecification;
 import com.kb04.starroad.Repository.Specification.ProductSpecification;
+import com.kb04.starroad.Repository.SubscriptionRepository;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
 
     private final ProductRepository productRepository;
-    public ProductService(ProductRepository productRepository) {
+    private final SubscriptionRepository subscriptionRepository;
+    public ProductService(ProductRepository productRepository, SubscriptionRepository subscriptionRepository) {
         this.productRepository = productRepository;
+        this.subscriptionRepository = subscriptionRepository;
     }
 
     public List<ProductResponseDto> makeProductResponseDtoList(List<Product> productListAll) {
@@ -49,5 +62,15 @@ public class ProductService {
         List<ProductResponseDto> list = makeProductResponseDtoList(productListAll);
 
         return list;
+    }
+
+    public List<SubscriptionDto> getSubscriptions(MemberDto memberDto) {
+        return subscriptionRepository.findByMember(memberDto.toMemberEntity()).stream().map(Subscription::toSubscriptionDto).collect(Collectors.toList());
+    }
+
+    public SubProdDto getProductInfo(String sub_name) {
+        Specification<Subscription> spec = (root, query, criteriaBuilder) -> null;
+        spec = spec.and(ProductSpecification.getProdInfo(productRepository.findOneByName(sub_name)));
+        return subscriptionRepository.findOne(spec).map(Subscription::toSubProdDto).orElse(new SubProdDto());
     }
 }

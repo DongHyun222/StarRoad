@@ -5,17 +5,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-import java.util.Date;
-
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PaymentLogDto {
-
-    private int no;
-    private SubscriptionDto subscription;
-    private Date paymentDate;
+public class SubProdDto {
+    private String name;
+    private String attribute;
+    private String explain;
+    private int period;
+    private int price;
 }

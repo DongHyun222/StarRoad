@@ -20,7 +20,7 @@ public class Condition {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "prod_no", nullable = false)
-    private Product prodNo;
+    private Product prod;
 
     @Column(name = "condition_name", nullable = false, length = 100)
     private String conditionName;

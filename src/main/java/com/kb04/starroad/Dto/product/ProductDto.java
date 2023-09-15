@@ -1,5 +1,6 @@
 package com.kb04.starroad.Dto.product;
 
+import com.kb04.starroad.Entity.Product;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,5 +26,24 @@ public class ProductDto {
     private String link;
     private Double maxRate;
     private Integer maxRatePeriod;
+    private Double maxConditionRate;
+
+    public Product toEntity() {
+        return Product.builder()
+                .no(no)
+                .type(type)
+                .name(name)
+                .explain(explain)
+                .attribute(attribute)
+                .minPeriod(minPeriod)
+                .maxPeriod(maxPeriod)
+                .minPrice(minPrice)
+                .maxPrice(maxPrice)
+                .link(link)
+                .maxRate(maxRate)
+                .maxRatePeriod(maxRatePeriod)
+                .maxConditionRate(maxConditionRate)
+                .build();
+    }
 
 }

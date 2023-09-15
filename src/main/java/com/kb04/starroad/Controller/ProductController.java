@@ -1,10 +1,15 @@
 package com.kb04.starroad.Controller;
 
+import com.kb04.starroad.Dto.SubscriptionDto;
 import com.kb04.starroad.Dto.product.ProductResponseDto;
+import com.kb04.starroad.Entity.Member;
 import com.kb04.starroad.Service.ProductService;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RestController
@@ -20,7 +25,14 @@ public class ProductController {
     @GetMapping("/starroad/product")
     public ModelAndView product(
             Model model,
-            @RequestParam(defaultValue = "1") int page) {
+            @RequestParam(defaultValue = "1") int page,
+            HttpServletRequest request) {
+
+        List<SubscriptionDto> subscriptionDtoList = findMemberAndSubscriptionInfo(request);
+        System.out.println(subscriptionDtoList);
+        for (SubscriptionDto dto: subscriptionDtoList) {
+            System.out.println(dto);
+        }
 
         List<ProductResponseDto> productList = productService.getProductList();
 
@@ -35,6 +47,23 @@ public class ProductController {
 
         ModelAndView mav = new ModelAndView("product/product");
         return mav;
+    }
+
+    private List<SubscriptionDto> findMemberAndSubscriptionInfo(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        Member loginMember = (Member) session.getAttribute("currentUser");
+        System.out.println();
+
+        int memberNo = loginMember.getNo();
+        int memberSalary = loginMember.getSalary();
+        int memberGoal = loginMember.getGoal();
+        Double monthGoal = (1.0 * memberSalary) *  (1.0 * memberGoal) / 100;
+        System.out.println("monthGoal: "+ monthGoal);
+        System.out.println("memberNo: "+memberNo);
+
+        List<SubscriptionDto> subscriptionList = productService.getSubscriptions(loginMember.toMemberDto());
+
+        return subscriptionList;
     }
 
     @GetMapping("/starroad/product/result")
