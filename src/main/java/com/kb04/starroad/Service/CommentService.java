@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -31,6 +32,7 @@ public class CommentService {
     }
 
 
+
     @Transactional
     public int createComment(String content, int boardNo) {
 
@@ -38,13 +40,36 @@ public class CommentService {
 
         newComment.setContent(content);
         newComment.setRegdate(new java.util.Date());
-//      newComment.setMember(memberRepository.findByNo(1));
+//      newComment.setMember(memberRepository.findByNo(1)); 로그인된 사용자 정보 설정
         newComment.setBoard(boardRepository.findByNo(boardNo));;
 
         Comment comment = newComment.toEntity();
 
         commentRepository.save(comment);
         return comment.getBoard().getNo();
+    }
+
+    public CommentDto getCommentById(int commentNo) {
+
+        Comment comment = commentRepository.findById(commentNo).orElseThrow(() -> new IllegalArgumentException("해당 댓글이 없습니다"));
+        return comment.toCommentDto();
+    }
+
+    @Transactional
+    public void updateComment(CommentDto commentDto) {
+        Optional<Comment> listcomment = commentRepository.findById(commentDto.getNo());
+
+        Comment comment = listcomment.get();
+        comment.update(commentDto.getContent());
+    }
+
+    @Transactional
+    public void deleteComment(int commentNo) {
+        commentRepository.deleteByNo(commentNo);
+    }
+
+    public Optional<Comment> findByNo(int commentNo) {
+        return commentRepository.findById(commentNo);
     }
 
 }

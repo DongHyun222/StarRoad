@@ -47,4 +47,8 @@ public class Comment {
                 .build();
     }
 
+    public void update(String content) {
+        this.content = content;
+    }
+
 }
