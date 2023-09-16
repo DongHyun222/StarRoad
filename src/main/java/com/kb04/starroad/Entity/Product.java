@@ -1,5 +1,6 @@
 package com.kb04.starroad.Entity;
 
+import com.kb04.starroad.Dto.SubProdDto;
 import com.kb04.starroad.Dto.product.ProductDto;
 import com.kb04.starroad.Dto.product.ProductResponseDto;
 import lombok.*;
@@ -95,5 +96,4 @@ public class Product {
                 .link(link)
                 .build();
     }
-
 }

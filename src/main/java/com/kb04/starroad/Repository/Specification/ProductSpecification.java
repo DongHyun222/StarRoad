@@ -2,6 +2,7 @@ package com.kb04.starroad.Repository.Specification;
 
 import com.kb04.starroad.Dto.product.ProductResponseDto;
 import com.kb04.starroad.Entity.Product;
+import com.kb04.starroad.Entity.Subscription;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.Order;
@@ -39,5 +40,9 @@ public class ProductSpecification {
             query.orderBy(builder.desc(root.get("maxRateTimesPeriod")));
             return spec.toPredicate(root, query, builder);
         };
+    }
+
+    public static Specification<Subscription> getProdInfo(Product sub_name) {
+        return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("prod"), sub_name);
     }
 }

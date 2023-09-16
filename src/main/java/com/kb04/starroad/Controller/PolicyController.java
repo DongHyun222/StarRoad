@@ -15,7 +15,6 @@ import java.util.*;
 @RestController
 public class PolicyController {
 
-    private static final int ITEMS_PER_PAGE = 3;
     private final PolicyService policyService;
 
     @GetMapping("/starroad/policy")
@@ -65,9 +64,6 @@ public class PolicyController {
         else {
 
             List<PolicyResponseDto> result = policyService.selectDetailPolicies(requestDto);
-            for (PolicyResponseDto dto:result) {
-                System.out.println(dto);
-            }
             Map<String, Object> finalResult = policyService.returnPoliciesByPage(result, pageIndex);
 
             model.addAttribute("policyList", finalResult.get("policyList"));

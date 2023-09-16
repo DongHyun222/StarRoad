@@ -3,17 +3,27 @@ package com.kb04.starroad.Service;
 import com.kb04.starroad.Dto.BaseRateDto;
 import com.kb04.starroad.Dto.ConditionDto;
 import com.kb04.starroad.Dto.MemberDto;
+import com.kb04.starroad.Dto.SubProdDto;
 import com.kb04.starroad.Dto.SubscriptionDto;
+import com.kb04.starroad.Dto.product.ProductDto;
 import com.kb04.starroad.Dto.product.ProductResponseDto;
+
 import com.kb04.starroad.Entity.BaseRate;
 import com.kb04.starroad.Entity.MemberCondition;
-import com.kb04.starroad.Entity.Product;
-import com.kb04.starroad.Entity.Subscription;
 import com.kb04.starroad.Repository.*;
 import com.kb04.starroad.Repository.Specification.BaseRateSpecification;
 import com.kb04.starroad.Repository.Specification.MemberConditionSpecification;
+
+import com.kb04.starroad.Entity.Comment;
+import com.kb04.starroad.Entity.Member;
+import com.kb04.starroad.Entity.Product;
+import com.kb04.starroad.Entity.Subscription;
+import com.kb04.starroad.Repository.ProductRepository;
+import com.kb04.starroad.Repository.Specification.CommentSpecification;
+
 import com.kb04.starroad.Repository.Specification.ProductSpecification;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -126,5 +136,10 @@ public class ProductService {
         return list;
     }
 
+    public SubProdDto getProductInfo(String sub_name) {
+        Specification<Subscription> spec = (root, query, criteriaBuilder) -> null;
+        spec = spec.and(ProductSpecification.getProdInfo(productRepository.findOneByName(sub_name)));
+        return subscriptionRepository.findOne(spec).map(Subscription::toSubProdDto).orElse(new SubProdDto());
+    }
 
 }

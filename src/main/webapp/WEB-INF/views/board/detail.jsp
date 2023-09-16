@@ -29,6 +29,11 @@
                 <c:out value="${board.likes}" />
             </span>
 
+<%--        <c:forEach var="member" items="${board.members}">
+            <c:out value="${member.id}" />
+        </c:forEach> --%>
+
+
             <div class="title-buttons">
                 <button id="editBtn">수정</button>
                 <button id="deleteBtn">삭제</button>
@@ -36,7 +41,7 @@
         </div>
 
         <div class="content">
-            <h2>내용<h2>
+
             <c:out value="${board.content}" />
             <div class="like-section">
                 <img src="https://ifh.cc/g/aw0vjY.png" alt="Like Icon" style="vertical-align: middle; width: 20px; height: 20px;">
@@ -46,27 +51,31 @@
         </div>
 
         <div class="comment">
-             <h2>댓글<h2>
-             <c:out value="${board.commentNum}" />
 
-             <div class="comment-input">
-                 <textarea id="commentText" placeholder="댓글을 입력하세요" rows="4" cols="50"></textarea>
-                 <button id="submitComment">등록</button>
-             </div>
+        댓글<c:out value="${board.commentNum}" />
+
+        <div class="comment-input">
+             <form action="/starroad/comment" method="post">
+                 <textarea id="commentText" name="content" placeholder="댓글을 입력하세요" rows="4" cols="50"></textarea>
+                 <input type="hidden" name="board" value="${board.no}" />
+                 <button id="submitComment" type="submit">등록</button>
+             </form>
         </div>
 
-<%--        <div class="comments-list">
-            <h2>댓글 목록<h2>
-            <c:forEach var="comment" items="${board.comments}">
-                <p>
-                    <c:out value="${comment.no}" />:
-                    <c:out value="${comment.content}" />:
-                    <c:out value="${comment.regdate}" />:
-                    <c:out value="${comment.board_no}" />:
-                    <c:out value="${board.likes}" />
-                </p>
-            </c:forEach>
-        </div> --%>
+        </div>
+
+        <div class="comments-list">
+        <h2>댓글 목록</h2>
+         <c:forEach var="comment" items="${board.comments}">
+             <div class="comment-item">
+                 <strong><c:out value="${comment.member.id}" /></strong>: <br>
+                 <c:out value="${comment.content}" /> <br>
+                 <span class="comment-date"><c:out value="${comment.regdate}" /></span>
+                 <button class="comment-edit" data-id="${comment.no}">수정</button>
+                 <button class="comment-delete" data-id="${comment.no}">삭제</button>
+             </div>
+         </c:forEach>
+        </div>
 
     </div>
    <script>
@@ -75,11 +84,52 @@
                    location.href = "/starroad/board/delete?no=" + ${board.no}; // 삭제 API 호출
                }
        });
-      document.getElementById("editBtn").addEventListener("click", function() {
+     document.getElementById("editBtn").addEventListener("click", function() {
 
                  location.href = "/starroad/board/update?no=" + ${board.no}; // 수정 API 호출
 
-         });
+       });
+     document.getElementById("submitComment").addEventListener("click", function() {
+
+                      location.href = "/starroad/board/update?no=" + ${board.no}; // 수정 API 호출
+
+       });
+
+  document.querySelectorAll(".comment-delete").forEach(function(button) {
+      button.addEventListener("click", function() {
+          const commentNo = button.getAttribute("data-id");
+          console.log("commentNo=" + commentNo);
+
+          if (confirm("정말로 댓글을 삭제하시겠습니까?")) {
+              const form = document.createElement('form');
+              form.method = 'POST';
+              form.action = '/starroad/comment/delete?no='+commentNo;
+
+              const input = document.createElement('input');
+              input.type = 'hidden';
+              input.name = 'no';
+              input.value = commentNo;
+
+              form.appendChild(input);
+              document.body.appendChild(form);
+
+              form.submit();
+          }
+      });
+  });
+
+    document.querySelectorAll(".comment-edit").forEach(function(button) {
+        button.addEventListener("click", function() {
+            const commentNo = button.getAttribute("data-id");
+            location.href = "/starroad/comment/update?no=" + commentNo;
+        });
+    });
+
+    document.getElementById("submitComment").addEventListener("click", function() {
+        location.href = "/starroad/comment/create?no=" + ${board.no};
+    });
+
+
    </script>
 </body>
 </html>

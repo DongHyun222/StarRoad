@@ -1,9 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html lang="ko">
 <head>
     <!-- 메타 정보, 스타일 등 -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/static/css/board/board2.css">
     <script src="//code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -24,8 +26,8 @@
             <div class="navbar">
                 <div class="navbar-left">
                     <a href="popular" id="popularLink"  onclick="showContent('popular','popular')">인기글</a>
-                    <a href="free?type=0" id="freeLink" onclick="showContent('free', '0')">자유게시판</a>
-                    <a href="free?type=1" id="authenticationLink" onclick="showContent('authentication', '1')">인증방</a>
+                    <a href="free?type=F" id="freeLink" onclick="showContent('free', 'F')">자유게시판</a>
+                    <a href="free?type=C" id="authenticationLink" onclick="showContent('authentication', 'C')">인증방</a>
                 </div>
                 <div class="navbar-right">
                     <a href="/starroad/board/write">글쓰기</a>
@@ -36,23 +38,40 @@
 </div>
 
 
-<!-- 자유게시판 내용 -->
+<!-- 게시판 내용 -->
 <div id="boardcontent" class="menu-content2">
     <div class="row no-gutters">
         <c:forEach items="${freeBoardPage.content}" var="board">
             <div class="col-md-6">
                 <div class="board-item">
-                    <h3><a href="/starroad/board/detail?no=${board.no}">${board.title}</a></h3>
-                    <p>${board.content}</p>
-                    <div class="icons">
-                        <i class="far fa-thumbs-up"></i> ${board.likes} <i class="far fa-comment"></i> ${board.commentNum}
+                    <div class ="detailTypeStyle">
+                        <a> ${board.detailType}</a>
                     </div>
+                    <div class="titleStyle">
+                    <a href="/starroad/board/detail?no=${board.no}">${board.title}</a>
+                    </div>
+                    <div class = "contentSytle">
+                    <p>${board.content}</p>
+                    </div>
+                    <div class="idSytle">
+                        <a> ID : ${board.member.id} </a>
+                    </div>
+
+                    <div class="icons">
+                        <div class left="left-icons">
+                        <i class="far fa-thumbs-up"></i> ${board.likes} <i class="far fa-comment"></i> ${board.commentNum}
+                        </div>
+
+                        <span class="timeStyle"><i class="far fa-calendar-alt"></i><fmt:formatDate value="${board.regdate}" pattern="yyyy-MM-dd" /></span>
+
+                    </div>
+
                 </div>
             </div>
         </c:forEach>
     </div>
 
-    <nav aria-label="Page navigation">
+    <nav  aria-label="Page navigation" id="btm_pagi2">
         <ul class="pagination justify-content-center">
             <c:if test="${freeBoardPage.totalPages > 1}">
                 <c:if test="${freeBoardPage.number != 0}">
@@ -89,22 +108,38 @@
         </ul>
     </nav>
 </div>
-
+<!-- 자유게시판 내용 -->
 <div id="popular" class="menu-content">
     <div class="row no-gutters">
         <c:forEach items="${popularBoardPage.content}" var="board">
             <div class="col-md-6">
                 <div class="board-item">
-                    <h3>${board.title}</h3>
-                    <p>${board.content}</p>
-                    <div class="icons">
-                        <i class="far fa-thumbs-up"></i> ${board.likes} <i class="far fa-comment"></i> ${board.commentNum}
+                    <div class ="detailTypeStyle">
+                        <a> ${board.detailType}</a>
                     </div>
+                    <div class="titleStyle">
+                    <h3><a href="/starroad/board/detail?no=${board.no}">${board.title}</a></h3>
+                    </div>
+                    <div class = "contentSytle">
+                    <p>${board.content}</p>
+                    </div>
+                    <div class="idSytle">
+                        <a>ID :  ${board.member.id}</a>
+                    </div>
+                    <div class="icons">
+                        <div class left="left-icons">
+                            <i class="far fa-thumbs-up"></i> ${board.likes} <i class="far fa-comment"></i> ${board.commentNum}
+                        </div>
+
+                        <i class="timeStyle"><i class="far fa-calendar-alt"></i><fmt:formatDate value="${board.regdate}" pattern="yyyy-MM-dd" /></i>
+
+                    </div>
+
                 </div>
             </div>
         </c:forEach>
     </div>
-    <nav aria-label="Page navigation">
+    <nav aria-label="Page navigation" id="btm_pagi">
         <ul class="pagination justify-content-center">
             <c:if test="${popularBoardPage.totalPages > 1}">
                 <c:if test="${popularBoardPage.number != 0}">
@@ -156,9 +191,9 @@
         // AJAX 요청 URL 정의
         let url;
         if (menu === 'free') {
-            url = '/starroad/freeboard?type=' + type;
+            url = '/starroad/board?type=' + type;
         } else if (menu === 'authentication') {
-            url = '/starroad/freeboard?type=' + type;
+            url = '/starroad/board?type=' + type;
         } else if (menu === 'popular') {
             url = '/starroad/popular';
         }
@@ -176,6 +211,8 @@
             }
         });
     }
+
+
 </script>
 </body>
 </html>

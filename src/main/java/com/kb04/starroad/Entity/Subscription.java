@@ -1,6 +1,7 @@
 package com.kb04.starroad.Entity;
 
 import com.kb04.starroad.Dto.MemberDto;
+import com.kb04.starroad.Dto.SubProdDto;
 import com.kb04.starroad.Dto.SubscriptionDto;
 import lombok.*;
 
@@ -38,6 +39,16 @@ public class Subscription {
                 .no(no)
                 .member(member.toMemberDto())
                 .prod(prod.toProductDto())
+                .period(period)
+                .price(price)
+                .build();
+    }
+
+    public SubProdDto toSubProdDto() {
+        return SubProdDto.builder()
+                .name(prod.getName())
+                .attribute(prod.getAttribute())
+                .explain(prod.getExplain())
                 .period(period)
                 .price(price)
                 .build();

@@ -17,6 +17,10 @@ public class PolicyService {
     private final PolicyRepository policyRepository;
     private static final int ITEMS_PER_PAGE = 3;
 
+    /**
+     * 청년정책 전체 조회
+     * @return List<PolicyResponseDto>
+     */
     public List<PolicyResponseDto> selectAllPolicies(){
 
         List<PolicyResponseDto> result = new ArrayList<>();
@@ -36,6 +40,10 @@ public class PolicyService {
         return result;
     }
 
+    /**
+     * 청년정책 Pagination
+     * @return Map<String, Object>
+     */
     public Map<String, Object> returnPoliciesByPage(List<PolicyResponseDto> policyList, int pageIdx) {
 
         Map<String, Object> result = new HashMap<>();
@@ -50,6 +58,10 @@ public class PolicyService {
         return result;
     }
 
+    /**
+     * 청년정책 검색 조건 여부 판단
+     * @return boolean
+     */
     public boolean judgePolicies(PolicyRequestDto requestDto) {
 
         PolicyRequestDto dto = PolicyRequestDto.builder()
@@ -64,6 +76,44 @@ public class PolicyService {
         return dto.equals(requestDto);
     }
 
+    /**
+     * 청년정책 검색 using 조건
+     * @return List<PolicyResponseDto>
+     */
+    public List<PolicyResponseDto> selectDetailPolicies(PolicyRequestDto request) {
+
+        Map<String, Object> searchKeys = new HashMap<>();
+
+        if(request.getLocation() != null) searchKeys.put("location", request.getLocation());
+        if(request.getKeyword() != null) searchKeys.put("keyword", request.getKeyword());
+
+        List<String> tags = new ArrayList<>();
+        if(request.getTag1() != null) tags.add(request.getTag1());
+        if(request.getTag2() != null) tags.add(request.getTag2());
+        if(request.getTag3() != null) tags.add(request.getTag3());
+        if(request.getTag4() != null) tags.add(request.getTag4());
+
+        if(tags.size() != 0) searchKeys.put("tag", tags);
+
+        List<Policy> result = policyRepository.findAll(PolicySpecification.searchPolicyWithMultiConditions(searchKeys));
+        List<PolicyResponseDto> finalResult = new ArrayList<>();
+        for(Policy policy : result){
+            PolicyResponseDto dto = PolicyResponseDto.builder()
+                    .name(policy.getName())
+                    .explain(policy.getExplain())
+                    .tag(policy.getTag())
+                    .link(policy.getLink())
+                    .location(policy.getLocation())
+                    .build();
+            finalResult.add(dto);
+        }
+        return finalResult;
+    }
+
+    /**
+     * 청년정책 검색 조건 매핑
+     * @return Map<String, String>
+     */
     public Map<String, String> mappingRequest(PolicyRequestDto requestDto) {
 
         Map<String, String> result = new HashMap<>();
@@ -76,35 +126,6 @@ public class PolicyService {
         result.put("request_tag4", requestDto.getTag4());
 
         return result;
-    }
-
-    public List<PolicyResponseDto> selectDetailPolicies(PolicyRequestDto request) {
-
-        Map<String, Object> searchKeys = new HashMap<>();
-        List<PolicyResponseDto> finalResult = new ArrayList<>();
-
-        if(request.getLocation() != null) searchKeys.put("location", request.getLocation());
-        if(request.getKeyword() != null) searchKeys.put("keyword", request.getKeyword());
-        List<String> tags = new ArrayList<>();
-        if(request.getTag1() != null) tags.add(request.getTag1());
-        if(request.getTag2() != null) tags.add(request.getTag2());
-        if(request.getTag3() != null) tags.add(request.getTag3());
-        if(request.getTag4() != null) tags.add(request.getTag4());
-
-        if(tags.size() != 0) searchKeys.put("tag", tags);
-
-        List<Policy> result = policyRepository.findAll(PolicySpecification.searchPolicyWithMultiConditions(searchKeys));
-        for(Policy policy : result){
-            PolicyResponseDto dto = PolicyResponseDto.builder()
-                    .name(policy.getName())
-                    .explain(policy.getExplain())
-                    .tag(policy.getTag())
-                    .link(policy.getLink())
-                    .location(policy.getLocation())
-                    .build();
-            finalResult.add(dto);
-        }
-        return finalResult;
     }
 
 }
