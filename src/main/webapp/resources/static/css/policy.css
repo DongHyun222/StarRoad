@@ -1,23 +1,23 @@
 .title {
     text-align: center;
-    margin-top: 70px;
+    margin-top: 2%;
     font-size: xx-large;
     font-weight: bolder;
 }
 .policy_box {
     border: black 1px;
     display: flex;
-    margin: inherit;
     justify-content: space-evenly;
     height: 100%;
     align-items: center;
     width: 80%;
+    margin-bottom: 10px
 }
 
 .policy {
     border: var(--sub-kb-gold) 1.5px solid;
     margin: inherit;
-    height: 500px;
+    height: 430px;
     border-radius: 20px;
     margin-top: 20px;
     margin-bottom: 20px;
@@ -73,9 +73,18 @@
 }
 
 main {
+    width: 90%;
+    margin: 0 auto;
+}
+
+#main_box {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+#policy-div-wrap {
+
 }
 
 .pagination {
@@ -97,10 +106,12 @@ a.page-link {
 .search_box {
     border: var(--sub-kb-dark-gray) 1.5px solid;
     border-radius: 20px;
-    width: 55%;
+    width: 53%;
     padding: 15px;
-    margin-bottom: 32px;
-    margin-top: 40px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    margin-bottom: 10px;
+    margin-top: 30px;
     justify-content: center;
 }
 
