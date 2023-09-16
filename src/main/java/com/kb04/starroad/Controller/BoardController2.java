@@ -3,6 +3,7 @@ package com.kb04.starroad.Controller;
 import com.kb04.starroad.Dto.board.BoardRequestDto;
 import com.kb04.starroad.Dto.board.BoardResponseDto;
 import com.kb04.starroad.Entity.Board;
+import com.kb04.starroad.Entity.Member;
 import com.kb04.starroad.Service.BoardService2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Optional;
 
@@ -25,9 +27,15 @@ public class BoardController2 {
     @Autowired
     private BoardService2 boardService;
     @GetMapping("/starroad/board/write")
-    public ModelAndView board() {
+    public ModelAndView board(HttpSession session) {
+        if (session.getAttribute("currentUser") == null) {
+            ModelAndView mav = new ModelAndView("redirect:/starroad/login");
+            mav.addObject("message", "로그인 후에 댓글을 작성할 수 있습니다.");
+            return mav;
+        }
         ModelAndView mav = new ModelAndView("board/write");
         return mav;
+
     }
     @GetMapping("/starroad/board/main1")
     public ModelAndView boardMain() {
@@ -93,18 +101,30 @@ public class BoardController2 {
     }
 
     @GetMapping("/starroad/board/update")
-    public ModelAndView updateBoard(@RequestParam("no") Integer no) {
+    public ModelAndView updateBoard(@RequestParam("no") Integer no,HttpSession session) {
+
 
         ModelAndView mav = new ModelAndView("board/update");
 
-        Optional<Board> boardOptional = boardService.findById(no);
+        // 세션에서 현재 로그인한 사용자의 ID 가져오기
+        Member currentUser = (Member) session.getAttribute("currentUser");
+        String currentUserId = currentUser.getId();  // 사용자 ID 가져오기
 
 
-        Board board = boardOptional.get();
-        BoardResponseDto boardResponseDto = board.toBoardResponseDto();
+        if (boardService.canUpdate(no, currentUserId)) {
+            // 현재 사용자가 게시글 수정 가능한 경우
+            Optional<Board> boardOptional = boardService.findById(no);
 
-        mav.addObject("board", boardResponseDto);
 
+            Board board = boardOptional.get();
+            BoardResponseDto boardResponseDto = board.toBoardResponseDto();
+
+            mav.addObject("board", boardResponseDto);
+        }
+        else{
+            // 현재 사용자가 게시글 수정 불가능한 경우 or 게시글 존재하지 않는 경우
+            mav.setViewName("redirect:/starroad/board/detail?no=" + no);
+        }
         return mav;
 
     }
@@ -146,23 +166,38 @@ public class BoardController2 {
 
 
     @PostMapping("/starroad/board/writepro")
-    public ResponseEntity<String> boardWritePro(
+    public ModelAndView boardWritePro(
+            HttpSession session,
             @RequestParam("type") String type,
             @RequestParam("detailType") String detailType,
             @RequestParam("title") String title,
             @RequestParam("content") String content,
             @RequestParam("image") MultipartFile imageFile
     ) {
-        try {
-            boardService.writeBoard(type, detailType, title, content, imageFile);
+        // 세션에서 현재 로그인한 사용자의 정보 가져오기
+        Member currentUser = (Member) session.getAttribute("currentUser");
 
-            HttpHeaders headers = new HttpHeaders();
-            headers.add("Location", "/starroad/board/main");
-            return new ResponseEntity<>("", headers, HttpStatus.FOUND);
+        if (currentUser == null) {
+            // 로그인하지 않은 사용자가 글 작성을 시도하는 경우 처리
+            ModelAndView mav = new ModelAndView("redirect:/starroad/login");
+            mav.addObject("message", "로그인 후에 게시글을 작성할 수 있습니다.");
+
+            return mav;
+        }
+
+        try {
+            // 게시글 작성 서비스 호출 시, 현재 사용자 ID 추가로 전달
+            boardService.writeBoard(currentUser.getId(), type, detailType, title, content, imageFile);
+
+            return new ModelAndView("redirect:/starroad/board/main");
         } catch (IOException e) {
             e.printStackTrace();
-            // 이미지 업로드 실패 시 에러 응답
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Image upload failed.");
+
+            // 이미지 업로드 실패 시 에러 페이지로 이동
+            ModelAndView mav = new ModelAndView("/error");
+            mav.addObject("message", "이미지 업로드에 실패했습니다.");
+
+            return mav;
         }
     }
 }
