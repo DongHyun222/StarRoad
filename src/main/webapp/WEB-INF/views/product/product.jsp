@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,7 +14,7 @@
     <link rel="stylesheet" type="text/css" href="${path}/resources/static/css/product.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script type="text/javascript">
-        $(function() {
+        $(function () {
             $("#navbar").load("${path}/resources/common_jsp/navbar.jsp");
         });
     </script>
@@ -63,22 +64,42 @@
 
                 <div>
                     <div class="search_type content">이자 과세</div>
-                    <ul id="rate" class="content">
-                        <li>
-                            <input type="radio" name="rate" value="basic" id="rate_basic" class="btn period_btn">
-                            <label for="rate_basic">일반과세</label>
-                            </input>
-                        </li>
-                        <li>
-                            <input type="radio" name="rate" value="none" id="rate_none" class="btn period_btn">
-                            <label for="rate_none">비과세</label>
-                            </input>
-                        </li>
-                    </ul>
+                    <c:choose>
+                        <c:when test="${user ne null}">
+                            <ul id="rate" class="content">
+                                <li>
+                                    <input type="radio" name="rate" value="base" id="rate_base" class="btn period_btn"
+                                           checked>
+                                    <label for="rate_base">일반과세</label>
+                                    </input>
+                                </li>
+                                <li>
+                                    <input type="radio" name="rate" value="none" id="rate_none" class="btn period_btn">
+                                    <label for="rate_none">비과세</label>
+                                    </input>
+                                </li>
+                            </ul>
+                        </c:when>
+                        <c:otherwise>
+                            <ul id="rate" class="content">
+                                <li>
+                                    <input type="radio" name="rate" value="base" class="btn period_btn" disabled>
+                                    <label for="rate_base">일반과세</label>
+                                    </input>
+                                </li>
+                                <li>
+                                    <input type="radio" name="rate" value="none" class="btn period_btn" disabled>
+                                    <label for="rate_none">비과세</label>
+                                    </input>
+                                </li>
+                                <span>로그인하시면 회원 정보와 이자 과세를 적용한 만기예상금액을 보실 수 있습니다.</span>
+                            </ul>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
 
                 <div>
-                    <div class="search_type content">상품</div>
+                    <div class="search_type content">상품명</div>
                     <input id="searchInput" name="query" class="form-control me-2 search_bar" type="text"
                            placeholder="예적금 상품명을 적어주세요"
                            aria-label="Search">
@@ -111,14 +132,31 @@
                         <div class="explain">${item.explain}</div>
                     </div>
                     <div class="rate">
-                        최고 연 <span class="max_rate"><span>${item.maxRate}</span>%</span> (${item.maxRatePeriod}개월)
+                        최고 연 <span class="max_rate"><span>${item.maxRate}</span>%</span> <c:if
+                            test="${item.maxRatePeriod ne null}">(${item.maxRatePeriod}개월)</c:if>
                     </div>
                 </div>
-                <div id="member" class="content">
-                    현재 ${user}님의 자산으로 계산된<br>
-                    만기 예상 금액은<br>
-                    세후 <span>${price}</span>원 입니다.
-                </div>
+                <c:if test="${user ne null}">
+                    <div id="member" class="content">
+                        현재 ${user}님의 자산으로 계산된<br>
+                        <c:choose>
+<%--                            회원우대적용--%>
+                            <c:when test="${memberConditionRates.containsKey(item.no)}">
+                                만기 예상 금액은<br>
+                                세후 <span><fmt:formatNumber type="number" pattern="###,###,###,###,###,###"
+                                                           value="${((monthlyAvailablePrice * 1000 * item.maxPeriod) * (1 + (((item.maxRate - item.maxConditionRate + memberConditionRates.get(item.no))*(item.maxRatePeriod + 1) / 24) * (1 - 0.154)) / 100))}"/></span>원
+                                입니다.
+                            </c:when>
+                            <c:otherwise>
+                                만기 예상 금액은<br>
+                                세후 <span><fmt:formatNumber type="number" pattern="###,###,###,###,###,###"
+                                                           value="${((monthlyAvailablePrice * 1000 * item.maxPeriod) * (1 + (((item.maxRate - item.maxConditionRate)*(item.maxRatePeriod + 1) / 24) * (1 - 0.154)) / 100))}"/></span>원
+                                입니다.
+                            </c:otherwise>
+                        </c:choose>
+
+                    </div>
+                </c:if>
                 <div class="content">
                     <button class="btn"><a href="${item.link}">자세히</a></button>
                 </div>

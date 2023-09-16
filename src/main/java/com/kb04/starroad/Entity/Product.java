@@ -4,6 +4,7 @@ import com.kb04.starroad.Dto.SubProdDto;
 import com.kb04.starroad.Dto.product.ProductDto;
 import com.kb04.starroad.Dto.product.ProductResponseDto;
 import lombok.*;
+import org.hibernate.annotations.Formula;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
@@ -61,8 +62,12 @@ public class Product {
     @Column(name = "max_condition_rate")
     private Double maxConditionRate;
 
+    @Formula("(max_period * 1000) * (1 + ((max_rate - nvl(max_condition_rate, 0)) * (nvl(max_rate_period, max_period) + 1) / 24) * (1 - 0.154) / 100) ")
+    private Double maxRateTimesPeriod;
+
     public ProductDto toProductDto() {
         return ProductDto.builder()
+                .no(no)
                 .type(type)
                 .name(name)
                 .explain(explain)
@@ -80,12 +85,14 @@ public class Product {
 
     public ProductResponseDto toProductResponseDto() {
         return ProductResponseDto.builder()
+                .no(no)
                 .type(type)
                 .attribute(attribute)
                 .name(name)
                 .explain(explain)
                 .maxRate(maxRate)
                 .maxRatePeriod(maxRatePeriod)
+                .maxPeriod(maxPeriod)
                 .link(link)
                 .build();
     }
