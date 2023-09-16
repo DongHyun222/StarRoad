@@ -61,7 +61,7 @@ public class Product {
     @Column(name = "max_condition_rate")
     private Double maxConditionRate;
 
-    @Formula("((max_rate - nvl(max_condition_rate,0)) * (nvl(max_rate_period, max_period) + 1)) * (max_period * 1000)")
+    @Formula("(max_period * 1000) * (1 + ((max_rate - nvl(max_condition_rate, 0)) * (nvl(max_rate_period, max_period) + 1) / 24) * (1 - 0.154) / 100) ")
     private Double maxRateTimesPeriod;
 
     public ProductDto toProductDto() {

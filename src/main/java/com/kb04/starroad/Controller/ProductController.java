@@ -76,14 +76,12 @@ public class ProductController {
             }
             setUserInfoInModel(model, loginMember, monthlyAvailablePrice);
         }
-        setPageIndexInModel(model, page, productList);
 
         if (type != null)
             model.addAttribute("type", type);
         if (period != null) {
             model.addAttribute("period", period);
             productList = setBaseRate(productList, Integer.parseInt(period));
-//            System.out.println(productList);
         }
         if (rate != null) {
             model.addAttribute("rate", rate);
@@ -95,6 +93,7 @@ public class ProductController {
         if (query != null)
             model.addAttribute("query", query);
 
+        setPageIndexInModel(model, page, productList);
         ModelAndView mav = new ModelAndView("product/product_result");
         return mav;
     }
@@ -131,6 +130,11 @@ public class ProductController {
                     prodDto.setBaseRate(dto.getRate());
             }
         }
+        return productList;
+    }
+
+    private List<ProductResponseDto> setEstimatedAmount(List<ProductResponseDto> productList, Double monthlyAvailablePrice) {
+
         return productList;
     }
 
