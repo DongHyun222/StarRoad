@@ -57,10 +57,11 @@ public class CommentService {
 
     @Transactional
     public void updateComment(CommentDto commentDto) {
-        Optional<Comment> listcomment = commentRepository.findById(commentDto.getNo());
 
-        Comment comment = listcomment.get();
-        comment.update(commentDto.getContent());
+        Optional<Comment> optionalcomment = commentRepository.findByNo(commentDto.getNo());
+
+        Comment comment2 = optionalcomment.get();
+        comment2.update(commentDto.getContent());
     }
 
     @Transactional

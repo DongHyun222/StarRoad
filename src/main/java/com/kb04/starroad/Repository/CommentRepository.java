@@ -17,4 +17,5 @@ public interface CommentRepository extends JpaRepository<Comment, Integer>, JpaS
     List<CommentDto> findByBoard(Board board);
     Optional<Comment> findByNo(Comment comment);
     void deleteByNo(int commentNo);
+    Optional<Comment> findByNo(int commentNo);
 }
