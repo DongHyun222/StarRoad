@@ -46,7 +46,7 @@
             <div class="like-section">
                 <img src="https://ifh.cc/g/aw0vjY.png" alt="Like Icon" style="vertical-align: middle; width: 20px; height: 20px;">
                 <c:out value="${board.likes}" />
-                <img src="data:image/jpeg;base64,${board.imageBase64}" alt="Image"width="200" height="200" style="margin-bottom: 30px;"/>
+        <img src="data:image/jpeg;base64,${board.imageBase64}" alt="" width="200" height="200" style="margin-bottom: 30px;" onerror="this.style.display='none'"/>
             </div>
         </div>
 
