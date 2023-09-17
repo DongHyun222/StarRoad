@@ -38,7 +38,7 @@
         <% if(currentUser == null) { %>
             <button class="btn"><a href="/starroad/login">로그인</a></button>
         <% } else { %>
-            <!-- 로그인 시 -->
+            <!-- 로그인 성공시 navbar-->
             <div>
                 <button class="btn"><a href="/starroad/mypage/asset">마이페이지</a></button>
                 <button class="btn"><a href="/starroad/logout">로그아웃</a></button>
