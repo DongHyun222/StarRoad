@@ -29,11 +29,6 @@
                 <c:out value="${board.likes}" />
             </span>
 
-<%--        <c:forEach var="member" items="${board.members}">
-            <c:out value="${member.id}" />
-        </c:forEach> --%>
-
-
             <div class="title-buttons">
                 <button id="editBtn">수정</button>
                 <button id="deleteBtn">삭제</button>

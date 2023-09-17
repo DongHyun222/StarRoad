@@ -38,7 +38,14 @@ public class CommentController {
 
     // 조회
     @GetMapping("/starroad/comment")
-    public ModelAndView getCommentByBoard(@RequestParam("no") int commentNo) {
+    public ModelAndView getCommentByBoard(@RequestParam("no") int commentNo, HttpSession session) {
+
+        if (session.getAttribute("currentUser") == null) {
+            ModelAndView mav = new ModelAndView("redirect:/starroad/login");
+            mav.addObject("message", "로그인 후에 댓글을 작성할 수 있습니다.");
+            return mav;
+        }
+
         CommentDto commentDto = commentService.getCommentById(commentNo);
         ModelAndView mav = new ModelAndView("board/detail?no=" + commentNo);
         mav.addObject("comment", commentDto);
@@ -46,7 +53,13 @@ public class CommentController {
     }
 
     @GetMapping("/starroad/comment/update")
-    public ModelAndView updateComment(@RequestParam("no") int commentNo) {
+    public ModelAndView updateComment(@RequestParam("no") int commentNo, HttpSession session) {
+
+        if (session.getAttribute("currentUser") == null) {
+            ModelAndView mav = new ModelAndView("redirect:/starroad/login");
+            mav.addObject("message", "로그인 후에 댓글을 작성할 수 있습니다.");
+            return mav;
+        }
 
         ModelAndView mav = new ModelAndView("comment/update");
 
@@ -64,7 +77,13 @@ public class CommentController {
     @PostMapping("/starroad/comment/doUpdate")
     public ModelAndView processUpdateComment(@RequestParam("no") int commentNo,
                                              @RequestParam("content") String content,
-                                             @RequestParam("board") int boardNo) {
+                                             @RequestParam("board") int boardNo, HttpSession session) {
+
+        if (session.getAttribute("currentUser") == null) {
+            ModelAndView mav = new ModelAndView("redirect:/starroad/login");
+            mav.addObject("message", "로그인 후에 댓글을 작성할 수 있습니다.");
+            return mav;
+        }
 
         CommentDto commentDto = new CommentDto();
         commentDto.setNo(commentNo);
@@ -76,7 +95,13 @@ public class CommentController {
         return mav;
     }
     @PostMapping("/starroad/comment/delete")
-    public ModelAndView deleteComment(@RequestParam("no") int commentNo) {
+    public ModelAndView deleteComment(@RequestParam("no") int commentNo, HttpSession session) {
+
+        if (session.getAttribute("currentUser") == null) {
+            ModelAndView mav = new ModelAndView("redirect:/starroad/login");
+            mav.addObject("message", "로그인 후에 댓글을 작성할 수 있습니다.");
+            return mav;
+        }
 
         commentService.deleteComment(commentNo);
         ModelAndView mav = new ModelAndView("redirect:/starroad/board/main");
