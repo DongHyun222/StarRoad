@@ -111,6 +111,7 @@
 
 .like-section {
       margin-top: 150px;
+      text-align: center;
 }
 
 .comments-list {
@@ -122,3 +123,23 @@
 }
 
 
+#like-icon:hover {
+    cursor: pointer; /* 마우스를 올렸을 때 커서 모양을 포인터로 변경 */
+
+}
+.separator {
+    border: none;
+    border-left: 1px solid hsla(20, 10%, 10%,50);
+    height: 20px;
+    width: 1px;
+    margin-left: 5px;
+        margin-right: 5px;
+}
+.something {
+   display:flex;
+   align-items:center;
+}
+.regdate, .likes {
+    color: #888; /* 이 값은 RGB로 표현된 색상입니다. 이 값을 변경하여 다른 색상을 선택할 수 있습니다. */
+    font-weight: lighter; /* 'lighter'는 부모 요소보다 더 얇은 폰트 굵기를 설정합니다. */
+}
