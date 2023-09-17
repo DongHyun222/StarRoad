@@ -37,6 +37,11 @@
             </div>
 
 
+<%--        <c:forEach var="member" items="${board.members}">
+            <c:out value="${member.id}" />
+        </c:forEach> --%>
+
+
             <div class="title-buttons">
                 <button id="editBtn">수정</button>
                 <button id="deleteBtn">삭제</button>
@@ -47,8 +52,10 @@
 
             <c:out value="${board.content}" />
             <div class="like-section">
+
               <img src="https://ifh.cc/g/aw0vjY.png" id="like-icon" alt="Like Icon" style="vertical-align: middle; width: 50px; height: 50px;" >
               <span id="likes-count"> <c:out value="${board.likes}" /></span>
+             
         <img src="data:image/jpeg;base64,${board.imageBase64}" alt="" width="200" height="200" style="margin-bottom: 30px;" onerror="this.style.display='none'"/>
             </div>
         </div>
