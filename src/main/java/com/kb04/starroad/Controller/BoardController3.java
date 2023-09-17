@@ -38,7 +38,8 @@ public class    BoardController3 {
             mav.setViewName("redirect:/starroad/board/main");
 
         } else{
-            // 현재 사용자가 게시글 삭제 불가능한 경우 or 게시글 존재하지 않는 경우
+            // 현재 사용자가 게시글 삭제 불가
+            // 능한 경우 or 게시글 존재하지 않는 경우
             mav.setViewName("board/deleteError");
         }
 
@@ -57,6 +58,9 @@ public class    BoardController3 {
             List<CommentDto> comments = commentService.findByBoard(board);
 
             BoardResponseDto boardResponseDto = board.toBoardResponseDto();
+            String memberId = board.getMember().getId();  // 'getId()'는 실제 회원 ID를 반환하는 메서드로 변경해야 합니다.
+            boardResponseDto.setMemberId(memberId);  // 'setMemberId()'는 DTO에서 회원 ID를 설정하는 메서드입니다.
+
             boardResponseDto.setComments(comments);
 
             // 이미지를 Base64로 인코딩하여 DTO에 추가
