@@ -37,7 +37,6 @@
             </div>
 
 
-
             <div class="title-buttons">
                 <button id="editBtn">수정</button>
                 <button id="deleteBtn">삭제</button>
