@@ -9,6 +9,7 @@
     <meta charset="UTF-8">
     <title>게시물 상세보기</title>
     <script src="//code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <link rel="stylesheet" type="text/css" href="/resources/static/css/board/detail.css">
     <script type="text/javascript">
             $(function() {
@@ -23,11 +24,18 @@
 
         <div class="title">
             <span class="title-text"><c:out value="${board.title}" /></span> <br>
-            <span class="regdate"><c:out value="${board.regdate}" /></span>
+            <div class ="something">
+            <span class="memberId"><c:out value="${board.memberId}"/></span>
+             <hr class="separator">
+            <span class="regdate">
+                <fmt:formatDate value="${board.regdate}" pattern="yyyy-MM-dd HH:mm" />
+            </span>
             <span class="likes">
                 <img src="https://ifh.cc/g/aw0vjY.png" alt="Like Icon" style="vertical-align: middle; width: 20px; height: 20px;">
                 <c:out value="${board.likes}" />
             </span>
+            </div>
+
 
 <%--        <c:forEach var="member" items="${board.members}">
             <c:out value="${member.id}" />
@@ -44,8 +52,10 @@
 
             <c:out value="${board.content}" />
             <div class="like-section">
-                <img src="https://ifh.cc/g/aw0vjY.png" alt="Like Icon" style="vertical-align: middle; width: 20px; height: 20px;">
-                <c:out value="${board.likes}" />
+
+              <img src="https://ifh.cc/g/aw0vjY.png" id="like-icon" alt="Like Icon" style="vertical-align: middle; width: 50px; height: 50px;" >
+              <span id="likes-count"> <c:out value="${board.likes}" /></span>
+             
         <img src="data:image/jpeg;base64,${board.imageBase64}" alt="" width="200" height="200" style="margin-bottom: 30px;" onerror="this.style.display='none'"/>
             </div>
         </div>
@@ -79,6 +89,7 @@
 
     </div>
    <script>
+
      document.getElementById("deleteBtn").addEventListener("click", function() {
                if (confirm("정말로 삭제하시겠습니까?")) {
                    location.href = "/starroad/board/delete?no=" + ${board.no}; // 삭제 API 호출

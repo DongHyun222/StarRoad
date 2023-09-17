@@ -1,5 +1,6 @@
 package com.kb04.starroad.Entity;
 
+import com.kb04.starroad.Dto.PaymentLogDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -7,6 +8,7 @@ import java.util.Date;
 
 @Entity
 @Getter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @SequenceGenerator(name = "payment_log_seq", sequenceName="payment_log_seq")
@@ -19,8 +21,16 @@ public class PaymentLog {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "subscription_no", nullable = false)
-    private Subscription subscriptionNo;
+    private Subscription subscription;
 
     @Column(nullable = false)
     private Date paymentDate;
+
+    public PaymentLogDto toPaymentLogDto() {
+        return PaymentLogDto.builder()
+                .no(no)
+                .subscription(subscription.toSubscriptionDto())
+                .paymentDate(paymentDate)
+                .build();
+    }
 }

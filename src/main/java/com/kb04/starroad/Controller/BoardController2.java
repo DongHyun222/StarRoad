@@ -1,6 +1,9 @@
 package com.kb04.starroad.Controller;
 
+import com.kb04.starroad.Dto.board.BoardRequestDto;
+import com.kb04.starroad.Dto.board.BoardResponseDto;
 import com.kb04.starroad.Entity.Board;
+import com.kb04.starroad.Entity.Member;
 import com.kb04.starroad.Service.BoardService2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -9,15 +12,15 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.persistence.PostPersist;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Optional;
 
 @RestController
 public class BoardController2 {
@@ -25,11 +28,17 @@ public class BoardController2 {
     @Autowired
     private BoardService2 boardService;
     @GetMapping("/starroad/board/write")
-    public ModelAndView board() {
+    public ModelAndView board(HttpSession session) {
+        if (session.getAttribute("currentUser") == null) {
+            ModelAndView mav = new ModelAndView("redirect:/starroad/login");
+            mav.addObject("message", "로그인 후에 댓글을 작성할 수 있습니다.");
+            return mav;
+        }
         ModelAndView mav = new ModelAndView("board/write");
         return mav;
+
     }
-    @GetMapping("/starroad/board/main")
+    @GetMapping("/starroad/board/main1")
     public ModelAndView boardMain() {
         ModelAndView mav = new ModelAndView("board/main");
         return mav;
@@ -40,7 +49,7 @@ public class BoardController2 {
     public ModelAndView boardList(
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "6") int size,
-            @RequestParam(name = "type", defaultValue = "0") String type,
+            @RequestParam(name = "type", defaultValue = "F") String type,
             HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("board/board");
 
@@ -51,11 +60,11 @@ public class BoardController2 {
 
         Page<Board> boardPage;
 
-        if ("0".equals(type)) {
-            // type이 "0"인 경우 자유게시판 목록 조회
+        if ("F".equals(type)) {
+            // type이 "F"인 경우 자유게시판 목록 조회
             boardPage = boardService.findPaginated(pageable);
-        } else if ("1".equals(type)) {
-            // type이 "1"인 경우 인증방 목록 조회
+        } else if ("C".equals(type)) {
+            // type이 "C"인 경우 인증방 목록 조회
             boardPage = boardService.findAuthenticatedPaginated(pageable);
         }
         else {
@@ -93,34 +102,103 @@ public class BoardController2 {
     }
 
     @GetMapping("/starroad/board/update")
-    public ModelAndView updateBoard() {
+    public ModelAndView updateBoard(@RequestParam("no") Integer no,HttpSession session) {
+
 
         ModelAndView mav = new ModelAndView("board/update");
 
+        // 세션에서 현재 로그인한 사용자의 ID 가져오기
+        Member currentUser = (Member) session.getAttribute("currentUser");
+        String currentUserId = currentUser.getId();  // 사용자 ID 가져오기
+
+
+        if (boardService.canUpdate(no, currentUserId)) {
+            // 현재 사용자가 게시글 수정 가능한 경우
+            Optional<Board> boardOptional = boardService.findById(no);
+
+
+            Board board = boardOptional.get();
+            BoardResponseDto boardResponseDto = board.toBoardResponseDto();
+
+            mav.addObject("board", boardResponseDto);
+        }
+        else{
+            // 현재 사용자가 게시글 수정 불가능한 경우 or 게시글 존재하지 않는 경우
+            mav.setViewName("redirect:/starroad/board/detail?no=" + no);
+        }
         return mav;
 
     }
 
 
+    @PostMapping("/starroad/board/updatepro")
+    public ModelAndView updateBoardPro(@ModelAttribute BoardRequestDto boardRequestDto,
+                                       @RequestParam(value = "image", required = false) MultipartFile image) {
+
+
+
+        if (image != null && !image.isEmpty()) {
+            try {
+                // 이미지가 업로드된 경우에만 이미지 데이터를 설정합니다.
+                byte[] imageBytes = image.getBytes();
+                boardRequestDto.setImage(imageBytes);
+            } catch (IOException e) {
+                // 이미지 처리 중 예외 발생 시 처리 로직을 추가합니다.
+                e.printStackTrace();
+                // 예외 처리 방법에 따라 적절한 응답을 반환할 수 있습니다.
+                ModelAndView errorModelAndView = new ModelAndView("error"); // 에러 페이지로 이동하는 예시
+                return errorModelAndView;
+            }
+        }
+
+        // 게시물 수정을 위해 서비스 메서드를 호출합니다.
+        // BoardService의 메서드에 해당하는 로직을 호출해야 합니다.
+        boardService.updateBoard(boardRequestDto); // 이 부분은 실제 서비스 메서드로 대체되어야 합니다.
+
+        // 수정이 완료되면 원하는 페이지로 리다이렉트할 수 있습니다.
+
+        ModelAndView modelAndView = new ModelAndView("redirect:/starroad/board/detail?no=" + boardRequestDto.getNo()); // 수정된 게시물로 이동하는 예시
+        return modelAndView;
+
+    }
+
+
+
+
 
     @PostMapping("/starroad/board/writepro")
-    public ResponseEntity<String> boardWritePro(
+    public ModelAndView boardWritePro(
+            HttpSession session,
             @RequestParam("type") String type,
             @RequestParam("detailType") String detailType,
             @RequestParam("title") String title,
             @RequestParam("content") String content,
             @RequestParam("image") MultipartFile imageFile
     ) {
-        try {
-            boardService.writeBoard(type, detailType, title, content, imageFile);
+        // 세션에서 현재 로그인한 사용자의 정보 가져오기
+        Member currentUser = (Member) session.getAttribute("currentUser");
 
-            HttpHeaders headers = new HttpHeaders();
-            headers.add("Location", "/starroad/board/main");
-            return new ResponseEntity<>("", headers, HttpStatus.FOUND);
+        if (currentUser == null) {
+            // 로그인하지 않은 사용자가 글 작성을 시도하는 경우 처리
+            ModelAndView mav = new ModelAndView("redirect:/starroad/login");
+            mav.addObject("message", "로그인 후에 게시글을 작성할 수 있습니다.");
+
+            return mav;
+        }
+
+        try {
+            // 게시글 작성 서비스 호출 시, 현재 사용자 ID 추가로 전달
+            boardService.writeBoard(currentUser.getId(), type, detailType, title, content, imageFile);
+
+            return new ModelAndView("redirect:/starroad/board/main");
         } catch (IOException e) {
             e.printStackTrace();
-            // 이미지 업로드 실패 시 에러 응답
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Image upload failed.");
+
+            // 이미지 업로드 실패 시 에러 페이지로 이동
+            ModelAndView mav = new ModelAndView("/error");
+            mav.addObject("message", "이미지 업로드에 실패했습니다.");
+
+            return mav;
         }
     }
 }

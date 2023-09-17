@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class ConditionDto {
 
     private int no;
-    private ProductDto prodNo;
+    private ProductDto prod;
     private String conditionName;
     private Double rate;
     private Double maxRate;

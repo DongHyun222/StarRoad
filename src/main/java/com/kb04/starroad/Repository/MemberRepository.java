@@ -23,4 +23,6 @@ public interface MemberRepository extends JpaRepository<Member, Integer> {
     Member findById(String id);
 
 
+
+
 }

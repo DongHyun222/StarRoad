@@ -1,11 +1,15 @@
 package com.kb04.starroad.Entity;
 
+import com.kb04.starroad.Dto.MemberDto;
+import com.kb04.starroad.Dto.SubProdDto;
+import com.kb04.starroad.Dto.SubscriptionDto;
 import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @SequenceGenerator(name = "subscription_seq", sequenceName="subscription_seq")
@@ -18,15 +22,35 @@ public class Subscription {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_no", nullable = false)
-    private Member memberNo;
+    private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "prod_no", nullable = false)
-    private Product prodNo;
+    private Product prod;
 
     @Column(nullable = false)
     private int period;
 
     @Column(nullable = false)
     private int price;
+
+    public SubscriptionDto toSubscriptionDto() {
+        return SubscriptionDto.builder()
+                .no(no)
+                .member(member.toMemberDto())
+                .prod(prod.toProductDto())
+                .period(period)
+                .price(price)
+                .build();
+    }
+
+    public SubProdDto toSubProdDto() {
+        return SubProdDto.builder()
+                .name(prod.getName())
+                .attribute(prod.getAttribute())
+                .explain(prod.getExplain())
+                .period(period)
+                .price(price)
+                .build();
+    }
 }

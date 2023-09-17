@@ -1,5 +1,7 @@
 package com.kb04.starroad.Entity;
 
+import com.kb04.starroad.Dto.ConditionDto;
+import com.kb04.starroad.Dto.product.ProductDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -7,6 +9,7 @@ import javax.persistence.*;
 
 @Getter
 @Entity
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "condition")
@@ -19,12 +22,22 @@ public class Condition {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "prod_no", nullable = false)
-    private Product prodNo;
+    private Product prod;
 
     @Column(name = "condition_name", nullable = false, length = 100)
     private String conditionName;
 
     @Column(name = "rate", nullable = false)
     private Double rate;
+
+    public ConditionDto toConditionDto() {
+        return ConditionDto.builder()
+                .no(no)
+                .prod(prod.toProductDto())
+                .conditionName(conditionName)
+                .rate(rate)
+                .build();
+
+    }
 
 }

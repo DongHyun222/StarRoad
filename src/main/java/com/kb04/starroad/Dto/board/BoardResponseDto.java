@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Builder
@@ -22,4 +23,11 @@ public class BoardResponseDto {
     private String type;
     private String detailType;
     private String imageBase64; // 이미지 데이터를 저장할 필드 추가
+    private String memberId; // 회원ID 저장할 필드 추가
+
+
+  private List<CommentDto> comments;
+
+
+
 }

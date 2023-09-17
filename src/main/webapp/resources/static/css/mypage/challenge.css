@@ -1,0 +1,75 @@
+#sel_sub {
+    width: 300px;
+    height: 60px;
+    border-radius: 5px;
+}
+
+#sub_info_s {
+    display: none;
+    border: 1px solid var(--sub-kb-dark-gray);
+    border-radius: 5px;
+    padding: 15px;
+    margin: 20px 0;
+}
+
+#sub_na_c {
+    margin-bottom: 10px;
+}
+
+#sub_be_c {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+#bef_exp {
+    width: 5px;
+    height: 24px;
+    background: var(--main-kb-yellow);
+    margin-inline: 5px;
+}
+
+#sub_name {
+    font-weight: bold;
+    font-size: 24px;
+}
+
+#sub_attr {
+    font-weight: lighter;
+}
+
+#sub_pp_c {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#sub_period:before {
+    content: "";
+    display: inline-block;
+    background-image: url("https://ifh.cc/g/NZ68Mz.png");
+    background-size: 40px 40px;
+    width: 40px;
+    height: 40px;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+#sub_price:before {
+    content: "";
+    display: inline-block;
+    background-image: url(https://ifh.cc/g/QB44qC.png);
+    background-size: 40px 40px;
+    width: 40px;
+    height: 40px;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+#flower_container {
+    width: 700px;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    background: #92d85a;
+    border-radius: 5px;
+    display: none;
+    margin: 0 auto;
+}

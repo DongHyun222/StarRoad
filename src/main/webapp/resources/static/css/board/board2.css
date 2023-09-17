@@ -1,3 +1,27 @@
+#boardnav {
+  background-color: #007BFF; /* 네비게이션 바 배경색 */
+  padding: 10px;
+}
+
+#boardnav .navbar-left a, #boardnav .navbar-right a {
+  color: #ffffff; /* 링크 텍스트 색상 */
+  margin-right: 10px;
+  text-decoration: none; /* 밑줄 제거 */
+}
+
+#boardnav .navbar-left a:hover, #boardnav .navbar-right a:hover {
+    color: #cccccc; /* 마우스 오버시 링크 텍스트 색상 변경 */
+}
+
+.navbar-nav.ml-auto {
+    float: right;
+    transform: translateX(770px);
+}
+
+.navbar-nav.mr-auto {
+
+    transform: translateX(50px);
+}
 .navbar a {
     float: left;
     font-size: 16px;
@@ -6,17 +30,19 @@
     padding: 14px 16px;
     text-decoration: none; /* 밑줄 제거 */
 }
+.navbar-left a:active, .navbar-right a:active {
+    font-weight: bold;
+}
 .navbar-right { /* 글쓰기 */
     float: right;
     margin-top: 10px; /* 글쓰기 버튼을 아래로 이동 */
+
 }
-.navbar-right a[href="/starroad/boardWrite"] {
-    background-color: yellow; /* 배경색 노란색으로 설정 */
-    font-weight: bold;
-    text-decoration: none;
-    padding: 10px 20px; /* 버튼의 여백 설정 */
-    border-radius: 5px; /* 버튼 모서리 둥글게 설정 */
+.navbar-left{
+ transform: translateX(80px); /* 원하는 값으로 조절 */
 }
+
+
 /* 밑줄 없애고 호버 스타일 */
 .navbar a:hover {
     background-color: #ddd;
@@ -31,39 +57,115 @@
 /* 게시글 스타일 */
 .board-item {
     flex: 0 0 calc(50% - 10px);
-    margin-right: 0; /* 가운데 간격을 없애려면 여기를 0으로 설정 */
-    margin-bottom: 0; /* 게시글 사이 간격을 없애려면 여기를 0으로 설정 */
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: center;
+    margin-right: -20px; /* 가운데 간격을 없애려면 여기를 0으로 설정 */
+    margin-bottom:  10px; /* 게시글 사이 간격을 없애려면 여기를 0으로 설정 */
+
+    padding: 30px;
+    height: 270px;
+    border: var(--sub-kb-gold) 1.5px solid;
+
 }
 .icons {
     font-size: 12px; /* 아이콘 크기 설정 */
     display: flex;
-
+    justify-content: space-between;
     align-items: center; /* 수직 가운데 정렬 */
-    margin-bottom: 5px; /* 좀 더 아래에 위치하도록 여백 추가 */
+}
+
+.left-icons {
+    display: flex;
+}
+
+
+.left-icons i + i {
+    margin-left: 10px; /* 아이콘과 아이콘 사이 여백 설정 */
 }
 
 /* 아이콘 색상 설정 */
 .icons i {
     margin-right: 5px; /* 아이콘과 텍스트 사이 여백 설정 */
     color: #888; /* 아이콘 색상 설정 */
-
-}
-.icons i + i {
-    margin-left: 5px; /* 아이콘과 아이콘 사이 여백 설정 */
 }
 #popular.menu-content {
+    position: absolute; /* 상위 요소에 대한 절대적인 위치 설정 */
+    top: 170px; /* 상단으로부터의 거리. 필요한 경우 이 값을 조절하세요. */
+    width: 60%; /* 부모 요소 너비의 80% */
+    margin-left: 400px;
 
-    padding: 10px; /* 표의 내부 여백을 조절하세요 */
-    margin: 10px; /* 표의 외부 여백을 조절하세요 */
+
+
 }
 #boardcontent.menu-content2 {
+    position: absolute; /* 상위 요소에 대한 절대적인 위치 설정 */
+    top: 170px; /* 상단으로부터의 거리. 필요한 경우 이 값을 조절하세요. */
+    width: 60%; /* 부모 요소 너비의 80% */
+    margin-left: 400px;
 
-    padding: 10px; /* 표의 내부 여백을 조절하세요 */
-    margin: 10px; /* 표의 외부 여백을 조절하세요 */
+
 }
 .page-link {
     margin-right: 10px;
+}
+.detailTypeStyle{
+    transform: translateY(-20px); /* 원하는 값으로 조절 */
+     display: flex;
+        justify-content: right;
+
+}
+.titleStyle{
+
+    transform: translate(-3px,-15px); /* 원하는 값으로 조절 */
+}
+.titleStyle a {
+    font-weight: bold;
+    font-size: 24px;
+}
+.idStyle{
+    transform: translateY(70px); /* 원하는 값으로 조절 */
+
+}
+.idStyle a {
+    font-weight: lighter;
+}
+.detailTypeStyle a{
+
+    font-weight: lighter;
+
+}
+.icons{
+    transform: translateY(70px); /* 원하는 값으로 조절 */
+    font-weight: normal;
+}
+
+.navbar-right{
+    background-color: #FFCC00;
+    font-weight: bold;
+    transform: translateX(-15px);
+    border-radius: 15px; /* 둥근 모서리 */
+}
+
+nav li {
+    margin-inline: 0;
+}
+
+
+li.page-item {
+    margin:0;
+}
+
+a.page-link {
+    margin:0;
+}
+
+.page-item:not(:first-child) .page-link {
+margin:0px;
+}
+
+nav#btm_pagi {
+    display: flex;
+    justify-content: center;
+}
+nav#btm_pagi2{
+    display: flex;
+    justify-content: center;
 }

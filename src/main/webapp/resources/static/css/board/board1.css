@@ -1,0 +1,61 @@
+.board-box {
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+    margin-top : 30px;
+}
+
+.board {
+    display: inline-block;
+    width: 25%;
+    margin: 20px;
+    text-align: left;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.board-header {
+    display: flex;
+    align-items: center;
+    margin-bottom : 25px;
+}
+
+.board-header img {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+
+.board-header h2 {
+    flex-grow: 1;
+    margin: 0;
+    font-size : 25px;
+}
+
+.board-header a {
+    text-decoration: none;
+
+}
+
+.board-detail {
+    font-size: 16px;
+    color : gray;
+}
+
+.board-list p {
+    text-align: right;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    margin-left : 10px;
+    margin-right : 10px;
+}
+
+.board-list span{
+    font-size: 18px;
+    font-weight: lighter;
+    color: var(--sub-kb-dark-gray);
+    border: 1px solid #ccc; /* 테두리 스타일 및 색상 설정 */
+    padding : 1px;
+
+}

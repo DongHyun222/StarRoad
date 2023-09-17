@@ -6,11 +6,10 @@ import lombok.*;
 
 import javax.persistence.*;
 @Entity
-@Table(name="member")
 @Getter
-@AllArgsConstructor
 @Builder
-
+@Table(name="member")
+@AllArgsConstructor
 @NoArgsConstructor
 public class Member {
 

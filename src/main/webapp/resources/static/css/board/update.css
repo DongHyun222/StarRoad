@@ -1,0 +1,70 @@
+#navbar {
+    position: fixed;
+    top: 0;
+    left: 0;   /* 화면의 왼쪽에서 시작합니다. */
+    width: 100%;  /* 전체 너비를 차지하게 합니다. */
+    z-index: 1000;  /* 다른 요소 위에 올려놓습니다. */
+    background: #FFF; /* 배경색을 흰색으로 설정 (필요에 따라 수정) */
+}
+
+.title {
+    border-bottom: 1px solid #ccc;
+    font-weight: bold;
+    position: relative; /* relative positioning을 설정해야 child element에 absolute를 적용할 수 있습니다. */
+
+}
+
+.container {
+    position: relative; /* 추가 */
+    width: 1000px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    margin: auto;
+    margin-top: 140px;
+    height: 800px; /* 원하는 높이로 조절 가능 */
+    display: flex;
+    flex-direction: column;
+}
+.buttonStyle{
+    border: none; !important;
+    background-color: #FFCC00;
+    cursor: pointer;
+}
+
+.titleStyle {
+    border: none; !important;
+    font-size: 32px;
+    position: relative;
+}
+.contentStyle{
+
+    border: none; !important;
+    font-size: 20px;
+    position: relative;
+    height: 600px;
+    width: 1000px;
+    resize: none;
+    padding-top: 30px;
+    border-bottom: 1px solid black; /* 구분선 생성 */
+
+}
+.update-button{
+    position: absolute; /* 절대 위치로 설정합니다. */
+    right: 20px; /* 오른쪽 여백을 조정하세요. */
+    bottom: 20px; /* 아래 여백을 조정하세요. */
+
+    height: 40px;
+    width: 80px;
+    border-radius: 10px;
+    background-color: #FFCC00;
+
+    color: black;
+    border: 1px solid black;
+
+    /* 추가된 스타일 */
+    font-size: 14px;
+    font-weight: bold;
+    text-align:center;
+    line-height:40px; /* 높이와 동일한 값 */
+
+}

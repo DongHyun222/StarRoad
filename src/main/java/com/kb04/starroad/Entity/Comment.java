@@ -7,12 +7,11 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "comments")
-
 @Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "comments")
 public class Comment {
 
     @Id
@@ -35,13 +34,21 @@ public class Comment {
     @Column(name = "content", nullable = false, length = 2000)
     private String content;
 
+    @Column(columnDefinition = "char(1)  default 'Y'", name = "status", nullable = false)
+    private Character status;
+
     public CommentDto toCommentDto() {
         return CommentDto.builder()
                 .no(no)
-                .board(board.toBoardRequestDto())
-                .member(member.toMemberDto())
+                .board(board)
+                .member(member)
                 .regdate(regdate)
                 .content(content)
                 .build();
     }
+
+    public void update(String content) {
+        this.content = content;
+    }
+
 }
