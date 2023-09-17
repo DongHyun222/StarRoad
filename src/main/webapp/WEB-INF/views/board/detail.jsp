@@ -78,9 +78,11 @@
         <h2>댓글 목록</h2>
          <c:forEach var="comment" items="${board.comments}">
              <div class="comment-item">
-                 <strong><c:out value="${comment.member.id}" /></strong>: <br>
+                 <strong><c:out value="${currentUser.id}" /></strong> <br>
                  <c:out value="${comment.content}" /> <br>
-                 <span class="comment-date"><c:out value="${comment.regdate}" /></span>
+                 <span class="comment-date">
+                    <fmt:formatDate value="${comment.regdate}" pattern="yyyy-MM-dd HH:mm:ss" />
+                 </span>
                  <button class="comment-edit" data-id="${comment.no}">수정</button>
                  <button class="comment-delete" data-id="${comment.no}">삭제</button>
              </div>
