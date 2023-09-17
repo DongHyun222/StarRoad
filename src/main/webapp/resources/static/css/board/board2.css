@@ -1,3 +1,27 @@
+#boardnav {
+  background-color: #007BFF; /* 네비게이션 바 배경색 */
+  padding: 10px;
+}
+
+#boardnav .navbar-left a, #boardnav .navbar-right a {
+  color: #ffffff; /* 링크 텍스트 색상 */
+  margin-right: 10px;
+  text-decoration: none; /* 밑줄 제거 */
+}
+
+#boardnav .navbar-left a:hover, #boardnav .navbar-right a:hover {
+    color: #cccccc; /* 마우스 오버시 링크 텍스트 색상 변경 */
+}
+
+.navbar-nav.ml-auto {
+    float: right;
+    transform: translateX(770px);
+}
+
+.navbar-nav.mr-auto {
+
+    transform: translateX(50px);
+}
 .navbar a {
     float: left;
     font-size: 16px;
@@ -12,8 +36,11 @@
 .navbar-right { /* 글쓰기 */
     float: right;
     margin-top: 10px; /* 글쓰기 버튼을 아래로 이동 */
-}
 
+}
+.navbar-left{
+ transform: translateX(80px); /* 원하는 값으로 조절 */
+}
 
 
 /* 밑줄 없애고 호버 스타일 */
@@ -36,6 +63,7 @@
     padding: 30px;
     height: 270px;
     border: var(--sub-kb-gold) 1.5px solid;
+
 }
 .icons {
     font-size: 12px; /* 아이콘 크기 설정 */
@@ -80,21 +108,23 @@
 }
 .detailTypeStyle{
     transform: translateY(-20px); /* 원하는 값으로 조절 */
+     display: flex;
+        justify-content: right;
 
 }
 .titleStyle{
 
-    transform: translate(-6px,-15px); /* 원하는 값으로 조절 */
+    transform: translate(-3px,-15px); /* 원하는 값으로 조절 */
 }
 .titleStyle a {
     font-weight: bold;
     font-size: 24px;
 }
-.idSytle{
-    transform: translateY(30px); /* 원하는 값으로 조절 */
+.idStyle{
+    transform: translateY(70px); /* 원하는 값으로 조절 */
 
 }
-.idSytle a {
+.idStyle a {
     font-weight: lighter;
 }
 .detailTypeStyle a{
@@ -103,12 +133,10 @@
 
 }
 .icons{
-    transform: translateY(30px); /* 원하는 값으로 조절 */
+    transform: translateY(70px); /* 원하는 값으로 조절 */
     font-weight: normal;
 }
-.contentStyle{
 
-}
 .navbar-right{
     background-color: #FFCC00;
     font-weight: bold;

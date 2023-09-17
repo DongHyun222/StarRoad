@@ -93,4 +93,10 @@ import java.util.Date;
             this.title=title;
             this.content=content;
         }
+
+        public void setMember(Member member) {
+            this.member = member;
+
+
+        }
     }
