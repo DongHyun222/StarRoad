@@ -4,7 +4,6 @@ import com.kb04.starroad.Dto.MemberDto;
 import com.kb04.starroad.Dto.board.BoardResponseDto;
 import com.kb04.starroad.Dto.board.CommentDto;
 import com.kb04.starroad.Entity.Board;
-import com.kb04.starroad.Entity.Member;
 import com.kb04.starroad.Service.BoardService2;
 import com.kb04.starroad.Service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
