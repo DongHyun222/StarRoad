@@ -33,6 +33,7 @@ public class MemberDto {
 
     public Member toMemberEntity() { // Dto를 Entity로 변환
         return Member.builder()
+            .no(no)
             .name(this.name)
             .id(this.id)
             .password(this.password)
@@ -50,6 +51,7 @@ public class MemberDto {
             .point(this.point)
             .investment(this.investment)
             .build();
+
     }
 
 }

@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html lang="ko">
 <head>
     <!-- 메타 정보, 스타일 등 -->
@@ -22,20 +23,29 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <div class="navbar">
-                <div class="navbar-left">
-                    <a href="popular" id="popularLink"  onclick="showContent('popular','popular')">인기글</a>
-                    <a href="free?type=F" id="freeLink" onclick="showContent('free', 'F')">자유게시판</a>
-                    <a href="free?type=C" id="authenticationLink" onclick="showContent('authentication', 'C')">인증방</a>
-                </div>
-                <div class="navbar-right">
-                    <a href="/starroad/board/write">글쓰기</a>
-                </div>
-            </div>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light" id="boardnav">
+
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="">
+                    <span class= "navbar-toggler-icon"></span>
+                </button>
+                <div class= "collapse navbar-collapse" id= "navbarNav">
+                    <ul class= "navbar-nav mr-auto">
+                        <li><a href= "popular">인기글</a></li>
+                        <li><a href= "free?type=F">자유게시판</a></li>
+                        <li><a href= "free?type=C">인증방</a></li>
+                    </ul>
+
+                    <!-- ml-auto 클래스로 오른쪽 정렬 -->
+                    <ul class = "nav navbar-nav ml-auto ">
+
+                        	<li><a href="/starroad/board/write"class ="btn btn-primary nav-link text-black">글쓰기</a></li>
+                     </ul>
+                 </div>
+            </nav>
         </div>
     </div>
 </div>
-
 
 <!-- 게시판 내용 -->
 <div id="boardcontent" class="menu-content2">
@@ -43,17 +53,34 @@
         <c:forEach items="${freeBoardPage.content}" var="board">
             <div class="col-md-6">
                 <div class="board-item">
-                    <h3><a href="/starroad/board/detail?no=${board.no}">${board.title}</a></h3>
-                    <p>${board.content}</p>
-                    <div class="icons">
-                        <i class="far fa-thumbs-up"></i> ${board.likes} <i class="far fa-comment"></i> ${board.commentNum}
+                    <div class ="detailTypeStyle">
+                        <a> ${board.detailType}</a>
                     </div>
+                    <div class="titleStyle">
+                    <a href="/starroad/board/detail?no=${board.no}">${board.title}</a>
+                    </div>
+                    <div class = "contentStyle">
+                    <a>${board.content}</a>
+                    </div>
+                    <div class="idStyle">
+                        <a> ID : ${board.member.id} </a>
+                    </div>
+
+                    <div class="icons">
+                        <div class left="left-icons">
+                        <i class="far fa-thumbs-up"></i> ${board.likes} <i class="far fa-comment"></i> ${board.commentNum}
+                        </div>
+
+                        <span class="timeStyle"><i class="far fa-calendar-alt"></i><fmt:formatDate value="${board.regdate}" pattern="yyyy-MM-dd" /></span>
+
+                    </div>
+
                 </div>
             </div>
         </c:forEach>
     </div>
 
-    <nav aria-label="Page navigation">
+    <nav  aria-label="Page navigation" id="btm_pagi2">
         <ul class="pagination justify-content-center">
             <c:if test="${freeBoardPage.totalPages > 1}">
                 <c:if test="${freeBoardPage.number != 0}">
@@ -96,16 +123,32 @@
         <c:forEach items="${popularBoardPage.content}" var="board">
             <div class="col-md-6">
                 <div class="board-item">
-                    <h3><a href="/starroad/board/detail?no=${board.no}">${board.title}</a></h3>
-                    <p>${board.content}</p>
-                    <div class="icons">
-                        <i class="far fa-thumbs-up"></i> ${board.likes} <i class="far fa-comment"></i> ${board.commentNum}
+                    <div class ="detailTypeStyle">
+                        <a> ${board.detailType}</a>
                     </div>
+                    <div class="titleStyle">
+                    <h3><a href="/starroad/board/detail?no=${board.no}">${board.title}</a></h3>
+                    </div>
+                    <div class = "contentStyle">
+                    <a>${board.content}</a>
+                    </div>
+                    <div class="idStyle">
+                        <a>ID :  ${board.member.id}</a>
+                    </div>
+                    <div class="icons">
+                        <div class left="left-icons">
+                            <i class="far fa-thumbs-up"></i> ${board.likes} <i class="far fa-comment"></i> ${board.commentNum}
+                        </div>
+
+                        <i class="timeStyle"><i class="far fa-calendar-alt"></i><fmt:formatDate value="${board.regdate}" pattern="yyyy-MM-dd" /></i>
+
+                    </div>
+
                 </div>
             </div>
         </c:forEach>
     </div>
-    <nav aria-label="Page navigation">
+    <nav aria-label="Page navigation" id="btm_pagi">
         <ul class="pagination justify-content-center">
             <c:if test="${popularBoardPage.totalPages > 1}">
                 <c:if test="${popularBoardPage.number != 0}">
@@ -177,6 +220,8 @@
             }
         });
     }
+
+
 </script>
 </body>
 </html>

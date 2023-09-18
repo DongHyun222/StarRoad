@@ -3,18 +3,20 @@ package com.kb04.starroad.Controller;
 import com.kb04.starroad.Dto.board.BoardResponseDto;
 import com.kb04.starroad.Dto.board.CommentDto;
 import com.kb04.starroad.Entity.Board;
+import com.kb04.starroad.Entity.Member;
 import com.kb04.starroad.Service.BoardService2;
 import com.kb04.starroad.Service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-public class BoardController3 {
+public class    BoardController3 {
 
     @Autowired
     private BoardService2 boardService2;
@@ -24,10 +26,23 @@ public class BoardController3 {
 
 
     @GetMapping("/starroad/board/delete")
-    public ModelAndView deleteBoard(@RequestParam Integer no) {
+    public ModelAndView deleteBoard(@RequestParam Integer no, HttpSession session) {
+        ModelAndView mav = new ModelAndView();
 
-        boardService2.deleteBoard(no);
-        ModelAndView mav = new ModelAndView("redirect:/starroad/board/main");
+        Member currentUser = (Member) session.getAttribute("currentUser");
+        String currentUserId = currentUser.getId();
+
+        if (boardService2.canDelete(no, currentUserId)) {
+            // 현재 사용자가 게시글 삭제 가능한 경우
+            boardService2.deleteBoard(no);
+            mav.setViewName("redirect:/starroad/board/main");
+
+        } else{
+            // 현재 사용자가 게시글 삭제 불가
+            // 능한 경우 or 게시글 존재하지 않는 경우
+            mav.setViewName("board/deleteError");
+        }
+
         return mav;
     }
     @GetMapping("/starroad/board/detail")
@@ -43,6 +58,9 @@ public class BoardController3 {
             List<CommentDto> comments = commentService.findByBoard(board);
 
             BoardResponseDto boardResponseDto = board.toBoardResponseDto();
+            String memberId = board.getMember().getId();  // 'getId()'는 실제 회원 ID를 반환하는 메서드로 변경해야 합니다.
+            boardResponseDto.setMemberId(memberId);  // 'setMemberId()'는 DTO에서 회원 ID를 설정하는 메서드입니다.
+
             boardResponseDto.setComments(comments);
 
             // 이미지를 Base64로 인코딩하여 DTO에 추가

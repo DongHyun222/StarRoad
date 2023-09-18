@@ -24,7 +24,7 @@ import java.util.Date;
             private String content;
             private int likes;
             private int commentNum = 0;
-            private Character status;
+            private Character status='Y';
             private String type;
             private byte[] image;
             private String detailType;
@@ -32,7 +32,7 @@ import java.util.Date;
             public Board toEntity() { //Dto를 Entity로 변환
                 return Board.builder()
 
-                        .no(this.no)
+
                         .title(this.title)
                         .content(this.content)
                         .likes(this.likes)

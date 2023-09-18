@@ -14,8 +14,13 @@ import java.util.Optional;
 
 @Repository
 public interface BoardRepository extends JpaRepository<Board, Integer>, JpaSpecificationExecutor<Board> {
-    Page<Board> findByType(String type, Pageable pageable);
-    Page<Board> findAllByOrderByLikesDesc(Pageable pageable);
+    Page<Board> findByTypeAndStatus(String type,Character status, Pageable pageable);
+
+
+    Page<Board> findAllByStatusOrderByLikesDesc(Character status,Pageable pageable);
+
+
+
     List<Board> findAllByMemberNoOrderByRegdate(Member memberNo);
 
     Optional<Board> findById(Integer no);

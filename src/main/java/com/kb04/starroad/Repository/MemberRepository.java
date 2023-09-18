@@ -25,6 +25,7 @@ public interface MemberRepository extends JpaRepository<Member, Integer> {
     Member findById(String id);
 
 
+
     // Member 엔티티의 필드를 이용하여 데이터베이스 업데이트를 수행하는 쿼리 메소드
     @Modifying
     @Transactional
@@ -40,4 +41,5 @@ public interface MemberRepository extends JpaRepository<Member, Integer> {
                       @Param("purpose") String purpose,
                       @Param("source") String source,
                       @Param("goal") int goal);
+
 }

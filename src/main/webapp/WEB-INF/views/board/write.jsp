@@ -42,7 +42,7 @@
         <div class="content">
             <textarea name="content" class="contentStyle" id="content" placeholder="내용을 입력하세요" required>${board.content}</textarea>
             <div class="image-input">
-                <input type="file" name="image" id="image">
+                <input type="file" name="image" id="image"  >
             </div>
             <div class="update-button">
                 <button type="submit" class="buttonStyle" id="updateBtn">등록</button>

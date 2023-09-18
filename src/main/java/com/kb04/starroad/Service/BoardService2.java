@@ -4,8 +4,10 @@ import com.kb04.starroad.Dto.board.BoardRequestDto;
 import com.kb04.starroad.Dto.board.BoardResponseDto;
 import com.kb04.starroad.Dto.board.CommentDto;
 import com.kb04.starroad.Entity.Board;
+import com.kb04.starroad.Entity.Member;
 import com.kb04.starroad.Repository.BoardRepository;
 import com.kb04.starroad.Repository.CommentRepository;
+import com.kb04.starroad.Repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,7 @@ import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -32,6 +35,8 @@ public class BoardService2 {
 
     @Autowired
     private BoardRepository boardRepository;
+    @Autowired
+    private MemberRepository memberRepository;
 
     @Autowired
     private CommentRepository commentRepository;
@@ -42,7 +47,16 @@ public class BoardService2 {
 
 
     //이미지 업로드 로직
-    public void writeBoard(String type, String detailType, String title, String content, MultipartFile imageFile) throws IOException {
+    public void writeBoard(String memberId, String type, String detailType,
+                           String title, String content,
+                           MultipartFile imageFile) throws IOException {
+        // Member 객체 찾기
+        Member member = memberRepository.findById(memberId);
+
+        if (member == null) {
+            throw new IllegalArgumentException("Invalid member ID: " + memberId);
+        }
+
         BoardRequestDto boardDto = new BoardRequestDto();
         boardDto.setType(type);
         boardDto.setDetailType(detailType);
@@ -54,20 +68,22 @@ public class BoardService2 {
             boardDto.setImage(imageBytes);
         }
 
-        // DTO를 Entity로 변환
+        // DTO to Entity 변환
         Board board = boardDto.toEntity();
 
-        // boardRepository를 통해 Entity를 저장
-        boardRepository.save(board);
-        }
+        // Member 객체와 연결
+        board.setMember(member);
 
+        // Entity 저장
+        boardRepository.save(board);
+    }
     public Page<Board> findPaginated(Pageable pageable) {
-        return boardRepository.findByType("F", pageable); // "0"은 자유게시판 타입에 해당하는 것으로 가정합니다.
+        return boardRepository.findByTypeAndStatus("F",'Y', pageable); // "0"은 자유게시판 타입에 해당하는 것으로 가정합니다.
     }
 
 
     public Page<Board> findAuthenticatedPaginated(Pageable pageable) {
-        return boardRepository.findByType("C", pageable); // "1"은 인증방 타입에 해당하는 것으로 가정합니다.
+        return boardRepository.findByTypeAndStatus("C", 'Y',pageable); // "1"은 인증방 타입에 해당하는 것으로 가정합니다.
     }
 
 
@@ -101,7 +117,7 @@ public class BoardService2 {
 
 
     public Page<Board> getPopularBoards(Pageable pageable) {
-        return boardRepository.findAllByOrderByLikesDesc(pageable);
+        return boardRepository.findAllByStatusOrderByLikesDesc('Y',pageable);
     }
 
     public Optional<Board> findById(Integer no) {
@@ -122,7 +138,48 @@ public class BoardService2 {
         }
 
     public void deleteBoard(Integer no) {
-        boardRepository.deleteById(no);
+        Optional<Board> boardOptional = boardRepository.findById(no);
+
+        if (boardOptional.isPresent()) {
+            // 게시글이 존재하는 경우에만 삭제 수행
+            boardRepository.deleteById(no);
+        } else {
+            throw new NoSuchElementException("게시글이 존재하지 않습니다.");
+        }
     }
+    public boolean canDelete(Integer no, String currentUserId) {
+        Optional<Board> boardOptional = boardRepository.findById(no);
+
+        if (boardOptional.isPresent()) {
+            Board board = boardOptional.get();
+            Member writer = board.getMember();
+
+            if (writer != null) {
+                String writerId = writer.getId();
+                return writerId.equals(currentUserId);
+            }
+        }
+
+        return false;
+    }
+
+    public boolean canUpdate(Integer no, String currentUserId) {
+        Optional<Board> boardOptional = findById(no);
+
+        if (boardOptional.isPresent()) {
+            Board board = boardOptional.get();
+            Member writer = board.getMember();  // 게시글의 작성자 가져오기
+
+
+            if (writer != null) {  // 작성자 정보가 있는 경우
+                String writerId = writer.getId();
+                return currentUserId != null && currentUserId.equals(writerId);
+            }
+        }
+
+
+        return false;
+    }
+
 
 }
