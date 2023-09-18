@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -44,7 +45,7 @@ public class MemberService {
         mypageResponseDto.setName(member.getName());
         mypageResponseDto.setPoint(member.getPoint());
         mypageResponseDto.setInvestment(member.getInvestment());
-        
+
         //여기 수정해야됨
         mypageResponseDto.setSavings(memberRepository.getSavings(1));
         mypageResponseDto.setDeposit(memberRepository.getDeposit(1));
@@ -124,13 +125,14 @@ public class MemberService {
                 memberDto.getPurpose(), memberDto.getSource(),
                 memberDto.getGoal());
 
-    }
+        public Member checkEmail(String email) {
+            return memberRepository.findByEmail(email);
+        }
 
-    public Member checkEmail(String email) {
-        return memberRepository.findByEmail(email);
-    }
+        public void memberPasswordUpdate(MemberDto memberDto, String encPass) {
+            memberRepository.findByIdAndUpdatePassword(memberDto.getId(), encPass);
+        }
 
-    public void memberPasswordUpdate(MemberDto memberDto, String encPass) {
-        memberRepository.findByIdAndUpdatePassword(memberDto.getId(), encPass);
+
     }
 }

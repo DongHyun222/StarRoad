@@ -1,5 +1,6 @@
 package com.kb04.starroad.Controller;
 
+import com.kb04.starroad.Dto.MemberDto;
 import com.kb04.starroad.Dto.board.BoardRequestDto;
 import com.kb04.starroad.Dto.board.BoardResponseDto;
 import com.kb04.starroad.Entity.Board;
@@ -108,7 +109,7 @@ public class BoardController2 {
         ModelAndView mav = new ModelAndView("board/update");
 
         // 세션에서 현재 로그인한 사용자의 ID 가져오기
-        Member currentUser = (Member) session.getAttribute("currentUser");
+        MemberDto currentUser = (MemberDto) session.getAttribute("currentUser");
         String currentUserId = currentUser.getId();  // 사용자 ID 가져오기
 
 
@@ -175,10 +176,10 @@ public class BoardController2 {
             @RequestParam("content") String content,
             @RequestParam("image") MultipartFile imageFile
     ) {
-        // 세션에서 현재 로그인한 사용자의 정보 가져오기
-        Member currentUser = (Member) session.getAttribute("currentUser");
+//        // 세션에서 현재 로그인한 사용자의 정보 가져오기
+//        Member currentUser = (Member) session.getAttribute("currentUser");
 
-        if (currentUser == null) {
+        if (session.getAttribute("currentUser") == null) {
             // 로그인하지 않은 사용자가 글 작성을 시도하는 경우 처리
             ModelAndView mav = new ModelAndView("redirect:/starroad/login");
             mav.addObject("message", "로그인 후에 게시글을 작성할 수 있습니다.");
@@ -187,8 +188,9 @@ public class BoardController2 {
         }
 
         try {
+            MemberDto dto = (MemberDto) session.getAttribute("currentUser");
             // 게시글 작성 서비스 호출 시, 현재 사용자 ID 추가로 전달
-            boardService.writeBoard(currentUser.getId(), type, detailType, title, content, imageFile);
+            boardService.writeBoard(dto.getId(), type, detailType, title, content, imageFile);
 
             return new ModelAndView("redirect:/starroad/board/main");
         } catch (IOException e) {

@@ -11,7 +11,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
-
 @RestController
 public class CommentController {
 
@@ -32,6 +31,9 @@ public class CommentController {
         }
 
         int number = commentService.createComment(content, boardNo);
+
+        commentService.increaseCommentCount(boardNo);
+
         ModelAndView mav = new ModelAndView("redirect:/starroad/board/detail?no=" + number);
         return mav;
     }
@@ -104,6 +106,7 @@ public class CommentController {
         }
 
         commentService.deleteComment(commentNo);
+
         ModelAndView mav = new ModelAndView("redirect:/starroad/board/main");
         return mav;
     }

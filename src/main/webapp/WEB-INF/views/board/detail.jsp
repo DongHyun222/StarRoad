@@ -5,6 +5,7 @@
 
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <title>게시물 상세보기</title>
@@ -31,16 +32,11 @@
                 <fmt:formatDate value="${board.regdate}" pattern="yyyy-MM-dd HH:mm" />
             </span>
             <span class="likes">
+
                 <img src="https://ifh.cc/g/aw0vjY.png" alt="Like Icon" style="vertical-align: middle; width: 20px; height: 20px;">
                 <c:out value="${board.likes}" />
             </span>
             </div>
-
-
-<%--        <c:forEach var="member" items="${board.members}">
-            <c:out value="${member.id}" />
-        </c:forEach> --%>
-
 
             <div class="title-buttons">
                 <button id="editBtn">수정</button>
@@ -52,20 +48,21 @@
 
             <c:out value="${board.content}" />
             <div class="like-section">
-
+<form id="likeForm" method="post" action="/starroad/board/like">
+    <input type="hidden" name="board" value="${board.no}">
               <img src="https://ifh.cc/g/aw0vjY.png" id="like-icon" alt="Like Icon" style="vertical-align: middle; width: 50px; height: 50px;" >
+             </form>
               <span id="likes-count"> <c:out value="${board.likes}" /></span>
-             
+
         <img src="data:image/jpeg;base64,${board.imageBase64}" alt="" width="200" height="200" style="margin-bottom: 30px;" onerror="this.style.display='none'"/>
             </div>
         </div>
 
         <div class="comment">
 
-        댓글<c:out value="${board.commentNum}" />
-
         <div class="comment-input">
              <form action="/starroad/comment" method="post">
+                 댓글<c:out value="${board.commentNum}" />
                  <textarea id="commentText" name="content" placeholder="댓글을 입력하세요" rows="4" cols="50"></textarea>
                  <input type="hidden" name="board" value="${board.no}" />
                  <button id="submitComment" type="submit">등록</button>
@@ -91,7 +88,6 @@
 
     </div>
    <script>
-
      document.getElementById("deleteBtn").addEventListener("click", function() {
                if (confirm("정말로 삭제하시겠습니까?")) {
                    location.href = "/starroad/board/delete?no=" + ${board.no}; // 삭제 API 호출
@@ -142,7 +138,12 @@
         location.href = "/starroad/comment/create?no=" + ${board.no};
     });
 
-
+   <!-- 좋아요 기능 -->
+  $(document).ready(function() {
+      $("#like-icon").on("click", function() {
+          $("#likeForm").submit();
+      });
+  });
    </script>
 </body>
 </html>

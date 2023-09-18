@@ -4,9 +4,11 @@ import com.kb04.starroad.Dto.board.BoardRequestDto;
 import com.kb04.starroad.Dto.board.BoardResponseDto;
 import com.kb04.starroad.Dto.board.CommentDto;
 import com.kb04.starroad.Entity.Board;
+import com.kb04.starroad.Entity.Heart;
 import com.kb04.starroad.Entity.Member;
 import com.kb04.starroad.Repository.BoardRepository;
 import com.kb04.starroad.Repository.CommentRepository;
+import com.kb04.starroad.Repository.HeartRepository;
 import com.kb04.starroad.Repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.javassist.NotFoundException;
@@ -23,10 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.io.IOException;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -40,6 +39,9 @@ public class BoardService2 {
 
     @Autowired
     private CommentRepository commentRepository;
+
+    @Autowired
+    private HeartRepository heartRepository;
     public void write(Board board) {  //entity를 매개변수로 받음
 
         boardRepository.save(board);  //새로운 게시물이 데이터베이스에 추가됩니다.
@@ -181,5 +183,29 @@ public class BoardService2 {
         return false;
     }
 
+    public void increaseLikes(int boardNo, String memberId) {
+        Optional<Board> optionalBoard = boardRepository.findById(boardNo);
+        if (optionalBoard.isPresent()) {
+            Board board = optionalBoard.get();
+            int currentLikesCount = board.getLikes();
+
+            board.setLikes(currentLikesCount + 1);
+            // Save a new like entity as well to keep track of who liked the post.
+            Member member = memberRepository.findById(memberId);
+            heartRepository.save(Heart.builder()
+                    .member(member)
+                    .board(board)
+                    .build());
+        }
+    }
+
+    public boolean hasLiked(int boardNo, String memberId) {
+        Member member = memberRepository.findById(memberId);
+        System.out.println("디버그14" + member.getId());
+        Optional<Heart> likes = heartRepository.findByMemberNoAndBoardNo(member.getNo(), boardNo);
+        System.out.println("디버그14" + likes);
+
+        return !likes.isPresent();
+    }
 
 }

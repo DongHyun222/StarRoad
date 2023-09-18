@@ -40,7 +40,7 @@ import java.util.List;
         private int likes;
 
         @Column(name = "comment_num", nullable = false)
-        private int commentNum = 0;
+        private int commentNum;
 
         @Column(name = "status", nullable = false)
         private Character status = 'Y';
@@ -102,4 +102,11 @@ import java.util.List;
 
 
         }
-    }
+
+        public void setCommentNum(int commentNum) {
+            this.commentNum = commentNum;
+        }
+        public void setLikes(int likes){
+            this.likes = likes;
+        }
+}
