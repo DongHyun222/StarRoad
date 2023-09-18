@@ -108,7 +108,7 @@ public class MemberService {
     public void memberUpdate(MemberDto memberDto, MemberDto changeDto) {
         String num = changeDto.getPhone().replace(",", "-");
         memberDto.setPhone(num);
-        memberDto.setEmail(changeDto.getEmail());
+        memberDto.setEmail(changeDto.getEmail() != null ? changeDto.getEmail() : memberDto.getEmail());
         memberDto.setAddress(changeDto.getAddress());
         memberDto.setJob(changeDto.getJob() != null ? changeDto.getJob() : memberDto.getJob());
         memberDto.setSalary(changeDto.getSalary());
