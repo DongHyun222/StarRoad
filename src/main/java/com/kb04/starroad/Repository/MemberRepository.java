@@ -43,4 +43,9 @@ public interface MemberRepository extends JpaRepository<Member, Integer> {
                       @Param("goal") int goal);
 
     Member findByEmail(String email);
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE Member m SET m.password = :encPass WHERE m.id = :id")
+    void findByIdAndUpdatePassword(@Param("id") String id, @Param("encPass") String encPass);
 }

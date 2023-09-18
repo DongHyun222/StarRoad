@@ -4,6 +4,12 @@
     margin-top : 20px;
 }
 
+div.password-container {
+    display : flex;
+    justify-content : center;
+    margin-top : 200px;
+}
+
 h1 {
     font-size : 30px;
     padding-bottom : 30px;
