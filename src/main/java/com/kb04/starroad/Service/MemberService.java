@@ -72,21 +72,51 @@ public class MemberService {
         return subscriptionRepository.findByMember(memberDto.toMemberEntity()).stream().map(Subscription::toSubscriptionDto).collect(Collectors.toList());
     }
 
-    public String getPayLog(int sub_no, int period) {
+    public String getPayLog(int sub_no, int period, char received) {
         Specification<PaymentLog> spec = (root, query, criteriaBuilder) -> null;
         spec = spec.and(PaymentLogSpecification.getPayLogsBySubNo(sub_no));
 
-        int[] result = new int[period];
+        int[] result = new int[period + 1];
+        int status = 0;
         List<PaymentLogDto> paylogs = paymentLogRepository.findAll(spec).stream().map(PaymentLog::toPaymentLogDto).collect(Collectors.toList());
-        LocalDate first = null;    // 처음 납부 날짜
-        for(PaymentLogDto paylog:paylogs) {
+        LocalDate first = new java.sql.Date(paylogs.get(0).getPaymentDate().getTime()).toLocalDate();    // 처음 납부 날짜
+        LocalDate last = new java.sql.Date(paylogs.get(paylogs.size() - 1).getPaymentDate().getTime()).toLocalDate();    // 마지막 납부 날짜
+        LocalDate now = LocalDate.now();
+
+        for (PaymentLogDto paylog : paylogs) {
             LocalDate day = new java.sql.Date(paylog.getPaymentDate().getTime()).toLocalDate();
-            if (first == null) {
-                first = day;
-            }
-            result[(int) ChronoUnit.MONTHS.between(first,day)] = day.getDayOfWeek().getValue();
+            result[(int) ChronoUnit.MONTHS.between(first, day)] = day.getDayOfWeek().getValue();
         }
+
+        boolean success = true;
+        for (int m = 0; m < (int) ChronoUnit.MONTHS.between(first, last); m++) {
+            if (result[m] == 0) {
+                success = false;
+                break;
+            }
+        }
+
+        if ((int) ChronoUnit.MONTHS.between(first, now) + 1 >= period) { // 만기?
+            status = (success && received == '0') ? -1 : -2;    // 아직 받지 않았고 꾸준히 넣었는가? 성공 : 실패
+        } else {
+            status = (period - (int) ChronoUnit.MONTHS.between(first, last) - 1);  // 만기까지 기간이 남았을 때, 남은 개월 수 보내줌.
+        }
+        result[period] = status;
+
         return Arrays.toString(result);
+    }
+
+    public int getReward(int period) {
+        return (int) (period * 500);
+    }
+
+    public void saveReward(int memNo, int subNo, int point) {
+        Member member = memberRepository.findByNo(memNo);
+        member.savePoint(point);
+        memberRepository.save(member);
+        Subscription subscription = subscriptionRepository.findByNo(subNo);
+        subscription.updateReceived('1');
+        subscriptionRepository.save(subscription);
     }
 
     public void memberInsert(MemberDto dto) {

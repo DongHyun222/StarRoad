@@ -73,3 +73,12 @@
     display: none;
     margin: 0 auto;
 }
+
+#reward_btn {
+    margin: 20px auto;
+    display: none;
+    width: 200px;
+    height: 50px;
+    border: none;
+    border-radius: 5px;
+}

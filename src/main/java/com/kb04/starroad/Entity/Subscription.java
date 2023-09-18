@@ -12,12 +12,12 @@ import javax.persistence.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@SequenceGenerator(name = "subscription_seq", sequenceName="subscription_seq")
+@SequenceGenerator(name = "subscription_seq", sequenceName = "subscription_seq")
 @Table(name = "subscription")
 public class Subscription {
     @Id
     @Column(nullable = false)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="subscription_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "subscription_seq")
     private int no;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -34,6 +34,9 @@ public class Subscription {
     @Column(nullable = false)
     private int price;
 
+    @Column(nullable = false)
+    private char received = '0';    // 0: 받지 않음, 1: 받음
+
     public SubscriptionDto toSubscriptionDto() {
         return SubscriptionDto.builder()
                 .no(no)
@@ -41,6 +44,7 @@ public class Subscription {
                 .prod(prod.toProductDto())
                 .period(period)
                 .price(price)
+                .received(received)
                 .build();
     }
 
@@ -51,6 +55,11 @@ public class Subscription {
                 .explain(prod.getExplain())
                 .period(period)
                 .price(price)
+                .received(received)
                 .build();
+    }
+
+    public void updateReceived(char status) {
+        this.received = status;
     }
 }
