@@ -33,24 +33,25 @@ public class MemberDto {
 
     public Member toMemberEntity() { // Dto를 Entity로 변환
         return Member.builder()
-                .no(no)
-                .name(this.name)
-                .id(this.id)
-                .password(this.password)
-                .birthday(this.birthday)
-                .phone(this.phone)
-                .email(this.email)
-                .address(this.address)
-                .job(this.job)
-                .purpose(this.purpose)
-                .source(this.source)
-                .goal(this.goal)
-                .status(this.status)
-                .salary(this.salary)
-                .agreement(this.agreement)
-                .point(this.point)
-                .investment(this.investment)
-                .build();
+            .no(no)
+            .name(this.name)
+            .id(this.id)
+            .password(this.password)
+            .birthday(this.birthday)
+            .phone(this.phone)
+            .email(this.email)
+            .address(this.address)
+            .job(this.job != null ? this.job : "직업없음")
+            .purpose(this.purpose != null ? this.purpose : "목적없음")
+            .source(this.source != null ? this.source : "원천없음")
+            .goal(this.goal)
+            .status(this.status)
+            .salary(this.salary)
+            .agreement(this.agreement)
+            .point(this.point)
+            .investment(this.investment)
+            .build();
+
     }
 
 }

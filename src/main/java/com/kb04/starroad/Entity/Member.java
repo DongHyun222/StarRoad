@@ -41,23 +41,22 @@ public class Member {
     private String address;
 
     @Column(name="job",nullable = false, length = 30)
-    private String job;
+    private String job = "N";
 
     @Column(name="purpose",nullable = false, length = 50)
-    private String purpose;
+    private String purpose = "N";
 
     @Column(name="source",nullable = false, length = 50)
-    private String source;
+    private String source = "N";
 
     @Column(name="goal",nullable = false)
-    private int goal;
-
-
+    private int goal = 0;
+    
     @Column(name="status",nullable = false)
     private Character status = 'Y';
 
     @Column(name="salary",nullable = false)
-    private int salary;
+    private int salary = 0;
 
     @Column(name="agreement",nullable = false)
     private Character agreement = 'Y';

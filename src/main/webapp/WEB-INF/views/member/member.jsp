@@ -28,23 +28,25 @@
                             if (data == "N") {
                                 result = "사용 가능한 아이디입니다.";
                                 $("#result_checkId").html(result).css("color", "green");
-                                id = true;
+                                idFlag = true;
                                 <%-- $("#password").trigger("focus"); --%>
                             } else {
                                 result = "이미 사용중인 아이디입니다.";
                                 $("#result_checkId").html(result).css("color", "red");
-                                id = false;
+                                idFlag = false;
                             }
                         },
                         error: function(error) {
                             console.log(id, error)
-                            id = false;
+                            idFlag = false;
                             alert("오류 발생");
                         }
                     });
                 } else {
                     alert("아이디는 6~12자의 영문자와 숫자 조합이어야 합니다.");
                     id = false;
+                    result = "6~12자리 영문/숫자 조합";
+                    $("#result_checkId").html(result).css("color", "red");
                     $("#id").val("").trigger("focus");
                 }
             });
@@ -95,6 +97,21 @@
     </script>
 
 
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script>
+        window.onload = function(){
+            document.getElementById("address").addEventListener("click", function(){ //주소입력칸을 클릭하면
+                //카카오 지도 발생
+                new daum.Postcode({
+                    oncomplete: function(data) { //선택시 입력값 세팅
+                        document.getElementById("address").value = data.address; // 주소 넣기
+                        document.querySelector("input[id=address_detail]").focus(); //상세입력 포커싱
+                    }
+                }).open();
+            });
+        }
+    </script>
+
 </head>
 <body>
     <div id="navbar"></div>
@@ -104,6 +121,7 @@
         <div class="form-container">
             <h1>회원가입</h1>
             <h2>기본정보 <span class="required"><span class="star">*</span>표시는 필수 입력입니다</span></h2>
+
             <form action="/starroad/member" method="post" enctype="multipart/form-data">
                 <table>
                     <tr>
@@ -160,6 +178,9 @@
                         <th>자택주소 <span class="star">*</span></th>
                         <td>
                             <input type="text" name="address" id="address" required>
+                        </td>
+                        <td>
+                            <input type="text" name="address" id="address_detail" placeholder="상세주소를 입력하세요" required>
                         </td>
                     </tr>
                     <tr>
