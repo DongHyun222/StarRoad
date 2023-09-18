@@ -16,6 +16,7 @@ import com.kb04.starroad.Repository.Specification.PaymentLogSpecification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -43,8 +44,10 @@ public class MemberService {
         mypageResponseDto.setName(member.getName());
         mypageResponseDto.setPoint(member.getPoint());
         mypageResponseDto.setInvestment(member.getInvestment());
-        mypageResponseDto.setSavings(memberRepository.getSavings(no));
-        mypageResponseDto.setDeposit(memberRepository.getDeposit(no));
+        
+        //여기 수정해야됨
+        mypageResponseDto.setSavings(memberRepository.getSavings(1));
+        mypageResponseDto.setDeposit(memberRepository.getDeposit(1));
 
         return mypageResponseDto;
     }
@@ -54,7 +57,10 @@ public class MemberService {
     }
 
     public boolean checkPassword(int no, String inputPw) {
-        return memberRepository.findByNo(no).getPassword().equals(inputPw);
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        boolean passwordMatches = encoder.matches(inputPw, memberRepository.findByNo(no).getPassword());
+
+        return passwordMatches;
     }
 
     public List<BoardResponseDto> getWritings(int no) {

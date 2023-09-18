@@ -8,6 +8,7 @@ import com.kb04.starroad.Service.MemberService;
 import com.kb04.starroad.Service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -29,57 +30,49 @@ public class MypageController {
     private final MemberService memberService;
     private final ProductService productService;
 
-    private static Member getLoginMember(HttpServletRequest request) {
+    private static MemberDto getLoginMember(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        Member loginMember = (Member) session.getAttribute("currentUser");
+        MemberDto loginMember = (MemberDto) session.getAttribute("currentUser");
         return loginMember;
     }
 
     @GetMapping("/starroad/mypage/asset")
-    public ModelAndView asset() {
+    public ModelAndView asset(
+            HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("mypage/asset");
-        mav.addObject("memberAssets", memberService.getAssets(1));
+        MemberDto memberDto = getLoginMember(request);
+
+        mav.addObject("memberAssets", memberService.getAssets(memberDto.getNo()));
         return mav;
     }
 
     @GetMapping("/starroad/mypage/board")
-    public ModelAndView board() {
+    public ModelAndView board(
+            HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("mypage/board");
-        mav.addObject("writings", memberService.getWritings(1));
+        MemberDto memberDto = getLoginMember(request);
+
+        mav.addObject("writings", memberService.getWritings(memberDto.getNo()));
         return mav;
     }
 
     @GetMapping("/starroad/mypage/comment")
-    public ModelAndView comment() {
+    public ModelAndView comment(
+            HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("mypage/comment");
-        mav.addObject("comments", memberService.getComments(1));
+        MemberDto memberDto = getLoginMember(request);
+
+        mav.addObject("comments", memberService.getComments(memberDto.getNo()));
         return mav;
     }
 
-    private MemberDto kiki = new MemberDto().builder()
-            .investment(100)
-            .address("서울 강남구 선릉로 428, 108동 101호")
-            .birthday("97/12/04")
-            .phone("010-1234-5678")
-            .email("imki@gmail.com")
-            .password("skzlzl04")
-            .id("imkiki")
-            .name("나키키")
-            .job("직장인")
-            .point(1000)
-            .agreement('Y')
-            .salary(1000)
-            .status('Y')
-            .goal(1000)
-            .no(1)
-            .source("근로 및 연금소득")
-            .purpose("급여 및 생활비")
-            .build();
-
     @GetMapping("/starroad/mypage/challenge")
-    public ModelAndView challenge() {
+    public ModelAndView challenge(
+            HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("mypage/challenge");
-        List<SubscriptionDto> subscriptions = memberService.getSubscriptions(kiki);
+        MemberDto memberDto = getLoginMember(request);
+
+        List<SubscriptionDto> subscriptions = memberService.getSubscriptions(memberDto);
         mav.addObject("subscriptions", subscriptions);
         List<String> paymentLogs = new ArrayList<>();
         for (SubscriptionDto sub:subscriptions) {
@@ -101,7 +94,7 @@ public class MypageController {
             @ModelAttribute MemberDto changeDto) {
         ModelAndView mav = new ModelAndView("redirect:/starroad");
 
-        MemberDto memberDto = getLoginMember(request).toMemberDto();
+        MemberDto memberDto = getLoginMember(request);
 
         mav.addObject("member", memberDto);
 
@@ -118,9 +111,13 @@ public class MypageController {
     }
 
     @PostMapping("/api/starroad/mypage/check-password")
-    public String checkPassword(@RequestParam("inputPw") String inputPw) {
+    public String checkPassword(@RequestParam("inputPw") String inputPw,
+            HttpServletRequest request) {
         String msg = "";
-        if (!memberService.checkPassword(1, inputPw)) {
+        MemberDto memberDto = getLoginMember(request);
+
+
+        if (!memberService.checkPassword(memberDto.getNo(), inputPw)) {
             msg = "비밀번호를 잘못 입력했습니다. 다시 입력해주세요.";
         }
         return msg;
