@@ -14,7 +14,6 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Table(name = "heart")
 public class Heart {
-
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "heart_seq")
     @SequenceGenerator(name = "heart_seq", sequenceName = "HEART_SEQ", allocationSize = 1)

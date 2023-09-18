@@ -138,6 +138,7 @@
         location.href = "/starroad/comment/create?no=" + ${board.no};
     });
 
+   <!-- 좋아요 기능 -->
   $(document).ready(function() {
       $("#like-icon").on("click", function() {
           $("#likeForm").submit();
