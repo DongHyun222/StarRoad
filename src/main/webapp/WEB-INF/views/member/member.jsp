@@ -71,27 +71,24 @@
                     alert("비밀번호는 8~12자의 영문자와 숫자 조합이어야 합니다");
                 }
             });
+        });
 
-            $("#confirmPassword").blur(function() {
-                let password = $("#password").val();
-                let confirmPassword = $("#confirmPassword").val();
+        $(".submit-button").click(function() {
+            var requiredFields = $("input[required]");
 
-                if (password !== confirmPassword) {
-                    result = "비밀번호를 다시 입력해주세요";
-                    $("#result_checkPassword").html(result).css("color", "red");
-
-                } else {
-                    result = "비밀번호가 일치합니다";
-                    $("#result_checkPassword").html(result).css("color", "green");
+            // 모든 필수 필드가 valid한지 확인
+            var allValid = true;
+            requiredFields.each(function() {
+                if (!this.checkValidity()) {
+                    allValid = false;
+                    return false; // 검증 실패 시 반복문 종료
                 }
             });
 
-            $(".submit-button").click(function() {
-                if (idFlag && errorFlag) {
-                    alert("회원가입이 완료되었습니다.");
-                }
-            });
-
+            // 모든 필수 필드가 valid하다면 alert 띄우기
+            if (allValid) {
+                alert("개인정보수정이 완료되었습니다.");
+            }
         });
 
     </script>
@@ -239,7 +236,7 @@
                             <span class="source"> 거래자금의 원천의</span>
                             <input type="number" name="goal" id="goal" min="0" max="100" required>
                             <span class="per">%</span>
-                            <div class='valid'>퍼센트단위 (1~100사이 숫자 입력)</div>
+                            <div class='valid'>퍼센트단위 (0~100사이 숫자 입력)</div>
                         </td>
                     </tr>
                 </table>
