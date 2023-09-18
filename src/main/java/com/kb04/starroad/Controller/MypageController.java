@@ -110,12 +110,26 @@ public class MypageController {
         return mav;
     }
 
+    @PostMapping("/starroad/mypage/password")
+    public ModelAndView password(
+            @RequestParam("password") String password,
+            HttpServletRequest request) {
+        ModelAndView mav = new ModelAndView("redirect:/starroad");
+
+        MemberDto memberDto = getLoginMember(request);
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String encPass = encoder.encode(password);
+
+        memberService.memberPasswordUpdate(memberDto,encPass);
+
+        return mav;
+    }
+
     @PostMapping("/api/starroad/mypage/check-password")
     public String checkPassword(@RequestParam("inputPw") String inputPw,
             HttpServletRequest request) {
         String msg = "";
         MemberDto memberDto = getLoginMember(request);
-
 
         if (!memberService.checkPassword(memberDto.getNo(), inputPw)) {
             msg = "비밀번호를 잘못 입력했습니다. 다시 입력해주세요.";

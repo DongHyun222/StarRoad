@@ -124,11 +124,13 @@ public class MemberService {
                 memberDto.getPurpose(), memberDto.getSource(),
                 memberDto.getGoal());
 
-
-
     }
 
     public Member checkEmail(String email) {
         return memberRepository.findByEmail(email);
+    }
+
+    public void memberPasswordUpdate(MemberDto memberDto, String encPass) {
+        memberRepository.findByIdAndUpdatePassword(memberDto.getId(), encPass);
     }
 }
