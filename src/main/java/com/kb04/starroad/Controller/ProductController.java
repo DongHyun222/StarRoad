@@ -2,7 +2,6 @@ package com.kb04.starroad.Controller;
 
 import com.kb04.starroad.Dto.*;
 import com.kb04.starroad.Dto.product.ProductResponseDto;
-import com.kb04.starroad.Entity.Member;
 import com.kb04.starroad.Service.ProductService;
 import io.swagger.annotations.*;
 import org.springframework.ui.Model;
@@ -27,10 +26,6 @@ public class ProductController {
     }
 
     @ApiOperation(value = "예적금 상품 조회", notes = "예적금 상품을 조회할 수 있다")
-    @ApiResponses(value = {
-            @ApiResponse(code = 404, message = "페이지 없음"),
-            @ApiResponse(code = 500, message = "서버 에러")
-    })
     @GetMapping("/starroad/product")
     public ModelAndView product(
             Model model,
@@ -54,10 +49,6 @@ public class ProductController {
     }
 
     @ApiOperation(value = "예적금 상품 검색", notes = "예적금 상품을 검색할 수 있다")
-    @ApiResponses(value = {
-            @ApiResponse(code = 404, message = "페이지 없음"),
-            @ApiResponse(code = 500, message = "서버 에러")
-    })
     @GetMapping("/starroad/product/result")
     public ModelAndView product_search_result(
             Model model,
