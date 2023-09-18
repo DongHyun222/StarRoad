@@ -1,6 +1,5 @@
 package com.kb04.starroad.Controller;
 
-import com.kb04.starroad.Dto.MemberDto;
 import com.kb04.starroad.Dto.board.BoardResponseDto;
 import com.kb04.starroad.Dto.board.CommentDto;
 import com.kb04.starroad.Entity.Board;
@@ -35,7 +34,7 @@ public class    BoardController3 {
             mav.addObject("message", "로그인 후에 댓글을 작성할 수 있습니다.");
             return mav;
         }
-        
+
         MemberDto currentUser = (MemberDto) session.getAttribute("currentUser");
         String currentUserId = currentUser.getId();
 
@@ -96,7 +95,7 @@ public class    BoardController3 {
 
         MemberDto memberDto = (MemberDto) session.getAttribute("currentUser");
         System.out.println("debug = " + memberDto.getId());
-        
+
         if (memberDto.getId() == null ){
 
             ModelAndView mav = new ModelAndView("redirect:/starroad/login");

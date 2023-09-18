@@ -19,7 +19,7 @@
         <div id="navbar"></div>
 
         <div class="title">
-            <input name="title" class="titleStyle"  type="text" id="title" placeholder="제목을 입력하세요"  />
+            <input name="title" class="titleStyle"  type="text" id="title" placeholder="제목을 입력하세요" required />
             <br>
             <div class = "labelStyle">
             <label for="type">게시판 선택:</label>
@@ -49,6 +49,7 @@
             </div>
         </div>
     </div>
+
 
 
 

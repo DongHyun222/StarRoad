@@ -1,18 +1,11 @@
 package com.kb04.starroad.Controller;
 
 import com.kb04.starroad.Dto.MemberDto;
-import com.kb04.starroad.Entity.Member;
 import com.kb04.starroad.Dto.SubProdDto;
 import com.kb04.starroad.Dto.SubscriptionDto;
 import com.kb04.starroad.Service.MemberService;
 import com.kb04.starroad.Service.ProductService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,12 +21,6 @@ public class MypageController {
 
     private final MemberService memberService;
     private final ProductService productService;
-
-    private static Member getLoginMember(HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        Member loginMember = (Member) session.getAttribute("currentUser");
-        return loginMember;
-    }
 
     @GetMapping("/starroad/mypage/asset")
     public ModelAndView asset() {
@@ -88,28 +75,12 @@ public class MypageController {
         mav.addObject("paymentLogs",paymentLogs);
         return mav;
     }
+
     @GetMapping("/starroad/mypage/info")
     public ModelAndView info() {
         ModelAndView mav = new ModelAndView("mypage/info");
         return mav;
     }
-
-    //회원정보 수정하는 부분
-    @PostMapping("/starroad/mypage/info")
-    public ModelAndView info(
-            HttpServletRequest request,
-            @ModelAttribute MemberDto changeDto) {
-        ModelAndView mav = new ModelAndView("redirect:/starroad");
-
-        MemberDto memberDto = getLoginMember(request).toMemberDto();
-
-        mav.addObject("member", memberDto);
-
-        memberService.memberUpdate(memberDto, changeDto);
-
-        return mav;
-    }
-
 
     @GetMapping("/starroad/mypage/password")
     public ModelAndView password() {

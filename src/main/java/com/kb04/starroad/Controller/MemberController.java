@@ -47,8 +47,19 @@ public class MemberController {
     @RequestMapping("/starroad/checkMemberId")
     public String checkId(@RequestParam("id") String id) {
         String result="Y";
-        System.out.println(id);
         Member optionalMember = memberService.checkId(id);
+        if (optionalMember == null) {
+            // 아이디가 존재하지 않는 경우
+            result = "N";
+        }
+        //아이디가 있을시 Y 없을시 N으로 jsp view 로 보냄
+        return result;
+    }
+
+    @RequestMapping("/starroad/checkMemberEmail")
+    public String checkEmail(@RequestParam("email") String email) {
+        String result="Y";
+        Member optionalMember = memberService.checkEmail(email);
         if (optionalMember == null) {
             // 아이디가 존재하지 않는 경우
             result = "N";

@@ -53,14 +53,12 @@
               <img src="https://ifh.cc/g/aw0vjY.png" id="like-icon" alt="Like Icon" style="vertical-align: middle; width: 50px; height: 50px;" >
              </form>
               <span id="likes-count"> <c:out value="${board.likes}" /></span>
-             
+
         <img src="data:image/jpeg;base64,${board.imageBase64}" alt="" width="200" height="200" style="margin-bottom: 30px;" onerror="this.style.display='none'"/>
             </div>
         </div>
 
         <div class="comment">
-
-        댓글<c:out value="${board.commentNum}" />
 
         <div class="comment-input">
              <form action="/starroad/comment" method="post">
@@ -90,7 +88,6 @@
 
     </div>
    <script>
-
      document.getElementById("deleteBtn").addEventListener("click", function() {
                if (confirm("정말로 삭제하시겠습니까?")) {
                    location.href = "/starroad/board/delete?no=" + ${board.no}; // 삭제 API 호출
