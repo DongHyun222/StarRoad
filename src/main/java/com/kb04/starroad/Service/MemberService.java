@@ -42,8 +42,12 @@ public class MemberService {
         mypageResponseDto.setName(member.getName());
         mypageResponseDto.setPoint(member.getPoint());
         mypageResponseDto.setInvestment(member.getInvestment());
-        mypageResponseDto.setSavings(memberRepository.getSavings(no));
-        mypageResponseDto.setDeposit(memberRepository.getDeposit(no));
+
+        Integer savings = memberRepository.getSavings(no);
+        Integer deposit = memberRepository.getDeposit(no);
+
+        mypageResponseDto.setSavings(savings==null?0:savings);
+        mypageResponseDto.setDeposit(deposit==null?0:deposit);
 
         return mypageResponseDto;
     }

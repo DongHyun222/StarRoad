@@ -15,6 +15,11 @@
     <script type="text/javascript">
         $(function() {
             $("#navbar").load("${path}/resources/common_jsp/navbar.jsp");
+
+            if (${memberAssets.savings}+${memberAssets.deposit}+${memberAssets.investment}===0) {
+                $("#asset").css("display","none")
+                $("#info").css("display", "block")
+            }
         });
     </script>
 </head>
@@ -38,6 +43,9 @@
             </section>
             <section id="asset">
                 <canvas id="myChart"></canvas>
+            </section>
+            <section id="info">
+                등록된 자산이 없습니다.
             </section>
         </article>
 
