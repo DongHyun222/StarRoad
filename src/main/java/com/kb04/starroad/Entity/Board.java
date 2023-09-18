@@ -5,9 +5,11 @@ import com.kb04.starroad.Dto.board.BoardResponseDto;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-    @Entity
+@Entity
     @Getter
     @Builder
     @AllArgsConstructor
@@ -38,10 +40,10 @@ import java.util.Date;
         private int likes;
 
         @Column(name = "comment_num", nullable = false)
-        private int commentNum = 0;
+        private int commentNum;
 
-        @Column(columnDefinition = "char(1)  default 'Y'", name = "status", nullable = false)
-        private Character status;
+        @Column(name = "status", nullable = false)
+        private Character status = 'Y';
 
         @Column(name = "type", length = 1, nullable = false)
         private String type;
@@ -52,7 +54,8 @@ import java.util.Date;
 
         @Column(name = "detail_type", length = 100, nullable = false)
         private String detailType;
-
+        @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
+        private List<Comment> comments = new ArrayList<>();
         @PrePersist
         protected void onCreate() {
             regdate = new Date(); // 현재 날짜와 시간을 설정
@@ -93,4 +96,17 @@ import java.util.Date;
             this.title=title;
             this.content=content;
         }
-    }
+
+        public void setMember(Member member) {
+            this.member = member;
+
+
+        }
+
+        public void setCommentNum(int commentNum) {
+            this.commentNum = commentNum;
+        }
+        public void setLikes(int likes){
+            this.likes = likes;
+        }
+}

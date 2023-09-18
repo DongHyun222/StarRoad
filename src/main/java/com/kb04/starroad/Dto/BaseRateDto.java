@@ -15,7 +15,9 @@ public class BaseRateDto {
     private int no;
     private int minPeriod;
     private int maxPeriod;
-    private double rate;
-    private ProductDto product;
+    private Double rate;
+    private ProductDto prod;
+
+//    private Double max_rate;
 
 }

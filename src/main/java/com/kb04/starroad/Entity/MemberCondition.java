@@ -1,5 +1,7 @@
 package com.kb04.starroad.Entity;
 
+import com.kb04.starroad.Dto.MemberConditionDto;
+import com.kb04.starroad.Dto.product.ProductDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -25,4 +27,13 @@ public class MemberCondition {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_no", nullable = false)
     private Member member;
+
+
+    public MemberConditionDto toMemberConditionDto() {
+        return MemberConditionDto.builder()
+                .no(no)
+                .condition(condition.toConditionDto())
+                .member(member.toMemberDto())
+                .build();
+    }
 }

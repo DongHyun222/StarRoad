@@ -1,5 +1,6 @@
 package com.kb04.starroad.Service;
 
+import com.kb04.starroad.Dto.MemberDto;
 import com.kb04.starroad.Dto.auth.LoginRequestDto;
 import com.kb04.starroad.Entity.Member;
 import com.kb04.starroad.Repository.MemberRepository;
@@ -13,16 +14,15 @@ public class AuthService {
     private MemberRepository memberRepository;
 
     // 로그인 기능
-    public Member authenticate(LoginRequestDto loginRequestDto) {
+    public MemberDto authenticate(LoginRequestDto loginRequestDto) {
         String id = loginRequestDto.getId();
         String password = loginRequestDto.getPassword();
 
-        // 데이터베이스에서 해당 아이디의 회원 정보를 가져옴
-        Member member = memberRepository.findById(id);
+        MemberDto memberDto = memberRepository.findById(id).toMemberDto();
 
-        if (member != null) {
+        if (memberDto != null) {
             // 데이터베이스에서 가져온 암호화된 비밀번호
-            String encryptedPasswordFromDatabase = member.getPassword();
+            String encryptedPasswordFromDatabase = memberDto.getPassword();
 
             BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
@@ -31,10 +31,9 @@ public class AuthService {
 
             if (passwordMatches) {
                 // 비밀번호가 일치하면 해당 회원 정보를 반환
-                return member;
+                return memberDto;
             }
         }
-
         // 아이디가 없거나 비밀번호가 일치하지 않을 경우 null 반환
         return null;
     }

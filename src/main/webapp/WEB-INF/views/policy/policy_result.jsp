@@ -40,80 +40,76 @@
         <div id="navbar"></div>
         <div class="title">청년 금융 정책</div>
         <main>
-            <br>
-            <div class="search_box">
+            <div id="main_box">
+                <div class="search_box">
 
-                <form name="policyForm" id="policyForm" class="search_form" method="get" action="${pageContext.request.contextPath}/starroad/policy/result">
-                    <div class="search_small_box">
-                        <div class="search_box_title">지역</div>
-                        <div class="search_box_option">
-                            <select class="location_select_box" name="location">
-                                <option disabled selected>선택해주세요</option>
-                                <option id="location_서울" value="서울">서울</option>
-                                <option id="location_경기" value="경기">경기</option>
-                                <option id="location_중앙부처" value="중앙부처">중앙부처</option>
-                            </select>
+                    <form name="policyForm" id="policyForm" class="search_form" method="get" action="${pageContext.request.contextPath}/starroad/policy/result">
+                        <div class="search_small_box">
+                            <div class="search_box_title">지역</div>
+                            <div class="search_box_option">
+                                <select class="location_select_box" name="location">
+                                    <option disabled selected>선택해주세요</option>
+                                    <option id="location_서울" value="서울">서울</option>
+                                    <option id="location_경기" value="경기">경기</option>
+                                    <option id="location_중앙부처" value="중앙부처">중앙부처</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="search_small_box">
-                        <div class="search_box_title">태그</div>
-                        <div class="search_box_option">
+                        <div class="search_small_box">
+                            <div class="search_box_title">태그</div>
+                            <div class="search_box_option">
 
-                            <ul class="ks-cboxtags">
-                                <li><input type="checkbox" id="금융지원" name="tag1" value="금융지원"><label for="금융지원">금융지원</label></li>
-                                <li><input type="checkbox" id="교육" name="tag2" value="교육"><label for="교육">교육</label></li>
-                                <li><input type="checkbox" id="생활지원" name="tag3" value="생활지원"><label for="생활지원">생활지원</label></li>
-                                <li><input type="checkbox" id="금융자산" name="tag4" value="금융자산"><label for="금융자산">금융자산 형성</label></li>
-                            </ul>
+                                <ul class="ks-cboxtags">
+                                    <li><input type="checkbox" id="금융지원" name="tag1" value="금융지원"><label for="금융지원">금융지원</label></li>
+                                    <li><input type="checkbox" id="교육" name="tag2" value="교육"><label for="교육">교육</label></li>
+                                    <li><input type="checkbox" id="생활지원" name="tag3" value="생활지원"><label for="생활지원">생활지원</label></li>
+                                    <li><input type="checkbox" id="금융자산" name="tag4" value="금융자산"><label for="금융자산">금융자산 형성</label></li>
+                                </ul>
 
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="search_small_box">
-                        <div class="search_box_title">정책명</div>
-                        <div class="search_box_option">
-                            <input class="search_input" name="keyword" id="keyword" type="text" placeholder="키워드를 입력해주세요">
-                            <button id="final" class="submit_btn" type="submit">검색</button>
+                        <div class="search_small_box">
+                            <div class="search_box_title">정책명</div>
+                            <div class="search_box_option">
+                                <input class="search_input" name="keyword" id="keyword" type="text" placeholder="키워드를 입력해주세요">
+                                <button id="final" class="submit_btn" type="submit">검색</button>
+                            </div>
                         </div>
-                    </div>
 
-                </form>
-            </div>
+                    </form>
+                </div>
 
-            <br>
-
-            <div class="policy_box">
-                <c:forEach items="${policyList}" var="item">
-                    <div class="policy">
-                        <div class="name">${item.name}</div>
-                        <div class="explain">${item.explain}</div>
-                        <div class="tag">#${item.tag}</div>
-                        <div class="btn_div"><button class="link_btn"><a href="${item.link}">더보기</a></button></div>
-                    </div>
-                </c:forEach>
-            </div>
-
-            <br>
-
-            <div aria-label="Page navigation example">
-                <ul class="pagination">
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Previous">
-                            <span aria-hidden="true">&lt;</span>
-                        </a>
-                    </li>
-                    <c:forEach begin="1" end="${pageEndIndex}" var="i">
-                        <li class="page-item"><a class="page-link" href="#" aria-label="${i}" id="${i}_page">${i}</a></li>
+                <div class="policy_box">
+                    <c:forEach items="${policyList}" var="item">
+                        <div class="policy">
+                            <div class="name">${item.name}</div>
+                            <div class="explain">${item.explain}</div>
+                            <div class="tag">#${item.tag}</div>
+                            <div class="btn_div"><button class="link_btn"><a href="${item.link}">더보기</a></button></div>
+                        </div>
                     </c:forEach>
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Next">
-                            <span aria-hidden="true">&gt;</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
+                </div>
 
+                <div aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&lt;</span>
+                            </a>
+                        </li>
+                        <c:forEach begin="1" end="${pageEndIndex}" var="i">
+                            <li class="page-item"><a class="page-link" href="#" aria-label="${i}" id="${i}_page">${i}</a></li>
+                        </c:forEach>
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&gt;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </main>
     </div>
 

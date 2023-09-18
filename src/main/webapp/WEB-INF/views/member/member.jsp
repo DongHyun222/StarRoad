@@ -28,23 +28,25 @@
                             if (data == "N") {
                                 result = "사용 가능한 아이디입니다.";
                                 $("#result_checkId").html(result).css("color", "green");
-                                id = true;
+                                idFlag = true;
                                 <%-- $("#password").trigger("focus"); --%>
                             } else {
                                 result = "이미 사용중인 아이디입니다.";
                                 $("#result_checkId").html(result).css("color", "red");
-                                id = false;
+                                idFlag = false;
                             }
                         },
                         error: function(error) {
                             console.log(id, error)
-                            id = false;
+                            idFlag = false;
                             alert("오류 발생");
                         }
                     });
                 } else {
                     alert("아이디는 6~12자의 영문자와 숫자 조합이어야 합니다.");
                     id = false;
+                    result = "6~12자리 영문/숫자 조합";
+                    $("#result_checkId").html(result).css("color", "red");
                     $("#id").val("").trigger("focus");
                 }
             });
@@ -70,6 +72,42 @@
                 }
             });
 
+            let emailFlag = false;
+            // 이메일 유효성을 검사하는 함수
+            function isValidEmail(email) {
+                const emailPattern = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+                return emailPattern.test(email);
+            }
+
+            $("#checkEmail").click(function(){
+                let email = $("#email").val();
+
+                if (isValidEmail(email)) {
+                    // 정규 표현식을 사용하여 이메일 유효성 검사
+                    $.ajax({
+                        type: 'post',
+                        url: "/starroad/checkMemberEmail",
+                        data: {"email": email},
+                        success: function(data) {
+                            if (data == "N") {
+                                result = "사용 가능한 이메일입니다.";
+                                $("#result_checkEmail").html(result).css("color", "green");
+                                emailFlag = true;
+                            } else {
+                                result = "이미 사용중인 이메일입니다.";
+                                $("#result_checkEmail").html(result).css("color", "red");
+                                emailFlag = false;
+                            }
+                        }
+                    });
+                } else {
+                    emailFlag = false;
+                    result = "이메일 주소 형식이 올바르지 않습니다.";
+                    $("#result_checkEmail").html(result).css("color", "red");
+                    $("#email").val("").focus();
+                }
+            });
+
             $("#confirmPassword").blur(function() {
                 let password = $("#password").val();
                 let confirmPassword = $("#confirmPassword").val();
@@ -85,15 +123,43 @@
             });
 
             $(".submit-button").click(function() {
-                if (idFlag && errorFlag) {
+                var requiredFields = $("input[required]");
+
+                // 모든 필수 필드가 valid한지 확인
+                var allValid = true;
+                requiredFields.each(function() {
+                    if (!this.checkValidity()) {
+                        allValid = false;
+                        return false; // 검증 실패 시 반복문 종료
+                    }
+                });
+
+                // 모든 필수 필드가 valid하다면 alert 띄우기
+                if (allValid && emailFlag && errorFlag && idFlag) {
                     alert("회원가입이 완료되었습니다.");
                 }
             });
 
         });
 
+
     </script>
 
+
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script>
+        window.onload = function(){
+            document.getElementById("address").addEventListener("click", function(){ //주소입력칸을 클릭하면
+                //카카오 지도 발생
+                new daum.Postcode({
+                    oncomplete: function(data) { //선택시 입력값 세팅
+                        document.getElementById("address").value = data.address; // 주소 넣기
+                        document.querySelector("input[id=address_detail]").focus(); //상세입력 포커싱
+                    }
+                }).open();
+            });
+        }
+    </script>
 
 </head>
 <body>
@@ -104,6 +170,7 @@
         <div class="form-container">
             <h1>회원가입</h1>
             <h2>기본정보 <span class="required"><span class="star">*</span>표시는 필수 입력입니다</span></h2>
+
             <form action="/starroad/member" method="post" enctype="multipart/form-data">
                 <table>
                     <tr>
@@ -116,7 +183,6 @@
                             <input type="text" name="id" id="id" required>
                             <a id="checkId" class="memberClick" >중복확인</a><br>
                             <div class='valid'><span id="result_checkId" style="font-size:12px;">6~12자리 영문/숫자 조합</span></div>
-                            <%-- <div><span id="result_checkId" style="font-size:12px;"></span></div> --%>
                         </td>
                     </tr>
                     <tr>
@@ -154,12 +220,18 @@
                         <th>이메일 <span class="star">*</span></th>
                         <td>
                             <input type="text" id="email" name="email" required>
+                            <a id="checkEmail" class="memberClick" >중복확인</a><br>
+                            <div class='valid'><span id="result_checkEmail" style="font-size:12px;">이메일을 적어주세요</span></div>
                         </td>
                     </tr>
                     <tr>
                         <th>자택주소 <span class="star">*</span></th>
                         <td>
                             <input type="text" name="address" id="address" required>
+                            <input type="text" name="address" id="address_detail" placeholder="상세주소를 입력하세요" required>
+                        </td>
+                        <td>
+                            <input type="text" name="address" id="address_detail" placeholder="상세주소를 입력하세요" required>
                         </td>
                     </tr>
                     <tr>
@@ -218,7 +290,7 @@
                             <span class="source"> 거래자금의 원천의</span>
                             <input type="number" name="goal" id="goal" min="0" max="100" required>
                             <span class="per">%</span>
-                            <div class='valid'>퍼센트단위 (1~100사이 숫자 입력)</div>
+                            <div class='valid'>퍼센트단위 (0~100사이 숫자 입력)</div>
                         </td>
                     </tr>
                 </table>
