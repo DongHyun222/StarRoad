@@ -1,5 +1,6 @@
 package com.kb04.starroad.Controller;
 
+import com.kb04.starroad.Dto.MemberDto;
 import com.kb04.starroad.Dto.auth.LoginRequestDto;
 import com.kb04.starroad.Entity.Member;
 import com.kb04.starroad.Service.AuthService;
@@ -26,9 +27,9 @@ public class AuthController {
     @PostMapping("/starroad/login")
     public ModelAndView login(LoginRequestDto requestDto, HttpSession session, RedirectAttributes redirectAttributes) {
         ModelAndView mav;
-        Member member = authService.authenticate(requestDto);
-        if (member != null) {
-            session.setAttribute("currentUser", member);
+        MemberDto memberDto = authService.authenticate(requestDto);
+        if (memberDto != null) {
+            session.setAttribute("currentUser", memberDto);
             mav = new ModelAndView("redirect:/starroad"); // 로그인 성공
         } else {
             mav = new ModelAndView("redirect:/starroad/login"); // 로그인 실패
