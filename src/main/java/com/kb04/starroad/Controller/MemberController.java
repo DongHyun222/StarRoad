@@ -37,7 +37,6 @@ public class MemberController {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String encPass = encoder.encode(dto.getPassword());
         dto.setPassword(encPass);
-        System.out.println(encPass);
 
         memberService.memberInsert(dto);
 

@@ -1,5 +1,6 @@
 package com.kb04.starroad.Service;
 
+import com.kb04.starroad.Dto.board.BoardRequestDto;
 import com.kb04.starroad.Dto.board.CommentDto;
 import com.kb04.starroad.Entity.Board;
 import com.kb04.starroad.Entity.Comment;
@@ -73,4 +74,24 @@ public class CommentService {
         return commentRepository.findById(commentNo);
     }
 
+    @Transactional
+    public void increaseCommentCount(int boardNo) {
+
+        Optional<Board> optionalBoard = boardRepository.findById(boardNo);
+        if (optionalBoard != null) {
+            Board board = optionalBoard.get();
+            int currentCount = board.getCommentNum();
+            board.setCommentNum(currentCount + 1);
+            System.out.println("board.getCommentNum(): " + board.getCommentNum());
+            boardRepository.save(board);
+            System.out.println("board.getCommentNum(): " + board.getCommentNum());
+        }
+    }
+//        CommentDto newComment = new CommentDto();
+//        newComment.setContent(content);
+//        newComment.setRegdate(new java.util.Date());
+//        newComment.setBoard(boardRepository.findByNo(boardNo));;
+//        Comment comment = newComment.toEntity();
+//        commentRepository.save(comment);
+//        return comment.getBoard().getNo();
 }

@@ -32,6 +32,9 @@ public class CommentController {
         }
 
         int number = commentService.createComment(content, boardNo);
+
+        commentService.increaseCommentCount(boardNo);
+
         ModelAndView mav = new ModelAndView("redirect:/starroad/board/detail?no=" + number);
         return mav;
     }
@@ -104,6 +107,7 @@ public class CommentController {
         }
 
         commentService.deleteComment(commentNo);
+
         ModelAndView mav = new ModelAndView("redirect:/starroad/board/main");
         return mav;
     }
