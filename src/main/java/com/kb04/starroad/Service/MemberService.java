@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -63,7 +64,34 @@ public class MemberService {
     }
 
     public void memberInsert(MemberDto dto) {
+        System.out.println("*1111");
         Member member = dto.toMemberEntity();
+        System.out.println("*2222");
         memberRepository.save(member);
+        System.out.println("*3333");
+    }
+
+    public void memberUpdate(MemberDto memberDto, MemberDto changeDto) {
+        String num = changeDto.getPhone().replace(",", "-");
+        memberDto.setPhone(num);
+        memberDto.setEmail(changeDto.getEmail());
+        memberDto.setAddress(changeDto.getAddress());
+        memberDto.setJob(changeDto.getJob() != null ? changeDto.getJob() : memberDto.getJob());
+        memberDto.setSalary(changeDto.getSalary());
+        memberDto.setPurpose(changeDto.getPurpose() != null ? changeDto.getPurpose() : memberDto.getPurpose());
+        memberDto.setSource(changeDto.getSource() != null ? changeDto.getSource() : memberDto.getSource());
+        memberDto.setGoal(changeDto.getGoal());
+
+        Member member = memberDto.toMemberEntity();
+//        memberRepository.update(member);
+
+        memberRepository.updateMember(memberDto.getNo(), memberDto.getPhone(),
+                memberDto.getEmail(), memberDto.getAddress(),
+                memberDto.getJob(), memberDto.getSalary(),
+                memberDto.getPurpose(), memberDto.getSource(),
+                memberDto.getGoal());
+
+
+
     }
 }
