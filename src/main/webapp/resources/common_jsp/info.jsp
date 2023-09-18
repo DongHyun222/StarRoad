@@ -17,6 +17,44 @@
         function clearInput(inputField) {
             inputField.value = '';
         }
+
+        let emailFlag = false;
+        // 이메일 유효성을 검사하는 함수
+        function isValidEmail(email) {
+            const emailPattern = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+            return emailPattern.test(email);
+        }
+
+        $("#checkEmail").click(function(){
+            let email = $("#email").val();
+
+            if (isValidEmail(email)) {
+                // 정규 표현식을 사용하여 이메일 유효성 검사
+                $.ajax({
+                    type: 'post',
+                    url: "/starroad/checkMemberEmail",
+                    data: {"email": email},
+                    success: function(data) {
+                        if (data == "N") {
+                            result = "사용 가능한 이메일입니다.";
+                            $("#result_checkEmail").html(result).css("color", "green");
+                            emailFlag = true;
+                        } else {
+                            result = "이미 사용중인 이메일입니다.";
+                            $("#result_checkEmail").html(result).css("color", "red");
+                            emailFlag = false;
+                        }
+                    }
+                });
+            } else {
+                emailFlag = false;
+                result = "이메일 주소 형식이 올바르지 않습니다.";
+                $("#result_checkEmail").html(result).css("color", "red");
+                $("#email").val("").focus();
+            }
+        });
+
+
         $(".submit-button").click(function() {
             var requiredFields = $("input[required]");
 
@@ -30,7 +68,7 @@
             });
 
             // 모든 필수 필드가 valid하다면 alert 띄우기
-            if (allValid) {
+            if (allValid && emailFlag) {
                 alert("개인정보수정이 완료되었습니다.");
             }
         });
@@ -52,11 +90,17 @@
 </head>
 <body>
     <div class="info_div">
-        <div class="info_h1">내 정보<div>
+        <div class="info_h1">${currentUser.name}님의 정보<div>
         <br>
         <br>
         <form action="/starroad/mypage/info" method="post" enctype="multipart/form-data">
             <table>
+                <tr>
+                    <th>이메일</th>
+                    <td>
+                        ${currentUser.email}
+                    </td>
+                </tr>
                 <tr>
                     <th>전화번호 <span class="star">*</span></th>
                     <td>
@@ -65,12 +109,7 @@
                         <input type="text" name="phone" value="${currentUser.phone.substring(9,13)}" onclick="clearInput(this)"/>
                     </td>
                 </tr>
-                <tr>
-                    <th>이메일 <span class="star">*</span></th>
-                    <td>
-                        <input type="text" id="email" name="email" value="${currentUser.email}" onclick="clearInput(this)" required>
-                    </td>
-                </tr>
+
                 <tr>
                     <th>자택주소 <span class="star">*</span></th>
                     <td>

@@ -42,4 +42,5 @@ public interface MemberRepository extends JpaRepository<Member, Integer> {
                       @Param("source") String source,
                       @Param("goal") int goal);
 
+    Member findByEmail(String email);
 }

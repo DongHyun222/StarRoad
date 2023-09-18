@@ -127,4 +127,8 @@ public class MemberService {
 
 
     }
+
+    public Member checkEmail(String email) {
+        return memberRepository.findByEmail(email);
+    }
 }
