@@ -29,14 +29,14 @@ public class ProductController {
             Model model,
             @RequestParam(defaultValue = "1") int page,
             HttpServletRequest request) {
-        Member member = getLoginMember(request);
+        MemberDto member = getLoginMember(request);
         List<ProductResponseDto> productList = null;
         // 로그인 안한 경우 첫 페이지
         if (member == null) {
             model.addAttribute("user", null);
             productList = productService.getProductList();
         } else { // 로그인 한 경우 첫 페이지
-            MemberDto loginMember = member.toMemberDto();
+            MemberDto loginMember = member;
             Double monthlyAvailablePrice = getMonthlyAvailablePricePerMember(loginMember);
             setUserInfoInModel(model, loginMember, monthlyAvailablePrice);
             productList = productService.getProductList(monthlyAvailablePrice);
@@ -56,7 +56,7 @@ public class ProductController {
             @RequestParam(defaultValue = "1") int page,
             HttpServletRequest request) {
 
-        Member member = getLoginMember(request);
+        MemberDto member = getLoginMember(request);
         List<ProductResponseDto> productList = null;
         // 로그인 안한 경우 검색
         if (member == null) {
@@ -67,7 +67,7 @@ public class ProductController {
                 productList = productService.getProductList();
             }
         } else { // 로그인 한 경우 검색
-            MemberDto loginMember = member.toMemberDto();
+            MemberDto loginMember = member;
             Double monthlyAvailablePrice = getMonthlyAvailablePricePerMember(loginMember);
             if (type != null || period != null || query != null) {
                 productList = productService.findByFormAndMember(type.charAt(0), period, query, monthlyAvailablePrice);
@@ -98,9 +98,9 @@ public class ProductController {
         return mav;
     }
 
-    private static Member getLoginMember(HttpServletRequest request) {
+    private static MemberDto getLoginMember(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        Member loginMember = (Member) session.getAttribute("currentUser");
+        MemberDto loginMember = (MemberDto) session.getAttribute("currentUser");
         return loginMember;
     }
 
