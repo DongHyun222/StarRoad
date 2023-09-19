@@ -137,6 +137,8 @@
                 // 모든 필수 필드가 valid하다면 alert 띄우기
                 if (allValid && emailFlag && errorFlag && idFlag) {
                     alert("회원가입이 완료되었습니다.");
+                } else{
+                    alert("회원정보를 다시 확인해주세요");
                 }
             });
 

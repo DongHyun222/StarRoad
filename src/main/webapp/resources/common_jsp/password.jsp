@@ -52,26 +52,30 @@
                     checkPassword = true;
                 }
             });
+            $(".submit-button").click(function() {
+                var requiredFields = $("input[required]");
 
-        });
+                // 모든 필수 필드가 valid한지 확인
+                var allValid = true;
+                requiredFields.each(function() {
+                    if (!this.checkValidity()) {
+                        allValid = false;
+                        return false; // 검증 실패 시 반복문 종료
+                    }
+                });
 
-        $(".submit-button").click(function() {
-            var requiredFields = $("input[required]");
-
-            // 모든 필수 필드가 valid한지 확인
-            var allValid = true;
-            requiredFields.each(function() {
-                if (!this.checkValidity()) {
-                    allValid = false;
-                    return false; // 검증 실패 시 반복문 종료
+                // 모든 필수 필드가 valid하다면 alert 띄우기
+                if (allValid && checkPassword && errorFlag) {
+                    alert("비밀번호수정이 완료되었습니다.");
+                } else {
+                    alert("비밀번호를 다시 확인해주세요.");
+                    return false;
                 }
             });
 
-            // 모든 필수 필드가 valid하다면 alert 띄우기
-            if (allValid && checkPassword && errorFlag) {
-                alert("비밀번호수정이 완료되었습니다.");
-            }
         });
+
+
 
 
     </script>

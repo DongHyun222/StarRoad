@@ -18,42 +18,6 @@
             inputField.value = '';
         }
 
-        let emailFlag = false;
-        // 이메일 유효성을 검사하는 함수
-        function isValidEmail(email) {
-            const emailPattern = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
-            return emailPattern.test(email);
-        }
-
-        $("#checkEmail").click(function(){
-            let email = $("#email").val();
-
-            if (isValidEmail(email)) {
-                // 정규 표현식을 사용하여 이메일 유효성 검사
-                $.ajax({
-                    type: 'post',
-                    url: "/starroad/checkMemberEmail",
-                    data: {"email": email},
-                    success: function(data) {
-                        if (data == "N") {
-                            result = "사용 가능한 이메일입니다.";
-                            $("#result_checkEmail").html(result).css("color", "green");
-                            emailFlag = true;
-                        } else {
-                            result = "이미 사용중인 이메일입니다.";
-                            $("#result_checkEmail").html(result).css("color", "red");
-                            emailFlag = false;
-                        }
-                    }
-                });
-            } else {
-                emailFlag = false;
-                result = "이메일 주소 형식이 올바르지 않습니다.";
-                $("#result_checkEmail").html(result).css("color", "red");
-                $("#email").val("").focus();
-            }
-        });
-
 
         $(".submit-button").click(function() {
             var requiredFields = $("input[required]");
@@ -68,8 +32,11 @@
             });
 
             // 모든 필수 필드가 valid하다면 alert 띄우기
-            if (allValid && emailFlag) {
+            if (allValid) {
                 alert("개인정보수정이 완료되었습니다.");
+            } else{
+                alert("개인정보를 다시 확인해주세요");
+                return false;
             }
         });
     </script>
