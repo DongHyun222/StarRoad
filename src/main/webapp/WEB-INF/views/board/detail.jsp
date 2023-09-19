@@ -25,8 +25,8 @@
         <div class="title">
             <span class="title-text"><c:out value="${board.title}" /></span> <br>
             <div class ="something">
-            <span class="memberId"><c:out value="${board.memberId}"/></span>
-             <hr class="separator">
+            <span class="memberId author-id"><c:out value="${board.memberId}"/></span>
+            <hr class="separator">
             <span class="regdate">
                 <fmt:formatDate value="${board.regdate}" pattern="yyyy-MM-dd HH:mm" />
             </span>
@@ -37,9 +37,12 @@
             </span>
             </div>
 
-            <div class="title-buttons">
-                <button id="editBtn">수정</button>
-                <button id="deleteBtn">삭제</button>
+            <div class="title-buttons more-actions">
+                <span class="icon">...</span>
+                <div class="actions">
+                    <button id="editBtn">수정</button>
+                    <button id="deleteBtn">삭제</button>
+                </div>
             </div>
         </div>
 
@@ -47,13 +50,13 @@
 
             <c:out value="${board.content}" />
             <div class="like-section">
-<form id="likeForm" method="post" action="/starroad/board/like">
-    <input type="hidden" name="board" value="${board.no}">
-              <img src="https://ifh.cc/g/aw0vjY.png" id="like-icon" alt="Like Icon" style="vertical-align: middle; width: 50px; height: 50px;" >
-             </form>
-              <span id="likes-count"> <c:out value="${board.likes}" /></span>
-
-        <img src="data:image/jpeg;base64,${board.imageBase64}" alt="" width="200" height="200" style="margin-bottom: 30px;" onerror="this.style.display='none'"/>
+            <form id="likeForm" method="post" action="/starroad/board/like">
+                <input type="hidden" name="board" value="${board.no}">
+                <img src="https://ifh.cc/g/aw0vjY.png" id="like-icon" alt="Like Icon" style="vertical-align: middle; width: 30px; height: 30px;" >
+            </form>
+                <span class="likes-count"> <c:out value="${board.likes}" />  </span>
+                <%-- <c:out value="${board.likes}" /> --%>
+                <img src="data:image/jpeg;base64,${board.imageBase64}" alt="" width="200" height="200" style="margin-bottom: 30px;" onerror="this.style.display='none'"/>
             </div>
         </div>
 
@@ -67,25 +70,28 @@
                  <button id="submitComment" type="submit">등록</button>
              </form>
         </div>
-
         </div>
 
         <div class="comments-list">
-        <h2>댓글 목록</h2>
-         <c:forEach var="comment" items="${board.comments}">
+        <c:forEach var="comment" items="${board.comments}">
              <div class="comment-item">
-                 <strong><c:out value="${currentUser.id}" /></strong> <br>
-                 <c:out value="${comment.content}" /> <br>
+                 <strong class="comment-author"><c:out value="${currentUser.id}" /></strong> <br>
+                 <span class="comment-content"><c:out value="${comment.content}" /></span> <br>
                  <span class="comment-date">
                     <fmt:formatDate value="${comment.regdate}" pattern="yyyy-MM-dd HH:mm:ss" />
                  </span>
-                 <button class="comment-edit" data-id="${comment.no}">수정</button>
-                 <button class="comment-delete" data-id="${comment.no}">삭제</button>
-             </div>
+
+                 <div class="more-actions">
+                    <span class="icon">...</span>
+                        <div class="actions">
+                            <button class="comment-edit" data-id="${comment.no}">수정</button>
+                            <button class="comment-delete" data-id="${comment.no}">삭제</button>
+                        </div>
+                    </div>
+                </div>
          </c:forEach>
         </div>
 
-    </div>
    <script>
      document.getElementById("deleteBtn").addEventListener("click", function() {
                if (confirm("정말로 삭제하시겠습니까?")) {
@@ -126,23 +132,48 @@
       });
   });
 
-    document.querySelectorAll(".comment-edit").forEach(function(button) {
-        button.addEventListener("click", function() {
-            const commentNo = button.getAttribute("data-id");
-            location.href = "/starroad/comment/update?no=" + commentNo;
+        document.querySelectorAll(".comment-edit").forEach(function(button) {
+            button.addEventListener("click", function() {
+                const commentNo = button.getAttribute("data-id");
+                location.href = "/starroad/comment/update?no=" + commentNo;
+            });
         });
-    });
 
-    document.getElementById("submitComment").addEventListener("click", function() {
-        location.href = "/starroad/comment/create?no=" + ${board.no};
-    });
+        document.getElementById("submitComment").addEventListener("click", function() {
+            location.href = "/starroad/comment/create?no=" + ${board.no};
+        });
 
-   <!-- 좋아요 기능 -->
-  $(document).ready(function() {
-      $("#like-icon").on("click", function() {
-          $("#likeForm").submit();
-      });
-  });
+       <!-- 좋아요 기능 -->
+        $(document).ready(function() {
+          $("#like-icon").on("click", function() {
+              $("#likeForm").submit();
+          });
+        });
+
+        <%-- 댓글 더보기 --%>
+        document.querySelector('.more-actions .icon').addEventListener('click', function() {
+            const parent = this.parentElement;
+            parent.classList.toggle('active');
+        });
+
+        <%-- 게시글 더보기 --%>
+            $(document).ready(function() {
+                $('.more-actions .icon').click(function(e) {
+                    e.stopPropagation(); // 이 이벤트가 부모 요소로 전파되는 것을 막습니다.
+                    $(this).siblings('.actions').toggle(); // .actions의 표시 여부를 토글합니다.
+                });
+
+                // 페이지의 다른 부분을 클릭할 때 .actions를 숨깁니다.
+                $(document).click(function() {
+                    $('.more-actions .actions').hide();
+                });
+
+                // .actions 내부를 클릭할 때 .actions가 사라지는 것을 방지합니다.
+                $('.more-actions .actions').click(function(e) {
+                    e.stopPropagation();
+                });
+            });
+
    </script>
 </body>
 </html>
