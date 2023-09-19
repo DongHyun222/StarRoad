@@ -104,9 +104,10 @@ public class CommentController {
             return mav;
         }
 
+        int commentDelete = commentService.findByNo(commentNo).get().getBoard().getNo();
         commentService.deleteComment(commentNo);
 
-        ModelAndView mav = new ModelAndView("redirect:/starroad/board/main");
+        ModelAndView mav = new ModelAndView("redirect:/starroad/board/detail?no=" + commentDelete);
         return mav;
     }
 
