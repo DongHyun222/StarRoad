@@ -156,9 +156,7 @@ public class MemberService {
                 memberDto.getJob(), memberDto.getSalary(),
                 memberDto.getPurpose(), memberDto.getSource(),
                 memberDto.getGoal());
-
     }
-
     public Member checkEmail(String email) {
         return memberRepository.findByEmail(email);
     }
