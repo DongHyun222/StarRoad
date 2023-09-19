@@ -2,7 +2,7 @@ package com.kb04.starroad.Controller;
 
 import com.kb04.starroad.Dto.board.CommentDto;
 import com.kb04.starroad.Entity.Comment;
-import com.kb04.starroad.Service.BoardService2;
+import com.kb04.starroad.Service.BoardService;
 import com.kb04.starroad.Service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +17,7 @@ public class CommentController {
     private CommentService commentService;
 
     @Autowired
-    private BoardService2 boardService;
+    private BoardService boardService;
 
     @PostMapping("/starroad/comment")
     public ModelAndView createComment(@RequestParam("content") String content,

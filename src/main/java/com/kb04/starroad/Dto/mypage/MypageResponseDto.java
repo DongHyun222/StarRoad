@@ -1,4 +1,4 @@
-package com.kb04.starroad.Dto;
+package com.kb04.starroad.Dto.mypage;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

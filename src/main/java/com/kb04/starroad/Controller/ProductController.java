@@ -1,6 +1,8 @@
 package com.kb04.starroad.Controller;
 
 import com.kb04.starroad.Dto.*;
+import com.kb04.starroad.Dto.product.BaseRateDto;
+import com.kb04.starroad.Dto.product.ConditionDto;
 import com.kb04.starroad.Dto.product.ProductResponseDto;
 import com.kb04.starroad.Service.ProductService;
 import io.swagger.annotations.*;

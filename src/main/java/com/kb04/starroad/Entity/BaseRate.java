@@ -1,6 +1,6 @@
 package com.kb04.starroad.Entity;
 
-import com.kb04.starroad.Dto.BaseRateDto;
+import com.kb04.starroad.Dto.product.BaseRateDto;
 import lombok.*;
 
 import javax.persistence.*;

@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <title>Login</title>
     <script src="//code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="/resources/static/css/login.css">
+    <link rel="stylesheet" type="text/css" href="/resources/static/css/auth/login.css">
     <script type="text/javascript">
             $(function() {
                 $("#navbar").load("/resources/common_jsp/navbar.jsp");

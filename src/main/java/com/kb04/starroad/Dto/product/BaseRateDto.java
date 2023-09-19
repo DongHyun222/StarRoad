@@ -1,4 +1,4 @@
-package com.kb04.starroad.Dto;
+package com.kb04.starroad.Dto.product;
 
 import com.kb04.starroad.Dto.product.ProductDto;
 import lombok.AllArgsConstructor;
@@ -17,7 +17,5 @@ public class BaseRateDto {
     private int maxPeriod;
     private Double rate;
     private ProductDto prod;
-
-//    private Double max_rate;
 
 }

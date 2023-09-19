@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="${path}/resources/static/css/common.css">
     <link rel="stylesheet" href="${path}/resources/static/css/mypage/sidebar.css">
     <link rel="stylesheet" href="${path}/resources/static/css/mypage/check_password.css">
-    <link rel="stylesheet" type="text/css" href="${path}/resources/static/css/member.css">
+    <link rel="stylesheet" type="text/css" href="${path}/resources/static/css/member/member.css">
     <!-- jquery 링크, navbar -->
     <script src="//code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="//code.jquery.com/jquery-latest.min.js"></script>

@@ -15,7 +15,7 @@
         })
     </script>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/static/css/common.css">
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/static/css/policy.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/static/css/policy/policy.css">
 </head>
 <body>
     <div id="policy-div-wrap">

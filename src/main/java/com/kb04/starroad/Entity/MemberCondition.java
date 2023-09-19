@@ -1,7 +1,6 @@
 package com.kb04.starroad.Entity;
 
-import com.kb04.starroad.Dto.MemberConditionDto;
-import com.kb04.starroad.Dto.product.ProductDto;
+import com.kb04.starroad.Dto.product.MemberConditionDto;
 import lombok.*;
 
 import javax.persistence.*;

@@ -11,8 +11,15 @@
 /* 글꼴 */
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
 * {
- font-family: 'Noto Sans KR', sans-serif;
+ font-family: 'NanumSquareRound', 'Noto Sans KR', sans-serif;
  font-size: 18px;
+}
+
+@font-face {
+    font-family: 'NanumSquareRound';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
 }
 
 /* body margin 수정 */

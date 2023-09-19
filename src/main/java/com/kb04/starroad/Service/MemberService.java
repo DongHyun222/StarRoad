@@ -6,7 +6,7 @@ import com.kb04.starroad.Dto.SubscriptionDto;
 import com.kb04.starroad.Dto.board.CommentDto;
 import com.kb04.starroad.Entity.*;
 import com.kb04.starroad.Repository.*;
-import com.kb04.starroad.Dto.MypageResponseDto;
+import com.kb04.starroad.Dto.mypage.MypageResponseDto;
 
 import com.kb04.starroad.Dto.board.BoardResponseDto;
 
@@ -17,10 +17,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
