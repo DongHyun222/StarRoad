@@ -230,9 +230,6 @@
                             <input type="text" name="address" id="address" required>
                             <input type="text" name="address" id="address_detail" placeholder="상세주소를 입력하세요" required>
                         </td>
-                        <td>
-                            <input type="text" name="address" id="address_detail" placeholder="상세주소를 입력하세요" required>
-                        </td>
                     </tr>
                     <tr>
                         <th>직업구분</th>
