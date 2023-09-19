@@ -67,6 +67,7 @@ public class CommentService {
 
     @Transactional
     public void deleteComment(int commentNo) {
+
         commentRepository.deleteByNo(commentNo);
     }
 
