@@ -13,6 +13,9 @@
     <script src="//code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript">
         $(function () {
+            let name = ""
+            let ss_no = 0
+            let period = 0
             $("#navbar").load("${path}/resources/common_jsp/navbar.jsp")
 
             $("#sel_sub").change(function () {
@@ -22,13 +25,20 @@
                 let paymentLogs = "${paymentLogs}".substring(2, "${paymentLogs}".length - 2).split("], [")
 
                 let sub = subscriptions[idx].split(", ")
-                $("#sub_name").text(sub[21].split("=")[1])
+                ss_no = sub[0].split("=")[1]
+                $("#ss_no_val").attr("value", ss_no)
+                name = sub[21].split("=")[1]
+                $("#sub_name").text(name)
+                $("#name_val").attr("value", name)
                 $("#sub_attr").text(sub[23].split("=")[1])
                 $("#sub_exp").text(sub[22].split("=")[1])
-                $("#sub_period").text(sub[32].split("=")[1] + "개월")
+                period = sub[32].split("=")[1]
+                $("#period_val").attr("value", period)
+                $("#sub_period").text(period + "개월")
                 $("#sub_price").text(sub[33].split("=")[1].split(")")[0] * 0.1 + "만원")
 
                 let logs = paymentLogs[idx].split(", ")
+                let status = logs.pop()
                 const fl_cont = document.querySelector('#flower_container')
                 fl_cont.innerHTML = ''
                 logs.forEach((fl) => {
@@ -42,6 +52,21 @@
 
                 $("#sub_info_s").css("display", "block")
                 $("#flower_container").css("display", "flex")
+
+                if (status === "-1") {          // 성공
+                    $("#reward_btn").text("리워드를 받으세요 🥳")
+                        .attr("disabled", false)
+                        .css({"display":"block", "background":"var(--main-kb-yellow-positive)", "color":"black", "cursor":"pointer"})
+                } else if (status === "-2") {   // 리워드를 이미 받았을 때, 끝났을 때
+                    $("#reward_btn").text("완주 성공! 😎")
+                        .attr("disabled",true)
+                        .css({"display":"block", "background":"var(--sub-kb-gold)", "color":"white", "cursor":"unset"})
+                    console.log(period)
+                } else {
+                    $("#reward_btn").text("").append("<strong>"+status+"</strong>"+"개월 남았어요 💪")
+                        .attr("disabled",true)
+                        .css({"display":"block", "background":"var(--sub-kb-gold)", "color":"white", "cursor":"unset"})
+                }
             })
         });
     </script>
@@ -83,6 +108,12 @@
         <section>
             <div id="flower_container"></div>
         </section>
+        <form action="/starroad/mypage/reward" method="post">
+            <input type="hidden" id="name_val" name="name">
+            <input type="hidden" id="period_val" name="period">
+            <input type="hidden" id="ss_no_val" name="sub_no">
+            <button id="reward_btn"></button>
+        </form>
     </article>
 </main>
 </html>

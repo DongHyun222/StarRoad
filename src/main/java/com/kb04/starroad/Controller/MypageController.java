@@ -69,10 +69,30 @@ public class MypageController {
         List<SubscriptionDto> subscriptions = memberService.getSubscriptions(kiki);
         mav.addObject("subscriptions", subscriptions);
         List<String> paymentLogs = new ArrayList<>();
-        for (SubscriptionDto sub:subscriptions) {
-            paymentLogs.add(memberService.getPayLog(sub.getNo(), sub.getPeriod()));
+        for (SubscriptionDto sub : subscriptions) {
+            paymentLogs.add(memberService.getPayLog(sub.getNo(), sub.getPeriod(), sub.getReceived()));
         }
-        mav.addObject("paymentLogs",paymentLogs);
+        mav.addObject("paymentLogs", paymentLogs);
+        return mav;
+    }
+
+    @PostMapping("/starroad/mypage/reward")
+    public ModelAndView reward(@RequestParam("sub_no") int subNo,
+                               @RequestParam("name") String name,
+                               @RequestParam("period") int period) {
+        ModelAndView mav = new ModelAndView("mypage/reward");
+        mav.addObject("reward", memberService.getReward(period));
+        mav.addObject("sub_no", subNo);
+        mav.addObject("name", name);
+        mav.addObject("period", period);
+        return mav;
+    }
+
+    @PostMapping("/starroad/mypage/save-reward")
+    public ModelAndView getReward(@RequestParam("sub_no") int subNo,
+                                  @RequestParam("reward") int reward) {
+        ModelAndView mav = new ModelAndView("redirect:/starroad/mypage/asset");
+        memberService.saveReward(1, subNo, reward);
         return mav;
     }
 

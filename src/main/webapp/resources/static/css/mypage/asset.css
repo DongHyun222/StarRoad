@@ -7,3 +7,9 @@
     aspect-ratio: 1/1;
     margin: 0 auto;
 }
+
+#info {
+    display: none;
+    text-align: center;
+    margin-top: 100px;
+}

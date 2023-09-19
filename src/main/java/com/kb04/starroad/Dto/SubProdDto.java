@@ -15,4 +15,5 @@ public class SubProdDto {
     private String explain;
     private int period;
     private int price;
+    private char received;
 }

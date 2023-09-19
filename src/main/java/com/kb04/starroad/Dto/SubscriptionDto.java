@@ -17,5 +17,5 @@ public class SubscriptionDto {
     private ProductDto prod;
     private int period;
     private int price;
-
+    private char received;
 }
