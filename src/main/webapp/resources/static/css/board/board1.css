@@ -1,3 +1,35 @@
+
+.banner_title {
+    margin-bottom: 20px;
+}
+
+.banner_container h2 {
+    font-weight: bold;
+}
+
+.banner_container {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    z-index: 999;
+    color: white;
+}
+
+.banner_container div {
+    margin-top: 50px;
+}
+
+.banner_container img {
+    margin-top: 20px;
+}
+
+
+.d-block {
+    height : 360px;
+}
+
 .board-box {
     width: 80%;
     margin: 0 auto;
