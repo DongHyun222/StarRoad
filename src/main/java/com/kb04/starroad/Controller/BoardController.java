@@ -3,31 +3,60 @@ package com.kb04.starroad.Controller;
 import com.kb04.starroad.Dto.MemberDto;
 import com.kb04.starroad.Dto.board.BoardRequestDto;
 import com.kb04.starroad.Dto.board.BoardResponseDto;
+import com.kb04.starroad.Dto.board.CommentDto;
 import com.kb04.starroad.Entity.Board;
-import com.kb04.starroad.Entity.Member;
-import com.kb04.starroad.Service.BoardService2;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.kb04.starroad.Service.BoardService;
+import com.kb04.starroad.Service.CommentService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.persistence.PostPersist;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Base64;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
-public class BoardController2 {
+public class BoardController {
 
-    @Autowired
-    private BoardService2 boardService;
+
+    private final BoardService boardService;
+
+    private final CommentService commentService;
+
+    public BoardController(BoardService boardService, CommentService commentService) {
+        this.boardService = boardService;
+        this.commentService = commentService;
+    }
+
+    @GetMapping("/starroad/board")
+    public ModelAndView board() {
+        ModelAndView mav = new ModelAndView("board/board");
+        return mav;
+    }
+
+    //자유랑 인증 게시판
+    @GetMapping("/starroad/board/main")
+    public ModelAndView boardList() {
+        ModelAndView mav = new ModelAndView("board/main");
+
+        // PageRequest를 생성하여 정렬 조건을 설정
+        PageRequest freepageRequest = PageRequest.of(0, 10, Sort.by("regdate").descending());
+        PageRequest authpageRequest = PageRequest.of(0, 10, Sort.by("regdate").descending());
+        PageRequest popularpageRequest = PageRequest.of(0, 10, Sort.by("regdate").descending());
+
+        mav.addObject("freeBoard", boardService.boardListFree(freepageRequest));
+        mav.addObject("authBoard", boardService.boardListAuth(authpageRequest));
+        mav.addObject("popularBoard", boardService.boardListpopular(popularpageRequest));
+
+        return mav;
+    }
+
     @GetMapping("/starroad/board/write")
     public ModelAndView board(HttpSession session) {
         if (session.getAttribute("currentUser") == null) {
@@ -56,9 +85,6 @@ public class BoardController2 {
 
         // 페이징 정보 설정
         PageRequest pageable = PageRequest.of(page, size, Sort.by("regdate").descending());
-
-
-
         Page<Board> boardPage;
 
         if ("F".equals(type)) {
@@ -203,4 +229,97 @@ public class BoardController2 {
             return mav;
         }
     }
+
+    @GetMapping("/starroad/board/delete")
+    public ModelAndView deleteBoard(@RequestParam Integer no, HttpSession session) {
+        ModelAndView mav = new ModelAndView();
+
+        if (session.getAttribute("currentUser") == null) {
+            mav = new ModelAndView("redirect:/starroad/login");
+            mav.addObject("message", "로그인 후에 댓글을 작성할 수 있습니다.");
+            return mav;
+        }
+
+        MemberDto currentUser = (MemberDto) session.getAttribute("currentUser");
+        String currentUserId = currentUser.getId();
+
+
+        if (boardService.canDelete(no, currentUserId)) {
+            // 현재 사용자가 게시글 삭제 가능한 경우
+            boardService.deleteBoard(no);
+            mav.setViewName("redirect:/starroad/board/main");
+
+        } else{
+            // 현재 사용자가 게시글 삭제 불가
+            // 능한 경우 or 게시글 존재하지 않는 경우
+            mav.setViewName("board/deleteError");
+        }
+
+        return mav;
+    }
+    @GetMapping("/starroad/board/detail")
+    public ModelAndView getBoardDetail(@RequestParam("no") Integer no) {
+
+        ModelAndView mav = new ModelAndView("board/detail");
+
+        Optional<Board> boardOptional = boardService.findById(no);
+
+        if (boardOptional.isPresent()) {
+            Board board = boardOptional.get();
+
+            List<CommentDto> comments = commentService.findByBoard(board);
+
+            BoardResponseDto boardResponseDto = board.toBoardResponseDto();
+            String memberId = board.getMember().getId();  // 'getId()'는 실제 회원 ID를 반환하는 메서드로 변경해야 합니다.
+            boardResponseDto.setMemberId(memberId);  // 'setMemberId()'는 DTO에서 회원 ID를 설정하는 메서드입니다.
+            //boardResponseDto.setCommentNum(board.getCommentNum()); // commentNum 수정
+            boardResponseDto.setComments(comments);
+
+            // 이미지를 Base64로 인코딩하여 DTO에 추가
+            if (board.getImage() != null) {
+                byte[] imageBytes = board.getImage();
+                String imageBase64 = Base64.getEncoder().encodeToString(imageBytes);
+                boardResponseDto.setImageBase64(imageBase64);
+            }
+
+            if (boardResponseDto.getComments() == null || boardResponseDto.getComments().isEmpty()) {
+                mav.addObject("noComments", true);
+            }
+
+            mav.addObject("board", boardResponseDto);
+        } else {
+            mav.addObject("error", "게시글을 찾을 수 없습니다.");
+        }
+
+        return mav;
+    }
+
+    @PostMapping("/starroad/board/like")
+    public ModelAndView handleLike(@RequestParam("board") int boardNo,
+                                   HttpSession session) {
+
+        MemberDto memberDto = (MemberDto) session.getAttribute("currentUser");
+        System.out.println("debug = " + memberDto.getId());
+
+        if (memberDto.getId() == null ){
+
+            ModelAndView mav = new ModelAndView("redirect:/starroad/login");
+            mav.addObject("message", "로그인 후에 게시글을 작성할 수 있습니다.");
+            return mav;
+
+        } else if (!boardService.hasLiked(boardNo,memberDto.getId())) {
+
+            ModelAndView mav= new ModelAndView("redirect:/starroad/board/detail?no=" + boardNo);
+            mav.addObject("message", "로그인 후에 좋아요를 누르거나 이미 좋아요한 게시글입니다.");
+            return mav;
+        }
+
+        else {
+
+            boardService.increaseLikes(boardNo, memberDto.getId());
+            ModelAndView mav= new ModelAndView("redirect:/starroad/board/detail?no=" + boardNo);
+            return mav;
+        }
+    }
+
 }

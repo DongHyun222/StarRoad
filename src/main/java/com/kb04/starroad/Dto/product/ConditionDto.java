@@ -1,4 +1,4 @@
-package com.kb04.starroad.Dto;
+package com.kb04.starroad.Dto.product;
 
 import com.kb04.starroad.Dto.product.ProductDto;
 import lombok.AllArgsConstructor;

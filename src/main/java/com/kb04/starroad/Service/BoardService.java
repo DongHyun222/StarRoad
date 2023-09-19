@@ -1,47 +1,38 @@
 package com.kb04.starroad.Service;
 
 import com.kb04.starroad.Dto.board.BoardRequestDto;
-import com.kb04.starroad.Dto.board.BoardResponseDto;
-import com.kb04.starroad.Dto.board.CommentDto;
 import com.kb04.starroad.Entity.Board;
 import com.kb04.starroad.Entity.Heart;
 import com.kb04.starroad.Entity.Member;
 import com.kb04.starroad.Repository.BoardRepository;
-import com.kb04.starroad.Repository.CommentRepository;
 import com.kb04.starroad.Repository.HeartRepository;
 import com.kb04.starroad.Repository.MemberRepository;
-import lombok.RequiredArgsConstructor;
-import org.apache.ibatis.javassist.NotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.data.domain.Page;
-
-
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-
-import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.io.IOException;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
-public class BoardService2 {
+public class BoardService {
+
+    private final BoardRepository boardRepository;
+    private final MemberRepository memberRepository;
+    private final HeartRepository heartRepository;
+
+    public BoardService(BoardRepository boardRepository, MemberRepository memberRepository, HeartRepository heartRepository) {
+        this.boardRepository = boardRepository;
+        this.memberRepository = memberRepository;
+        this.heartRepository = heartRepository;
+    }
 
 
-    @Autowired
-    private BoardRepository boardRepository;
-    @Autowired
-    private MemberRepository memberRepository;
-
-    @Autowired
-    private CommentRepository commentRepository;
-
-    @Autowired
-    private HeartRepository heartRepository;
     public void write(Board board) {  //entity를 매개변수로 받음
 
         boardRepository.save(board);  //새로운 게시물이 데이터베이스에 추가됩니다.
@@ -137,7 +128,7 @@ public class BoardService2 {
         Board board2 =optionalBoard.get();
         board2.update(boardRequestDto.getTitle(),boardRequestDto.getContent());
 
-        }
+    }
 
     public void deleteBoard(Integer no) {
         Optional<Board> boardOptional = boardRepository.findById(no);
@@ -207,5 +198,4 @@ public class BoardService2 {
 
         return !likes.isPresent();
     }
-
 }

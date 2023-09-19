@@ -1,11 +1,10 @@
-package com.kb04.starroad.Dto;
+package com.kb04.starroad.Dto.product;
 
+import com.kb04.starroad.Dto.MemberDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
 
 @Data
 @Builder
