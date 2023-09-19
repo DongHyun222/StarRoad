@@ -1,8 +1,8 @@
-h3 {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-    margin-bottom: 20px;
+.main_title {
+    text-align: center;
+    margin-top: 2%;
+    font-size: xx-large;
+    font-weight: bolder;
 }
 
 div {
@@ -10,13 +10,18 @@ div {
 }
 
 /*노랑 버튼*/
-.btn {
-    background-color: var(--main-kb-yellow-positive);
-    font-size: medium;
+.search_link_btn{
+    height: 35px;
+    padding-inline: 10px;
     border-radius: 10px;
     border: 2px solid var(--main-kb-yellow);
-    padding-inline: 10px;
-    padding-block: 5px;
+    background-color: var(--main-kb-yellow-positive);
+    font-size: medium;
+}
+
+.search_link_btn a {
+    text-decoration: none;
+    align-items: center;
 }
 
 /*세로 정렬*/
@@ -42,6 +47,7 @@ div {
     padding: 10px;
     border: 1px solid var(--sub-kb-silver);
     border-radius: 10px;
+    margin-top: 10px;
 }
 
 form {
@@ -62,6 +68,7 @@ form > div {
 }
 
 #type {
+    height: 35px;
     border-radius: 10px;
     border: 1px solid var(--sub-kb-silver);
     padding: 5px;
@@ -90,6 +97,7 @@ form > div {
 }
 
 label{
+    height: 37px;
     display: inline-block;
     background-color: rgba(255, 255, 255, .9);
     border: 2px solid #d3d3d3;
@@ -126,14 +134,16 @@ li input[type="radio"] {
     opacity: 0;
 }
 li input[type="radio"]:focus + label {
-    border: 2px solid #e9a1ff;
+    border: 2px solid var(--main-kb-yellow);
 }
 
 .search_bar {
-    width: 500px;
+    width: 65%;
+    height: 35px;
     border-radius: 10px;
     border: 1px solid var(--sub-kb-silver);
     font-size: medium;
+
 }
 
 

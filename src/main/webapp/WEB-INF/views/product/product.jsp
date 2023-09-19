@@ -21,7 +21,7 @@
 </head>
 <body>
 <div id="navbar"></div>
-<h3>예적금 상품 추천</h3>
+<div class="main_title">예적금 상품 추천</div>
 <div id="product_search">
     <nav class="navbar navbar-light bg-light" id="product_search_nav">
         <div class="container-fluid">
@@ -103,7 +103,7 @@
                     <input id="searchInput" name="query" class="form-control me-2 search_bar" type="text"
                            placeholder="예적금 상품명을 적어주세요"
                            aria-label="Search">
-                    <button id="submitButton" class="btn search_btn" type="submit">검색</button>
+                    <button id="submitButton" class="search_link_btn" type="submit">검색</button>
                 </div>
 
             </form>
@@ -158,7 +158,7 @@
                     </div>
                 </c:if>
                 <div class="content">
-                    <button class="btn"><a href="${item.link}">자세히</a></button>
+                    <button class="search_link_btn"><a href="${item.link}">자세히</a></button>
                 </div>
 
             </li>
@@ -169,7 +169,7 @@
     <ul class="pagination">
         <li class="page-item">
             <a class="page-link" href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
+                <span aria-hidden="true">&lt;</span>
             </a>
         </li>
         <c:forEach begin="1" end="${pageEndIndex}" var="i">
@@ -177,7 +177,7 @@
         </c:forEach>
         <li class="page-item">
             <a class="page-link" href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
+                <span aria-hidden="true">&gt;</span>
             </a>
         </li>
     </ul>

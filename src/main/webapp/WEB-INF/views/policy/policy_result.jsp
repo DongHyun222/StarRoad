@@ -41,8 +41,7 @@
         <div class="title">청년 금융 정책</div>
         <main>
             <div id="main_box">
-                <div class="search_box">
-
+                <div class="search_box bg-light">
                     <form name="policyForm" id="policyForm" class="search_form" method="get" action="${pageContext.request.contextPath}/starroad/policy/result">
                         <div class="search_small_box">
                             <div class="search_box_title">지역</div>
@@ -73,7 +72,7 @@
                         <div class="search_small_box">
                             <div class="search_box_title">정책명</div>
                             <div class="search_box_option">
-                                <input class="search_input" name="keyword" id="keyword" type="text" placeholder="키워드를 입력해주세요">
+                                <input class="search_input form-control me-2 search_bar" name="keyword" id="keyword" type="text" placeholder="키워드를 입력해주세요">
                                 <button id="final" class="submit_btn" type="submit">검색</button>
                             </div>
                         </div>
