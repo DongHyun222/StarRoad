@@ -14,9 +14,9 @@
     <script src="//code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="//code.jquery.com/jquery-latest.min.js"></script>
     <script>
-        function clearInput(inputField) {
-            inputField.value = '';
-        }
+        //function clearInput(inputField) {
+        //    inputField.value = '';
+        //}
 
 
         $(".submit-button").click(function() {
@@ -34,9 +34,6 @@
             // 모든 필수 필드가 valid하다면 alert 띄우기
             if (allValid) {
                 alert("개인정보수정이 완료되었습니다.");
-            } else{
-                alert("개인정보를 다시 확인해주세요");
-                return false;
             }
         });
     </script>
