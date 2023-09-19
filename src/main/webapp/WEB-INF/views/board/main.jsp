@@ -8,7 +8,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="${path}/resources/static/css/common.css">
-    <link rel="stylesheet" type="text/css" href="${path}/resources/static/css/home/home.css">
     <link rel="stylesheet" type="text/css" href="${path}/resources/static/css/nav.css">
     <link rel="stylesheet" type="text/css" href="${path}/resources/static/css/board/board1.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
