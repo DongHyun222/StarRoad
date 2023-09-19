@@ -1,107 +1,129 @@
-#navbar {
-    position: fixed;
-    top: 0;
-    left: 0;   /* 화면의 왼쪽에서 시작합니다. */
-    width: 100%;  /* 전체 너비를 차지하게 합니다. */
-    z-index: 1000;  /* 다른 요소 위에 올려놓습니다. */
-    background: #FFF; /* 배경색을 흰색으로 설정 (필요에 따라 수정) */
-}
-
-body {
+#login_main {
+    height: calc(100vh - 93px);
     display: flex;
     justify-content: center;
-    height: 100vh;
-    margin: 0;
-    font-family: 'Noto Sans', sans-serif;
+    align-items: center;
+    background: var(--main-kb-gray-negative);
 }
 
-.container {
-    width: 564px;
-    padding: 20px;
-    background: #FFF;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+#egg_c {
+    position: absolute;
+    top: 93px;
+    width: 500px;
+    height: 500px;
+    overflow: hidden;
+    left: 0;
+
+    #egg {
+        position: absolute;
+        top: -189px;
+        width: 650px;
+        aspect-ratio: 1/1;
+        left: -137px;
+        animation: shake 10s infinite;
+    }
+}
+
+@keyframes shake {
+    0% {
+        transform: rotate(0deg);
+    }
+    20% {
+        transform: rotate(45deg);
+    }
+    40% {
+        transform: rotate(0deg);
+    }
+    60% {
+        transform: rotate(-45deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+#login_m {
+    width: 600px;
+    aspect-ratio: 3/2;
+    border-radius: 5px;
+    box-shadow: 4px 4px 4px 0 rgba(0, 0, 0, 25%);
+    background: rgba(255, 255, 255, 50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
 }
 
 .text-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    color: #767676;
-    font-size: 20px;
-    text-align: center; /* 중앙 정렬 */
-    margin-top: 250px;
 }
 
-.title {
-    margin-bottom: 20px;
-    color: #000;
+#login_title {
     text-align: center;
-    font-size: 24px;
+    font-size: 30px;
+    font-weight: bold;
 }
 
-/* 폼 내의 입력 상자 크기 조절 */
-.text-container input[type="text"],
-.text-container input[type="password"] {
-    font-size: 24px;  /* 글씨 크기를 조절하세요 */
-    height: 30px;    /* 입력 상자의 높이를 조절하세요 */
-    width: 400px;    /* 입력 상자의 너비를 조절하세요 */
-    padding: 5px 10px;  /* 내부 패딩을 조절하여 텍스트가 중앙에 위치하도록 함 */
+#login_exp {
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: lighter;
+}
+
+/*폼 내의 입력 상자 크기 조절*/
+.text-container input {
+    outline-color: var(--main-kb-yellow);
+    height: 30px; /* 입력 상자의 높이를 조절하세요 */
+    width: 400px; /* 입력 상자의 너비를 조절하세요 */
+    padding: 5px 10px; /* 내부 패딩을 조절하여 텍스트가 중앙에 위치하도록 함 */
 }
 
 /* 폼 내의 희미한 텍스트 스타일 조절 */
-.text-container input[type="text"]::placeholder,
-.text-container input[type="password"]::placeholder {
-    font-size: 18px;  /* 원하는 글씨 크기로 조절하세요 */
-    color: #aaa;     /* 희미한 텍스트의 색상을 회색으로 조절하세요 */
+.text-container input::placeholder {
+    color: #aaa; /* 희미한 텍스트의 색상을 회색으로 조절하세요 */
 }
 
-.checkbox-container {
-    display: inline-flex; /* inline-flex를 사용하여 체크박스와 텍스트를 한 라인에 놓습니다 */
-    width: 100%;         /* 전체 너비를 차지하게 합니다. */
-    text-align: left;    /* 왼쪽 정렬 */
-    margin-left: 135px;
-    margin-top: 20px;
-}
-
-.checkbox-container input[type="checkbox"] {
-    margin-right: 5px; /* 체크박스와 라벨 사이의 간격 조정 */
-}
-
-.login-button1 {
-    width: 420px;   /* 버튼의 너비 */
-    height: 50px;  /* 버튼의 높이 */
+.login-button1[type="submit"] {
+    width: 420px; /* 버튼의 너비 */
+    height: 50px; /* 버튼의 높이 */
     font-size: 20px; /* 글자 크기 */
-    background-color: #FFCF02; /* 버튼의 배경색 고정 */
-    color: black;  /* 버튼의 글자색 */
-    border: none;  /* 테두리 제거 */
-    border-radius: 5px;  /* 둥근 모서리 설정 */
-    cursor: pointer;  /* 마우스 오버 시 손가락 모양으로 변경 */
+    background-color: var(--main-kb-yellow-positive); /* 버튼의 배경색 고정 */
+    color: black; /* 버튼의 글자색 */
+    border: none; /* 테두리 제거 */
+    border-radius: 30px; /* 둥근 모서리 설정 */
+    cursor: pointer; /* 마우스 오버 시 손가락 모양으로 변경 */
     margin-top: 20px;
-    margin-right: 5px;
+    font-weight: bold;
 }
 
-.signup-options a {
-    margin-left: 60px;
-    color: #aaa;
-}
-
-.link-container {
-    display: flex;
-    justify-content: space-between; /* 왼쪽과 오른쪽 요소 사이에 최대 간격 제공 */
-    margin-top: 10px;  /* 로그인 버튼과의 간격 설정 */
-}
-
-.find-options a {
-    margin: 0 120px; /* 각 링크 사이의 간격 설정 */
-    color: #aaa;
-}
-
-.find-options a:hover, .signup-options a:hover {
-    text-decoration: underline; /* 마우스 오버 시 밑줄 추가 */
+.login-button1:hover {
+    background: var(--main-kb-yellow);
 }
 
 .error-message {
     color: red;
     font-size: 14px;
     margin: 10px 0;
+}
+
+.signup-options {
+    margin-top: 20px;
+}
+
+#signup_e {
+    font-weight: bold;
+    color: var(--sub-kb-dark-gray);
+}
+
+#signup_a {
+    color: var(--sub-kb-gold);
+    font-weight: bold;
+
+}
+
+#signup_a:hover {
+    text-decoration: underline;
 }
