@@ -8,11 +8,12 @@
 }
 
 .title {
-    border-bottom: 5px solid #ccc;
+
     font-weight: bold;
     position: relative; /* relative positioning을 설정해야 child element에 absolute를 적용할 수 있습니다. */
     display: flex;
     justify-content: space-between;
+
 
 
 }
@@ -21,22 +22,47 @@
     position: relative; /* 추가 */
     width: 1000px;
     padding: 18px;
-    border: var(--sub-kb-gold) 1.5px solid;
+
 
     margin: auto;
     margin-top: 160px;
-    height: 800px; /* 원하는 높이로 조절 가능 */
+    height: 870px; /* 원하는 높이로 조절 가능 */
     display: flex;
     flex-direction: column;
 
 }
-.labelStyle{
-
-
+.topTitle {
+    border-bottom: 1px solid black;
 }
+
+.labelStyle {
+    margin-top: 20px;
+}
+
+.labelStyle .form-group {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Change this from 'left' to 'center' */
+    margin-bottom: 10px;
+}
+
+.labelStyle label {
+    margin-right: 5px; /* Reduce this from 10px to 5px */
+}
+
 .labelStyle select {
-    width: 100px; /* 필요에 따라 조절하세요 */
+    width: calc(70% - 60px);
+    height: 35px;
+    padding-left: 10px;
+    border-radius: 5px;
 }
+
+/* Add this to reduce the space between form groups */
+.form-group:not(:last-child) {
+    margin-right: 30px;
+}
+
+
 .buttonStyle{
     border: none; !important;
     background-color: #FFCC00;
@@ -47,17 +73,21 @@
     border: none; !important;
     font-size: 32px;
     position: relative;
+    transform: translateY(15px);
+    width : 1100px;
 }
 .contentStyle{
-
+    transform: translateY(30px);
     border: none; !important;
     font-size: 20px;
     position: relative;
     height: 600px;
-    width: 1000px;
+    width: 1110px;
     resize: none;
     padding-top: 30px;
-    border-bottom: 5px solid #ccc; /* 구분선 생성 */
+    border-top : 2px solid #ccc;
+
+
 
 }
 .update-button{
@@ -65,8 +95,8 @@
     right: 20px; /* 오른쪽 여백을 조정하세요. */
     bottom: 20px; /* 아래 여백을 조정하세요. */
 
-    height: 40px;
-    width: 80px;
+    height: 45px;
+    width: 70px;
     border-radius: 10px;
     background-color: var(--main-kb-yellow-positive);
 
@@ -79,4 +109,7 @@
     text-align:center;
     line-height:40px; /* 높이와 동일한 값 */
 
+}
+.image-input{
+    transform: translateY(30px);
 }
