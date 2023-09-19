@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -48,8 +49,8 @@ public class MemberService {
         Integer savings = memberRepository.getSavings(no);
         Integer deposit = memberRepository.getDeposit(no);
 
-        mypageResponseDto.setSavings(savings == null ? 0 : savings);
-        mypageResponseDto.setDeposit(deposit == null ? 0 : deposit);
+        mypageResponseDto.setSavings(savings==null?0:savings);
+        mypageResponseDto.setDeposit(deposit==null?0:deposit);
 
         return mypageResponseDto;
     }
@@ -156,7 +157,6 @@ public class MemberService {
                 memberDto.getPurpose(), memberDto.getSource(),
                 memberDto.getGoal());
     }
-
     public Member checkEmail(String email) {
         return memberRepository.findByEmail(email);
     }
