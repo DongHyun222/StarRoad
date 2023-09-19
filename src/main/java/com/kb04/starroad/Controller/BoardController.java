@@ -7,6 +7,7 @@ import com.kb04.starroad.Dto.board.CommentDto;
 import com.kb04.starroad.Entity.Board;
 import com.kb04.starroad.Service.BoardService;
 import com.kb04.starroad.Service.CommentService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -81,7 +82,7 @@ public class BoardController {
             @RequestParam(name = "size", defaultValue = "6") int size,
             @RequestParam(name = "type", defaultValue = "F") String type,
             HttpServletRequest request) {
-        ModelAndView mav = new ModelAndView("board/board");
+        ModelAndView mav = new ModelAndView("board/board_new");
 
         // 페이징 정보 설정
         PageRequest pageable = PageRequest.of(page, size, Sort.by("regdate").descending());
@@ -111,7 +112,7 @@ public class BoardController {
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "6") int size,
             HttpServletRequest request) {
-        ModelAndView mav = new ModelAndView("board/board");
+        ModelAndView mav = new ModelAndView("board/board_new");
 
         // 페이징 정보 설정
         PageRequest pageable = PageRequest.of(page, size, Sort.by("likes").descending());

@@ -13,6 +13,14 @@
     <script type="text/javascript">
         $(function() {
             $("#navbar").load("${path}/resources/common_jsp/navbar.jsp");
+            if ("${type}" === 'F') {
+                $("#nav_typeF").css("color", "#FFBC00");
+            }else if ("${type}" === 'C') {
+                $("#nav_typeC").css("color", "#FFBC00");
+            }
+            else {
+                $("#nav_popular").css("color", "#FFBC00");
+            }
         });
     </script>
 </head>
@@ -21,7 +29,20 @@
 
 
 <!-- 네비게이션 바 -->
-<div class="container">
+<div class="board_nav">
+    <div class="board_nav_type">
+        <ul class="board_nav_type_list">
+            <li><a href= "popular"><p id="nav_popular">인기글</p></a></li>
+            <li><a href= "free?type=F"><p id="nav_typeF">자유게시판</p></a></li>
+            <li><a href= "free?type=C"><p id="nav_typeC">인증방</p></a></li>
+        </ul>
+    </div>
+    <div class="board_nav_btn">
+        <button id="nav_btn" onclick="location.href='/starroad/board/write';">글쓰기</button>
+    </div>
+</div>
+
+<!--<div class="container">
     <div class="row">
         <div class="col-md-12">
             <nav class="navbar navbar-expand-lg navbar-light bg-light" id="boardnav">
@@ -37,23 +58,102 @@
                         <li><a href= "free?type=C">인증방</a></li>
                     </ul>
 
-                    <!-- ml-auto 클래스로 오른쪽 정렬 -->
-                    <ul class = "nav navbar-nav ml-auto ">
 
-                        	<li><a href="/starroad/board/write"class ="btn btn-primary nav-link text-black">글쓰기</a></li>
+                    <ul class = "nav navbar-nav ml-auto ">
+                        <li><a href="/starroad/board/write"class ="btn btn-primary nav-link text-black">글쓰기</a></li>
                      </ul>
                  </div>
             </nav>
         </div>
     </div>
-</div>
+</div> -->
+
 
 <main>
     <div class="main_box">
-
-        <div class="board_items">
+        <div class="board_items menu-content">
             <c:forEach items="${freeBoardPage.content}" var="board">
-                <div class="item_box">
+                <div class="item_box item grow" rel="grow" style="cursor: pointer;" onclick="location.href='/starroad/board/detail?no=${board.no}';">
+                    <div class="item_img">
+                        <img class="img_detail" src="/resources/static/image/board/default.jpg">
+                    </div>
+
+                    <div class="item_tag">
+                        <span class="item_tag_text">${board.detailType}</span>
+                    </div>
+
+                    <div class="item_title">
+                        ${board.title}
+                    </div>
+
+                    <div class="item_content">
+                            ${board.content}
+                    </div>
+
+                    <div class="item_footer">
+                        <div class="item_id_date">
+                            <div class="item_user_icon">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                            <div>
+                                <span class="icon_id">${board.member.id}</span> <br>
+                                <span class="icon_text_date"><fmt:formatDate value="${board.regdate}" pattern="yyyy-MM-dd" /></span>
+                            </div>
+                        </div>
+                        <div class="item_icon">
+                            <i class="far fa-thumbs-up"></i><span class="icon_text">${board.likes}</span>
+                            <i class="far fa-comment"></i><span class="icon_text"> ${board.commentNum}</span>
+                        </div>
+                    </div>
+                </div>
+            </c:forEach>
+        </div>
+
+        <nav  aria-label="Page navigation" id="btm_pagi2">
+            <ul class="pagination justify-content-center">
+                <c:if test="${freeBoardPage.totalPages > 1}">
+                    <c:if test="${freeBoardPage.number != 0}">
+                        <li class="page-item">
+
+                            <a class="page-link" href="?page=0&type=${type}" aria-label="처음">
+                                <span aria-hidden="true">&laquo;&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page=${freeBoardPage.number - 1}&type=${type}" aria-label="이전">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                    </c:if>
+                    <c:forEach begin="0" end="${freeBoardPage.totalPages - 1}" varStatus="loop">
+                        <li class="page-item ${loop.index == freeBoardPage.number ? 'active' : ''}">
+                            <a class="page-link" href="?page=${loop.index}&type=${type}">${loop.index + 1}</a>
+                        </li>
+                    </c:forEach>
+                    <c:if test="${freeBoardPage.number + 1 < freeBoardPage.totalPages}">
+                        <li class="page-item">
+                            <a class="page-link" href="?page=${freeBoardPage.number + 1}&type=${type}" aria-label="다음">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page=${freeBoardPage.totalPages - 1}&type=${type}" aria-label="끝">
+                                <span aria-hidden="true">&raquo;&raquo;</span>
+                            </a>
+                        </li>
+                    </c:if>
+                </c:if>
+            </ul>
+        </nav>
+    </div>
+</main>
+
+<main>
+    <div class="main_box">
+        <!-- 자유게시판 내용 -->
+        <div class="menu-content board_items" id="popular">
+            <c:forEach items="${popularBoardPage.content}" var="board">
+                <div class="item_box item grow" rel="grow">
                     <div class="item_img">
                         <img class="img_detail" src="/resources/static/image/board/default.jpg">
                     </div>
@@ -72,8 +172,13 @@
 
                     <div class="item_footer">
                         <div class="item_id_date">
-                            <span class="icon_id">ID : ${board.member.id}</span> <br>
-                            <i class="far fa-calendar-alt"></i><span class="icon_text"><fmt:formatDate value="${board.regdate}" pattern="yyyy-MM-dd" /></span>
+                            <div class="item_user_icon">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                            <div>
+                                <span class="icon_id">${board.member.id}</span> <br>
+                                <span class="icon_text_date"><fmt:formatDate value="${board.regdate}" pattern="yyyy-MM-dd" /></span>
+                            </div>
                         </div>
                         <div class="item_icon">
                             <i class="far fa-thumbs-up"></i><span class="icon_text">${board.likes}</span>
@@ -84,148 +189,41 @@
             </c:forEach>
         </div>
 
-        <!-- 게시판 내용 -->
-        <!--<div id="boardcontent" class="menu-content2">
-            <div class="row no-gutters">
-                <c:forEach items="${freeBoardPage.content}" var="board">
-                    <div class="col-md-6">
-                        <div class="board-item">
-                            <div class ="detailTypeStyle">
-                                <a> ${board.detailType}</a>
-                            </div>
-                            <div class="titleStyle">
-                            <a href="/starroad/board/detail?no=${board.no}">${board.title}</a>
-                            </div>
-                            <div class = "contentStyle">
-                            <a>${board.content}</a>
-                            </div>
-                            <div class="idStyle">
-                                <a> ID : ${board.member.id} </a>
-                            </div>
-
-                            <div class="icons">
-                                <div class left="left-icons">
-                                <i class="far fa-thumbs-up"></i> ${board.likes} <i class="far fa-comment"></i> ${board.commentNum}
-                                </div>
-
-                                <span class="timeStyle"><i class="far fa-calendar-alt"></i><fmt:formatDate value="${board.regdate}" pattern="yyyy-MM-dd" /></span>
-
-                            </div>
-
-                        </div>
-                    </div>
-                </c:forEach>
-            </div>-->
-
-            <nav  aria-label="Page navigation" id="btm_pagi2">
-                <ul class="pagination justify-content-center">
-                    <c:if test="${freeBoardPage.totalPages > 1}">
-                        <c:if test="${freeBoardPage.number != 0}">
-                            <li class="page-item">
-
-                                <a class="page-link" href="?page=0&type=${type}" aria-label="처음">
-                                    <span aria-hidden="true">&laquo;&laquo;</span>
-                                </a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link" href="?page=${freeBoardPage.number - 1}&type=${type}" aria-label="이전">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                            </li>
-                        </c:if>
-                        <c:forEach begin="0" end="${freeBoardPage.totalPages - 1}" varStatus="loop">
-                            <li class="page-item ${loop.index == freeBoardPage.number ? 'active' : ''}">
-                                <a class="page-link" href="?page=${loop.index}&type=${type}">${loop.index + 1}</a>
-                            </li>
-                        </c:forEach>
-                        <c:if test="${freeBoardPage.number + 1 < freeBoardPage.totalPages}">
-                            <li class="page-item">
-                                <a class="page-link" href="?page=${freeBoardPage.number + 1}&type=${type}" aria-label="다음">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link" href="?page=${freeBoardPage.totalPages - 1}&type=${type}" aria-label="끝">
-                                    <span aria-hidden="true">&raquo;&raquo;</span>
-                                </a>
-                            </li>
-                        </c:if>
+        <nav aria-label="Page navigation" id="btm_pagi">
+            <ul class="pagination justify-content-center">
+                <c:if test="${popularBoardPage.totalPages > 1}">
+                    <c:if test="${popularBoardPage.number != 0}">
+                        <li class="page-item">
+                            <a class="page-link" href="?page=0&type=popular" aria-label="처음">
+                                <span aria-hidden="true">&laquo;&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page=${popularBoardPage.number - 1}" aria-label="이전">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
                     </c:if>
-                </ul>
-            </nav>
-        </div>
-    </div>
-</main>
-
-<main>
-    <div class="main_box">
-        <!-- 자유게시판 내용 -->
-        <div id="popular" class="menu-content">
-            <div class="row no-gutters">
-                <c:forEach items="${popularBoardPage.content}" var="board">
-                    <div class="col-md-6">
-                        <div class="board-item">
-                            <div class ="detailTypeStyle">
-                                <a> ${board.detailType}</a>
-                            </div>
-                            <div class="titleStyle">
-                            <h3><a href="/starroad/board/detail?no=${board.no}">${board.title}</a></h3>
-                            </div>
-                            <div class = "contentStyle">
-                            <a>${board.content}</a>
-                            </div>
-                            <div class="idStyle">
-                                <a>ID :  ${board.member.id}</a>
-                            </div>
-                            <div class="icons">
-                                <div class left="left-icons">
-                                    <i class="far fa-thumbs-up"></i> ${board.likes} <i class="far fa-comment"></i> ${board.commentNum}
-                                </div>
-
-                                <i class="timeStyle"><i class="far fa-calendar-alt"></i><fmt:formatDate value="${board.regdate}" pattern="yyyy-MM-dd" /></i>
-
-                            </div>
-
-                        </div>
-                    </div>
-                </c:forEach>
-            </div>
-            <nav aria-label="Page navigation" id="btm_pagi">
-                <ul class="pagination justify-content-center">
-                    <c:if test="${popularBoardPage.totalPages > 1}">
-                        <c:if test="${popularBoardPage.number != 0}">
-                            <li class="page-item">
-                                <a class="page-link" href="?page=0&type=popular" aria-label="처음">
-                                    <span aria-hidden="true">&laquo;&laquo;</span>
-                                </a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link" href="?page=${popularBoardPage.number - 1}" aria-label="이전">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                            </li>
-                        </c:if>
-                        <c:forEach begin="0" end="${popularBoardPage.totalPages - 1}" varStatus="loop">
-                            <li class="page-item ${loop.index == popularBoardPage.number ? 'active' : ''}">
-                                <a class="page-link" href="?page=${loop.index}">${loop.index + 1}</a>
-                            </li>
-                        </c:forEach>
-                        <c:if test="${popularBoardPage.number + 1 < popularBoardPage.totalPages}">
-                            <li class="page-item">
-                                <a class="page-link" href="?page=${popularBoardPage.number + 1}" aria-label="다음">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link" href="?page=${popularBoardPage.totalPages - 1}" aria-label="끝">
-                                    <span aria-hidden="true">&raquo;&raquo;</span>
-                                </a>
-                            </li>
-                        </c:if>
+                    <c:forEach begin="0" end="${popularBoardPage.totalPages - 1}" varStatus="loop">
+                        <li class="page-item ${loop.index == popularBoardPage.number ? 'active' : ''}">
+                            <a class="page-link" href="?page=${loop.index}">${loop.index + 1}</a>
+                        </li>
+                    </c:forEach>
+                    <c:if test="${popularBoardPage.number + 1 < popularBoardPage.totalPages}">
+                        <li class="page-item">
+                            <a class="page-link" href="?page=${popularBoardPage.number + 1}" aria-label="다음">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page=${popularBoardPage.totalPages - 1}" aria-label="끝">
+                                <span aria-hidden="true">&raquo;&raquo;</span>
+                            </a>
+                        </li>
                     </c:if>
-                </ul>
-            </nav>
-        </div>
+                </c:if>
+            </ul>
+        </nav>
     </div>
 </main>
 
