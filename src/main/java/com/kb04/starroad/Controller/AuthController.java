@@ -3,28 +3,36 @@ package com.kb04.starroad.Controller;
 import com.kb04.starroad.Dto.MemberDto;
 import com.kb04.starroad.Dto.auth.LoginRequestDto;
 import com.kb04.starroad.Service.AuthService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpSession;
 
+@Api(tags = {"로그인 API"})
 @RestController
 public class AuthController {
 
     @Autowired
     private AuthService authService;
 
+    @ApiOperation(value = "로그인 폼 조회", notes = "로그인 폼을 조회할 수 있다")
     @GetMapping("/starroad/login")
     public ModelAndView showLoginForm() {
         ModelAndView mav = new ModelAndView("member/login");
         return mav;
     }
+    @ApiOperation(value = "로그인 기능", notes = "로그인을 할 수 있다")
     @PostMapping("/starroad/login")
-    public ModelAndView login(LoginRequestDto requestDto, HttpSession session, RedirectAttributes redirectAttributes) {
+    public ModelAndView login(
+            @ApiParam(value = "게시글 수정하기 위한 정보") @RequestBody @ModelAttribute LoginRequestDto requestDto,
+            @ApiIgnore HttpSession session,
+            RedirectAttributes redirectAttributes) {
         ModelAndView mav = new ModelAndView();
 
         if (requestDto.getId().trim().isEmpty()) {
@@ -47,8 +55,10 @@ public class AuthController {
         return mav;
     }
 
+    @ApiOperation(value = "로그아웃 기능", notes = "로그아웃을 할 수 있다")
     @GetMapping("/starroad/logout")
-    public ModelAndView logout(HttpSession session) {
+    public ModelAndView logout(
+            @ApiIgnore HttpSession session) {
         session.invalidate();  // 세션 정보를 모두 삭제
         ModelAndView mav = new ModelAndView("redirect:/starroad");
         return mav;
