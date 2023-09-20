@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -46,8 +47,14 @@ public class MemberController {
     // 아이디 중복 확인을 위한 엔드포인트
     @RequestMapping("/starroad/checkMemberId")
     public String checkId(@RequestParam("id") String id) {
-        String result="Y";
-        Member optionalMember = memberService.checkId(id);
+        Optional<Member> optionalMember = memberService.checkId(id);
+        return optionalMember.isPresent() ? "Y" : "N";
+    }
+
+    @RequestMapping("/starroad/checkMemberEmail")
+    public String checkEmail(@RequestParam("email") String email) {
+        String result = "Y";
+        Member optionalMember = memberService.checkEmail(email);
         if (optionalMember == null) {
             // 아이디가 존재하지 않는 경우
             result = "N";
@@ -55,17 +62,5 @@ public class MemberController {
         //아이디가 있을시 Y 없을시 N으로 jsp view 로 보냄
         return result;
     }
-
-//    @RequestMapping("/starroad/checkMemberEmail")
-//    public String checkEmail(@RequestParam("email") String email) {
-//        String result="Y";
-//        Member optionalMember = memberService.checkEmail(email);
-//        if (optionalMember == null) {
-//            // 아이디가 존재하지 않는 경우
-//            result = "N";
-//        }
-//        //아이디가 있을시 Y 없을시 N으로 jsp view 로 보냄
-//        return result;
-//    }
 
 }
