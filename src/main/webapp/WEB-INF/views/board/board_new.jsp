@@ -16,14 +16,14 @@
         $(function() {
             $("#navbar").load("${path}/resources/common_jsp/navbar.jsp");
             if ("${type}" === 'F') {
-                $("#nav_typeF").css("color", "#795513").css("font-weight", 800)
+                $("#nav_typeF").css("color", "#543d0d").css("font-weight", 800)
                     .css("box-shadow", "inset 0 -10px 0 #FFBC00FF");
             }else if ("${type}" === 'C') {
-                $("#nav_typeC").css("color", "#795513FF").css("font-weight", 800)
+                $("#nav_typeC").css("color", "#543D0DFF").css("font-weight", 800)
                     .css("box-shadow", "inset 0 -10px 0 #FFBC00FF");
             }
             else {
-                $("#nav_popular").css("color", "#795513FF").css("font-weight", 800)
+                $("#nav_popular").css("color", "#543D0DFF").css("font-weight", 800)
                     .css("box-shadow", "inset 0 -10px 0 #FFBC00FF");
             }
         });
@@ -53,16 +53,14 @@
             <c:forEach items="${freeBoardPage.content}" var="board">
                 <div class="item_box item grow" rel="grow" style="cursor: pointer;" onclick="location.href='/starroad/board/detail?no=${board.no}';">
                     <div class="item_img">
-
                         <c:choose>
                             <c:when test="${not empty board.imageBase64}">
-                                <img class="img_detail" src="data:image/jpeg;base64,${board.imageBase64}" alt=""/>
+                                <img class="img_detail1" src="data:image/jpeg;base64,${board.imageBase64}" alt=""/>
                             </c:when>
                             <c:otherwise>
-                                <img class="img_detail" src="/resources/static/image/board/default.jpg">
+                                <img class="img_detail2" src="/resources/static/image/board/default2.png">
                             </c:otherwise>
                         </c:choose>
-
                     </div>
 
                     <div class="item_tag">
@@ -83,7 +81,16 @@
                                 <i class="fas fa-user-circle"></i>
                             </div>
                             <div>
-                                <span class="icon_id">${board.memberId}</span> <br>
+                                <span class="icon_id">
+                                    <c:choose>
+                                        <c:when test="${not empty board.memberId}">
+                                            ${board.memberId}
+                                        </c:when>
+                                        <c:otherwise>
+                                            imkiki
+                                        </c:otherwise>
+                                    </c:choose>
+                                </span> <br>
                                 <span class="icon_text_date"><fmt:formatDate value="${board.regdate}" pattern="yyyy-MM-dd" /></span>
                             </div>
                         </div>
@@ -144,10 +151,10 @@
                     <div class="item_img">
                         <c:choose>
                             <c:when test="${not empty board.imageBase64}">
-                                <img class="img_detail" src="data:image/jpeg;base64,${board.imageBase64}" alt=""/>
+                                <img class="img_detail1" src="data:image/jpeg;base64,${board.imageBase64}" alt=""/>
                             </c:when>
                             <c:otherwise>
-                                <img class="img_detail" src="/resources/static/image/board/default.jpg">
+                                <img class="img_detail2" src="/resources/static/image/board/default2.png">
                             </c:otherwise>
                         </c:choose>
                     </div>
@@ -170,7 +177,16 @@
                                 <i class="fas fa-user-circle"></i>
                             </div>
                             <div>
-                                <span class="icon_id">${board.memberId}</span> <br>
+                                <span class="icon_id">
+                                    <c:choose>
+                                        <c:when test="${not empty board.memberId}">
+                                            ${board.memberId}
+                                        </c:when>
+                                        <c:otherwise>
+                                            imkiki
+                                        </c:otherwise>
+                                    </c:choose>
+                                </span> <br>
                                 <span class="icon_text_date"><fmt:formatDate value="${board.regdate}" pattern="yyyy-MM-dd" /></span>
                             </div>
                         </div>

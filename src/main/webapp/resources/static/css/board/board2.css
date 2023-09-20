@@ -82,27 +82,33 @@ main {
     height: 40%;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    overflow: hidden;
+    /*overflow: hidden;*/
+    /*object-fit: scale-down;*/
+    object-fit: fill;
 }
 
-.img_detail {
+.img_detail1 {
     height: 100%;
     width: 100%;
     object-fit: cover;
+}
+
+.img_detail2 {
+    height: 100%;
+    width: 100%;
+    object-fit: fill;
 }
 
 .item_tag {
     position: absolute;
     border: solid 1.5px var(--main-kb-yellow);
     border-radius: 30px;
-    background-color: var(--main-kb-gray-negative);
-    color: white;
+    background-color: #ffe7a8;
     top: 105px;
     left: 230px;
     width: 80px;
     text-align: center;
     padding: 3.2px;
-    box-shadow: 1px 1px 3px 1px dimgrey;
 }
 
 .item_tag_text {
