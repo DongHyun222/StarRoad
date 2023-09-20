@@ -1,3 +1,5 @@
+<%@ page import="java.sql.Blob" %>
+<%@ page import="java.util.Base64" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -14,12 +16,15 @@
         $(function() {
             $("#navbar").load("${path}/resources/common_jsp/navbar.jsp");
             if ("${type}" === 'F') {
-                $("#nav_typeF").css("color", "#FFBC00");
+                $("#nav_typeF").css("color", "#795513").css("font-weight", 800)
+                    .css("box-shadow", "inset 0 -10px 0 #FFBC00FF");
             }else if ("${type}" === 'C') {
-                $("#nav_typeC").css("color", "#FFBC00");
+                $("#nav_typeC").css("color", "#795513FF").css("font-weight", 800)
+                    .css("box-shadow", "inset 0 -10px 0 #FFBC00FF");
             }
             else {
-                $("#nav_popular").css("color", "#FFBC00");
+                $("#nav_popular").css("color", "#795513FF").css("font-weight", 800)
+                    .css("box-shadow", "inset 0 -10px 0 #FFBC00FF");
             }
         });
     </script>
@@ -32,9 +37,9 @@
 <div class="board_nav">
     <div class="board_nav_type">
         <ul class="board_nav_type_list">
-            <li><a href= "popular"><p id="nav_popular">인기글</p></a></li>
-            <li><a href= "free?type=F"><p id="nav_typeF">자유게시판</p></a></li>
-            <li><a href= "free?type=C"><p id="nav_typeC">인증방</p></a></li>
+            <li class="sidebar_menu"><a href= "popular"><p id="nav_popular">인기글</p></a></li>
+            <li class="sidebar_menu"><a href= "free?type=F"><p id="nav_typeF">자유게시판</p></a></li>
+            <li class="sidebar_menu"><a href= "free?type=C"><p id="nav_typeC">인증방</p></a></li>
         </ul>
     </div>
     <div class="board_nav_btn">
@@ -42,40 +47,22 @@
     </div>
 </div>
 
-<!--<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light" id="boardnav">
-
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                        aria-controls="navbarNav" aria-expanded="false" aria-label="">
-                    <span class= "navbar-toggler-icon"></span>
-                </button>
-                <div class= "collapse navbar-collapse" id= "navbarNav">
-                    <ul class= "navbar-nav mr-auto">
-                        <li><a href= "popular">인기글</a></li>
-                        <li><a href= "free?type=F">자유게시판</a></li>
-                        <li><a href= "free?type=C">인증방</a></li>
-                    </ul>
-
-
-                    <ul class = "nav navbar-nav ml-auto ">
-                        <li><a href="/starroad/board/write"class ="btn btn-primary nav-link text-black">글쓰기</a></li>
-                     </ul>
-                 </div>
-            </nav>
-        </div>
-    </div>
-</div> -->
-
-
 <main>
     <div class="main_box">
         <div class="board_items menu-content">
             <c:forEach items="${freeBoardPage.content}" var="board">
                 <div class="item_box item grow" rel="grow" style="cursor: pointer;" onclick="location.href='/starroad/board/detail?no=${board.no}';">
                     <div class="item_img">
-                        <img class="img_detail" src="/resources/static/image/board/default.jpg">
+
+                        <c:choose>
+                            <c:when test="${not empty board.imageBase64}">
+                                <img class="img_detail" src="data:image/jpeg;base64,${board.imageBase64}" alt=""/>
+                            </c:when>
+                            <c:otherwise>
+                                <img class="img_detail" src="/resources/static/image/board/default.jpg">
+                            </c:otherwise>
+                        </c:choose>
+
                     </div>
 
                     <div class="item_tag">
@@ -96,7 +83,7 @@
                                 <i class="fas fa-user-circle"></i>
                             </div>
                             <div>
-                                <span class="icon_id">${board.member.id}</span> <br>
+                                <span class="icon_id">${board.memberId}</span> <br>
                                 <span class="icon_text_date"><fmt:formatDate value="${board.regdate}" pattern="yyyy-MM-dd" /></span>
                             </div>
                         </div>
@@ -153,9 +140,16 @@
         <!-- 자유게시판 내용 -->
         <div class="menu-content board_items" id="popular">
             <c:forEach items="${popularBoardPage.content}" var="board">
-                <div class="item_box item grow" rel="grow">
+                <div class="item_box item grow" rel="grow" style="cursor: pointer;" onclick="location.href='/starroad/board/detail?no=${board.no}';">
                     <div class="item_img">
-                        <img class="img_detail" src="/resources/static/image/board/default.jpg">
+                        <c:choose>
+                            <c:when test="${not empty board.imageBase64}">
+                                <img class="img_detail" src="data:image/jpeg;base64,${board.imageBase64}" alt=""/>
+                            </c:when>
+                            <c:otherwise>
+                                <img class="img_detail" src="/resources/static/image/board/default.jpg">
+                            </c:otherwise>
+                        </c:choose>
                     </div>
 
                     <div class="item_tag">
@@ -163,7 +157,7 @@
                     </div>
 
                     <div class="item_title">
-                        <a href="/starroad/board/detail?no=${board.no}">${board.title}</a>
+                        ${board.title}
                     </div>
 
                     <div class="item_content">
@@ -176,7 +170,7 @@
                                 <i class="fas fa-user-circle"></i>
                             </div>
                             <div>
-                                <span class="icon_id">${board.member.id}</span> <br>
+                                <span class="icon_id">${board.memberId}</span> <br>
                                 <span class="icon_text_date"><fmt:formatDate value="${board.regdate}" pattern="yyyy-MM-dd" /></span>
                             </div>
                         </div>

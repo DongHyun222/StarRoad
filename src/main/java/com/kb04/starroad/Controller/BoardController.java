@@ -87,20 +87,25 @@ public class BoardController {
         // 페이징 정보 설정
         PageRequest pageable = PageRequest.of(page, size, Sort.by("regdate").descending());
         Page<Board> boardPage;
+        Page<BoardResponseDto> finalBoardPage = null;
 
         if ("F".equals(type)) {
             // type이 "F"인 경우 자유게시판 목록 조회
             boardPage = boardService.findPaginated(pageable);
+            finalBoardPage = boardService.convertPaginated(boardPage);
+
         } else if ("C".equals(type)) {
             // type이 "C"인 경우 인증방 목록 조회
             boardPage = boardService.findAuthenticatedPaginated(pageable);
+            finalBoardPage = boardService.convertPaginated(boardPage);
         }
         else {
             // 잘못된 type 값이 들어온 경우 예외 처리
             throw new IllegalArgumentException("잘못된 type 값입니다.");
         }
 
-        mav.addObject("freeBoardPage", boardPage);
+
+        mav.addObject("freeBoardPage", finalBoardPage);
         mav.addObject("type", type); // View에서 현재 type 값을 사용할 수 있도록 추가
 
         return mav;
@@ -119,8 +124,9 @@ public class BoardController {
 
         // 게시글 목록 조회 (likes 내림차순)
         Page<Board> boardPage = boardService.getPopularBoards(pageable);
+        Page<BoardResponseDto> finalBoardPage = boardService.convertPaginated(boardPage);
         //웹 페이지로 데이터를 전달하기 위한 객체로, 이를 통해 뷰(HTML 템플릿)로 데이터를 전송
-        mav.addObject("popularBoardPage", boardPage);
+        mav.addObject("popularBoardPage", finalBoardPage);
         //ModelAndView에 "type"이라는 키를 사용하여 "popular" 문자열을 추가
         mav.addObject("type", "popular"); // 인기 게시판임을 표시하기 위한 값
 

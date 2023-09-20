@@ -1,6 +1,7 @@
 package com.kb04.starroad.Service;
 
 import com.kb04.starroad.Dto.board.BoardRequestDto;
+import com.kb04.starroad.Dto.board.BoardResponseDto;
 import com.kb04.starroad.Entity.Board;
 import com.kb04.starroad.Entity.Heart;
 import com.kb04.starroad.Entity.Member;
@@ -8,16 +9,14 @@ import com.kb04.starroad.Repository.BoardRepository;
 import com.kb04.starroad.Repository.HeartRepository;
 import com.kb04.starroad.Repository.MemberRepository;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class BoardService {
@@ -72,6 +71,19 @@ public class BoardService {
     }
     public Page<Board> findPaginated(Pageable pageable) {
         return boardRepository.findByTypeAndStatus("F",'Y', pageable); // "0"은 자유게시판 타입에 해당하는 것으로 가정합니다.
+    }
+
+    public Page<BoardResponseDto> convertPaginated(Page<Board> paginatedBoard) {
+
+        List<BoardResponseDto> dtoList = new ArrayList<>();
+
+        for(Board board : paginatedBoard){
+            dtoList.add(board.toBoardResponseDto());
+        }
+
+        Page<BoardResponseDto> result = new PageImpl<>(dtoList);
+
+        return result;
     }
 
 
