@@ -36,18 +36,34 @@
                 <li><a class='sidebar_menu' href='/starroad/mypage/password'>비밀번호 수정</a></li>
             </ul>
         </aside>
-        <article>
+
+
+        <div class="box1">
+            <article>
+                <section id="header">
+                    <span> ${memberAssets.name}님의 포트폴리오 </span>
+                </section>
+                <section id="asset">
+                    <canvas id="myChart"></canvas>
+                </section>
+
+                <section id="info">
+                    등록된 자산이 없습니다.
+                </section>
+            </article>
+        </div>
+
+        <div class="box2">
             <section id="pointree">
                 <span>${memberAssets.name}님의 포인트리</span>
                 <span>${memberAssets.point}P</span>
             </section>
-            <section id="asset">
-                <canvas id="myChart"></canvas>
+
+            <section id="">
+
             </section>
-            <section id="info">
-                등록된 자산이 없습니다.
-            </section>
-        </article>
+
+        </div>
 
         <!-- 차트 -->
         <script>
@@ -64,7 +80,13 @@
                 type: 'doughnut',
                 data: data,
                 options: {
-                    responsive: false
+                    responsive: false,
+                    plugins: {
+                        legend: false, // 범례 숨기기
+                        datalabels: {
+                            display: false // 데이터 레이블 숨기기
+                        },
+                    }
                 }
             });
         </script>
