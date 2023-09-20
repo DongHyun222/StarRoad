@@ -30,7 +30,7 @@ html, body {
 }
 
 
-#section1:hover {
+.section:hover {
     background-size: 150%;
 }
 
@@ -53,13 +53,14 @@ html, body {
 
 .title {
     width: 100%;
-    height: 60%;
+    height: 55%;
     display: flex;
     align-items: end;
     justify-content: center;
     text-align: center;
     font-size: xxx-large;
     font-weight: bold;
+    margin-bottom: 20px;
 }
 
 .detail {
@@ -71,4 +72,13 @@ html, body {
     justify-content: center;
     font-weight: bold;
     font-size: x-large;
+}
+
+.page_container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    color: white;
 }
