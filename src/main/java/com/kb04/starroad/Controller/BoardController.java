@@ -80,7 +80,7 @@ public class BoardController {
             @ApiParam(value = "페이지크기") @RequestParam(name = "size", defaultValue = "6") int size,
             @ApiParam(value = "게시글타입") @RequestParam(name = "type", defaultValue = "F") String type,
             @ApiIgnore HttpServletRequest request) {
-        ModelAndView mav = new ModelAndView("board/board");
+        ModelAndView mav = new ModelAndView("board/board_new");
 
 
         // 페이징 정보 설정
@@ -117,7 +117,7 @@ public class BoardController {
             @ApiParam(value = "페이지") @RequestParam(name = "page", defaultValue = "0") int page,
             @ApiParam(value = "페이지크기") @RequestParam(name = "size", defaultValue = "6") int size,
             @ApiIgnore HttpServletRequest request) {
-        ModelAndView mav = new ModelAndView("board/board");
+        ModelAndView mav = new ModelAndView("board/board_new");
 
         // 페이징 정보 설정
         PageRequest pageable = PageRequest.of(page, size, Sort.by("likes").descending());

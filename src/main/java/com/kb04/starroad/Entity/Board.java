@@ -93,7 +93,7 @@ import java.util.List;
                     .type(type)
                     .detailType(detailType)
                     .imageBase64(image == null ? null : java.util.Base64.getEncoder().encodeToString(image))
-                    .memberId(member.getId())
+                    .memberId(member == null ? null : member.getId())
                     .build();
         }
         public void update(String title, String content){
