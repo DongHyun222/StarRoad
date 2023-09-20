@@ -56,7 +56,7 @@ transform: translateY(-20px);
 
 .labelStyle select {
     width: calc(70% - 60px);
-    height: 35px;
+    height: 50px;
     padding-left: 10px;
     border-radius: 5px;
 }
@@ -90,15 +90,15 @@ border: 1px solid lightgray;
 }
 .contentStyle{
     transform: translateY(-5px);
-    border: none; !important;
+
     font-size: 20px;
     position: relative;
     height: 600px;
     width: 1110px;
     resize: none;
     padding-top: 30px;
-    border-top : 2px solid #ccc;
-    border: 1px solid lightgray;
+    border-top : 3px solid #ccc;
+    border: 3px solid lightgray;
 
 
 
@@ -138,17 +138,11 @@ transform: translateX(-7px);
 
 }
 .image-upload p {
-    font-size: 12px; /* Reduce the size of the text */
+    font-size: 13px; /* Reduce the size of the text */
     margin-top: 16px;
-    transform: translateX(6px);
+    transform: translateX(10px);
 
 }
 .image-upload label, select.form-control {
     cursor: pointer; /* Change cursor shape when hovering over the label or select */
-}
-.video-icon{
-transform: translateY(25px);
-}
-.video-icon p{
-margin-top: 16px;
 }

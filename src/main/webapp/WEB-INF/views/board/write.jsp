@@ -70,7 +70,7 @@
                        </div>
 
 
-        <hr/>
+            <hr style="border: solid 1px black;">
             <div >
 
 
@@ -96,7 +96,7 @@
              <div class="col-md-4 col-sm-12 image-upload d-flex" >
               <div class="image-upload">
                                        <label for="image">
-                                           <img src="${path}/resources/static/image/board/imagee.png"  height="35" width="35"/>
+                                           <img src="${path}/resources/static/image/board/imagee.png"  height="45" width="45"/>
 
                                        <input type="file" id="image" name="image" style="display: none;" />
                                         </label>
