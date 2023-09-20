@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class AuthService {
     @Autowired
@@ -18,9 +20,10 @@ public class AuthService {
         String id = loginRequestDto.getId();
         String password = loginRequestDto.getPassword();
 
-        MemberDto memberDto = memberRepository.findById(id).toMemberDto();
+        Optional<Member> optionalMember = memberRepository.findById(id);
 
-        if (memberDto != null) {
+        if (optionalMember.isPresent()) {
+            MemberDto memberDto = optionalMember.get().toMemberDto();
             // 데이터베이스에서 가져온 암호화된 비밀번호
             String encryptedPasswordFromDatabase = memberDto.getPassword();
 
@@ -29,10 +32,8 @@ public class AuthService {
             // 입력한 비밀번호와 데이터베이스에서 가져온 암호화된 비밀번호를 비교
             boolean passwordMatches = encoder.matches(password, encryptedPasswordFromDatabase);
 
-            if (passwordMatches) {
-                // 비밀번호가 일치하면 해당 회원 정보를 반환
+            if (passwordMatches)    // 비밀번호가 일치하면 해당 회원 정보를 반환
                 return memberDto;
-            }
         }
         // 아이디가 없거나 비밀번호가 일치하지 않을 경우 null 반환
         return null;

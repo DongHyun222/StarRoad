@@ -2,7 +2,6 @@ package com.kb04.starroad.Controller;
 
 import com.kb04.starroad.Dto.MemberDto;
 import com.kb04.starroad.Dto.auth.LoginRequestDto;
-import com.kb04.starroad.Entity.Member;
 import com.kb04.starroad.Service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,14 +25,24 @@ public class AuthController {
     }
     @PostMapping("/starroad/login")
     public ModelAndView login(LoginRequestDto requestDto, HttpSession session, RedirectAttributes redirectAttributes) {
-        ModelAndView mav;
-        MemberDto memberDto = authService.authenticate(requestDto);
-        if (memberDto != null) {
-            session.setAttribute("currentUser", memberDto);
-            mav = new ModelAndView("redirect:/starroad"); // 로그인 성공
+        ModelAndView mav = new ModelAndView();
+
+        if (requestDto.getId().trim().isEmpty()) {
+            mav.setViewName("redirect:/starroad/login");
+            redirectAttributes.addFlashAttribute("error", "아이디를 입력해주세요");
+        } else if (requestDto.getPassword().trim().isEmpty()) {
+            mav.setViewName("redirect:/starroad/login");
+            redirectAttributes.addFlashAttribute("written_id", requestDto.getId());
+            redirectAttributes.addFlashAttribute("error", "비밀번호를 입력해주세요");
         } else {
-            mav = new ModelAndView("redirect:/starroad/login"); // 로그인 실패
-            redirectAttributes.addFlashAttribute("error", "아이디와 비밀번호가 일치하지않습니다");
+            MemberDto memberDto = authService.authenticate(requestDto);
+            if (memberDto != null) {
+                session.setAttribute("currentUser", memberDto);
+                mav.setViewName("redirect:/starroad"); // 로그인 성공
+            } else {
+                mav.setViewName("redirect:/starroad/login"); // 로그인 실패
+                redirectAttributes.addFlashAttribute("error", "아이디와 비밀번호가 일치하지 않습니다");
+            }
         }
         return mav;
     }
@@ -44,5 +53,4 @@ public class AuthController {
         ModelAndView mav = new ModelAndView("redirect:/starroad");
         return mav;
     }
-
 }

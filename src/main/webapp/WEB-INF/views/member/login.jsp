@@ -25,19 +25,17 @@
         <div id="login_title">로그인</div>
         <div id="login_exp">청춘을 위한 Star Road</div>
         <form action="/starroad/login" method="post" class="text-container">
-            <input type="text" name="id" placeholder="아이디"><br>
+            <input type="text" name="id" placeholder="아이디" value="${written_id}"><br>
             <input type="password" name="password" placeholder="비밀번호">
-            <c:if test="${not empty error}">
-                <p class="error-message">${error}</p>
-            </c:if>
+            <div class="error-message">${error}</div>
             <input type="submit" value="로그인" class="login-button1">
-            <div class="link-container">
-                <div class="signup-options">
-                    <span id="signup_e">계정이 없으신가요?</span>
-                    <a id="signup_a" href="/starroad/member">회원가입</a>
-                </div>
-            </div>
         </form>
+        <div class="link-container">
+            <div class="signup-options">
+                <span id="signup_e">계정이 없으신가요?</span>
+                <a id="signup_a" href="/starroad/member">회원가입</a>
+            </div>
+        </div>
     </article>
 </main>
 </body>
