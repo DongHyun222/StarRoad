@@ -105,7 +105,7 @@ main {
     border-radius: 30px;
     background-color: #ffe7a8;
     top: 105px;
-    left: 230px;
+    left: 275px;
     width: 80px;
     text-align: center;
     padding: 3.2px;
@@ -120,13 +120,13 @@ main {
     height: 18%;
     font-weight: 650;
     overflow: hidden;
-    padding: 22px 8px 8px;
+    padding: 22px 15px 8px;
 }
 
 .item_content {
-    height: 25%;
+    height: 23%;
     overflow: hidden;
-    padding: 2px 8px 8px;
+    padding: 2px 15px 8px;
     word-break: keep-all;
     word-wrap: break-word;
     font-size: 15px;
@@ -135,7 +135,7 @@ main {
 
 .item_footer {
     height: inherit;
-    padding: 8px;
+    padding: 8px 15px;
     display: flex;
     justify-content: space-between;
 }
@@ -146,6 +146,7 @@ main {
 
 .item_icon {
     padding-top: 15px;
+    padding-right: 3px;
 }
 
 .icon_id {

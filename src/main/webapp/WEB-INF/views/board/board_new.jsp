@@ -52,14 +52,11 @@
         <div class="board_items menu-content">
             <c:forEach items="${freeBoardPage.content}" var="board">
                 <div class="item_box item grow" rel="grow" style="cursor: pointer;" onclick="location.href='/starroad/board/detail?no=${board.no}';">
-                    <div class="item_img">
+                    <div class="item_img" style="background-color: lightyellow">
                         <c:choose>
                             <c:when test="${not empty board.imageBase64}">
                                 <img class="img_detail1" src="data:image/jpeg;base64,${board.imageBase64}" alt=""/>
                             </c:when>
-                            <c:otherwise>
-                                <img class="img_detail2" src="/resources/static/image/board/default2.png">
-                            </c:otherwise>
                         </c:choose>
                     </div>
 
@@ -144,18 +141,15 @@
 
 <main>
     <div class="main_box">
-        <!-- 자유게시판 내용 -->
+        <!-- 인기게시판 내용 -->
         <div class="menu-content board_items" id="popular">
             <c:forEach items="${popularBoardPage.content}" var="board">
                 <div class="item_box item grow" rel="grow" style="cursor: pointer;" onclick="location.href='/starroad/board/detail?no=${board.no}';">
-                    <div class="item_img">
+                    <div class="item_img" style="background-color: lightyellow">
                         <c:choose>
                             <c:when test="${not empty board.imageBase64}">
                                 <img class="img_detail1" src="data:image/jpeg;base64,${board.imageBase64}" alt=""/>
                             </c:when>
-                            <c:otherwise>
-                                <img class="img_detail2" src="/resources/static/image/board/default2.png">
-                            </c:otherwise>
                         </c:choose>
                     </div>
 
