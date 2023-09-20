@@ -99,8 +99,14 @@
             </div>
             <div class="board-list">
                 <c:forEach items="${popularBoard.content}" var="board" begin="0" end="5">
-                    <p><span>${board.detailType}</span>
-                    <a href ="/starroad/board/detail?no=${board.no}">${board.title} </a></p>
+                    <p><div class="detailType">${board.detailType}</div>
+                    <a href ="/starroad/board/detail?no=${board.no}">${board.title} </a>
+
+                    <div class="right-align">
+                        <img src="${path}/resources/static/image/board/likes.png" alt="좋아요" class="like-icon">
+                        ${board.likes}
+                    </div>
+                    </p>
                 </c:forEach>
             </div>
         </div>
@@ -113,8 +119,14 @@
             </div>
             <div class="board-list">
                 <c:forEach items="${freeBoard.content}" var="board" begin="0" end="5">
-                    <p><span>${board.detailType}</span>
-                    <a href ="/starroad/board/detail?no=${board.no}">${board.title} </a></p>
+                    <p><div class="detailType">${board.detailType}</div>
+                    <a href ="/starroad/board/detail?no=${board.no}">${board.title} </a>
+
+                    <div class="right-align">
+                        <img src="${path}/resources/static/image/board/likes.png" alt="좋아요" class="like-icon">
+                        ${board.likes}
+                    </div>
+                    </p>
                 </c:forEach>
             </div>
         </div>
@@ -127,8 +139,14 @@
             </div>
             <div class="board-list">
                 <c:forEach items="${authBoard.content}" var="board" begin="0" end="5">
-                    <p><span>${board.detailType}</span>
-                    <a href ="/starroad/board/detail?no=${board.no}">${board.title} </a></p>
+                    <p><div class="detailType">${board.detailType}</div>
+                    <a href ="/starroad/board/detail?no=${board.no}">${board.title} </a>
+
+                    <div class="right-align">
+                        <img src="${path}/resources/static/image/board/likes.png" alt="좋아요" class="like-icon">
+                        ${board.likes}
+                    </div>
+                    </p>
                 </c:forEach>
             </div>
         </div>

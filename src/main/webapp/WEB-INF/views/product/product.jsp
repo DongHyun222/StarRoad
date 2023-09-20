@@ -12,16 +12,19 @@
     <link rel="stylesheet" type="text/css" href="${path}/resources/static/css/common.css"/>
     <link rel="stylesheet" type="text/css" href="${path}/resources/static/css/nav.css">
     <link rel="stylesheet" type="text/css" href="${path}/resources/static/css/product/product.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css"/>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script type="text/javascript">
         $(function () {
+            AOS.init();
             $("#navbar").load("${path}/resources/common_jsp/navbar.jsp");
         });
     </script>
 </head>
 <body>
 <div id="navbar"></div>
-<h3>예적금 상품 추천</h3>
+<div class="main_title">예적금 상품 추천</div>
 <div id="product_search">
     <nav class="navbar navbar-light bg-light" id="product_search_nav">
         <div class="container-fluid">
@@ -103,7 +106,7 @@
                     <input id="searchInput" name="query" class="form-control me-2 search_bar" type="text"
                            placeholder="예적금 상품명을 적어주세요"
                            aria-label="Search">
-                    <button id="submitButton" class="btn search_btn" type="submit">검색</button>
+                    <button id="submitButton" class="search_link_btn" type="submit">검색</button>
                 </div>
 
             </form>
@@ -112,8 +115,8 @@
 </div>
 <div id="product_list">
     <ul>
-        <c:forEach items="${productItems}" var="item">
-            <li id="product_item">
+        <c:forEach items="${productItems}" var="item" varStatus="status">
+            <li id="product_item" data-aos="fade-up" data-aos-delay="${200*status.index}" data-aos-duration="400">
                 <div id="product">
                     <div class="sub">
                         <c:choose>
@@ -140,7 +143,7 @@
                     <div id="member" class="content">
                         현재 ${user}님의 자산으로 계산된<br>
                         <c:choose>
-<%--                            회원우대적용--%>
+                            <%--                            회원우대적용--%>
                             <c:when test="${memberConditionRates.containsKey(item.no)}">
                                 만기 예상 금액은<br>
                                 세후 <span><fmt:formatNumber type="number" pattern="###,###,###,###,###,###"
@@ -158,7 +161,7 @@
                     </div>
                 </c:if>
                 <div class="content">
-                    <button class="btn"><a href="${item.link}">자세히</a></button>
+                    <button class="search_link_btn"><a href="${item.link}">자세히</a></button>
                 </div>
 
             </li>
@@ -169,7 +172,7 @@
     <ul class="pagination">
         <li class="page-item">
             <a class="page-link" href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
+                <span aria-hidden="true">&lt;</span>
             </a>
         </li>
         <c:forEach begin="1" end="${pageEndIndex}" var="i">
@@ -177,7 +180,7 @@
         </c:forEach>
         <li class="page-item">
             <a class="page-link" href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
+                <span aria-hidden="true">&gt;</span>
             </a>
         </li>
     </ul>
@@ -207,6 +210,14 @@
                 }
             } else {
                 window.location.href = '/starroad/product?page=' + link.getAttribute('aria-label');
+            }
+        });
+    });
+    $(document).ready(function () {
+        $('#searchInput').keyup(function (event) {
+            if (event.which === 13) {
+                event.preventDefault();
+                $('form').submit();
             }
         });
     });
