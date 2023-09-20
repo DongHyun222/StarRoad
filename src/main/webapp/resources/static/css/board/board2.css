@@ -1,149 +1,11 @@
-#boardnav {
-  background-color: #007BFF; /* 네비게이션 바 배경색 */
-  padding: 10px;
-}
-
-#boardnav .navbar-left a, #boardnav .navbar-right a {
-  color: #ffffff; /* 링크 텍스트 색상 */
-  margin-right: 10px;
-  text-decoration: none; /* 밑줄 제거 */
-}
-
-#boardnav .navbar-left a:hover, #boardnav .navbar-right a:hover {
-    color: #cccccc; /* 마우스 오버시 링크 텍스트 색상 변경 */
-}
-
-.navbar-nav.ml-auto {
-    float: right;
-    transform: translateX(770px);
-}
-
-.navbar-nav.mr-auto {
-
-    transform: translateX(50px);
-}
-.navbar a {
-    float: left;
-    font-size: 16px;
-    color: black;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none; /* 밑줄 제거 */
-}
-.navbar-left a:active, .navbar-right a:active {
-    font-weight: bold;
-}
-.navbar-right { /* 글쓰기 */
-    float: right;
-    margin-top: 10px; /* 글쓰기 버튼을 아래로 이동 */
-
-}
-.navbar-left{
- transform: translateX(80px); /* 원하는 값으로 조절 */
-}
-
-
 /* 밑줄 없애고 호버 스타일 */
 .navbar a:hover {
     background-color: #ddd;
-    color: black;
+    color: var(--main-kb-yellow);
 }
 
-
-/* 게시판 스타일 */
-.board {
-    background-color: #f5f5f5;
-    padding: 20px;
-    border: 1px solid #ddd;
-}
-/* 게시글 스타일 */
-.board-item {
-    flex: 0 0 calc(50% - 10px);
-    margin-right: -20px; /* 가운데 간격을 없애려면 여기를 0으로 설정 */
-    margin-bottom:  10px; /* 게시글 사이 간격을 없애려면 여기를 0으로 설정 */
-
-    padding: 30px;
-    height: 270px;
-    border: var(--sub-kb-gold) 1.5px solid;
-
-}
-.icons {
-    font-size: 12px; /* 아이콘 크기 설정 */
-    display: flex;
-    justify-content: space-between;
-    align-items: center; /* 수직 가운데 정렬 */
-}
-
-.left-icons {
-    display: flex;
-}
-
-
-.left-icons i + i {
-    margin-left: 10px; /* 아이콘과 아이콘 사이 여백 설정 */
-}
-
-/* 아이콘 색상 설정 */
-.icons i {
-    margin-right: 5px; /* 아이콘과 텍스트 사이 여백 설정 */
-    color: #888; /* 아이콘 색상 설정 */
-}
-#popular.menu-content {
-    position: absolute; /* 상위 요소에 대한 절대적인 위치 설정 */
-    top: 170px; /* 상단으로부터의 거리. 필요한 경우 이 값을 조절하세요. */
-    width: 60%; /* 부모 요소 너비의 80% */
-    /*margin-left: 400px;*/
-
-
-
-}
-#boardcontent.menu-content2 {
-    position: absolute; /* 상위 요소에 대한 절대적인 위치 설정 */
-    top: 170px; /* 상단으로부터의 거리. 필요한 경우 이 값을 조절하세요. */
-    width: 60%; /* 부모 요소 너비의 80% */
-    /*margin-left: 400px;*/
-
-
-}
 .page-link {
     margin-right: 10px;
-}
-.detailTypeStyle{
-    transform: translateY(-20px); /* 원하는 값으로 조절 */
-     display: flex;
-        justify-content: right;
-
-}
-.titleStyle{
-
-    transform: translate(-3px,-15px); /* 원하는 값으로 조절 */
-}
-.titleStyle a {
-    font-weight: bold;
-    font-size: 24px;
-}
-.idStyle{
-    transform: translateY(70px); /* 원하는 값으로 조절 */
-
-}
-.idStyle a {
-    font-weight: lighter;
-}
-.detailTypeStyle a{
-
-    font-weight: lighter;
-
-}
-.icons{
-    transform: translateY(70px); /* 원하는 값으로 조절 */
-    font-weight: normal;
-}
-
-.navbar-right{
-    background-color: #FFCC00;
-    font-weight: bold;
-    transform: translateX(-15px);
-    border-radius: 15px; /* 둥근 모서리 */
 }
 
 nav li {
@@ -185,25 +47,35 @@ main {
     align-items: center;
 }
 
+.menu-content {
+    position: absolute;
+    top: 170px;
+    width: 62%;
+}
+
+#popular.menu-content {
+    position: absolute;
+    top: 170px;
+    width: 62%;
+}
+
 .board_items {
     top: 170px;
-    width: 70%;
-    display: flex;
-    border: black 1px solid;
-    justify-content: space-between;
-    flex-wrap: wrap;
+    margin-top: 20px;
+    width: 62%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3열로 설정 */
+    grid-template-rows: repeat(2, 1fr); /* 2행으로 설정 */
+    gap: 40px; /* 아이템 간격 설정 */
 }
 
 .item_box {
-    border: black 1px solid;
     border-radius: 10px;
-    width: 30%;
     height: 300px;
     margin-bottom: 20px;
     overflow: hidden;
     position: relative;
-    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5), /* 기본 그림자 */
-    0 0 40px rgba(173, 173, 173, 0.5) inset; /* 그라데이션 그림자 */
+    box-shadow: 0 5px 9px rgba(0, 0, 0, 0.5);
 }
 
 .item_img {
@@ -221,9 +93,10 @@ main {
 
 .item_tag {
     position: absolute;
-    border: solid 1px var(--main-kb-yellow);
+    border: solid 1.5px var(--main-kb-yellow);
     border-radius: 30px;
-    background-color: var(--main-kb-yellow);
+    background-color: var(--main-kb-gray-negative);
+    color: white;
     top: 105px;
     left: 230px;
     width: 80px;
@@ -233,28 +106,28 @@ main {
 }
 
 .item_tag_text {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 480;
 }
 
 .item_title {
-    border: solid 1px black;
     height: 18%;
     font-weight: 650;
-    padding: 12px 8px 8px;
+    overflow: hidden;
+    padding: 22px 8px 8px;
 }
 
 .item_content {
-    border: solid 1px black;
     height: 25%;
-    padding: 12px 8px 8px;
+    overflow: hidden;
+    padding: 2px 8px 8px;
     word-break: keep-all;
+    word-wrap: break-word;
     font-size: 15px;
     color: var(--sub-kb-dark-gray);
 }
 
 .item_footer {
-    border: solid 1px black;
     height: inherit;
     padding: 8px;
     display: flex;
@@ -262,32 +135,133 @@ main {
 }
 
 .item_id_date {
-
+    display: flex;
 }
 
-.item-icon {
-
+.item_icon {
+    padding-top: 15px;
 }
 
 .icon_id {
     font-size: 15px;
+    margin-left: 5px;
+}
+
+.item_user_icon {
+    margin-top: 3px;
 }
 
 .icon_text {
-    font-size: 15px;
+    font-size: 13px;
+}
+
+.icon_text_date {
+    font-size: 10px;
+    margin-left: 5px;
 }
 
 .fa-calendar-alt {
-    font-size: 15px;
+    font-size: 10px;
+    width: 15px;
     color: var(--sub-kb-dark-gray);
 }
 
 .fa-thumbs-up {
-    font-size: 15px;
-    color: royalblue;
+    font-size: 13px;
+    color: var(--sub-kb-dark-gray);
 }
 
 .fa-comment {
-    font-size: 15px;
-    color: royalblue;
+    font-size: 13px;
+    color: var(--sub-kb-dark-gray);
+}
+
+.fa-user-circle {
+    color: var(--sub-kb-dark-gray);
+    width: 30px;
+    font-size: 27px;
+}
+
+.item {
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.grow {
+    display: inline-block;
+    transition-duration: .3s;
+    transition-property: transform;
+
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    transform: translateZ(0);
+    box-shadow: 0 5px 9px rgba(0, 0, 0, 0.5);
+}
+
+.grow:hover {
+    transform: scale(1.025);
+}
+
+.board_nav {
+    display: flex;
+    width: 60%;
+    margin-left: 20%;
+    margin-right: 20%;
+    justify-content: space-between;
+    padding-top: 10px;
+    font-weight: 590;
+}
+
+.board_nav_type {
+
+}
+
+.board_nav_btn {
+    margin-top: 20px;
+}
+
+.board_nav_btn > button{
+    border: 1.3px solid var(--sub-kb-dark-gray);
+    background-color: white;
+    border-radius: 10px;
+    text-align: center;
+    width: 80px;
+    height: 40px;
+    font-weight: 590;
+}
+
+.board_nav_type_list {
+    list-style: none;
+}
+
+.board_nav_type_list > li{
+    float: left;
+    margin: 20px;
+    display: flex;
+    height: 30px;
+}
+
+a:hover {
+    color: black;
+}
+
+#nav_btn:hover{
+    background-color: var(--main-kb-yellow);
+    color: var(--sub-kb-dark-gray);
+    font-weight: 700;
+    border: 2px solid var(--sub-kb-dark-gray);
+}
+
+.sidebar_menu {
+    background-repeat: no-repeat;
+    background-size: 0%;
+    transition: background-size 0.5s;
+    background-image: linear-gradient(transparent 55%, var(--main-kb-yellow) 45%);
+}
+
+ul:hover #selected {
+    background-size: 0%;
+}
+
+.sidebar_menu:hover {
+    background-size: 100% 100%;
 }
