@@ -12,9 +12,12 @@
     <link rel="stylesheet" type="text/css" href="${path}/resources/static/css/common.css"/>
     <link rel="stylesheet" type="text/css" href="${path}/resources/static/css/nav.css">
     <link rel="stylesheet" type="text/css" href="${path}/resources/static/css/product/product.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script type="text/javascript">
         $(function () {
+            AOS.init();
             $("#navbar").load("${path}/resources/common_jsp/navbar.jsp");
         });
     </script>
@@ -112,8 +115,8 @@
 </div>
 <div id="product_list">
     <ul>
-        <c:forEach items="${productItems}" var="item">
-            <li id="product_item">
+        <c:forEach items="${productItems}" var="item" varStatus="status">
+            <li id="product_item" data-aos="fade-up" data-aos-delay="${200*status.index}" data-aos-duration="400">
                 <div id="product">
                     <div class="sub">
                         <c:choose>
