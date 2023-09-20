@@ -15,21 +15,38 @@
     margin-block: 25px;
 }
 
+/*.policy {*/
+/*    border: var(--sub-kb-gold) 1px solid;*/
+/*   */
+/*}*/
+
+
 .policy {
-    border: var(--sub-kb-gold) 1px solid;
+    border: 2px solid #ffe7a8;
+    border-radius: 5px;
+
     height: 400px;
-    border-radius: 20px;
     margin-top: 20px;
     margin-bottom: 20px;
     text-align: center;
     width: 30%;
+
+    --c: #ffe37c; /* the border color */
+    --b: 5px; /* the border thickness*/
+    --g: 5px; /* the gap on hover */
+
+    padding: calc(var(--g) + var(--b));
+    --_g: #0000 25%, var(--c) 0;
+    background: conic-gradient(from 180deg at top var(--b) right var(--b), var(--_g)) var(--_i, 200%) 0  /200% var(--_i, var(--b)) no-repeat,
+    conic-gradient(at bottom var(--b) left var(--b), var(--_g)) 0 var(--_i, 200%)/var(--_i, var(--b)) 200% no-repeat;
+    transition: .3s, background-position .3s .3s;
+    cursor: pointer;
 }
 
-/*.policy > div {*/
-/*    !*margin: inherit;*!*/
-/*    !*display: inline-flex;*!*/
-/*    !*align-items: center;*!*/
-/*}*/
+.policy:hover {
+    --_i: 100%;
+    transition: .3s, -webkit-mask-size .3s .3s;
+}
 
 .name {
     display: inline-flex;
@@ -61,8 +78,8 @@
 .link_btn {
     padding-inline: 10px;
     border-radius: 10px;
-    border: 2px solid var(--main-kb-yellow);
-    background-color: var(--main-kb-yellow-positive);
+    border: 2px solid var(--main-kb-yellow-positive);
+    background-color: #ffe7a8;
     font-size: medium;
     width: 30%;
     height: 40px;
@@ -76,7 +93,7 @@
 }
 
 .link_btn:hover {
-    background: #eea419;
+    background: #ffe37c;
 }
 
 main {
@@ -193,9 +210,9 @@ ul.ks-cboxtags li input[type="checkbox"]:checked + label {
     transition: all .2s;
 }
 
-ul.ks-cboxtags li input[type="checkbox"] {
-    display: absolute;
-}
+/*ul.ks-cboxtags li input[type="checkbox"] {*/
+/*    !*display: absolute;*!*/
+/*}*/
 
 ul.ks-cboxtags li input[type="checkbox"] {
     position: absolute;
@@ -231,8 +248,12 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
     width: 15%;
     padding-inline: 10px;
     border-radius: 10px;
-    border: 2px solid var(--main-kb-yellow);
-    background-color: var(--main-kb-yellow-positive);
+    border: 2px solid var(--main-kb-yellow-positive);
+    background-color: #ffe7a8;
     font-size: medium;
+}
+
+.submit_btn:hover {
+    background: #ffe37c;
 }
 

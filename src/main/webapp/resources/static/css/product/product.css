@@ -14,14 +14,19 @@ div {
     height: 35px;
     padding-inline: 10px;
     border-radius: 10px;
-    border: 2px solid var(--main-kb-yellow);
-    background-color: var(--main-kb-yellow-positive);
+    border: 2px solid var(--main-kb-yellow-positive);
+    background-color: #ffe7a8;
     font-size: medium;
 }
 
 .search_link_btn a {
     text-decoration: none;
     align-items: center;
+    color: black;
+}
+
+.search_link_btn:hover{
+    background: #ffe37c;
 }
 
 /*세로 정렬*/
