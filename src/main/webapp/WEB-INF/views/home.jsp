@@ -9,12 +9,16 @@
     <link rel="stylesheet" type="text/css" href="${path}/resources/static/css/common.css">
     <link rel="stylesheet" type="text/css" href="${path}/resources/static/css/home/home.css">
     <link rel="stylesheet" type="text/css" href="${path}/resources/static/css/nav.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css"/>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.20/fullpage.min.js"
             integrity="sha512-LGiXf+jHGTHcIybSsOWO3I/in+OObCkcEsWIZ7IyhzfD6RzD5qDUw2CK+JveuI7zTSEcDG//bIOvOpAJW2BWsg=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="//code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript">
         $(function () {
+            AOS.init();
+
             $("#navbar").load("${path}/resources/common_jsp/navbar.jsp");
             window.addEventListener("wheel", function (e) {
                 e.preventDefault();
@@ -47,103 +51,42 @@
 <div id="navbar"></div>
 <!-- 본문 내용 -->
 <div class="section" id="section1">
-    <div id="section1_detail">
-
+    <div class="title" data-aos="fade-up" data-aos-duration="3000">
+        인류의 지속가능한 미래를 <br>
+        선도하는 글로벌 비지니스 리더
     </div>
-</div
->
-<div class="section" id="section2"></div
->
-<div class="section" id="section3"></div
->
-<div class="section" id="section4"></div>
+    <div id="section1_detail" class="detail" data-aos="fade-up" data-aos-duration="2000">
+        디테일한 정보
+    </div>
+</div>
+<div class="section" id="section2">
+    <div class="title" data-aos="fade-up" data-aos-duration="3000">
+        머시기머시기 머시기<br>
+        lorem
+    </div>
+    <div id="section2_detail" class="detail" data-aos="fade-up" data-aos-duration="2000">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias deleniti exercitationem explicabo magni nisi pariatur perspiciatis placeat quasi tenetur ut. Aliquam consectetur doloribus enim eveniet maiores modi officiis sit, temporibus?
+    </div>
 
-<%--<div class="container">--%>
-<%--<div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">--%>
-<%--    &lt;%&ndash;    <ol class="carousel-indicators">&ndash;%&gt;--%>
-<%--    &lt;%&ndash;        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>&ndash;%&gt;--%>
-<%--    &lt;%&ndash;        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>&ndash;%&gt;--%>
-<%--    &lt;%&ndash;        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>&ndash;%&gt;--%>
-<%--    &lt;%&ndash;    </ol>&ndash;%&gt;--%>
-<%--    <div class="carousel-inner">--%>
-<%--        <div class="carousel-item active" data-bs-interval="3000">--%>
-<%--            <div class="banner_container">--%>
-<%--                <div>--%>
-<%--                    <div class="banner_title">--%>
-<%--                        <h2>사용자 맞춤 금융상품</h2>--%>
-<%--                    </div>--%>
-<%--                    <p class="banner_content">--%>
-<%--                        사용자가 설정한 값에 따라서 <br>--%>
-<%--                        만기예상금액이 자동으로 계산되어 <br>--%>
-<%--                        모든 금융 상품을 볼 수 있습니다.--%>
-<%--                    </p>--%>
-<%--                </div>--%>
-<%--                <img src="${path}/resources/static/image/home/animated1.gif" class="banner_3d_img" alt="...">--%>
-<%--            </div>--%>
-<%--            <img src="${path}/resources/static/image/home/banner1.png" class="d-block w-100" alt="...">--%>
-<%--        </div>--%>
-<%--        <div class="carousel-item" data-bs-interval="3000">--%>
-<%--            <div class="banner_container">--%>
-<%--                <div>--%>
-<%--                    <div class="banner_title">--%>
-<%--                        <h2>사용자 맞춤 금융상품</h2>--%>
-<%--                    </div>--%>
-<%--                    <p class="banner_content">--%>
-<%--                        사용자가 설정한 값에 따라서 <br>--%>
-<%--                        만기예상금액이 자동으로 계산되어 <br>--%>
-<%--                        모든 금융 상품을 볼 수 있습니다.--%>
-<%--                    </p>--%>
-<%--                </div>--%>
-<%--                <img src="${path}/resources/static/image/home/animated1.gif" class="banner_3d_img" alt="...">--%>
-<%--            </div>--%>
-<%--            <img src="${path}/resources/static/image/home/banner2.png" class="d-block w-100" alt="...">--%>
-<%--        </div>--%>
-<%--        <div class="carousel-item" data-bs-interval="3000">--%>
-<%--            <div class="banner_container">--%>
-<%--                <div>--%>
-<%--                    <div class="banner_title">--%>
-<%--                        <h2>사용자 맞춤 금융상품</h2>--%>
-<%--                    </div>--%>
-<%--                    <p class="banner_content">--%>
-<%--                        사용자가 설정한 값에 따라서 <br>--%>
-<%--                        만기예상금액이 자동으로 계산되어 <br>--%>
-<%--                        모든 금융 상품을 볼 수 있습니다.--%>
-<%--                    </p>--%>
-<%--                </div>--%>
-<%--                <img src="${path}/resources/static/image/home/animated1.gif" class="banner_3d_img" alt="...">--%>
-<%--            </div>--%>
-<%--            <img src="${path}/resources/static/image/home/banner3.png" class="d-block w-100" alt="...">--%>
-<%--        </div>--%>
-<%--    </div>--%>
-<%--    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying"--%>
-<%--            data-bs-slide="prev">--%>
-<%--        <span class="carousel-control-prev-icon" aria-hidden="true"></span>--%>
-<%--        <span class="visually-hidden">Previous</span>--%>
-<%--    </button>--%>
-<%--    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying"--%>
-<%--            data-bs-slide="next">--%>
-<%--        <span class="carousel-control-next-icon" aria-hidden="true"></span>--%>
-<%--        <span class="visually-hidden">Next</span>--%>
-<%--    </button>--%>
-<%--</div>--%>
 
-<%--<div class="content_title">--%>
-<%--    <h6>내게 맞는 금융상품, 비교하기 힘드시죠?</h6>--%>
-<%--    <h3>스타로드는 쉽고 정확하게 비교합니다.</h3>--%>
-<%--</div>--%>
-<%--<div class="bottom-section">--%>
-<%--    <div class="section">--%>
-<%--        <img src="${path}/resources/static/image/home/bank.gif" alt="이미지1">--%>
-<%--        <p>국민 은행 내의 금융상품을 추천한다</p>--%>
-<%--    </div>--%>
-<%--    <div class="section">--%>
-<%--        <img src="${path}/resources/static/image/home/piggy-bank.gif" alt="이미지2">--%>
-<%--        <p>예적금을 지속할 수 있도록 돕는다 챌린지</p>--%>
-<%--    </div>--%>
-<%--    <div class="section">--%>
-<%--        <img src="${path}/resources/static/image/home/cheque.gif" alt="이미지3">--%>
-<%--        <p>청년 정책 및 청년에게 필요한 금융지식을 제공한다</p>--%>
-<%--    </div>--%>
-<%--</div>--%>
+</div>
+<div class="section" id="section3">
+    <div class="title" data-aos="fade-up" data-aos-duration="3000">
+        블라블라블라<br>
+        lorem
+    </div>
+    <div id="section3_detail" class="detail" data-aos="fade-up" data-aos-duration="2000">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias deleniti exercitationem explicabo magni nisi pariatur perspiciatis placeat quasi tenetur ut. Aliquam consectetur doloribus enim eveniet maiores modi officiis sit, temporibus?
+    </div>
+</div>
+<div class="section" id="section4">
+    <div class="title" data-aos="fade-up" data-aos-duration="3000">
+        라라랄ㄹ라<br>
+        f라라ㅏ라라라라ㅏ라라
+    </div>
+    <div id="section4_detail" class="detail" data-aos="fade-up" data-aos-duration="2000">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias deleniti exercitationem explicabo magni nisi pariatur perspiciatis placeat quasi tenetur ut. Aliquam consectetur doloribus enim eveniet maiores modi officiis sit, temporibus?
+    </div>
+</div>
 </body>
 </html>
