@@ -12,7 +12,7 @@
     <link rel="stylesheet" type="text/css" href="${path}/resources/static/css/common.css"/>
     <link rel="stylesheet" type="text/css" href="${path}/resources/static/css/nav.css">
     <link rel="stylesheet" type="text/css" href="${path}/resources/static/css/product/product.css">
-    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css"/>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script type="text/javascript">
@@ -143,7 +143,7 @@
                     <div id="member" class="content">
                         현재 ${user}님의 자산으로 계산된<br>
                         <c:choose>
-<%--                            회원우대적용--%>
+                            <%--                            회원우대적용--%>
                             <c:when test="${memberConditionRates.containsKey(item.no)}">
                                 만기 예상 금액은<br>
                                 세후 <span><fmt:formatNumber type="number" pattern="###,###,###,###,###,###"
@@ -210,6 +210,14 @@
                 }
             } else {
                 window.location.href = '/starroad/product?page=' + link.getAttribute('aria-label');
+            }
+        });
+    });
+    $(document).ready(function () {
+        $('#searchInput').keyup(function (event) {
+            if (event.which === 13) {
+                event.preventDefault();
+                $('form').submit();
             }
         });
     });

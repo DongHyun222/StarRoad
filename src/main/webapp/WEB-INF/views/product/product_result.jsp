@@ -12,7 +12,7 @@
     <link rel="stylesheet" type="text/css" href="${path}/resources/static/css/common.css"/>
     <link rel="stylesheet" type="text/css" href="${path}/resources/static/css/nav.css">
     <link rel="stylesheet" type="text/css" href="${path}/resources/static/css/product/product.css">
-    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css"/>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script type="text/javascript">
@@ -230,6 +230,15 @@
                 }
             } else {
                 window.location.href = '/starroad/product/result?type=${type}&period=${period}&query=${query}&page=' + link.getAttribute('aria-label');
+            }
+        });
+    });
+
+    $(document).ready(function () {
+        $('#searchInput').keyup(function (event) {
+            if (event.which === 13) {
+                event.preventDefault();
+                $('form').submit();
             }
         });
     });
