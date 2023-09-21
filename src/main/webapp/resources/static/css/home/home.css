@@ -42,6 +42,7 @@ html, body {
 #section1 .scroll {
     height: 35%;
 }
+
 #section2 .scroll {
     height: 30%;
 }
@@ -61,16 +62,23 @@ html, body {
     height: 55%;
 }
 
-#section1 {
-    color: white;
-    background-color: #495DC5;
-}
-
-
-
 #section2 {
     color: white;
-    background-color: #B6C1F9;
+    background-color: #495DC5;
+
+    -webkit-transition: background .5s ease-out;
+    -moz-transition: background .5s ease-out;
+    -o-transition: background .5s ease-out;
+    transition: background .5s ease-out;
+}
+
+#section2:hover  {
+    color: black;
+    background: #B6C1F9;
+}
+
+#section2:hover > .content  {
+    background-image: url("/resources/static/image/home/urban-line-stars-line.gif");
 }
 
 #section2 .title {
@@ -151,8 +159,8 @@ html, body {
 }
 
 .main_3d_img {
-    margin-left: 30px;
-    width: 300px;
+    margin-left: 60px;
+    width: 330px;
 }
 
 #section4_img_chart {
@@ -183,7 +191,9 @@ html, body {
     display: block;
 }
 
-.fa-angle-double-down:before {content: "\f107";}
+.fa-angle-double-down:before {
+    content: "\f107";
+}
 
 .bounce {
     position: absolute;
@@ -191,11 +201,11 @@ html, body {
     left: 50%;
     width: 60px;
     height: 60px;
-    margin-left:-30px;
-    -webkit-border-radius:50%;
-    -moz-border-radius:50%;
-    -ms-border-radius:50%;
-    border-radius:50%;
+    margin-left: -30px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    border-radius: 50%;
     animation: bounce 2s infinite;
     -webkit-animation: bounce 2s infinite;
     -moz-animation: bounce 2s infinite;
@@ -204,24 +214,49 @@ html, body {
 
 
 @-webkit-keyframes bounce {
-    0%, 20%, 50%, 80%, 100% {-webkit-transform: translateY(0);}
-    40% {-webkit-transform: translateY(-30px);}
-    60% {-webkit-transform: translateY(-15px);}
+    0%, 20%, 50%, 80%, 100% {
+        -webkit-transform: translateY(0);
+    }
+    40% {
+        -webkit-transform: translateY(-30px);
+    }
+    60% {
+        -webkit-transform: translateY(-15px);
+    }
 }
 
 @-moz-keyframes bounce {
-    0%, 20%, 50%, 80%, 100% {-moz-transform: translateY(0);}
-    40% {-moz-transform: translateY(-30px);}
-    60% {-moz-transform: translateY(-15px);}
+    0%, 20%, 50%, 80%, 100% {
+        -moz-transform: translateY(0);
+    }
+    40% {
+        -moz-transform: translateY(-30px);
+    }
+    60% {
+        -moz-transform: translateY(-15px);
+    }
 }
 
 @-o-keyframes bounce {
-    0%, 20%, 50%, 80%, 100% {-o-transform: translateY(0);}
-    40% {-o-transform: translateY(-30px);}
-    60% {-o-transform: translateY(-15px);}
+    0%, 20%, 50%, 80%, 100% {
+        -o-transform: translateY(0);
+    }
+    40% {
+        -o-transform: translateY(-30px);
+    }
+    60% {
+        -o-transform: translateY(-15px);
+    }
 }
+
 @keyframes bounce {
-    0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-    40% {transform: translateY(-30px);}
-    60% {transform: translateY(-15px);}
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-30px);
+    }
+    60% {
+        transform: translateY(-15px);
+    }
 }

@@ -82,7 +82,8 @@
             <div id="section3_detail" class="detail" data-aos="fade-up" data-aos-duration="3000">
                 다양한 국민은행 상품을 추천받아요.<br>만기해지 시 예상 금액을 볼 수 있어요
             </div>
-            <button class="main_btn" data-aos="fade-up" data-aos-duration="3000"><a href="/starroad/product">상품 추천 받기</a></button>
+            <button class="main_btn" data-aos="fade-up" data-aos-duration="3000"><a href="/starroad/product">상품 추천
+                받기</a></button>
         </div>
         <img src="${path}/resources/static/image/home/section3.gif" class="main_3d_img" alt="...">
     </div>
@@ -105,10 +106,12 @@
             </div>
             <c:choose>
                 <c:when test="${currentUser ne null}">
-                    <button class="main_btn" data-aos="fade-up" data-aos-duration="3000"><a href="/starroad/mypage/asset">자산 상태 보러가기</a></button>
+                    <button class="main_btn" data-aos="fade-up" data-aos-duration="3000"><a
+                            href="/starroad/mypage/asset">자산 상태 보러가기</a></button>
                 </c:when>
                 <c:otherwise>
-                    <button class="main_btn" data-aos="fade-up" data-aos-duration="3000"><a href="/starroad/login">자산 상태 보러가기</a></button>
+                    <button class="main_btn" data-aos="fade-up" data-aos-duration="3000"><a href="/starroad/login">자산 상태
+                        보러가기</a></button>
                 </c:otherwise>
             </c:choose>
 
@@ -124,7 +127,8 @@
             <div id="section5_detail" class="detail" data-aos="fade-up" data-aos-duration="3000">
                 청년을 위한 금융 정책을 알아보아요
             </div>
-            <button class="main_btn" data-aos="fade-up" data-aos-duration="3000"><a href="/starroad/policy">청년 정책 보러가기</a></button>
+            <button class="main_btn" data-aos="fade-up" data-aos-duration="3000"><a href="/starroad/policy">청년 정책
+                보러가기</a></button>
         </div>
         <img src="${path}/resources/static/image/home/section5_1.gif" class="main_3d_img" alt="...">
     </div>
