@@ -1,33 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Hahmlet:wght@800&display=swap');
 
 .banner_title {
+    margin-bottom: 50px;
+    margin-left: 250px;
+    color: #5DD4A8;
+    text-align: left;
+}
+
+.banner_title h3{
+    font-family: 'Hahmlet';
     margin-bottom: 20px;
+    color: black;
 }
 
-.banner_container h2 {
-    font-weight: bold;
+.banner_title h1{
+    font-family: 'Hahmlet';
+    color: #5DD4A8;
 }
 
-.banner_container {
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    z-index: 999;
-    color: white;
-}
-
-.banner_container div {
-    margin-top: 50px;
-}
-
-.banner_container img {
-    margin-top: 20px;
-}
 
 
 .d-block {
-    height : 360px;
+    height : 320px;
 }
 
 .board-box {
