@@ -8,9 +8,12 @@ import com.kb04.starroad.Entity.Member;
 import com.kb04.starroad.Repository.BoardRepository;
 import com.kb04.starroad.Repository.HeartRepository;
 import com.kb04.starroad.Repository.MemberRepository;
+import com.kb04.starroad.Repository.Specification.BoardSpecification;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,6 +21,7 @@ import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.*;
 
+@RequiredArgsConstructor
 @Service
 public class BoardService {
 
@@ -25,11 +29,126 @@ public class BoardService {
     private final MemberRepository memberRepository;
     private final HeartRepository heartRepository;
 
-    public BoardService(BoardRepository boardRepository, MemberRepository memberRepository, HeartRepository heartRepository) {
-        this.boardRepository = boardRepository;
-        this.memberRepository = memberRepository;
-        this.heartRepository = heartRepository;
+    /**
+     * 게시판 메인 용 - 자유 게시판
+     */
+    public Page<Board> boardListFree(Pageable pageable) {
+        Page<Board> boardList;
+
+        boardList = boardRepository.findAllByTypeAndStatusOrderByRegdateDesc("F", 'Y', pageable);
+
+        return boardList;
     }
+
+    /**
+     * 게시판 메인 용 - 인증 게시판
+     */
+    public Page<Board> boardListAuth(Pageable pageable) {
+        Page<Board> boardList;
+
+        boardList = boardRepository.findAllByTypeAndStatusOrderByRegdateDesc("C", 'Y', pageable);
+
+        return boardList;
+    }
+
+    /**
+     * 게시판 메인 용 - 인기 게시판
+     */
+    public Page<Board> boardListPopular(Pageable pageable) {
+        Page<Board> boardList;
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_YEAR, -7);
+        Date oneWeekAgo = calendar.getTime();
+        boardList = boardRepository.findAllByStatusAndLikesGreaterThanEqualAndRegdateAfterOrderByLikesDesc('Y', 10, oneWeekAgo, pageable);
+
+        return boardList;
+    }
+
+    /**
+     * 게시판 모든 글 출력 - 자유 게시판, 인증방
+     */
+    public List<BoardResponseDto> selectBoardAllOrderByDate(String type) {
+        List<Board> boardList = boardRepository.findAll(BoardSpecification.searchBoardByStatusAndType(type, 'Y'));
+
+        List<BoardResponseDto> dtoList = new ArrayList<>();
+        for(Board board : boardList){
+            dtoList.add(board.toBoardResponseDto());
+        }
+
+        return dtoList;
+    }
+
+    /**
+     * 게시판 모든 글 출력 - 인기글
+     */
+    public List<BoardResponseDto> selectPopularBoard() {
+        List<Board> boardList = boardRepository.findAllByStatusOrderByLikesDesc('Y');
+        List<BoardResponseDto> dtoList = new ArrayList<>();
+
+        for(Board board : boardList) {
+            dtoList.add(board.toBoardResponseDto());
+        }
+        return dtoList;
+    }
+
+    /**
+     * 수정하려는 게시물이 현재 로그인한 유저가 작성한 게시물인지 검사
+     * @param no 게시물 번호
+     * @param currentUserId 현재 로그인한 유저
+     */
+    public boolean canUpdate(int no, String currentUserId) {
+        Optional<Board> boardOptional = findById(no);
+
+        if (boardOptional.isPresent()) {
+            Board board = boardOptional.get();
+            Member writer = board.getMember();
+
+            if (writer != null) {
+                String writerId = writer.getId();
+                return currentUserId != null && currentUserId.equals(writerId);
+            }
+        }
+        return false;
+    }
+
+    /**
+     * canUpdate가 true일 경우 수정하려는 게시물 내용 return
+     * @param no 게시물 번호
+     */
+    public BoardResponseDto getUpdateBoard(int no) {
+        return boardRepository.findByNo(no).toBoardResponseDto();
+    }
+
+    /**
+     * 게시물 수정 logic
+     * @param boardRequestDto 수정된 게시물 - 제목, 내용, 이미지
+     */
+    @Transactional
+    public boolean updateBoard(BoardRequestDto boardRequestDto) {
+
+        Optional<Board> optionalBoard = boardRepository.findById(boardRequestDto.getNo());
+
+        if(optionalBoard.isPresent()){
+            Board board2 = optionalBoard.get();
+            board2.update(boardRequestDto.getTitle(), boardRequestDto.getContent(), boardRequestDto.getImage());
+            boardRepository.save(board2);
+            return true;
+        }
+        return false;
+    }
+
+
+
+    public BoardResponseDto detailBoard(){
+        return null;
+    }
+
+
+
+
+
+
 
 
     public void write(Board board) {  //entity를 매개변수로 받음
@@ -68,77 +187,21 @@ public class BoardService {
         boardRepository.save(board);
     }
 
-    public Page<Board> findPaginated(Pageable pageable) {
-        return boardRepository.findByTypeAndStatus("F", 'Y', pageable); // "0"은 자유게시판 타입에 해당하는 것으로 가정합니다.
-    }
-
-    public Page<BoardResponseDto> convertPaginated(Page<Board> paginatedBoard) {
-
-        List<BoardResponseDto> dtoList = new ArrayList<>();
-
-        for(Board board : paginatedBoard){
-            dtoList.add(board.toBoardResponseDto());
-        }
-
-        Page<BoardResponseDto> result = new PageImpl<>(dtoList);
-
-        return result;
-    }
 
 
-    public Page<Board> findAuthenticatedPaginated(Pageable pageable) {
-        return boardRepository.findByTypeAndStatus("C", 'Y', pageable); // "1"은 인증방 타입에 해당하는 것으로 가정합니다.
-    }
 
 
-    //0914 여기 수정중
-    public Page<Board> boardListFree(Pageable pageable) {
-        Page<Board> boardList;
-
-        boardList = boardRepository.findAllByTypeAndStatusOrderByRegdateDesc("F", 'Y', pageable);
-
-        return boardList;
-    }
-
-    public Page<Board> boardListAuth(Pageable pageable) {
-        Page<Board> boardList;
-
-        boardList = boardRepository.findAllByTypeAndStatusOrderByRegdateDesc("C", 'Y', pageable);
-
-        return boardList;
-    }
-
-    public Page<Board> boardListpopular(Pageable pageable) {
-        Page<Board> boardList;
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DAY_OF_YEAR, -7);
-        Date oneWeekAgo = calendar.getTime();
-        boardList = boardRepository.findAllByStatusAndLikesGreaterThanEqualAndRegdateAfterOrderByLikesDesc('Y', 10, oneWeekAgo, pageable);
-
-        return boardList;
-    }
 
 
-    public Page<Board> getPopularBoards(Pageable pageable) {
-        return boardRepository.findAllByStatusOrderByLikesDesc('Y', pageable);
-    }
 
-    public Optional<Board> findById(Integer no) {
+
+
+    public Optional<Board> findById(int no) {
 
         return boardRepository.findById(no);
     }
 
-    @Transactional
-    public void updateBoard(BoardRequestDto boardRequestDto) {
-        // 게시물 번호를 이용하여 해당 게시물을 조회합니다.
 
-        Optional<Board> optionalBoard = boardRepository.findById(boardRequestDto.getNo());
-
-        Board board2 = optionalBoard.get();
-        board2.update(boardRequestDto.getTitle(), boardRequestDto.getContent());
-
-    }
 
     public void deleteBoard(Integer no) {
         Optional<Board> boardOptional = boardRepository.findById(no);
@@ -166,23 +229,8 @@ public class BoardService {
         return false;
     }
 
-    public boolean canUpdate(Integer no, String currentUserId) {
-        Optional<Board> boardOptional = findById(no);
-
-        if (boardOptional.isPresent()) {
-            Board board = boardOptional.get();
-            Member writer = board.getMember();  // 게시글의 작성자 가져오기
 
 
-            if (writer != null) {  // 작성자 정보가 있는 경우
-                String writerId = writer.getId();
-                return currentUserId != null && currentUserId.equals(writerId);
-            }
-        }
-
-
-        return false;
-    }
 
     public void increaseLikes(int boardNo, String memberId) {
         Optional<Board> optionalBoard = boardRepository.findById(boardNo);
