@@ -6,6 +6,8 @@
 <html>
 
 <head>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <meta charset="UTF-8">
     <title>게시물 상세보기</title>
     <script src="//code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -16,7 +18,7 @@
                 $("#navbar").load("/resources/common_jsp/navbar.jsp");
             });
 
-    </script>
+    </script>.
 </head>
 <body>
     <div class="container">
@@ -25,16 +27,21 @@
         <div class="title">
             <span class="title-text"><c:out value="${board.title}" /></span> <br>
             <div class ="something">
+
+            <div class = "authorStyle">
+            <i class="fas fa-user-circle"></i>
             <span class="memberId author-id"><c:out value="${board.memberId}"/></span>
+            </div>
             <hr class="separator">
             <span class="regdate">
+                <i class="fas fa-clock"></i>
                 <fmt:formatDate value="${board.regdate}" pattern="yyyy-MM-dd HH:mm" />
             </span>
-            <span class="likes">
+<%--            <span class="likes">
 
                 <img src="https://ifh.cc/g/aw0vjY.png" alt="Like Icon" style="vertical-align: middle; width: 20px; height: 20px;">
                 <c:out value="${board.likes}" />
-            </span>
+            </span> --%>
             </div>
 
             <div class="title-buttons more-actions">
@@ -48,6 +55,7 @@
 
         <div class="content">
 
+            <img src="data:image/jpeg;base64,${board.imageBase64}" alt="" width="200" height="200" style="margin-bottom: 30px;" onerror="this.style.display='none'"/>
             <c:out value="${board.content}" />
             <div class="like-section">
             <form id="likeForm" method="post" action="/starroad/board/like">
@@ -56,7 +64,6 @@
             </form>
                 <span class="likes-count"> <c:out value="${board.likes}" />  </span>
                 <%-- <c:out value="${board.likes}" /> --%>
-                <img src="data:image/jpeg;base64,${board.imageBase64}" alt="" width="200" height="200" style="margin-bottom: 30px;" onerror="this.style.display='none'"/>
             </div>
         </div>
 
@@ -75,11 +82,17 @@
         <div class="comments-list">
         <c:forEach var="comment" items="${board.comments}">
              <div class="comment-item">
+                <i class="fas fa-user-circle"></i>
                  <strong class="comment-author"><c:out value="${currentUser.id}" /></strong> <br>
+                 <div class="comment-content">
                  <span class="comment-content"><c:out value="${comment.content}" /></span> <br>
+                 </div>
+                 <div class="comment-date">
                  <span class="comment-date">
+                    <i class="fas fa-clock"></i>
                     <fmt:formatDate value="${comment.regdate}" pattern="yyyy-MM-dd HH:mm:ss" />
                  </span>
+                 </div>
 
                  <div class="more-actions">
                     <span class="icon">...</span>
