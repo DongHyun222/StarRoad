@@ -56,7 +56,7 @@
 .title, .content, .comments-list {
     flex-grow: 1;  /* 이 속성은 각 섹션에게 남는 공간을 동일하게 분배하라는 지시입니다. */
     border-bottom: 1px solid #ccc;
-    padding: 10px;
+    padding: 5px;
 }
 
 .title {
@@ -90,6 +90,11 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;  /* 내용과 좋아요 사이에 최대한의 공간을 확보합니다. */
+}
+
+.comment1 {
+      padding: 12px;
+      margin-top: 10px;
 }
 
 .comment {
@@ -135,13 +140,19 @@
 
 #submitComment {
     position: absolute;  /* 댓글 입력창의 오른쪽 하단에 버튼을 배치합니다. */
-    right: 5px;
+    right: 20px;
     bottom: 75px;
     height: 40px;
     margin-left: 10px;
     border-radius: 10px;  /* 모서리를 둥글게 만들기 위한 설정 */
     cursor: pointer;  /* 마우스 커서를 포인터로 변경 */
     transition: background-color 0.3s ease;  /* 배경색이 부드럽게 변경되도록 트랜지션을 추가 */
+
+    border: 1.3px solid var(--sub-kb-dark-gray);
+    background-color: white;
+   text-align: center;
+    width: 80px;
+   font-weight: 590
 }
 
 #submitComment:hover {
@@ -203,6 +214,7 @@
    display:flex;
    align-items:center;
 }
+
 .regdate, .likes {
     color: #888; /* 이 값은 RGB로 표현된 색상입니다. 이 값을 변경하여 다른 색상을 선택할 수 있습니다. */
     font-weight: lighter; /* 'lighter'는 부모 요소보다 더 얇은 폰트 굵기를 설정합니다. */
