@@ -53,13 +53,11 @@
             STAR ROAD
         </div>
     </div>
-    <div class="scroll">
-        <img src="${path}/resources/static/image/home/scroll.png">
+    <div class="scroll bounce">
+        <img class="fa fa-angle-double-down" src="${path}/resources/static/image/home/scroll.png">
     </div>
-    <%--    </div>--%>
 </div>
 <div class="section" id="section2">
-    <%--    <div class="page_container">--%>
     <div class="content">
         <div>
             <div class="title">
@@ -70,10 +68,9 @@
             </div>
         </div>
     </div>
-    <div class="scroll">
-        <img src="${path}/resources/static/image/home/scroll.png">
+    <div class="scroll bounce">
+        <img class="fa fa-angle-double-down" src="${path}/resources/static/image/home/scroll.png">
     </div>
-    <%--    </div>--%>
 </div>
 <div class="section" id="section3">
     <div class="page_container">
@@ -92,8 +89,10 @@
 <div class="section" id="section4">
     <div class="page_container">
         <div>
-            <img id="section4_img_chart" src="${path}/resources/static/image/home/section4_1.png" class="main_3d_img" alt="...">
-            <img id="section4_img_plant" src="${path}/resources/static/image/home/section4_2.png" class="main_3d_img" alt="...">
+            <img id="section4_img_chart" data-aos="fade-up" data-aos-duration="3000"
+                 src="${path}/resources/static/image/home/section4_1.png" class="main_3d_img" alt="...">
+            <img id="section4_img_plant" data-aos="fade-up" data-aos-duration="3000"
+                 src="${path}/resources/static/image/home/section4_2.png" class="main_3d_img" alt="...">
         </div>
         <div>
             <div class="title" data-aos="fade-up" data-aos-duration="3000">

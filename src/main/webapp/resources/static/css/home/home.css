@@ -1,3 +1,6 @@
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css');
+@import url('https://fonts.googleapis.com/css2?family=Hahmlet:wght@800&display=swap');
+
 #navbar {
     position: fixed;
     z-index: 1000;
@@ -99,7 +102,7 @@ html, body {
     font-size: xxx-large;
     margin-bottom: 20px;
     font-family: 'Hahmlet';
-    font-weight: 800;
+    font-weight: 900;
 }
 
 .detail {
@@ -158,4 +161,52 @@ html, body {
     position: relative;
     margin-left: 150px;
     margin-top: 100px;
+}
+
+
+.fa {
+    width: 60px;
+    display: block;
+}
+
+.fa-angle-double-down:before {content: "\f107";}
+
+.bounce {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    width: 60px;
+    height: 60px;
+    margin-left:-30px;
+    -webkit-border-radius:50%;
+    -moz-border-radius:50%;
+    -ms-border-radius:50%;
+    border-radius:50%;
+    animation: bounce 2s infinite;
+    -webkit-animation: bounce 2s infinite;
+    -moz-animation: bounce 2s infinite;
+    -o-animation: bounce 2s infinite;
+}
+
+@-webkit-keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {-webkit-transform: translateY(0);}
+    40% {-webkit-transform: translateY(-30px);}
+    60% {-webkit-transform: translateY(-15px);}
+}
+
+@-moz-keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {-moz-transform: translateY(0);}
+    40% {-moz-transform: translateY(-30px);}
+    60% {-moz-transform: translateY(-15px);}
+}
+
+@-o-keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {-o-transform: translateY(0);}
+    40% {-o-transform: translateY(-30px);}
+    60% {-o-transform: translateY(-15px);}
+}
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+    40% {transform: translateY(-30px);}
+    60% {transform: translateY(-15px);}
 }
