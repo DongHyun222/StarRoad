@@ -67,11 +67,11 @@
             </div>
         </div>
 
-        <div class="comment">
+        <div class="comment1"> 댓글<c:out value="${board.commentNum}" /></div>
 
+        <div class="comment">
         <div class="comment-input">
              <form action="/starroad/comment" method="post">
-                 댓글<c:out value="${board.commentNum}" />
                  <textarea id="commentText" name="content" placeholder="댓글을 입력하세요" rows="4" cols="50"></textarea>
                  <input type="hidden" name="board" value="${board.no}" />
                  <button id="submitComment" type="submit">등록</button>
