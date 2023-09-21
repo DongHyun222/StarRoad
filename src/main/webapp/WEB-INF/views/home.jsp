@@ -31,7 +31,7 @@
             $(window).on("wheel", function (e) {
                 if (mHtml.is(":animated")) return;
                 if (e.originalEvent.deltaY > 0) {
-                    if (page == 4) return;
+                    if (page == 5) return;
                     page++;
                 } else if (e.originalEvent.deltaY < 0) {
                     if (page == 1) return;
@@ -48,52 +48,77 @@
 <body>
 <div id="navbar"></div>
 <div class="section" id="section1">
-    <div class="title" data-aos="fade-up" data-aos-duration="3000">
-        내게 맞는 금융상품, 비교하기 힘드시죠?
+    <div class="content">
+        <div class="title" data-aos="fade-up" data-aos-duration="3000">
+            STAR ROAD
+        </div>
     </div>
-    <div id="section1_detail" class="detail" data-aos="fade-up" data-aos-duration="2000">
-        사용자가 설정한 값에 따라서 <br>
-        만기예상금액이 자동으로 계산되어 <br>
-        모든 금융 상품을 볼 수 있습니다
+    <div class="scroll">
+        <img src="${path}/resources/static/image/home/scroll.png">
     </div>
+    <%--    </div>--%>
 </div>
 <div class="section" id="section2">
-    <div class="page_container">
+    <%--    <div class="page_container">--%>
+    <div class="content">
         <div>
-            <div class="title" data-aos="fade-up" data-aos-duration="3000">
-                청년을 위한 금융 혜택을 한눈에!
+            <div class="title">
+                STAR ROAD
             </div>
-            <div id="section2_detail" class="detail" data-aos="fade-up" data-aos-duration="2000">
-                국민 은행의 추천 금융 상품을 확인하세요
+            <div id="section2_detail" class="detail" data-aos="fade-up" data-aos-duration="3000">
+                한줄설명
             </div>
         </div>
-        <img src="${path}/resources/static/image/home/animated1.gif" class="banner_3d_img" alt="...">
     </div>
+    <div class="scroll">
+        <img src="${path}/resources/static/image/home/scroll.png">
+    </div>
+    <%--    </div>--%>
 </div>
 <div class="section" id="section3">
     <div class="page_container">
-        <img src="${path}/resources/static/image/home/animated1.gif" class="banner_3d_img" alt="...">
         <div>
             <div class="title" data-aos="fade-up" data-aos-duration="3000">
-                지속 가능한 예적금 챌린지!
+                예적금 상품 추천
             </div>
             <div id="section3_detail" class="detail" data-aos="fade-up" data-aos-duration="2000">
-                더 나은 재정 건강을 위한 여정을 시작하세요
+                다양한 국민은행 상품을 추천받아요.<br>만기해지 시 예상 금액을 볼 수 있어요
             </div>
+            <button class="main_btn" data-aos="fade-up" data-aos-duration="3000"><a href="#">상품 추천 받기</a></button>
         </div>
+        <img src="${path}/resources/static/image/home/section3.gif" class="main_3d_img" alt="...">
     </div>
 </div>
 <div class="section" id="section4">
     <div class="page_container">
         <div>
+            <img id="section4_img_chart" src="${path}/resources/static/image/home/section4_1.png" class="main_3d_img" alt="...">
+            <img id="section4_img_plant" src="${path}/resources/static/image/home/section4_2.png" class="main_3d_img" alt="...">
+        </div>
+        <div>
             <div class="title" data-aos="fade-up" data-aos-duration="3000">
-                청년을 위한 금융 혜택을 한눈에!
+                My Asset & Challenge
             </div>
             <div id="section4_detail" class="detail" data-aos="fade-up" data-aos-duration="2000">
-                국민 은행의 추천 금융 상품을 확인하세요
+                나의 자산 상태를 차트로 파악하고,<br>
+                적금 유지하여 포인트리를 받아요.
             </div>
+            <button class="main_btn" data-aos="fade-up" data-aos-duration="3000"><a href="#">자산 상태 보러가기</a></button>
         </div>
-        <img src="${path}/resources/static/image/home/animated1.gif" class="banner_3d_img" alt="...">
+    </div>
+</div>
+<div class="section" id="section5">
+    <div class="page_container">
+        <div>
+            <div class="title" data-aos="fade-up" data-aos-duration="3000">
+                Policy
+            </div>
+            <div id="section5_detail" class="detail" data-aos="fade-up" data-aos-duration="3000">
+                청년을 위한 금융 정책을 알아보아요
+            </div>
+            <button class="main_btn" data-aos="fade-up" data-aos-duration="3000"><a href="#">청년 정책 보러가기</a></button>
+        </div>
+        <img src="${path}/resources/static/image/home/section5_1.gif" class="main_3d_img" alt="...">
     </div>
 </div>
 </body>
