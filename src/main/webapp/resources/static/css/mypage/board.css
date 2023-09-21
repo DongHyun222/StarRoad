@@ -1,3 +1,9 @@
+#writings_c {
+    display: block;
+    width: 850px;
+    margin: 0 auto 50px;
+}
+
 #sub_menu {
     margin-top: 10px;
     margin-bottom: 20px;
@@ -32,17 +38,28 @@
 .w_d_l {
     display: flex;
     justify-content: flex-end;
+    align-items: flex-end;
 }
 
-.w_likes {
-    margin-left: 10px;
+.w_date {
+    margin-right: 20px;
+    height: 27px;
 }
 
-.thumb {
-    width: 20px;
+#likes_cc {
+    width: 60px;
+}
+
+.likes_c {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#thumb {
+    width: 27px;
     aspect-ratio: 1/1;
-    vertical-align: bottom;
-    margin-right: 3px;
+    display: block;
 }
 
 .w_t_d {
