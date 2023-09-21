@@ -1,6 +1,7 @@
 package com.kb04.starroad.Service;
 
 import com.kb04.starroad.Dto.board.BoardRequestDto;
+import com.kb04.starroad.Dto.board.BoardResponseDto;
 import com.kb04.starroad.Entity.Board;
 import com.kb04.starroad.Entity.Heart;
 import com.kb04.starroad.Entity.Member;
@@ -8,16 +9,14 @@ import com.kb04.starroad.Repository.BoardRepository;
 import com.kb04.starroad.Repository.HeartRepository;
 import com.kb04.starroad.Repository.MemberRepository;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class BoardService {
@@ -44,11 +43,9 @@ public class BoardService {
                            String title, String content,
                            MultipartFile imageFile) throws IOException {
         // Member 객체 찾기
-        Member member = memberRepository.findById(memberId);
+        Optional<Member> optionalMember = memberRepository.findById(memberId);
 
-        if (member == null) {
-            throw new IllegalArgumentException("Invalid member ID: " + memberId);
-        }
+        Member member = optionalMember.orElseThrow(() -> new IllegalArgumentException("Invalid member ID: " + memberId));
 
         BoardRequestDto boardDto = new BoardRequestDto();
         boardDto.setType(type);
@@ -70,13 +67,27 @@ public class BoardService {
         // Entity 저장
         boardRepository.save(board);
     }
+
     public Page<Board> findPaginated(Pageable pageable) {
-        return boardRepository.findByTypeAndStatus("F",'Y', pageable); // "0"은 자유게시판 타입에 해당하는 것으로 가정합니다.
+        return boardRepository.findByTypeAndStatus("F", 'Y', pageable); // "0"은 자유게시판 타입에 해당하는 것으로 가정합니다.
+    }
+
+    public Page<BoardResponseDto> convertPaginated(Page<Board> paginatedBoard) {
+
+        List<BoardResponseDto> dtoList = new ArrayList<>();
+
+        for(Board board : paginatedBoard){
+            dtoList.add(board.toBoardResponseDto());
+        }
+
+        Page<BoardResponseDto> result = new PageImpl<>(dtoList);
+
+        return result;
     }
 
 
     public Page<Board> findAuthenticatedPaginated(Pageable pageable) {
-        return boardRepository.findByTypeAndStatus("C", 'Y',pageable); // "1"은 인증방 타입에 해당하는 것으로 가정합니다.
+        return boardRepository.findByTypeAndStatus("C", 'Y', pageable); // "1"은 인증방 타입에 해당하는 것으로 가정합니다.
     }
 
 
@@ -103,14 +114,14 @@ public class BoardService {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_YEAR, -7);
         Date oneWeekAgo = calendar.getTime();
-        boardList = boardRepository.findAllByStatusAndLikesGreaterThanEqualAndRegdateAfterOrderByLikesDesc('Y', 10, oneWeekAgo,pageable);
+        boardList = boardRepository.findAllByStatusAndLikesGreaterThanEqualAndRegdateAfterOrderByLikesDesc('Y', 10, oneWeekAgo, pageable);
 
         return boardList;
     }
 
 
     public Page<Board> getPopularBoards(Pageable pageable) {
-        return boardRepository.findAllByStatusOrderByLikesDesc('Y',pageable);
+        return boardRepository.findAllByStatusOrderByLikesDesc('Y', pageable);
     }
 
     public Optional<Board> findById(Integer no) {
@@ -124,9 +135,8 @@ public class BoardService {
 
         Optional<Board> optionalBoard = boardRepository.findById(boardRequestDto.getNo());
 
-
-        Board board2 =optionalBoard.get();
-        board2.update(boardRequestDto.getTitle(),boardRequestDto.getContent());
+        Board board2 = optionalBoard.get();
+        board2.update(boardRequestDto.getTitle(), boardRequestDto.getContent());
 
     }
 
@@ -140,6 +150,7 @@ public class BoardService {
             throw new NoSuchElementException("게시글이 존재하지 않습니다.");
         }
     }
+
     public boolean canDelete(Integer no, String currentUserId) {
         Optional<Board> boardOptional = boardRepository.findById(no);
 
@@ -152,7 +163,6 @@ public class BoardService {
                 return writerId.equals(currentUserId);
             }
         }
-
         return false;
     }
 
@@ -182,7 +192,7 @@ public class BoardService {
 
             board.setLikes(currentLikesCount + 1);
             // Save a new like entity as well to keep track of who liked the post.
-            Member member = memberRepository.findById(memberId);
+            Member member = memberRepository.findById(memberId).get();
             heartRepository.save(Heart.builder()
                     .member(member)
                     .board(board)
@@ -191,10 +201,8 @@ public class BoardService {
     }
 
     public boolean hasLiked(int boardNo, String memberId) {
-        Member member = memberRepository.findById(memberId);
-        System.out.println("디버그14" + member.getId());
+        Member member = memberRepository.findById(memberId).get();
         Optional<Heart> likes = heartRepository.findByMemberNoAndBoardNo(member.getNo(), boardNo);
-        System.out.println("디버그14" + likes);
 
         return !likes.isPresent();
     }

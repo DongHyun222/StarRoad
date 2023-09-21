@@ -92,6 +92,8 @@ import java.util.List;
                     .commentNum(commentNum)
                     .type(type)
                     .detailType(detailType)
+                    .imageBase64(image == null ? null : java.util.Base64.getEncoder().encodeToString(image))
+                    .memberId(member == null ? null : member.getId())
                     .build();
         }
         public void update(String title, String content){

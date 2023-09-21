@@ -23,6 +23,7 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -47,13 +48,13 @@ public class MemberService {
         Integer savings = memberRepository.getSavings(no);
         Integer deposit = memberRepository.getDeposit(no);
 
-        mypageResponseDto.setSavings(savings==null?0:savings);
-        mypageResponseDto.setDeposit(deposit==null?0:deposit);
+        mypageResponseDto.setSavings(savings == null ? 0 : savings);
+        mypageResponseDto.setDeposit(deposit == null ? 0 : deposit);
 
         return mypageResponseDto;
     }
 
-    public Member checkId(String id) {
+    public Optional<Member> checkId(String id) {
         return memberRepository.findById(id);
     }
 
@@ -155,6 +156,7 @@ public class MemberService {
                 memberDto.getPurpose(), memberDto.getSource(),
                 memberDto.getGoal());
     }
+
     public Member checkEmail(String email) {
         return memberRepository.findByEmail(email);
     }

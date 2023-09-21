@@ -100,15 +100,15 @@
 <div class="bottom-section">
     <div class="section">
         <img src="${path}/resources/static/image/home/bank.gif" alt="이미지1">
-        <p>국민 은행 내의 금융상품을 추천한다</p>
+        <p>청년을 위한 금융 혜택을 한눈에!<br>국민 은행의 추천 금융 상품을 확인하세요.</p>
     </div>
     <div class="section">
         <img src="${path}/resources/static/image/home/piggy-bank.gif" alt="이미지2">
-        <p>예적금을 지속할 수 있도록 돕는다 챌린지</p>
+        <p>지속 가능한 예적금 챌린지! <br>더 나은 재정 건강을 위한 여정을 시작하세요.</p>
     </div>
     <div class="section">
         <img src="${path}/resources/static/image/home/cheque.gif" alt="이미지3">
-        <p>청년 정책 및 청년에게 필요한 금융지식을 제공한다</p>
+        <p>청년 정책과 금융 지식을 한 곳에서! <br>청년 여러분을 위한 금융 정보와 혜택을 소개합니다.</p>
     </div>
 </div>
 </body>

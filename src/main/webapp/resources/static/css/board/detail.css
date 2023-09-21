@@ -8,20 +8,41 @@
  }
 
  .title-buttons {
-     position: absolute;  /* absolute positioning을 사용하여 오른쪽 아래에 버튼을 배치합니다. */
+     position: relative;
+         display: flex;             /* flexbox를 사용 */
+         justify-content: flex-end; /* 자식 요소를 오른쪽으로 정렬 */
+         align-items: center;       /* 자식 요소를 수직 중앙으로 정렬 */
+         width: 100%;
+ }
+
+ .title-buttons .actions {
+     display: none;
+     position: absolute;
+     bottom: calc(-100% + 15px);
      right: 0;
-     bottom: 10px;
+     background-color: transparent;
+     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+     border-radius: 5px;
  }
 
  #editBtn, #deleteBtn {
-     padding: 5px 10px;
-     margin-left: 5px; /* 간격 조정 */
-     cursor: pointer;
-     background-color: #FFCC00;
-     color: black;
-     border: 1px solid black;
-     border-radius: 10px;  /* 모서리를 둥글게 만들기 위한 설정 */
+     background-color: white;
+         color: #333;
+         display: block;
+         margin: 5px 0;
+         padding: 5px 10px;
+         cursor: pointer;
+         border: none;
+         transition: background-color 0.3s ease;
  }
+
+#editBtn:hover, #deleteBtn:hover {
+    background-color: #87CEFA;
+}
+
+.title-buttons.active .actions {
+    display: block;
+}
 
  .container {
       width: 1000px;
@@ -81,10 +102,12 @@
 .comment-author {
     font-size: 14px; /
     color: blue;
+    transform: translateY(20px);
 }
 
 .comment-content {
     font-size: 20px;
+    transform: translateY(20px);
 }
 
 .comment-input {
@@ -112,12 +135,17 @@
 
 #submitComment {
     position: absolute;  /* 댓글 입력창의 오른쪽 하단에 버튼을 배치합니다. */
-    right: 0;
+    right: 5px;
     bottom: 75px;
     height: 40px;
-    width: 80px;
+    margin-left: 10px;
     border-radius: 10px;  /* 모서리를 둥글게 만들기 위한 설정 */
-    background-color: white;
+    cursor: pointer;  /* 마우스 커서를 포인터로 변경 */
+    transition: background-color 0.3s ease;  /* 배경색이 부드럽게 변경되도록 트랜지션을 추가 */
+}
+
+#submitComment:hover {
+    background-color: #FFCC00;
 }
 
 .likes-comments {
@@ -148,6 +176,17 @@
       box-sizing: border-box;  /* 패딩과 테두리를 포함한 전체 너비가 width 값과 동일하도록 설정 */
 
 }
+.comment-date i{
+        transform: translateY(4px);
+        margin-right: 5px;
+}
+.comment-date {
+      font-size: 17px;
+      display: flex;          /* Flex container로 설정 */
+      margin-top: 10px;       /* 상단 마진을 10px로 설정 */
+      color: rgba(128, 128, 128, 0.7);
+      transform: translateY(12px);
+}
 
 #like-icon:hover {
     cursor: pointer; /* 마우스를 올렸을 때 커서 모양을 포인터로 변경 */
@@ -172,29 +211,42 @@
 
 .more-actions {
     position: relative;
-    display: inline-block;  /* 필요에 따라 다른 display 값을 사용해도 됩니다. */
-    display: flex;       /* flexbox를 사용 */
-        justify-content: flex-end; /* 자식 요소를 오른쪽으로 정렬 */
-        align-items: center; /* 자식 요소를 수직 중앙으로 정렬 */
-        width: 100%;
+    display: inline-block;     /* 필요에 따라 다른 display 값을 사용해도 됩니다. */
+    display: flex;             /* flexbox를 사용 */
+    justify-content: flex-end; /* 자식 요소를 오른쪽으로 정렬 */
+    align-items: center; /* 자식 요소를 수직 중앙으로 정렬 */
+    width: 100%;
 }
 
 .more-actions .icon {
     cursor: pointer;
     position: relative;
-    top: -10px;
+    top: -75px;
 }
 
 .more-actions .actions {
     display: none;
     position: absolute;
-    top: 100%;  /* 아이콘 바로 아래에 위치 */
+    bottom: calc(-100% + 15px);
     right: 0;
-    background-color: #FFF;
-    border: 1px solid #ccc;
+    background-color: transparent;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
 }
 
+.more-actions .actions button {
+    background-color: white;  /* 버튼 배경 투명 */
+         border: none;                   /* 버튼 테두리 제거 */
+         color: #333;                    /* 버튼 글자색 설정 */
+         display: block;
+         margin: 5px 0;
+         padding: 5px 10px;              /* 버튼 패딩 추가 */
+         cursor: pointer;                /* 마우스 커서를 포인터로 변경 *//
+}
+
+.more-actions .actions button:hover {
+    background-color: #87CEFA;     /* 버튼에 마우스를 올렸을 때의 배경색 */
+}
 .more-actions.active .actions {
     display: block;
 }
