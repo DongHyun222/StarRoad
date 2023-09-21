@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <!DOCTYPE html>
@@ -8,8 +9,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="${path}/resources/static/css/common.css">
     <link rel="stylesheet" type="text/css" href="${path}/resources/static/css/home/home.css">
-<%--    <link rel="stylesheet" type="text/css" href="${path}/resources/static/css/nav.css">--%>
-<%--    <link rel="stylesheet" type="text/css" href="${path}/resources/static/css/footer.css">--%>
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css"/>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.20/fullpage.min.js"
@@ -19,10 +18,8 @@
     <script type="text/javascript">
         $(function () {
             AOS.init();
-
             $("#footer").load("${path}/resources/common_jsp/footer.jsp");
             $("#navbar").load("${path}/resources/common_jsp/navbar.jsp");
-
 
             window.addEventListener("wheel", function (e) {
                 e.preventDefault();
@@ -63,11 +60,12 @@
 <div class="section" id="section2">
     <div class="content">
         <div>
-            <div class="title">
+            <div class="title" data-aos="zoom-in" data-aos-duration="2000">
                 STAR ROAD
             </div>
-            <div id="section2_detail" class="detail" data-aos="fade-up" data-aos-duration="3000">
-                한줄설명
+            <div id="section2_detail" class="detail" data-aos="fade-up" data-aos-duration="3000" data-aos-delay="1000">
+                세상을 바꾸는 금융<br>
+                청년의 행복과 더 나은 세상을 만들어갑니다
             </div>
         </div>
     </div>
@@ -78,10 +76,10 @@
 <div class="section" id="section3">
     <div class="page_container">
         <div>
-            <div class="title" data-aos="fade-up" data-aos-duration="3000">
+            <div class="title" data-aos="fade-up" data-aos-duration="2000">
                 예적금 상품 추천
             </div>
-            <div id="section3_detail" class="detail" data-aos="fade-up" data-aos-duration="2000">
+            <div id="section3_detail" class="detail" data-aos="fade-up" data-aos-duration="3000">
                 다양한 국민은행 상품을 추천받아요.<br>만기해지 시 예상 금액을 볼 수 있어요
             </div>
             <button class="main_btn" data-aos="fade-up" data-aos-duration="3000"><a href="/starroad/product">상품 추천 받기</a></button>
@@ -92,27 +90,35 @@
 <div class="section" id="section4">
     <div class="page_container">
         <div>
-            <img id="section4_img_chart" data-aos="fade-up" data-aos-duration="3000"
+            <img id="section4_img_chart"
                  src="${path}/resources/static/image/home/section4_1.png" class="main_3d_img" alt="...">
-            <img id="section4_img_plant" data-aos="fade-up" data-aos-duration="3000"
+            <img id="section4_img_plant"
                  src="${path}/resources/static/image/home/section4_2.png" class="main_3d_img" alt="...">
         </div>
         <div>
-            <div class="title" data-aos="fade-up" data-aos-duration="3000">
+            <div class="title" data-aos="fade-up" data-aos-duration="2000">
                 My Asset & Challenge
             </div>
-            <div id="section4_detail" class="detail" data-aos="fade-up" data-aos-duration="2000">
+            <div id="section4_detail" class="detail" data-aos="fade-up" data-aos-duration="3000">
                 나의 자산 상태를 차트로 파악하고,<br>
                 적금 유지하여 포인트리를 받아요.
             </div>
-            <button class="main_btn" data-aos="fade-up" data-aos-duration="3000"><a href="/starroad/mypage/asset">자산 상태 보러가기</a></button>
+            <c:choose>
+                <c:when test="${currentUser ne null}">
+                    <button class="main_btn" data-aos="fade-up" data-aos-duration="3000"><a href="/starroad/mypage/asset">자산 상태 보러가기</a></button>
+                </c:when>
+                <c:otherwise>
+                    <button class="main_btn" data-aos="fade-up" data-aos-duration="3000"><a href="/starroad/login">자산 상태 보러가기</a></button>
+                </c:otherwise>
+            </c:choose>
+
         </div>
     </div>
 </div>
 <div class="section" id="section5">
     <div class="page_container">
         <div>
-            <div class="title" data-aos="fade-up" data-aos-duration="3000">
+            <div class="title" data-aos="fade-up" data-aos-duration="2000">
                 Policy
             </div>
             <div id="section5_detail" class="detail" data-aos="fade-up" data-aos-duration="3000">

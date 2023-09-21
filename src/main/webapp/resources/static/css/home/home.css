@@ -66,20 +66,23 @@ html, body {
     background-color: #495DC5;
 }
 
-#section1 .title {
-    justify-content: center;
-}
+
 
 #section2 {
     color: white;
     background-color: #B6C1F9;
 }
 
-#section2 .content {
-    height: 60%;
+#section2 .title {
+    justify-content: center;
 }
 
-#section2 .detail {
+#section2 .content {
+    height: 65%;
+}
+
+#section2_detail {
+    text-align: center;
     justify-content: center;
 }
 
@@ -118,7 +121,7 @@ html, body {
 .page_container {
     display: flex;
     width: 100%;
-    height: 100%;
+    height: 115%;
     justify-content: center;
     align-items: center;
 }
@@ -156,12 +159,22 @@ html, body {
     position: absolute;
     margin-left: 10px;
     margin-top: 80px;
+
+    animation: bounce 2s infinite;
+    -webkit-animation: bounce 2s infinite;
+    -moz-animation: bounce 2s infinite;
+    -o-animation: bounce 2s infinite;
 }
 
 #section4_img_plant {
     position: relative;
     margin-left: 150px;
     margin-top: 100px;
+
+    /*animation: bounce 3s 2;*/
+    /*-webkit-animation: bounce 3s 2;*/
+    /*-moz-animation: bounce 3s 2;*/
+    /*-o-animation: bounce 3s 2;*/
 }
 
 
@@ -188,6 +201,7 @@ html, body {
     -moz-animation: bounce 2s infinite;
     -o-animation: bounce 2s infinite;
 }
+
 
 @-webkit-keyframes bounce {
     0%, 20%, 50%, 80%, 100% {-webkit-transform: translateY(0);}
