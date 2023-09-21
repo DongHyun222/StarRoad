@@ -45,8 +45,9 @@
         <div class="image-input">
             <input type="file" name="image" id="image">
         </div>
-        <div class="update-button">
-            <button type="submit" class="buttonStyle" id="updateBtn">등록</button>
+
+        <div class="update-button" >
+            <button type="submit" class="buttonStyle">등록</button>
         </div>
     </div>
 </div>
