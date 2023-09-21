@@ -29,18 +29,18 @@
 <!-- 본문 내용 -->
 <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
-        <div class="carousel-item active" data-bs-interval="2000">
+        <div class="carousel-item active" data-bs-interval="3000">
             <img src="${path}/resources/static/image/board/main/ad_1.png" class="d-block w-100" alt="...">
         </div>
-        <div class="carousel-item" data-bs-interval="2000">
+        <div class="carousel-item" data-bs-interval="3000">
             <img src="${path}/resources/static/image/board/main/ad_2.png" class="d-block w-100" alt="...">
         </div>
-        <div class="carousel-item" data-bs-interval="2000">
+        <div class="carousel-item" data-bs-interval="3500">
             <img src="${path}/resources/static/image/board/main/ad_3.png" class="d-block w-100" alt="...">
             <div class="carousel-caption d-none d-md-block">
                 <div class="banner_title">
                     <h3> 신상품 출시! </h3>
-                    <a href="https://otalk.kbstar.com/quics?page=C019392&cc=b032271:b032271"><h1>「KB청년도약계좌」</h1></a>
+                    <a class="bounce" href="https://otalk.kbstar.com/quics?page=C019392&cc=b032271:b032271"><h1>「KB청년도약계좌」</h1></a>
                 </div>
             </div>
         </div>
