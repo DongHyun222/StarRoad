@@ -31,7 +31,7 @@
             $(window).on("wheel", function (e) {
                 if (mHtml.is(":animated")) return;
                 if (e.originalEvent.deltaY > 0) {
-                    if (page == 5) return;
+                    if (page == 4) return;
                     page++;
                 } else if (e.originalEvent.deltaY < 0) {
                     if (page == 1) return;
@@ -47,16 +47,16 @@
 
 <body>
 <div id="navbar"></div>
-<div class="section" id="section1">
-    <div class="content">
-        <div class="title" data-aos="fade-up" data-aos-duration="3000">
-            STAR ROAD
-        </div>
-    </div>
-    <div class="scroll bounce">
-        <img class="fa fa-angle-double-down" src="${path}/resources/static/image/home/scroll.png">
-    </div>
-</div>
+<%--<div class="section" id="section1">--%>
+<%--    <div class="content">--%>
+<%--        <div class="title" data-aos="fade-up" data-aos-duration="3000">--%>
+<%--            STAR ROAD--%>
+<%--        </div>--%>
+<%--    </div>--%>
+<%--    <div class="scroll bounce">--%>
+<%--        <img class="fa fa-angle-double-down" src="${path}/resources/static/image/home/scroll.png">--%>
+<%--    </div>--%>
+<%--</div>--%>
 <div class="section" id="section2">
     <div class="content">
         <div>
