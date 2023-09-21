@@ -3,7 +3,6 @@ package com.kb04.starroad.Controller;
 import com.kb04.starroad.Dto.MemberDto;
 import com.kb04.starroad.Dto.SubscriptionDto;
 import com.kb04.starroad.Service.MemberService;
-import com.kb04.starroad.Service.ProductService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,13 +36,17 @@ public class MypageController {
     }
 
     @ApiOperation(value = "자산", notes = "자신의 자산을 확인할 수 있습니다")
-    @GetMapping("/starroad/mypage/asset")
-    public ModelAndView asset(
-            HttpServletRequest request) {
-        ModelAndView mav = new ModelAndView("mypage/asset");
+    @GetMapping(value= {"/starroad/mypage", "/starroad/mypage/asset"})
+    public ModelAndView asset(HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        ModelAndView mav = new ModelAndView();
         MemberDto memberDto = getLoginMember(request);
-
-        mav.addObject("memberAssets", memberService.getAssets(memberDto.getNo()));
+        if (memberDto != null) {    // 로그인된 상태일 때
+            mav.setViewName("mypage/asset");
+            mav.addObject("memberAssets", memberService.getAssets(memberDto.getNo()));
+        } else {
+            redirectAttributes.addFlashAttribute("error", "마이페이지는 로그인이 필요한 서비스입니다");
+            mav.setViewName("redirect:/starroad/login");
+        }
         return mav;
     }
 
