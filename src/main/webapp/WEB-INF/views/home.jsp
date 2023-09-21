@@ -8,7 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="${path}/resources/static/css/common.css">
     <link rel="stylesheet" type="text/css" href="${path}/resources/static/css/home/home.css">
-    <link rel="stylesheet" type="text/css" href="${path}/resources/static/css/nav.css">
+<%--    <link rel="stylesheet" type="text/css" href="${path}/resources/static/css/nav.css">--%>
+<%--    <link rel="stylesheet" type="text/css" href="${path}/resources/static/css/footer.css">--%>
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css"/>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.20/fullpage.min.js"
@@ -19,7 +20,9 @@
         $(function () {
             AOS.init();
 
+            $("#footer").load("${path}/resources/common_jsp/footer.jsp");
             $("#navbar").load("${path}/resources/common_jsp/navbar.jsp");
+
 
             window.addEventListener("wheel", function (e) {
                 e.preventDefault();
@@ -31,7 +34,7 @@
             $(window).on("wheel", function (e) {
                 if (mHtml.is(":animated")) return;
                 if (e.originalEvent.deltaY > 0) {
-                    if (page == 4) return;
+                    if (page == 5) return;
                     page++;
                 } else if (e.originalEvent.deltaY < 0) {
                     if (page == 1) return;
@@ -81,7 +84,7 @@
             <div id="section3_detail" class="detail" data-aos="fade-up" data-aos-duration="2000">
                 다양한 국민은행 상품을 추천받아요.<br>만기해지 시 예상 금액을 볼 수 있어요
             </div>
-            <button class="main_btn" data-aos="fade-up" data-aos-duration="3000"><a href="#">상품 추천 받기</a></button>
+            <button class="main_btn" data-aos="fade-up" data-aos-duration="3000"><a href="/starroad/product">상품 추천 받기</a></button>
         </div>
         <img src="${path}/resources/static/image/home/section3.gif" class="main_3d_img" alt="...">
     </div>
@@ -102,7 +105,7 @@
                 나의 자산 상태를 차트로 파악하고,<br>
                 적금 유지하여 포인트리를 받아요.
             </div>
-            <button class="main_btn" data-aos="fade-up" data-aos-duration="3000"><a href="#">자산 상태 보러가기</a></button>
+            <button class="main_btn" data-aos="fade-up" data-aos-duration="3000"><a href="/starroad/mypage/asset">자산 상태 보러가기</a></button>
         </div>
     </div>
 </div>
@@ -115,10 +118,11 @@
             <div id="section5_detail" class="detail" data-aos="fade-up" data-aos-duration="3000">
                 청년을 위한 금융 정책을 알아보아요
             </div>
-            <button class="main_btn" data-aos="fade-up" data-aos-duration="3000"><a href="#">청년 정책 보러가기</a></button>
+            <button class="main_btn" data-aos="fade-up" data-aos-duration="3000"><a href="/starroad/policy">청년 정책 보러가기</a></button>
         </div>
         <img src="${path}/resources/static/image/home/section5_1.gif" class="main_3d_img" alt="...">
     </div>
 </div>
+<div id="footer"></div>
 </body>
 </html>
