@@ -66,16 +66,14 @@
 
             <h2 class="topTitle"> 글쓰기 </h2>
 
-            <div class="update-button">
+            <%-- <div class="update-button"> --%>
+            <div id="update_btn_container">
                 <button type="submit" class="buttonStyle" id="updateBtn">등 록</button>
             </div>
 
-
             <hr style="border: solid 2px lightgrey;">
             <div>
-
-
-                <div class="row labelStyle">
+                <div class="row labelStyle" style="margin-left: 0;">
                     <div class="col-md-4 col-sm-12 form-group d-flex ">
 
                         <select id="type" name="type" required class="form-control">

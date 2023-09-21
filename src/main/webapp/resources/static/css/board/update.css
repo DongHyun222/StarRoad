@@ -25,9 +25,23 @@
     display: flex;
     flex-direction: column;
 }
+
 .buttonStyle{
-    border: none; !important;
-    background-color: #FFCC00;
+    border: 1.3px solid var(--sub-kb-dark-gray);
+    background-color: white;
+    border-radius: 10px;
+    text-align: center;
+    width: 80px;
+    height: 40px;
+    font-weight: 590;
+    float:right;
+}
+
+.buttonStyle:hover{
+    background-color: var(--main-kb-yellow);
+    color: var(--sub-kb-dark-gray);
+    font-weight: 700;
+    border: 2px solid var(--sub-kb-dark-gray);
     cursor: pointer;
 }
 
@@ -36,6 +50,7 @@
     font-size: 32px;
     position: relative;
 }
+
 .contentStyle{
 
     border: none; !important;
@@ -46,25 +61,5 @@
     resize: none;
     padding-top: 30px;
     border-bottom: 1px solid black; /* 구분선 생성 */
-
-}
-.update-button{
-    position: absolute; /* 절대 위치로 설정합니다. */
-    right: 20px; /* 오른쪽 여백을 조정하세요. */
-    bottom: 20px; /* 아래 여백을 조정하세요. */
-
-    height: 40px;
-    width: 80px;
-    border-radius: 10px;
-    background-color: #FFCC00;
-
-    color: black;
-    border: 1px solid black;
-
-    /* 추가된 스타일 */
-    font-size: 14px;
-    font-weight: bold;
-    text-align:center;
-    line-height:40px; /* 높이와 동일한 값 */
 
 }
