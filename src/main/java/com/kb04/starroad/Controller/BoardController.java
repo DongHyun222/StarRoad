@@ -239,6 +239,7 @@ public class BoardController {
 
         ModelAndView mav = new ModelAndView();
         MemberDto memberDto = (MemberDto) session.getAttribute("currentUser");
+
         if (memberDto == null ){
             redirectAttributes.addFlashAttribute("error", "게시물 추천은 로그인이 필요한 서비스입니다");
             mav.setViewName("redirect:/starroad/login");
