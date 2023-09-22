@@ -64,14 +64,15 @@
     <div class="container">
         <div class="dkssud">
 
-            <h2 class="topTitle"> 글쓰기 </h2>
+
 
             <%-- <div class="update-button"> --%>
             <div id="update_btn_container">
+                <h2 class="topTitle"> 글쓰기 </h2>
                 <button type="submit" class="buttonStyle" id="updateBtn">등 록</button>
             </div>
 
-            <hr style="border: solid 2px lightgrey;">
+            <hr style="border: solid 1px lightgrey;">
             <div>
                 <div class="row labelStyle" style="margin-left: 0;">
                     <div class="col-md-4 col-sm-12 form-group d-flex ">
@@ -108,11 +109,11 @@
                 </div>
 
                 <div class="title">
-                    <input name="title" class="titleStyle" type="text" id="title" placeholder=" 제목을 입력하세요" required/>
+                    <input name="title" class="titleStyle" type="text" id="title" placeholder="제목을 입력하세요" required/>
                 </div>
 
                 <div class="content">
-                    <textarea name="content" class="contentStyle" id="content" placeholder=" 내용을 입력하세요"
+                    <textarea name="content" class="contentStyle" id="content" placeholder="내용을 입력하세요"
                               required>${board.content}</textarea>
 
 
