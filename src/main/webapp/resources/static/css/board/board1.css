@@ -1,33 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Hahmlet:wght@800&display=swap');
 
 .banner_title {
+    margin-bottom: 120px;
+    margin-left: 270px;
+    color: #5DD4A8;
+    text-align: left;
+}
+
+.banner_title h3{
+    font-family: 'Hahmlet';
     margin-bottom: 20px;
+    color: black;
+    position: relative;
 }
 
-.banner_container h2 {
-    font-weight: bold;
+.banner_title h1{
+    font-family: 'Hahmlet';
+    color: #5DD4A8;
 }
 
-.banner_container {
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    z-index: 999;
-    color: white;
+.bounce {
+    position: fixed;
+    /*bottom: 20px;*/
+    /*left: 10%;*/
+    /*width: 60px;*/
+    /*height: 60px;*/
+    /*margin-left: -30px;*/
+    /*-webkit-border-radius: 50%;*/
+    /*-moz-border-radius: 50%;*/
+    /*-ms-border-radius: 50%;*/
+    /*border-radius: 50%;*/
+    animation: bounce 2s infinite;
+    -webkit-animation: bounce 2s infinite;
+    -moz-animation: bounce 2s infinite;
+    -o-animation: bounce 2s infinite;
 }
 
-.banner_container div {
-    margin-top: 50px;
+
+@-webkit-keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        -webkit-transform: translateY(0);
+    }
+    40% {
+        -webkit-transform: translateY(-30px);
+    }
+    60% {
+        -webkit-transform: translateY(-15px);
+    }
 }
 
-.banner_container img {
-    margin-top: 20px;
+@-moz-keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        -moz-transform: translateY(0);
+    }
+    40% {
+        -moz-transform: translateY(-30px);
+    }
+    60% {
+        -moz-transform: translateY(-15px);
+    }
+}
+
+@-o-keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        -o-transform: translateY(0);
+    }
+    40% {
+        -o-transform: translateY(-30px);
+    }
+    60% {
+        -o-transform: translateY(-15px);
+    }
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-30px);
+    }
+    60% {
+        transform: translateY(-15px);
+    }
 }
 
 
 .d-block {
-    height : 360px;
+    height : 320px;
 }
 
 .board-box {
