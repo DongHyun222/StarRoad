@@ -51,10 +51,11 @@
     font-size: 32px;
     position: relative;
     outline-color: var(--main-kb-yellow);
+    padding-inline: 10px;
+    padding-block: 3px;
 }
 
 .contentStyle{
-    /*border: none; !important;*/
     border: none;
     font-size: 20px;
     position: relative;
@@ -64,7 +65,7 @@
     margin: 20px;
     padding: 20px;
     outline-color: var(--main-kb-yellow);
-    border-bottom: 1px solid black; /* 구분선 생성 */
+    border-bottom: 1px solid black;
 }
 
 .image-input {
