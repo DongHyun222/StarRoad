@@ -22,6 +22,11 @@
     <div id="egg_c">
         <img id="egg" src="/resources/static/image/member/egg.png">
     </div>
+
+    <div id="egg_c2">
+        <img id="egg2" src="/resources/static/image/member/egg.png">
+    </div>
+
     <article id="login_m">
         <div id="login_title">로그인</div>
         <div id="login_exp">청춘을 위한 Star Road</div>
