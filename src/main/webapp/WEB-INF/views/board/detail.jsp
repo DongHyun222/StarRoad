@@ -45,7 +45,7 @@
             </div>
 
             <div class="title-buttons more-actions">
-                <span class="icon">...</span>
+                <span class="icon">°°°</span>
                 <div class="actions">
                     <button id="editBtn">수정</button>
                     <button id="deleteBtn">삭제</button>
@@ -95,7 +95,7 @@
                  </div>
 
                  <div class="more-actions">
-                    <span class="icon">...</span>
+                    <span class="icon">°°°</span>
                         <div class="actions">
                             <button class="comment-edit" data-id="${comment.no}">수정</button>
                             <button class="comment-delete" data-id="${comment.no}">삭제</button>
