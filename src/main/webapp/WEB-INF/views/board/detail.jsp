@@ -90,7 +90,7 @@
                  <div class="comment-date">
                  <span class="comment-date">
                     <i class="fas fa-clock"></i>
-                    <fmt:formatDate value="${comment.regdate}" pattern="yyyy-MM-dd HH:mm:ss" />
+                    <fmt:formatDate value="${comment.regdate}" pattern="yyyy-MM-dd HH:mm" />
                  </span>
                  </div>
 
