@@ -3,6 +3,10 @@
     margin-bottom: 30px;
 }
 
+#asset_a {
+    justify-content: flex-start;
+}
+
 #asset_container {
     width: 100%;
 }

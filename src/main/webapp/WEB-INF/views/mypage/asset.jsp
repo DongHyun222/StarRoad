@@ -19,7 +19,9 @@
 
             if (${memberAssets.savings}+${memberAssets.deposit}+${memberAssets.investment} === 0) {
                 $("#asset").css("display", "none")
+                $("#asset_info").css("display", "none")
                 $("#info").css("display", "block")
+                $("#myChart").css("display", "none")
             }
         });
     </script>
@@ -37,7 +39,7 @@
             <li><a class='sidebar_menu' href='/starroad/mypage/password'>비밀번호 수정</a></li>
         </ul>
     </aside>
-    <article>
+    <article id="asset_a">
         <h1 id="asset_title">${memberAssets.name}님의 자산</h1>
         <div id="asset_container">
             <div id="asset_div">
