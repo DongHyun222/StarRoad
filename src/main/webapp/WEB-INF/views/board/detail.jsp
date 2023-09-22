@@ -83,7 +83,7 @@
         <c:forEach var="comment" items="${board.comments}">
              <div class="comment-item">
                 <i class="fas fa-user-circle"></i>
-                 <strong class="comment-author"><c:out value="${currentUser.id}" /></strong> <br>
+                 <strong class="comment-author"><c:out value="${comment.member.id}" /></strong> <br>
                  <div class="comment-content">
                  <span class="comment-content"><c:out value="${comment.content}" /></span> <br>
                  </div>
