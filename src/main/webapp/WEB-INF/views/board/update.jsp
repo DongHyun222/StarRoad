@@ -12,7 +12,7 @@
 
     <link rel="stylesheet" type="text/css" href="/resources/static/css/board/update.css">
     <script type="text/javascript">
-        $(function() {
+        $(function () {
             $("#navbar").load("/resources/common_jsp/navbar.jsp");
         });
 
@@ -20,14 +20,16 @@
 </head>
 <body>
 
+
 <form method="post" enctype="multipart/form-data" action="/starroad/board/updatepro?no=${board.no}">
     <input type="hidden" name="no" value="${board.no}">
 <div class="container">
     <div id="navbar"></div>
     <div class="title">
+            <input name="title" class="titleStyle" type="text" id="title" placeholder="제목을 입력하세요" required
+                   value="${board.title}"/>
+            <br>
 
-        <input name="title" class="titleStyle"  type="text" id="title" placeholder="제목을 입력하세요" required value="${board.title}" />
-        <br>
 
         <span class="regdate"><c:out value="${board.regdate}" /></span>
         <span class="likes">
@@ -44,14 +46,15 @@
 
         <div class="image-input">
             <input type="file" name="newImage" id="newImage">
+
         </div>
+
+
         <div class="update-button">
-            <button type="submit" class="buttonStyle" id="updateBtn">등록</button>
+            <button type="submit" class="buttonStyle">등록</button>
         </div>
-    </div>
+        </div>
 </div>
-
-
 
 
 </form>

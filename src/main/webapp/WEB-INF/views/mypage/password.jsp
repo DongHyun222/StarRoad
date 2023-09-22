@@ -14,17 +14,11 @@
         $(function () {
             $("#navbar").load("${path}/resources/common_jsp/navbar.jsp");
 
-            $("#password").keydown(function (e) {
-                console.log(e.key)
-                if (e.key === "Enter")
-                    e.preventDefault();
-            })
-
-            document.getElementById("check_btn").addEventListener('click', (e) => {
+            function check_password(input_pw) {
                 $.ajax({
                     type: 'post',
                     url: "/api/starroad/mypage/check-password",
-                    data: {"inputPw": $("#password").val()},
+                    data: {"inputPw": input_pw},
                     success: function (data) {
                         if (data !== "") {
                             $("#check_msg").text(data);
@@ -38,6 +32,17 @@
                         alert("잠시 후 시도해주세요.");
                     }
                 });
+            }
+
+            document.getElementById("check_btn").addEventListener('click', (e) => {
+                check_password($("#password").val());
+            });
+
+            document.getElementById("password").addEventListener('keydown', (e) => {
+                if (e.key === "Enter") {
+                    e.preventDefault();
+                    check_password($("#password").val());
+                }
             });
         });
     </script>
