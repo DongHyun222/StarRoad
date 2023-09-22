@@ -77,9 +77,14 @@ public class CommentService {
     }
 
     @Transactional
-    public void deleteComment(int commentNo) {
-
+    public int deleteComment(int commentNo) {
+        Optional<Comment> comment = commentRepository.findById(commentNo);
+        int boardNo = comment.get().getBoard().getNo();
+        Board board = boardRepository.findByNo(boardNo);
+        board.setCommentNum(board.getCommentNum() - 1);
+        boardRepository.save(board);
         commentRepository.deleteByNo(commentNo);
+        return boardNo;
     }
 
     public Optional<Comment> findByNo(int commentNo) {
@@ -114,4 +119,17 @@ public class CommentService {
         }
         return false;
     }
+
+    public boolean canDelete(Integer no, String currentUserId) {
+        Optional<Comment> commentOptional = findByNo(no);
+
+        if(commentOptional.isPresent()) {
+            Comment comment = commentOptional.get();
+            Member writer = comment.getMember();
+
+            return writer.getId().equals(currentUserId);
+        }
+        return false;
+    }
 }
+
