@@ -51,21 +51,37 @@
                 })
 
                 $("#sub_info_s").css("display", "block")
-                $("#flower_container").css("display", "flex")
+                $("#flower_container").css({"display": "flex", "visibility": "visible"})
+                $("#sel_pic").css("display", "none")
+                $("#pic_exp").css("display", "none")
 
                 if (status === "-1") {          // 성공
                     $("#reward_btn").text("리워드를 받으세요 🥳")
                         .attr("disabled", false)
-                        .css({"display":"block", "background":"var(--main-kb-yellow-positive)", "color":"black", "cursor":"pointer"})
+                        .css({
+                            "display": "block",
+                            "background": "var(--main-kb-yellow-positive)",
+                            "color": "black",
+                            "cursor": "pointer"
+                        })
                 } else if (status === "-2") {   // 리워드를 이미 받았을 때, 끝났을 때
                     $("#reward_btn").text("완주 성공! 😎")
-                        .attr("disabled",true)
-                        .css({"display":"block", "background":"var(--sub-kb-gold)", "color":"white", "cursor":"unset"})
-                    console.log(period)
+                        .attr("disabled", true)
+                        .css({
+                            "display": "block",
+                            "background": "var(--sub-kb-gold)",
+                            "color": "white",
+                            "cursor": "unset"
+                        })
                 } else {
-                    $("#reward_btn").text("").append("<strong>"+status+"</strong>"+"개월 남았어요 💪")
-                        .attr("disabled",true)
-                        .css({"display":"block", "background":"var(--sub-kb-gold)", "color":"white", "cursor":"unset"})
+                    $("#reward_btn").text("").append("<strong>" + status + "</strong>" + "개월 남았어요 💪")
+                        .attr("disabled", true)
+                        .css({
+                            "display": "block",
+                            "background": "var(--sub-kb-gold)",
+                            "color": "white",
+                            "cursor": "unset"
+                        })
                 }
             })
         });
@@ -83,37 +99,46 @@
             <li><a class='sidebar_menu' href='/starroad/mypage/password'>비밀번호 수정</a></li>
         </ul>
     </aside>
-    <article>
-        <select name="subscription" id="sel_sub">
-            <option disabled selected>가입하신 적금을 선택해주세요</option>
-            <c:forEach items="${subscriptions}" var="subscription" varStatus="status">
-                <option value="${status.index}">&nbsp;${subscription.prod.name}</option>
-            </c:forEach>
-        </select>
+    <article id="sub_article">
+        <div>
+            <select name="subscription" id="sel_sub">
+                <option disabled selected>가입하신 적금을 선택해주세요</option>
+                <c:forEach items="${subscriptions}" var="subscription" varStatus="status">
+                    <option value="${status.index}">&nbsp;${subscription.prod.name}</option>
+                </c:forEach>
+            </select>
 
-        <section id="sub_info_s">
-            <div id="sub_na_c">
-                <span id="sub_name"></span>
-                <span id="sub_attr"></span>
-            </div>
-            <div id="sub_be_c">
-                <div id="bef_exp"></div>
-                <div id="sub_exp"></div>
-            </div>
-            <div id="sub_pp_c">
-                <div id="sub_period"></div>
-                <div id="sub_price"></div>
-            </div>
-        </section>
-        <section>
-            <div id="flower_container"></div>
-        </section>
-        <form action="/starroad/mypage/reward" method="post">
-            <input type="hidden" id="name_val" name="name">
-            <input type="hidden" id="period_val" name="period">
-            <input type="hidden" id="ss_no_val" name="sub_no">
-            <button id="reward_btn"></button>
-        </form>
+            <section id="sel_pic_exp">
+                <img id="sel_pic" src="${path}/resources/static/image/mypage/sel_pic.png">
+                <div id="pic_exp">가입하신 적금을 선택해주세요</div>
+            </section>
+
+            <section id="sub_info_s">
+                <div id="sub_na_c">
+                    <span id="sub_name"></span>
+                    <span id="sub_attr"></span>
+                </div>
+                <div id="sub_be_c">
+                    <div id="bef_exp"></div>
+                    <div id="sub_exp"></div>
+                </div>
+                <div id="sub_pp_c">
+                    <div id="sub_period"></div>
+                    <div id="sub_price"></div>
+                </div>
+            </section>
+
+            <section>
+                <div id="flower_container"></div>
+            </section>
+
+            <form action="/starroad/mypage/reward" method="post">
+                <input type="hidden" id="name_val" name="name">
+                <input type="hidden" id="period_val" name="period">
+                <input type="hidden" id="ss_no_val" name="sub_no">
+                <button id="reward_btn"></button>
+            </form>
+        </div>
     </article>
 </main>
 </html>

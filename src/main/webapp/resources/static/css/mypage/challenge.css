@@ -1,7 +1,25 @@
+#sub_article {
+    justify-content: flex-start;
+}
+
 #sel_sub {
     width: 300px;
     height: 60px;
     border-radius: 5px;
+    margin-bottom: 30px;
+}
+
+#sel_pic_exp {
+    width: 700px;
+}
+
+#sel_pic {
+    display: block;
+    margin: 0 auto;
+}
+
+#pic_exp {
+    text-align: center;
 }
 
 #sub_info_s {
@@ -70,7 +88,7 @@
     justify-content: space-evenly;
     background: #92d85a;
     border-radius: 5px;
-    display: none;
+    visibility: hidden;
     margin: 0 auto;
 }
 
