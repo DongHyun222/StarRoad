@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <title>STARROAD</title>
-    <link rel="icon" href="${path}/resources/static/image/home/logo.png" type="image/x-icon">
+    <link rel="icon" href="${path}/resources/static/image/home/logo1.png" type="image/x-icon">
     <link rel="stylesheet" href="${path}/resources/static/css/common.css">
     <link rel="stylesheet" href="${path}/resources/static/css/mypage/sidebar.css">
     <link rel="stylesheet" href="${path}/resources/static/css/mypage/check_password.css">
