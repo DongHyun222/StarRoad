@@ -20,6 +20,7 @@ import springfox.documentation.annotations.ApiIgnore;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
@@ -68,27 +69,6 @@ public class BoardController {
 
     }
 
-    @ApiOperation(value = "게시글 수정 폼", notes = "게시글을 폼을 볼 수 있습니다")
-    @GetMapping("/starroad/board/update")
-    public ModelAndView updateBoard(
-            @ApiParam(value = "게시글 번호") @RequestParam("no") int no,
-            @ApiIgnore HttpSession session) {
-
-        ModelAndView mav = new ModelAndView("board/update");
-
-        MemberDto currentUser = (MemberDto) session.getAttribute("currentUser"); // 세션에서 현재 로그인한 사용자의 ID
-        String currentUserId = currentUser.getId();
-
-        if (boardService.canUpdate(no, currentUserId)) {
-            BoardResponseDto boardResponseDto = boardService.getUpdateBoard(no);
-            mav.addObject("board", boardResponseDto);
-        }
-        else{
-            mav.setViewName("redirect:/starroad/board/detail?no=" + no);
-        }
-        return mav;
-    }
-
     @ApiOperation(value = "자유,인증 게시판", notes = "자유,인증 게시판으로 갈 수 있습니다.")
     @GetMapping("/starroad/board/free")
     public ModelAndView boardList(
@@ -130,33 +110,62 @@ public class BoardController {
         return mav;
     }
 
-    @ApiOperation(value = "게시글 수정 기능", notes = "게시글을 수정할 수 있습니다")
-    @PostMapping("/starroad/board/updatepro")
-    public ModelAndView updateBoardPro(
-            @ApiParam(value = "게시글 수정하기 위한 정보") @RequestBody @ModelAttribute BoardRequestDto boardRequestDto,
-            @ApiParam(value = "이미지") @RequestParam(value = "image", required = false) MultipartFile image) {
+    @ApiOperation(value = "게시글 수정 폼", notes = "게시글을 폼을 볼 수 있습니다")
+    @GetMapping("/starroad/board/update")
+    public ModelAndView updateBoard(
+            @ApiParam(value = "게시글 번호") @RequestParam("no") int no,
+            @ApiIgnore HttpSession session) {
 
+        ModelAndView mav = new ModelAndView("board/update");
         ModelAndView errorModelAndView = new ModelAndView("error");
 
-        if (image != null && !image.isEmpty()) {
-            try {  // 이미지가 업로드된 경우에만 이미지 데이터를 설정
-                boardRequestDto.setImage(image.getBytes());
-            } catch (IOException e) {
-                e.printStackTrace();
-                return errorModelAndView;
-            }
-        }
-
-        int no;
-        if(boardService.updateBoard(boardRequestDto)){
-            no = boardRequestDto.getNo();
-        } else {
+        MemberDto currentUser = (MemberDto) session.getAttribute("currentUser"); // 세션에서 현재 로그인한 사용자의 ID
+        if (currentUser == null){
             return errorModelAndView;
         }
 
-        ModelAndView modelAndView = new ModelAndView("redirect:/starroad/board/detail?no=" + no);
-        return modelAndView;
+        String currentUserId = currentUser.getId();
+        if (boardService.canUpdate(no, currentUserId)) {
+            BoardResponseDto boardResponseDto = boardService.getUpdateBoard(no);
+            mav.addObject("board", boardResponseDto);
+        }
+        else{
+            mav.setViewName("redirect:/starroad/board/detail?no=" + no);
+        }
+        return mav;
     }
+
+    @ApiOperation(value = "게시글 수정 기능", notes = "게시글을 수정할 수 있습니다")
+    @PostMapping("/starroad/board/updatepro")
+    public ModelAndView updateBoardPro(
+            @ApiParam(value = "게시글 번호")@RequestParam("no") int no,
+            @ApiParam(value = "게시글 제목") @RequestParam("title") String title,
+            @ApiParam(value = "게시글 내용") @RequestParam("content") String content,
+            @ApiParam(value = "이미지") @RequestParam(value = "newImage") MultipartFile newImage) {
+
+        ModelAndView errorModelAndView = new ModelAndView("error");
+        ModelAndView modelAndView = new ModelAndView("redirect:/starroad/board/detail?no=" + no);
+
+        try {
+            if (boardService.updateBoard(no, title, content, newImage)){
+                return modelAndView;
+            } else {
+                return errorModelAndView;
+            }
+        } catch (IOException e) {
+            errorModelAndView.addObject("errorMessage", e.getMessage());
+            return errorModelAndView;
+        }
+    }
+
+
+
+
+
+
+
+
+
 
     @ApiOperation(value = "게시글 상세", notes = "게시글을 상세를 볼 수 있습니다")
     @GetMapping("/starroad/board/detail")
@@ -195,13 +204,6 @@ public class BoardController {
 
         return mav;
     }
-
-
-
-
-
-
-
 
 
     @ApiOperation(value = "게시글 작성", notes = "게시글을 작성할 수 있습니다")

@@ -94,6 +94,7 @@ public class Board {
                 .likes(likes)
                 .commentNum(commentNum)
                 .type(type)
+                .image(image)
                 .detailType(detailType)
                 .imageBase64(image == null ? null : java.util.Base64.getEncoder().encodeToString(image))
                 .memberId(member == null ? null : member.getId())
