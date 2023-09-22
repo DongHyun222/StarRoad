@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <title>STARROAD</title>
-<link rel="icon" href="${path}/resources/static/image/home/logo.png" type="image/x-icon">
+<link rel="icon" href="${path}/resources/static/image/home/logo1.png" type="image/x-icon">
 
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">

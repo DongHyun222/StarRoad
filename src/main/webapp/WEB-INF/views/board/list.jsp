@@ -3,7 +3,7 @@
 <html>
 <head>
     <title>STARROAD</title>
-    <link rel="icon" href="${path}/resources/static/image/home/logo.png" type="image/x-icon">
+    <link rel="icon" href="${path}/resources/static/image/home/logo1.png" type="image/x-icon">
 </head>
 <body>
 <h1>Board List</h1>

@@ -8,7 +8,7 @@
 <head>
     <meta charset="UTF-8">
     <title>STARROAD</title>
-    <link rel="icon" href="${path}/resources/static/image/home/logo.png" type="image/x-icon">
+    <link rel="icon" href="${path}/resources/static/image/home/logo1.png" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="/resources/static/css/board/update.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <script src="//code.jquery.com/jquery-3.6.0.min.js"></script>

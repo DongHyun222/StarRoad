@@ -78,13 +78,29 @@ public class CommentController {
                                       @ApiParam(value = "게시글 번호") @RequestParam("boardNo") int boardNo,
                                       @ApiIgnore HttpSession session) {
 
+
         if (session.getAttribute("currentUser") == null) {
             ModelAndView mav = new ModelAndView("redirect:/starroad/login");
             mav.addObject("message", "로그인 후에 댓글을 작성할 수 있습니다.");
             return mav;
         }
 
+        MemberDto currentUser = (MemberDto) session.getAttribute("currentUser");
+        String currentUserId = currentUser.getId();
+
         ModelAndView mav = new ModelAndView("comment/update");
+
+        // 로그인한 사용자와 댓글 작성자가 동일한지 확인
+        if (commentService.canUpdate(commentNo, currentUserId)) {
+            CommentDto commentDto = commentService.getUpdateComment(commentNo);
+            mav.addObject("comment", commentDto);
+            mav.setViewName("comment/update");
+        }
+        else{
+            mav.setViewName("redirect:/starroad/board/detail?no=" + boardNo);
+            mav.addObject("message", "다른 사용자의 댓글을 수정할 수 없습니다.");
+        }
+
 
         Optional<Comment> commentOptional = commentService.findByNo(commentNo);
 
@@ -131,16 +147,26 @@ public class CommentController {
             @RequestParam("no") int commentNo,
             @ApiIgnore HttpSession session) {
 
+
+        ModelAndView mav = new ModelAndView();
         if (session.getAttribute("currentUser") == null) {
-            ModelAndView mav = new ModelAndView("redirect:/starroad/login");
+            mav = new ModelAndView("redirect:/starroad/login");
             mav.addObject("message", "로그인 후에 댓글을 작성할 수 있습니다.");
             return mav;
         }
 
-        int commentDelete = commentService.findByNo(commentNo).get().getBoard().getNo();
-        commentService.deleteComment(commentNo);
+        MemberDto currentUser = (MemberDto) session.getAttribute("currentUser");
+        String currentUserId = currentUser.getId();
+        if (commentService.canDelete(commentNo, currentUserId)) {
+            // 현재 사용자가 게시글 삭제 가능한 경우
+            int boardNo = commentService.deleteComment(commentNo);
+            mav.setViewName("redirect:/starroad/board/detail?no=" + boardNo);
 
-        ModelAndView mav = new ModelAndView("redirect:/starroad/board/detail?no=" + commentDelete);
+        } else {
+            // 현재 사용자가 게시글 삭제 불가
+            // 능한 경우 or 게시글 존재하지 않는 경우
+            mav.setViewName("board/deleteError");
+        }
         return mav;
     }
 
