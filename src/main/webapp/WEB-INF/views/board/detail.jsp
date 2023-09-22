@@ -37,11 +37,6 @@
                 <i class="fas fa-clock"></i>
                 <fmt:formatDate value="${board.regdate}" pattern="yyyy-MM-dd HH:mm" />
             </span>
-<%--            <span class="likes">
-
-                <img src="https://ifh.cc/g/aw0vjY.png" alt="Like Icon" style="vertical-align: middle; width: 20px; height: 20px;">
-                <c:out value="${board.likes}" />
-            </span> --%>
             </div>
 
             <div class="title-buttons more-actions">
@@ -83,14 +78,18 @@
         <c:forEach var="comment" items="${board.comments}">
              <div class="comment-item">
                 <i class="fas fa-user-circle"></i>
-                 <strong class="comment-author"><c:out value="${currentUser.id}" /></strong> <br>
+                 <strong class="currentUser">
+                    <c:out value="${comment.member.id}" />
+                 </strong> <br>
+
                  <div class="comment-content">
-                 <span class="comment-content"><c:out value="${comment.content}" /></span> <br>
+                    <span class="comment-content"><c:out value="${comment.content}" /></span> <br>
                  </div>
+
                  <div class="comment-date">
                  <span class="comment-date">
                     <i class="fas fa-clock"></i>
-                    <fmt:formatDate value="${comment.regdate}" pattern="yyyy-MM-dd HH:mm:ss" />
+                    <fmt:formatDate value="${comment.regdate}" pattern="yyyy-MM-dd HH:mm" />
                  </span>
                  </div>
 
@@ -118,7 +117,7 @@
        });
      document.getElementById("submitComment").addEventListener("click", function() {
 
-                      location.href = "/starroad/board/update?no=" + ${board.no}; // 수정 API 호출
+                      location.href = "/starroad/board/detail?no=" + ${board.no}; // 수정 API 호출
 
        });
 
@@ -152,8 +151,13 @@
             });
         });
 
-        document.getElementById("submitComment").addEventListener("click", function() {
-            location.href = "/starroad/comment/create?no=" + ${board.no};
+        document.getElementById("submitComment").addEventListener("click", function(event) {
+            var commentContent = document.getElementById("commentText").value.trim();
+
+            if (!commentContent) {
+                alert("댓글 내용을 입력해주세요.");
+                event.preventDefault();
+            }
         });
 
        <!-- 좋아요 기능 -->

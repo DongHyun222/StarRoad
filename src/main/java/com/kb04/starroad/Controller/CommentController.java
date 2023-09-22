@@ -1,5 +1,6 @@
 package com.kb04.starroad.Controller;
 
+import com.kb04.starroad.Dto.MemberDto;
 import com.kb04.starroad.Dto.board.CommentDto;
 import com.kb04.starroad.Entity.Comment;
 import com.kb04.starroad.Service.BoardService;
@@ -37,7 +38,13 @@ public class CommentController {
             return mav;
         }
 
-        int number = commentService.createComment(content, boardNo);
+        if (content == null || content.trim().isEmpty()) {
+            ModelAndView mav = new ModelAndView("redirect:/starroad/board/detail?no=" + boardNo);
+            mav.addObject("message", "댓글 내용을 입력해주세요.");
+            return mav;
+        }
+
+        int number = commentService.createComment(content, boardNo, ((MemberDto)session.getAttribute("currentUser")).getNo());
 
         commentService.increaseCommentCount(boardNo);
 
