@@ -29,19 +29,19 @@ public class CommentService {
 
     public List<CommentDto> findByBoard(Board board) {
 
-        return commentRepository.findByBoard(board);
+        return commentRepository.findByBoardOrderByRegdate(board);
     }
 
 
 
     @Transactional
-    public int createComment(String content, int boardNo) {
+    public int createComment(String content, int boardNo, int currentUserNo) {
 
         CommentDto newComment = new CommentDto();
 
         newComment.setContent(content);
         newComment.setRegdate(new java.util.Date());
-//      newComment.setMember(memberRepository.findByNo(1)); 로그인된 사용자 정보 설정
+        newComment.setMember(memberRepository.findByNo(currentUserNo));
         newComment.setBoard(boardRepository.findByNo(boardNo));;
 
         Comment comment = newComment.toEntity();
@@ -88,11 +88,4 @@ public class CommentService {
             System.out.println("board.getCommentNum(): " + board.getCommentNum());
         }
     }
-//        CommentDto newComment = new CommentDto();
-//        newComment.setContent(content);
-//        newComment.setRegdate(new java.util.Date());
-//        newComment.setBoard(boardRepository.findByNo(boardNo));;
-//        Comment comment = newComment.toEntity();
-//        commentRepository.save(comment);
-//        return comment.getBoard().getNo();
 }
