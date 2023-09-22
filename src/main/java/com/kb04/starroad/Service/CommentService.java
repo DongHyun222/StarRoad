@@ -1,9 +1,11 @@
 package com.kb04.starroad.Service;
 
 import com.kb04.starroad.Dto.board.BoardRequestDto;
+import com.kb04.starroad.Dto.board.BoardResponseDto;
 import com.kb04.starroad.Dto.board.CommentDto;
 import com.kb04.starroad.Entity.Board;
 import com.kb04.starroad.Entity.Comment;
+import com.kb04.starroad.Entity.Member;
 import com.kb04.starroad.Repository.BoardRepository;
 import com.kb04.starroad.Repository.CommentRepository;
 import com.kb04.starroad.Repository.MemberRepository;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 
@@ -55,7 +58,15 @@ public class CommentService {
         Comment comment = commentRepository.findById(commentNo).orElseThrow(() -> new IllegalArgumentException("해당 댓글이 없습니다"));
         return comment.toCommentDto();
     }
-
+    public CommentDto getUpdateComment(int no) {
+        Optional<Comment> commentOptional = commentRepository.findByNo(no);
+        if (commentOptional.isPresent()) {
+            return commentOptional.get().toCommentDto();
+        } else {
+            // 여기에서 적절한 예외를 던지거나 null을 반환할 수 있습니다.
+            throw new NoSuchElementException("No Comment found with given id");
+        }
+    }
     @Transactional
     public void updateComment(CommentDto commentDto) {
 
@@ -87,5 +98,20 @@ public class CommentService {
             boardRepository.save(board);
             System.out.println("board.getCommentNum(): " + board.getCommentNum());
         }
+    }
+
+    public boolean canUpdate(int no, String currentUserId) {
+        Optional<Comment> commentOptional = findByNo(no);
+
+        if(commentOptional.isPresent()) {
+            Comment comment = commentOptional.get();
+            Member writer = comment.getMember();
+
+            if (writer != null) {
+                String writerId = writer.getId();
+                return currentUserId != null && currentUserId.equals(writerId);
+            }
+        }
+        return false;
     }
 }
