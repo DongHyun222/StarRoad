@@ -7,7 +7,8 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>댓글 수정</title>
+    <title>STARROAD</title>
+    <link rel="icon" href="${path}/resources/static/image/home/logo.png" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="/resources/static/css/board/update.css">
     <script src="//code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript">
