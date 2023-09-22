@@ -1,7 +1,6 @@
 package com.kb04.starroad.Controller;
 
 import com.kb04.starroad.Dto.MemberDto;
-import com.kb04.starroad.Dto.board.BoardRequestDto;
 import com.kb04.starroad.Dto.board.BoardResponseDto;
 import com.kb04.starroad.Dto.board.CommentDto;
 import com.kb04.starroad.Entity.Board;
@@ -20,7 +19,6 @@ import springfox.documentation.annotations.ApiIgnore;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
@@ -231,8 +229,8 @@ public class BoardController {
             MemberDto dto = (MemberDto) session.getAttribute("currentUser");
             // 게시글 작성 서비스 호출 시, 현재 사용자 ID 추가로 전달
             boardService.writeBoard(dto.getId(), type, detailType, title, content, imageFile);
-
-            return new ModelAndView("redirect:/starroad/board/main");
+            String url = "redirect:/starroad/board/free?type=" + type;
+            return new ModelAndView(url);
         } catch (IOException e) {
             e.printStackTrace();
 
