@@ -2,6 +2,7 @@ package com.kb04.starroad.Service;
 
 import com.kb04.starroad.Dto.board.BoardRequestDto;
 import com.kb04.starroad.Dto.board.BoardResponseDto;
+import com.kb04.starroad.Dto.board.CommentDto;
 import com.kb04.starroad.Entity.Board;
 import com.kb04.starroad.Entity.Heart;
 import com.kb04.starroad.Entity.Member;
@@ -28,6 +29,7 @@ public class BoardService {
     private final BoardRepository boardRepository;
     private final MemberRepository memberRepository;
     private final HeartRepository heartRepository;
+    private final CommentService commentService;
 
     /**
      * 게시판 메인 용 - 자유 게시판
@@ -98,7 +100,7 @@ public class BoardService {
      * @param currentUserId 현재 로그인한 유저
      */
     public boolean canUpdate(int no, String currentUserId) {
-        Optional<Board> boardOptional = findById(no);
+        Optional<Board> boardOptional = boardRepository.findById(no);
 
         if (boardOptional.isPresent()) {
             Board board = boardOptional.get();
@@ -121,11 +123,11 @@ public class BoardService {
     }
 
     /**
-     * 게시글 수정
-     * @param no 게시글 번호
-     * @param title 게시글 타이틀
-     * @param content 게시글 내용
-     * @param newImage 게시글 이미지
+     * 게시물 수정
+     * @param no 게시물 번호
+     * @param title 게시물 타이틀
+     * @param content 게시물 내용
+     * @param newImage 게시물 이미지
      */
     @Transactional
     public boolean updateBoard(int no, String title, String content, MultipartFile newImage) throws IOException {
@@ -141,120 +143,97 @@ public class BoardService {
         return false;
     }
 
-
-
-
-
-
-
-
-
-
-
-    public BoardResponseDto detailBoard(){
-        return null;
-    }
-    public void write(Board board) {  //entity를 매개변수로 받음
-
-        boardRepository.save(board);  //새로운 게시물이 데이터베이스에 추가됩니다.
-    }
-
-
-    //이미지 업로드 로직
+    /**
+     * 게시물 등록
+     * @param memberId 로그인한 회원 아이디
+     * @param type 게시물 type
+     * @param detailType 게시물 detail type
+     * @param title 게시물 제목
+     * @param content 게시물 내용
+     * @param imageFile 게시물 이미지 파일
+     */
     public void writeBoard(String memberId, String type, String detailType,
-                           String title, String content,
-                           MultipartFile imageFile) throws IOException {
-        // Member 객체 찾기
-        Optional<Member> optionalMember = memberRepository.findById(memberId);
+                           String title, String content, MultipartFile imageFile) throws IOException {
 
-        Member member = optionalMember.orElseThrow(() -> new IllegalArgumentException("Invalid member ID: " + memberId));
+        Optional<Member> optionalMember = memberRepository.findById(memberId);
+        Member member = optionalMember.get();
 
         BoardRequestDto boardDto = new BoardRequestDto();
         boardDto.setType(type);
         boardDto.setDetailType(detailType);
         boardDto.setTitle(title);
         boardDto.setContent(content);
+        boardDto.setMember(member);
+        boardDto.setImage(imageFile.isEmpty() ? null : imageFile.getBytes());
 
-        if (imageFile != null && !imageFile.isEmpty()) {
-            byte[] imageBytes = imageFile.getBytes();
-            boardDto.setImage(imageBytes);
-        }
-
-        // DTO to Entity 변환
         Board board = boardDto.toEntity();
-
-        // Member 객체와 연결
-        board.setMember(member);
-
-        // Entity 저장
         boardRepository.save(board);
     }
 
+    /**
+     * 삭제하려는 게시물이 현재 로그인한 유저가 작성한 게시물인지 검사
+     * @param no 게시글 번호
+     * @param currentUserId 로그인한 회원 아이디
+     */
+    public boolean canDelete(int no, String currentUserId) {
 
+        Board board = boardRepository.findByNo(no);
+        Member writer = board.getMember();
 
-
-
-
-
-
-
-
-    public Optional<Board> findById(int no) {
-
-        return boardRepository.findById(no);
+        return writer.getId().equals(currentUserId);
     }
 
-
-
-    public void deleteBoard(Integer no) {
-        Optional<Board> boardOptional = boardRepository.findById(no);
-
-        if (boardOptional.isPresent()) {
-            // 게시글이 존재하는 경우에만 삭제 수행
-            boardRepository.deleteById(no);
-        } else {
-            throw new NoSuchElementException("게시글이 존재하지 않습니다.");
-        }
+    /**
+     * 게시물 삭제
+     * @param no 게시물 번호
+     */
+    public void deleteBoard(int no) {
+        boardRepository.deleteById(no);
     }
 
-    public boolean canDelete(Integer no, String currentUserId) {
-        Optional<Board> boardOptional = boardRepository.findById(no);
+    /**
+     * 게시물 상세 보기
+     * @param no 게시물 번호
+     */
+    public BoardResponseDto detailBoard(int no){
 
-        if (boardOptional.isPresent()) {
-            Board board = boardOptional.get();
-            Member writer = board.getMember();
+        Board board = boardRepository.findByNo(no);
+        if (board == null) return null;
 
-            if (writer != null) {
-                String writerId = writer.getId();
-                return writerId.equals(currentUserId);
-            }
-        }
-        return false;
+        BoardResponseDto resultDto = board.toBoardResponseDto();
+        List<CommentDto> comments = commentService.findByBoard(board);
+        resultDto.setComments(comments);
+        return resultDto;
     }
 
-
-
-
-    public void increaseLikes(int boardNo, String memberId) {
-        Optional<Board> optionalBoard = boardRepository.findById(boardNo);
-        if (optionalBoard.isPresent()) {
-            Board board = optionalBoard.get();
-            int currentLikesCount = board.getLikes();
-
-            board.setLikes(currentLikesCount + 1);
-            // Save a new like entity as well to keep track of who liked the post.
-            Member member = memberRepository.findById(memberId).get();
-            heartRepository.save(Heart.builder()
-                    .member(member)
-                    .board(board)
-                    .build());
-        }
-    }
-
+    /**
+     * 로그인 한 유저가 게시물 좋아요 눌렀는지 안 했는지 검사
+     * @param boardNo 게시물 번호
+     * @param memberId 로그인한 유저 아이디
+     * @return 이미 좋아요 눌렀다면 true, 아니라면 false 리턴
+     */
     public boolean hasLiked(int boardNo, String memberId) {
         Member member = memberRepository.findById(memberId).get();
         Optional<Heart> likes = heartRepository.findByMemberNoAndBoardNo(member.getNo(), boardNo);
 
-        return !likes.isPresent();
+        return likes.isPresent();
     }
+
+    /**
+     * 게시물 좋아요 누르기
+     * @param boardNo 게시물 번호
+     * @param memberId 로그인한 유저 아이디
+     */
+    public void increaseLikes(int boardNo, String memberId) {
+
+        Board board = boardRepository.findByNo(boardNo);
+        int currentLikesCount = board.getLikes();
+        board.setLikes(currentLikesCount + 1);
+
+        Member member = memberRepository.findById(memberId).get();
+        heartRepository.save(Heart.builder()
+                .member(member)
+                .board(board)
+                .build());
+        }
 }

@@ -70,9 +70,9 @@ public class Board {
         }
     }
 
-    public BoardRequestDto toBoardRequestDto() {
+    /*public BoardRequestDto toBoardRequestDto() {
         return BoardRequestDto.builder()
-                .memberNo(member.toMemberDto())
+                .member(member)
                 .title(title)
                 .regdate(regdate)
                 .content(content)
@@ -83,8 +83,11 @@ public class Board {
                 .image(image)
                 .detailType(detailType)
                 .build();
-    }
+    }*/
 
+    /**
+     * Entity를 Dto로 변경
+     */
     public BoardResponseDto toBoardResponseDto() {
         return BoardResponseDto.builder()
                 .no(no)
@@ -113,9 +116,9 @@ public class Board {
         this.image = image;
     }
 
-    public void setMember(Member member) {
-        this.member = member;
-    }
+//    public void setMember(Member member) {
+//        this.member = member;
+//    }
 
     public void setCommentNum(int commentNum) {
         this.commentNum = commentNum;

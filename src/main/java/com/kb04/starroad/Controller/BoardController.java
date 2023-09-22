@@ -15,6 +15,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletRequest;
@@ -58,15 +59,15 @@ public class BoardController {
 
     @ApiOperation(value = "게시물 글쓰기 폼", notes = "게시물 글쓰기 폼으로 이동합니다")
     @GetMapping("/starroad/board/write")
-    public ModelAndView board(@ApiIgnore HttpSession session) {
+    public ModelAndView board(@ApiIgnore HttpSession session, RedirectAttributes redirectAttributes) {
+        ModelAndView mav = new ModelAndView();
         if (session.getAttribute("currentUser") == null) {
-            ModelAndView mav = new ModelAndView("redirect:/starroad/login");
-            mav.addObject("message", "로그인 후에 댓글을 작성할 수 있습니다.");
+            redirectAttributes.addFlashAttribute("error", "게시물 쓰기는 로그인이 필요한 서비스입니다");
+            mav.setViewName("redirect:/starroad/login");
             return mav;
         }
-        ModelAndView mav = new ModelAndView("board/write");
+        mav = new ModelAndView("board/write");
         return mav;
-
     }
 
     @ApiOperation(value = "자유,인증 게시판", notes = "자유,인증 게시판으로 갈 수 있습니다.")
@@ -114,16 +115,17 @@ public class BoardController {
     @GetMapping("/starroad/board/update")
     public ModelAndView updateBoard(
             @ApiParam(value = "게시글 번호") @RequestParam("no") int no,
-            @ApiIgnore HttpSession session) {
+            @ApiIgnore HttpSession session, RedirectAttributes redirectAttributes) {
 
-        ModelAndView mav = new ModelAndView("board/update");
-        ModelAndView errorModelAndView = new ModelAndView("error");
+        ModelAndView mav = new ModelAndView();
 
         MemberDto currentUser = (MemberDto) session.getAttribute("currentUser"); // 세션에서 현재 로그인한 사용자의 ID
         if (currentUser == null){
-            return errorModelAndView;
+            redirectAttributes.addFlashAttribute("error", "게시글 수정은 로그인이 필요한 서비스입니다");
+            mav.setViewName("redirect:/starroad/login");
         }
 
+        mav = new ModelAndView("board/update");
         String currentUserId = currentUser.getId();
         if (boardService.canUpdate(no, currentUserId)) {
             BoardResponseDto boardResponseDto = boardService.getUpdateBoard(no);
@@ -153,93 +155,38 @@ public class BoardController {
                 return errorModelAndView;
             }
         } catch (IOException e) {
-            errorModelAndView.addObject("errorMessage", e.getMessage());
+            errorModelAndView.addObject("errorMessage", e.getMessage()); // TODO : 에러 페이지 - 게시물 수정 에러
             return errorModelAndView;
         }
     }
 
-
-
-
-
-
-
-
-
-
-    @ApiOperation(value = "게시글 상세", notes = "게시글을 상세를 볼 수 있습니다")
-    @GetMapping("/starroad/board/detail")
-    public ModelAndView getBoardDetail(@ApiParam(value = "게시글 번호") @RequestParam("no") int no) {
-
-        ModelAndView mav = new ModelAndView("board/detail");
-
-        Optional<Board> boardOptional = boardService.findById(no);
-
-        if (boardOptional.isPresent()) {
-            Board board = boardOptional.get();
-
-            List<CommentDto> comments = commentService.findByBoard(board);
-
-            BoardResponseDto boardResponseDto = board.toBoardResponseDto();
-            String memberId = board.getMember().getId();  // 'getId()'는 실제 회원 ID를 반환하는 메서드로 변경해야 합니다.
-            boardResponseDto.setMemberId(memberId);  // 'setMemberId()'는 DTO에서 회원 ID를 설정하는 메서드입니다.
-            //boardResponseDto.setCommentNum(board.getCommentNum()); // commentNum 수정
-            boardResponseDto.setComments(comments);
-
-            // 이미지를 Base64로 인코딩하여 DTO에 추가
-            if (board.getImage() != null) {
-                byte[] imageBytes = board.getImage();
-                String imageBase64 = Base64.getEncoder().encodeToString(imageBytes);
-                boardResponseDto.setImageBase64(imageBase64);
-            }
-
-            if (boardResponseDto.getComments() == null || boardResponseDto.getComments().isEmpty()) {
-                mav.addObject("noComments", true);
-            }
-
-            mav.addObject("board", boardResponseDto);
-        } else {
-            mav.addObject("error", "게시글을 찾을 수 없습니다.");
-        }
-
-        return mav;
-    }
-
-
     @ApiOperation(value = "게시글 작성", notes = "게시글을 작성할 수 있습니다")
     @PostMapping("/starroad/board/writepro")
     public ModelAndView boardWritePro(
-            @ApiIgnore HttpSession session,
+            @ApiIgnore HttpSession session, RedirectAttributes redirectAttributes,
             @ApiParam(value = "게시글 종류") @RequestParam("type") String type,
             @ApiParam(value = "게시글 상세 종류") @RequestParam("detailType") String detailType,
             @ApiParam(value = "게시글 제목") @RequestParam("title") String title,
             @ApiParam(value = "게시글 내용") @RequestParam("content") String content,
             @ApiParam(value = "게시글 이미지") @RequestParam("image") MultipartFile imageFile
     ) {
-//        // 세션에서 현재 로그인한 사용자의 정보 가져오기
-//        Member currentUser = (Member) session.getAttribute("currentUser");
+
+        ModelAndView mav = new ModelAndView();
 
         if (session.getAttribute("currentUser") == null) {
-            // 로그인하지 않은 사용자가 글 작성을 시도하는 경우 처리
-            ModelAndView mav = new ModelAndView("redirect:/starroad/login");
-            mav.addObject("message", "로그인 후에 게시글을 작성할 수 있습니다.");
-
+            redirectAttributes.addFlashAttribute("error", "게시물 작성은 로그인이 필요한 서비스입니다");
+            mav.setViewName("redirect:/starroad/login");
             return mav;
         }
 
         try {
             MemberDto dto = (MemberDto) session.getAttribute("currentUser");
-            // 게시글 작성 서비스 호출 시, 현재 사용자 ID 추가로 전달
             boardService.writeBoard(dto.getId(), type, detailType, title, content, imageFile);
-
             return new ModelAndView("redirect:/starroad/board/main");
         } catch (IOException e) {
             e.printStackTrace();
-
-            // 이미지 업로드 실패 시 에러 페이지로 이동
-            ModelAndView mav = new ModelAndView("/error");
-            mav.addObject("message", "이미지 업로드에 실패했습니다.");
-
+            mav = new ModelAndView("/error");
+            mav.addObject("message", "이미지 업로드에 실패했습니다."); // TODO : 에러 페이지 - 이미지 업로드 에러
             return mav;
         }
     }
@@ -247,64 +194,63 @@ public class BoardController {
     @ApiOperation(value = "게시글 삭제", notes = "게시글을 삭제할 수 있습니다")
     @GetMapping("/starroad/board/delete")
     public ModelAndView deleteBoard(
-            @ApiParam(value = "게시글 번호") @RequestParam Integer no,
-            @ApiIgnore HttpSession session) {
+            @ApiParam(value = "게시글 번호") @RequestParam Integer no, @ApiIgnore HttpSession session, RedirectAttributes redirectAttributes) {
+
         ModelAndView mav = new ModelAndView();
 
         if (session.getAttribute("currentUser") == null) {
-            mav = new ModelAndView("redirect:/starroad/login");
-            mav.addObject("message", "로그인 후에 댓글을 작성할 수 있습니다.");
+            redirectAttributes.addFlashAttribute("error", "게시물 삭제는 로그인이 필요한 서비스입니다");
+            mav.setViewName("redirect:/starroad/login");
             return mav;
         }
 
         MemberDto currentUser = (MemberDto) session.getAttribute("currentUser");
         String currentUserId = currentUser.getId();
 
-
         if (boardService.canDelete(no, currentUserId)) {
-            // 현재 사용자가 게시글 삭제 가능한 경우
             boardService.deleteBoard(no);
             mav.setViewName("redirect:/starroad/board/main");
-
         } else{
-            // 현재 사용자가 게시글 삭제 불가
-            // 능한 경우 or 게시글 존재하지 않는 경우
-            mav.setViewName("board/deleteError");
+            mav.setViewName("board/deleteError");  // TODO : 에러 페이지 - 삭제 에러
         }
-
         return mav;
     }
 
+    @ApiOperation(value = "게시글 상세", notes = "게시글을 상세를 볼 수 있습니다")
+    @GetMapping("/starroad/board/detail")
+    public ModelAndView getBoardDetail(@ApiParam(value = "게시글 번호") @RequestParam("no") int no) {
 
+        ModelAndView mav = new ModelAndView();
+        mav = new ModelAndView("board/detail");
+
+        BoardResponseDto dto = boardService.detailBoard(no);
+        //if(dto.equals(null)) mav.addObject("error", "게시글을 찾을 수 없습니다.");
+        if(dto.getComments().equals(null)) mav.addObject("noComments", true);
+        mav.addObject("board", dto);
+
+        return mav;
+    }
 
     @ApiOperation(value = "게시글 추천", notes = "게시글을 추천할 수 있습니다")
     @PostMapping("/starroad/board/like")
     public ModelAndView handleLike(
             @ApiParam(value = "게시글 번호") @RequestParam("board") int boardNo,
-            @ApiIgnore HttpSession session) {
+            @ApiIgnore HttpSession session, RedirectAttributes redirectAttributes) {
 
+        ModelAndView mav = new ModelAndView();
         MemberDto memberDto = (MemberDto) session.getAttribute("currentUser");
-        System.out.println("debug = " + memberDto.getId());
-
-        if (memberDto.getId() == null ){
-
-            ModelAndView mav = new ModelAndView("redirect:/starroad/login");
-            mav.addObject("message", "로그인 후에 게시글을 작성할 수 있습니다.");
+        if (memberDto == null ){
+            redirectAttributes.addFlashAttribute("error", "게시물 추천은 로그인이 필요한 서비스입니다");
+            mav.setViewName("redirect:/starroad/login");
             return mav;
-
-        } else if (!boardService.hasLiked(boardNo,memberDto.getId())) {
-
-            ModelAndView mav= new ModelAndView("redirect:/starroad/board/detail?no=" + boardNo);
-            mav.addObject("message", "로그인 후에 좋아요를 누르거나 이미 좋아요한 게시글입니다.");
-            return mav;
+        } else if (boardService.hasLiked(boardNo, memberDto.getId())) {
+            ModelAndView lMav= new ModelAndView("redirect:/starroad/board/detail?no=" + boardNo);
+            lMav.addObject("message", "로그인 후에 좋아요를 누르거나 이미 좋아요한 게시글입니다.");  //TODO : 메시지가 표시되는 곳이 있나요?
+            return lMav;
         }
-
         else {
-
             boardService.increaseLikes(boardNo, memberDto.getId());
-            ModelAndView mav= new ModelAndView("redirect:/starroad/board/detail?no=" + boardNo);
-            return mav;
+            return new ModelAndView("redirect:/starroad/board/detail?no=" + boardNo);
         }
     }
-
 }

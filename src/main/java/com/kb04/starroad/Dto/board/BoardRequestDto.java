@@ -18,7 +18,7 @@ import java.util.Date;
 public class BoardRequestDto {
 
     private int no;
-    private MemberDto memberNo;
+    private Member member;
     private String title;
     private Date regdate;
     private String content;
@@ -43,6 +43,7 @@ public class BoardRequestDto {
                 .type(this.type)
                 .image(this.image)
                 .detailType(this.detailType)
+                .member(this.member)
                 .build();
     }
 
