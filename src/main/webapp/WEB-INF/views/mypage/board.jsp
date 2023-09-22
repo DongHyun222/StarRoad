@@ -39,7 +39,7 @@
             <c:forEach var="writing" items="${writings}">
                 <div class="b_contents">
                     <span class="b_type">${writing.type.equals("0")?"자유게시판":"인증게시판"}</span><br>
-                    <div class="b_title"><a href="#" class="b_title">${writing.title}</a></div>
+                    <div class="b_title"><a href="/starroad/board/detail?no=${writing.no}" class="b_title">${writing.title}</a></div>
                     <div class="w_d_l">
                         <div class="w_date">${writing.regdate.toString().substring(0,10)}</div>
                         <div id="likes_cc">
