@@ -147,7 +147,8 @@
         document.querySelectorAll(".comment-edit").forEach(function(button) {
             button.addEventListener("click", function() {
                 const commentNo = button.getAttribute("data-id");
-                location.href = "/starroad/comment/update?no=" + commentNo;
+                const boardNo = ${board.no};
+                location.href = "/starroad/comment/update?no=" + commentNo +"&boardNo=" + boardNo;
             });
         });
 

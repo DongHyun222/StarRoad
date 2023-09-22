@@ -18,6 +18,8 @@ public interface CommentRepository extends JpaRepository<Comment, Integer>, JpaS
     Optional<Comment> findByNo(Comment comment);
     void deleteByNo(int commentNo);
 
+
+
     Optional<Comment> findByNo(int commentNo);
 
 }

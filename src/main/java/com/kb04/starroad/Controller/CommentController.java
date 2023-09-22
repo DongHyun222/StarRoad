@@ -1,6 +1,7 @@
 package com.kb04.starroad.Controller;
 
 import com.kb04.starroad.Dto.MemberDto;
+import com.kb04.starroad.Dto.board.BoardResponseDto;
 import com.kb04.starroad.Dto.board.CommentDto;
 import com.kb04.starroad.Entity.Comment;
 import com.kb04.starroad.Service.BoardService;
@@ -74,7 +75,9 @@ public class CommentController {
     @ApiOperation(value = "댓글 수정 화면", notes = "댓글을 수정하기 위한 화면을 보여줍니다")
     @GetMapping("/starroad/comment/update")
     public ModelAndView updateComment(@ApiParam(value = "수정할 댓글 번호", example = "1") @RequestParam("no") int commentNo,
+                                      @ApiParam(value = "게시물 번호") @RequestParam("boardNo") int boardNo,
                                       @ApiIgnore HttpSession session) {
+
 
         if (session.getAttribute("currentUser") == null) {
             ModelAndView mav = new ModelAndView("redirect:/starroad/login");
@@ -82,7 +85,22 @@ public class CommentController {
             return mav;
         }
 
+        MemberDto currentUser = (MemberDto) session.getAttribute("currentUser");
+        String currentUserId = currentUser.getId();
+
         ModelAndView mav = new ModelAndView("comment/update");
+
+        // 로그인한 사용자와 댓글 작성자가 동일한지 확인
+        if (commentService.canUpdate(commentNo, currentUserId)) {
+            CommentDto commentDto = commentService.getUpdateComment(commentNo);
+            mav.addObject("comment", commentDto);
+            mav.setViewName("comment/update");
+        }
+        else{
+            mav.setViewName("redirect:/starroad/board/detail?no=" + boardNo);
+            mav.addObject("message", "다른 사용자의 댓글을 수정할 수 없습니다.");
+        }
+
 
         Optional<Comment> commentOptional = commentService.findByNo(commentNo);
 
