@@ -21,7 +21,7 @@ public interface BoardRepository extends JpaRepository<Board, Integer>, JpaSpeci
             char status, int minLikes, Date oneWeekAgo, Pageable pageable
     );
     List<Board> findAllByStatusOrderByLikesDesc(Character status);
-
+    List<Board> findAllByStatusAndLikesGreaterThanEqualAndRegdateAfterOrderByLikesDesc(char status, int minLikes, Date oneWeekago);
 
 
 

@@ -284,9 +284,9 @@ public class BoardController {
             @ApiIgnore HttpSession session) {
 
         MemberDto memberDto = (MemberDto) session.getAttribute("currentUser");
-        System.out.println("debug = " + memberDto.getId());
 
-        if (memberDto.getId() == null ){
+
+        if (memberDto== null || memberDto.getId() == null ){
 
             ModelAndView mav = new ModelAndView("redirect:/starroad/login");
             mav.addObject("message", "로그인 후에 게시글을 작성할 수 있습니다.");

@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @RequiredArgsConstructor
@@ -82,13 +83,30 @@ public class BoardService {
     /**
      * 게시판 모든 글 출력 - 인기글
      */
-    public List<BoardResponseDto> selectPopularBoard() {
-        List<Board> boardList = boardRepository.findAllByStatusOrderByLikesDesc('Y');
-        List<BoardResponseDto> dtoList = new ArrayList<>();
+//    public List<BoardResponseDto> selectPopularBoard() {
+//        List<Board> boardList = boardRepository.findAllByStatusOrderByLikesDesc('Y');
+//        List<BoardResponseDto> dtoList = new ArrayList<>();
+//
+//        for(Board board : boardList) {
+//            dtoList.add(board.toBoardResponseDto());
+//        }
+//        return dtoList;
+//    }
 
+
+    // 게시판 모든 글 출력 - 인기글
+    public List<BoardResponseDto> selectPopularBoard() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_YEAR, -7);
+        Date oneWeekAgo = calendar.getTime();
+
+        List<Board> boardList = boardRepository.findAllByStatusAndLikesGreaterThanEqualAndRegdateAfterOrderByLikesDesc('Y', 10, oneWeekAgo);
+
+        List<BoardResponseDto> dtoList = new ArrayList<>();
         for(Board board : boardList) {
             dtoList.add(board.toBoardResponseDto());
         }
+
         return dtoList;
     }
 
@@ -140,16 +158,6 @@ public class BoardService {
         }
         return false;
     }
-
-
-
-
-
-
-
-
-
-
 
     public BoardResponseDto detailBoard(){
         return null;
@@ -237,6 +245,7 @@ public class BoardService {
 
     public void increaseLikes(int boardNo, String memberId) {
         Optional<Board> optionalBoard = boardRepository.findById(boardNo);
+
         if (optionalBoard.isPresent()) {
             Board board = optionalBoard.get();
             int currentLikesCount = board.getLikes();
