@@ -39,19 +39,30 @@
 
                 let logs = paymentLogs[idx].split(", ")
                 let status = logs.pop()
-                const fl_cont = document.querySelector('#flower_container')
-                fl_cont.innerHTML = ''
-                logs.forEach((fl) => {
-                    let flower = document.createElement("img")
-                    flower.src = "${path}/resources/static/image/mypage/flowers/" + fl + ".png"
-                    flower.width = 100
-                    flower.height = 100
-                    flower.style.margin = "10px 5px"
-                    document.querySelector('#flower_container').appendChild(flower)
+
+                let colors = ["#282930", "#5C7EFC", "#879FFC", "#CAD1FD", "#FFFFFF", "#FFF06F", "#F6AD5C", "#F07450"]
+                const star_cont = document.querySelector('#star_container')
+                star_cont.innerHTML = ''
+                logs.forEach((fl, idx) => {
+                    let star_b = document.createElement("div")
+                    star_b.className = "star_b"
+                    if (fl !== "0") {
+                        star_b.id = "star_b" + idx
+                        let star = document.createElement("div")
+                        star.className = "star"
+                        star.style.background = colors[fl]
+                        star.style.boxShadow = "0 0 3px 3px " + colors[fl]
+                        star.style.left = String(Math.random() * 90) + "px"
+                        star.style.top = String(Math.random() * (parseInt(300 / parseInt(logs.length/6))-40)) + "px"
+                        document.querySelector('#star_container').appendChild(star_b).append(star)
+                    } else {
+                        document.querySelector('#star_container').appendChild(star_b)
+                    }
                 })
 
                 $("#sub_info_s").css("display", "block")
-                $("#flower_container").css({"display": "flex", "visibility": "visible"})
+                $("#star_container").css({"display": "flex", "visibility": "visible"})
+                $("#star_section").css("display", "block")
                 $("#sel_pic").css("display", "none")
                 $("#pic_exp").css("display", "none")
 
@@ -128,8 +139,8 @@
                 </div>
             </section>
 
-            <section>
-                <div id="flower_container"></div>
+            <section id="star_section">
+                <div id="star_container"></div>
             </section>
 
             <form action="/starroad/mypage/reward" method="post">

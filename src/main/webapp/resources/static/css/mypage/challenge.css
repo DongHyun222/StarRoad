@@ -82,14 +82,33 @@
     margin-right: 10px;
 }
 
-#flower_container {
+#star_section {
+    height: 300px;
+    display: none;
+}
+
+#star_container {
+    display: none;
+    height: 100%;
     width: 700px;
     flex-wrap: wrap;
     justify-content: space-evenly;
-    background: #92d85a;
+    background: #282930;
     border-radius: 5px;
-    visibility: hidden;
     margin: 0 auto;
+}
+
+.star_b {
+    width: 100px;
+    margin: 10px 5px;
+    position: relative;
+}
+
+.star {
+    border-radius: 100%;
+    width: 10px;
+    aspect-ratio: 1/1;
+    position: absolute;
 }
 
 #reward_btn {
