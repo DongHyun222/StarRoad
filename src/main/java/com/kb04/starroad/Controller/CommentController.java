@@ -75,7 +75,7 @@ public class CommentController {
     @ApiOperation(value = "댓글 수정 화면", notes = "댓글을 수정하기 위한 화면을 보여줍니다")
     @GetMapping("/starroad/comment/update")
     public ModelAndView updateComment(@ApiParam(value = "수정할 댓글 번호", example = "1") @RequestParam("no") int commentNo,
-                                      @ApiParam(value = "게시물 번호") @RequestParam("boardNo") int boardNo,
+                                      @ApiParam(value = "게시글 번호") @RequestParam("boardNo") int boardNo,
                                       @ApiIgnore HttpSession session) {
 
 
@@ -108,6 +108,9 @@ public class CommentController {
             Comment comment = commentOptional.get();
             CommentDto commentDto = comment.toCommentDto();
             mav.addObject("comment", commentDto);
+            BoardResponseDto dto = boardService.detailBoard(boardNo);
+            if(dto.getComments().equals(null)) mav.addObject("noComments", true);
+            mav.addObject("board", dto);
         } else {
             mav.addObject("errorMessage", "해당하는 댓글이 존재하지 않습니다.");
         }
