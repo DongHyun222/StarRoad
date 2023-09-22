@@ -121,17 +121,20 @@ public class BoardService {
     }
 
     /**
-     * 게시물 수정 logic
-     * @param boardRequestDto 수정된 게시물 - 제목, 내용, 이미지
+     * 게시글 수정
+     * @param no 게시글 번호
+     * @param title 게시글 타이틀
+     * @param content 게시글 내용
+     * @param newImage 게시글 이미지
      */
     @Transactional
-    public boolean updateBoard(BoardRequestDto boardRequestDto) {
+    public boolean updateBoard(int no, String title, String content, MultipartFile newImage) throws IOException {
 
-        Optional<Board> optionalBoard = boardRepository.findById(boardRequestDto.getNo());
+        Optional<Board> optionalBoard = boardRepository.findById(no);
 
         if(optionalBoard.isPresent()){
             Board board2 = optionalBoard.get();
-            board2.update(boardRequestDto.getTitle(), boardRequestDto.getContent(), boardRequestDto.getImage());
+            board2.update(title, content, newImage.isEmpty() ? board2.getImage() : newImage.getBytes());
             boardRepository.save(board2);
             return true;
         }
@@ -140,17 +143,17 @@ public class BoardService {
 
 
 
+
+
+
+
+
+
+
+
     public BoardResponseDto detailBoard(){
         return null;
     }
-
-
-
-
-
-
-
-
     public void write(Board board) {  //entity를 매개변수로 받음
 
         boardRepository.save(board);  //새로운 게시물이 데이터베이스에 추가됩니다.

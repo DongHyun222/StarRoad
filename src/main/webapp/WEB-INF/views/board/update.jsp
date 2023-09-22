@@ -20,7 +20,8 @@
 </head>
 <body>
 
-<form method="post" action="/starroad/board/updatepro?no=${board.no}"   >
+<form method="post" enctype="multipart/form-data" action="/starroad/board/updatepro?no=${board.no}">
+    <input type="hidden" name="no" value="${board.no}">
 <div class="container">
     <div id="navbar"></div>
     <div class="title">
@@ -32,18 +33,17 @@
         <span class="likes">
                 <img src="https://ifh.cc/g/aw0vjY.png" alt="Like Icon" style="vertical-align: middle; width: 20px; height: 20px;">
                 <c:out value="${board.likes}" />
-            </span>
-<%--
-        <div class="title-buttons">
-            <button id="editBtn">수정</button>
-            <button id="deleteBtn">삭제</button>
-        </div>--%>
+        </span>
     </div>
 
     <div class="content">
         <textarea name="content" class="contentStyle" id="content" placeholder="내용을 입력하세요" required>${board.content}</textarea>
+        <c:if test="${not empty board.image}">
+            <img src="data:image/jpeg;base64,${board.imageBase64}" alt="" width="200" height="200">
+        </c:if>
+
         <div class="image-input">
-            <input type="file" name="image" id="image">
+            <input type="file" name="newImage" id="newImage">
         </div>
         <div class="update-button">
             <button type="submit" class="buttonStyle" id="updateBtn">등록</button>
