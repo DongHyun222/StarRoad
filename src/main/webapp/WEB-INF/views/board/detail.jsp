@@ -83,14 +83,14 @@
         <c:forEach var="comment" items="${board.comments}">
              <div class="comment-item">
                 <i class="fas fa-user-circle"></i>
-                 <strong class="comment-author"><c:out value="${comment.member.id}" /></strong> <br>
+                 <strong class="comment-author"><c:out value="${currentUser.id}" /></strong> <br>
                  <div class="comment-content">
                  <span class="comment-content"><c:out value="${comment.content}" /></span> <br>
                  </div>
                  <div class="comment-date">
                  <span class="comment-date">
                     <i class="fas fa-clock"></i>
-                    <fmt:formatDate value="${comment.regdate}" pattern="yyyy-MM-dd HH:mm:ss" />
+                    <fmt:formatDate value="${comment.regdate}" pattern="yyyy-MM-dd HH:mm" />
                  </span>
                  </div>
 
