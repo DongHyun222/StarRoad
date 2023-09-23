@@ -13,9 +13,9 @@
     <link rel="stylesheet" type="text/css" href="${path}/resources/static/css/member/member.css">
 
     <script type="text/javascript">
-        $(function() {
+        $(function () {
             let errorFlag = false;
-            $("#password1").blur(function() {
+            $("#password1").blur(function () {
                 let password = $("#password1").val();
                 let confirmPassword = $("#confirmPassword").val();
                 const passwordPattern = /^[a-zA-Z0-9]{8,12}$/;
@@ -37,7 +37,7 @@
 
             let checkPassword = false;
 
-            $("#confirmPassword").blur(function() {
+            $("#confirmPassword").blur(function () {
                 let password = $("#password1").val();
                 let confirmPassword = $("#confirmPassword").val();
 
@@ -52,12 +52,12 @@
                     checkPassword = true;
                 }
             });
-            $(".submit-button").click(function() {
+            $(".submit-button").click(function () {
                 var requiredFields = $("input[required]");
 
                 // 모든 필수 필드가 valid한지 확인
                 var allValid = true;
-                requiredFields.each(function() {
+                requiredFields.each(function () {
                     if (!this.checkValidity()) {
                         allValid = false;
                         return false; // 검증 실패 시 반복문 종료
@@ -76,15 +76,13 @@
         });
 
 
-
-
     </script>
 
 </head>
 <body>
-
-    <div class="password-container" >
-        <div class="info_h1">${currentUser.name}님의 정보<div>
+<div>
+    <h1>${currentUser.name}님의 정보</h1>
+    <div class="password-container">
         <form action="/starroad/mypage/password" method="post" enctype="multipart/form-data">
             <table>
                 <tr>
@@ -105,9 +103,9 @@
             </table>
             <br>
             <br>
-            <button type="submit" class="submit-button" >비밀번호 수정</button>
+            <button type="submit" class="submit-button">비밀번호 수정</button>
         </form>
     </div>
-
+</div>
 </body>
 </html>

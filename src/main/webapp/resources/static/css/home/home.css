@@ -139,7 +139,6 @@ html, body {
     width: 180px;
     height: 50px;
     border-radius: 50px;
-    /*border: none;*/
     border: 3px solid white;
 }
 
@@ -151,10 +150,6 @@ html, body {
 #section3 .main_btn {
     background-color: #ffcb1e;
 }
-
-/*#section3 .main_btn a {*/
-/*    color: black;*/
-/*}*/
 
 #section4 .main_btn {
     background-color: #F6AD5C;
@@ -184,11 +179,6 @@ html, body {
     position: relative;
     margin-left: 150px;
     margin-top: 100px;
-
-    /*animation: bounce 3s 2;*/
-    /*-webkit-animation: bounce 3s 2;*/
-    /*-moz-animation: bounce 3s 2;*/
-    /*-o-animation: bounce 3s 2;*/
 }
 
 
@@ -200,6 +190,7 @@ html, body {
 .fa-angle-double-down:before {
     content: "\f107";
 }
+
 
 .bounce {
     position: absolute;

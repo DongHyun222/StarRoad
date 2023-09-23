@@ -14,8 +14,12 @@ import java.util.Optional;
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Integer>, JpaSpecificationExecutor<Comment> {
 
-    List<CommentDto> findByBoard(Board board);
+    List<CommentDto> findByBoardOrderByRegdate(Board board);
     Optional<Comment> findByNo(Comment comment);
     void deleteByNo(int commentNo);
+
+
+
     Optional<Comment> findByNo(int commentNo);
+
 }

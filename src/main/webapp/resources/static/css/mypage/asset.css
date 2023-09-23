@@ -1,5 +1,20 @@
-#pointree {
-    text-align: right;
+#asset_title {
+    font-size: 30px;
+    margin-bottom: 30px;
+}
+
+#asset_a {
+    justify-content: flex-start;
+}
+
+#asset_container {
+    width: 100%;
+}
+
+#asset_div {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 }
 
 #myChart {
@@ -12,4 +27,44 @@
     display: none;
     text-align: center;
     margin-top: 100px;
+}
+
+#asset_info {
+    width: 400px;
+    height: 300px;
+    border: 1px solid var(--sub-kb-dark-gray);
+    border-radius: 5px;
+    box-shadow: 4px 4px 4px 0 rgba(0, 0, 0, 25%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.color_class {
+    width: 20px;
+    aspect-ratio: 1/1;
+    margin-right: 10px;
+    float: left;
+}
+
+#deposit_color {
+    background: var(--sub-kb-dark-gray);
+}
+
+#savings_color {
+    background: var(--main-kb-yellow);
+}
+
+#invest_color {
+    background: var(--sub-kb-gold);
+}
+
+#asset_info_table tr td {
+    padding: 10px;
+}
+
+
+#assetInfo td:nth-child(1) {
+    text-align: right;
 }

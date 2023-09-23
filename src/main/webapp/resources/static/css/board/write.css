@@ -1,9 +1,9 @@
 #navbar {
     position: fixed;
     top: 0;
-    left: 0;   /* 화면의 왼쪽에서 시작합니다. */
-    width: 100%;  /* 전체 너비를 차지하게 합니다. */
-    z-index: 1000;  /* 다른 요소 위에 올려놓습니다. */
+    left: 0; /* 화면의 왼쪽에서 시작합니다. */
+    width: 100%; /* 전체 너비를 차지하게 합니다. */
+    z-index: 1000; /* 다른 요소 위에 올려놓습니다. */
     background: #FFF; /* 배경색을 흰색으로 설정 (필요에 따라 수정) */
 }
 
@@ -13,13 +13,16 @@
     position: relative; /* relative positioning을 설정해야 child element에 absolute를 적용할 수 있습니다. */
     display: flex;
     justify-content: space-between;
-
-
-
-
 }
+
 .row {
-transform: translateY(-20px);
+    transform: translateY(-20px);
+}
+
+#update_btn_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .container {
@@ -35,12 +38,13 @@ transform: translateY(-20px);
     flex-direction: column;
     transform: translateY(-80px);
 }
+
 .topTitle {
 
 }
 
 .labelStyle {
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 .labelStyle .form-group {
@@ -60,9 +64,10 @@ transform: translateY(-20px);
     padding-left: 10px;
     border-radius: 5px;
 }
+
 .col-md-4.col-sm-12.form-group.d-flex {
-   padding-left: 0px; /* Remove left padding */
-   padding-right: 0px; /* Remove right padding */
+    padding-left: 0px; /* Remove left padding */
+    padding-right: 0px; /* Remove right padding */
 }
 
 /* Add this to reduce the space between form groups */
@@ -70,79 +75,106 @@ transform: translateY(-20px);
     margin-right: -150px;
 }
 
+/*
+.board_nav_btn > button{
+    border: 1.3px solid var(--sub-kb-dark-gray);
+    background-color: white;
+    border-radius: 10px;
+    text-align: center;
+    width: 80px;
+    height: 40px;
+    font-weight: 590;
+}
+*/
 
+.buttonStyle {
+    border: 1.3px solid var(--sub-kb-dark-gray);
+    background-color: white;
+    border-radius: 10px;
+    text-align: center;
+    width: 80px;
+    height: 40px;
+    font-weight: 590;
+}
 
-.buttonStyle{
-    border: none; !important;
-    background-color: #FFCC00;
-    cursor: pointer;
-    font-size: 17px;
-
-    font-weight:bold;
+.buttonStyle:hover {
+    background-color: var(--main-kb-yellow);
+    color: var(--sub-kb-dark-gray);
+    font-weight: 700;
+    border: 2px solid var(--sub-kb-dark-gray);
 }
 
 .titleStyle {
-border: 1px solid lightgray;
-    font-size: 32px;
+    padding: 10px;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    outline-color: var(--main-kb-yellow);
+    font-size: x-large;
     position: relative;
     transform: translateY(-30px);
-    width : 1120px;
+    width: 1120px;
 }
-.contentStyle{
-    transform: translateY(-5px);
 
+.contentStyle {
+    transform: translateY(-5px);
     font-size: 20px;
     position: relative;
-    height: 600px;
+    height: 450px;
     width: 1110px;
     resize: none;
-    padding-top: 30px;
-    border-top : 3px solid #ccc;
-    border: 3px solid lightgray;
-
-
-
-
+    padding: 15px;
+    /*border-top: 3px solid #ccc;*/
+    border-radius: 5px;
+    border: 1px solid lightgray;
+    outline-color: var(--main-kb-yellow);
 }
-.update-button{
-    float :right;
+
+.update-button {
+    float: right;
     right: 20px; /* 오른쪽 여백을 조정하세요. */
     bottom: 20px; /* 아래 여백을 조정하세요. */
 
     height: 45px;
     width: 70px;
     border-radius: 10px;
-    background-color: var(--main-kb-yellow-positive);
+    background-color: white;
 
     color: black;
     transform: translateY(-50px);
-
+    border: 2px solid black;
     /* 추가된 스타일 */
     font-size: 14px;
     font-weight: bold;
-    text-align:center;
-    line-height:40px; /* 높이와 동일한 값 */
+    text-align: center;
+    line-height: 40px; /* 높이와 동일한 값 */
+    transition: background-color 0.3s ease;
+    background-color: #f0f0f0; /* 마우스 호버 시 배경색 변경 */
 
 }
-.image-input{
+
+.image-input {
     transform: translateY(30px);
 }
-.image-upload{
-transform: translateX(-7px);
+
+.image-upload {
+    transform: translateX(-7px);
 }
+
 .image-upload label {
     display: inline-block;
     transform: translateY(25px);
-        cursor: pointer; /* Change cursor shape when hovering over the label */
-        text-align: center; /* Center the text */
+    cursor: pointer; /* Change cursor shape when hovering over the label */
+    text-align: center; /* Center the text */
 
 }
+
 .image-upload p {
     font-size: 13px; /* Reduce the size of the text */
     margin-top: 16px;
-    transform: translateX(10px);
+    transform: translateX(5px);
 
 }
+
 .image-upload label, select.form-control {
     cursor: pointer; /* Change cursor shape when hovering over the label or select */
 }

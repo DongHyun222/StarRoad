@@ -5,7 +5,8 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>mypage</title>
+    <title>STARROAD</title>
+    <link rel="icon" href="${path}/resources/static/image/home/logo1.png" type="image/x-icon">
     <link rel="stylesheet" href="${path}/resources/static/css/common.css">
     <link rel="stylesheet" href="${path}/resources/static/css/mypage/sidebar.css">
     <link rel="stylesheet" href="${path}/resources/static/css/mypage/board.css">
@@ -30,7 +31,7 @@
             <li><a class='sidebar_menu' href='/starroad/mypage/password'>비밀번호 수정</a></li>
         </ul>
     </aside>
-    <article>
+    <article id="writings_c">
         <div id="sub_menu">
             <a id="sel" href="/starroad/mypage/board">작성글</a>&nbsp;
             <a id="not_sel" href="/starroad/mypage/comment">작성댓글</a>
@@ -39,11 +40,17 @@
             <c:forEach var="writing" items="${writings}">
                 <div class="b_contents">
                     <span class="b_type">${writing.type.equals("0")?"자유게시판":"인증게시판"}</span><br>
-                    <div class="b_title"><a href="#" class="b_title">${writing.title}</a></div>
+                    <div class="b_title"><a href="/starroad/board/detail?no=${writing.no}" class="b_title">${writing.title}</a></div>
                     <div class="w_d_l">
                         <div class="w_date">${writing.regdate.toString().substring(0,10)}</div>
-                        <div class="w_likes"><img class="thumb" src="https://ifh.cc/g/aw0vjY.png"
-                                                  alt="thumb">${writing.likes}</div>
+                        <div id="likes_cc">
+                            <div class="likes_c">
+                                <img class="thumb" src="${path}/resources/static/image/board/likes.png" alt="thumb">
+                                <div class="likes_n">
+                                        ${writing.likes}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </c:forEach>

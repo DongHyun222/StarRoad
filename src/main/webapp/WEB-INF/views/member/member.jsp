@@ -4,17 +4,18 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Member</title>
+    <title>STARROAD</title>
+    <link rel="icon" href="${path}/resources/static/image/home/logo1.png" type="image/x-icon">
     <script src="//code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="//code.jquery.com/jquery-latest.min.js"></script>
     <link rel="stylesheet" type="text/css" href="${path}/resources/static/css/common.css">
     <link rel="stylesheet" type="text/css" href="${path}/resources/static/css/member/member.css">
     <script type="text/javascript">
-        $(function() {
+        $(function () {
             $("#navbar").load("${path}/resources/common_jsp/navbar.jsp");
 
             let idFlag = false;
-            $("#checkId").click(function(){
+            $("#checkId").click(function () {
                 let id = $("#id").val();
                 // 정규 표현식을 사용하여 아이디 유효성 검사
                 const idPattern = /^[a-zA-Z0-9]{6,12}$/;
@@ -24,7 +25,7 @@
                         type: 'post',
                         url: "/starroad/checkMemberId",
                         data: {"id": id},
-                        success: function(data) {
+                        success: function (data) {
                             if (data == "N") {
                                 result = "사용 가능한 아이디입니다.";
                                 $("#result_checkId").html(result).css("color", "green");
@@ -36,8 +37,7 @@
                                 idFlag = false;
                             }
                         },
-                        error: function(error) {
-                            console.log(id, error)
+                        error: function (error) {
                             idFlag = false;
                             alert("오류 발생");
                         }
@@ -52,7 +52,7 @@
             });
 
             let errorFlag = false;
-            $("#password").blur(function() {
+            $("#password").blur(function () {
                 let password = $("#password").val();
                 let confirmPassword = $("#confirmPassword").val();
                 const passwordPattern = /^[a-zA-Z0-9]{8,12}$/;
@@ -73,13 +73,14 @@
             });
 
             let emailFlag = false;
+
             // 이메일 유효성을 검사하는 함수
             function isValidEmail(email) {
                 const emailPattern = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
                 return emailPattern.test(email);
             }
 
-            $("#checkEmail").click(function(){
+            $("#checkEmail").click(function () {
                 let email = $("#email").val();
 
                 if (isValidEmail(email)) {
@@ -88,7 +89,7 @@
                         type: 'post',
                         url: "/starroad/checkMemberEmail",
                         data: {"email": email},
-                        success: function(data) {
+                        success: function (data) {
                             if (data == "N") {
                                 result = "사용 가능한 이메일입니다.";
                                 $("#result_checkEmail").html(result).css("color", "green");
@@ -108,26 +109,25 @@
                 }
             });
 
-            $("#confirmPassword").blur(function() {
+            $("#confirmPassword").blur(function () {
                 let password = $("#password").val();
                 let confirmPassword = $("#confirmPassword").val();
 
                 if (password !== confirmPassword) {
                     result = "비밀번호를 다시 입력해주세요";
                     $("#result_checkPassword").html(result).css("color", "red");
-
                 } else {
                     result = "비밀번호가 일치합니다";
                     $("#result_checkPassword").html(result).css("color", "green");
                 }
             });
 
-            $(".submit-button").click(function() {
+            $(".submit-button").click(function () {
                 var requiredFields = $("input[required]");
 
                 // 모든 필수 필드가 valid한지 확인
                 var allValid = true;
-                requiredFields.each(function() {
+                requiredFields.each(function () {
                     if (!this.checkValidity()) {
                         allValid = false;
                         return false; // 검증 실패 시 반복문 종료
@@ -137,24 +137,32 @@
                 // 모든 필수 필드가 valid하다면 alert 띄우기
                 if (allValid && emailFlag && errorFlag && idFlag) {
                     alert("회원가입이 완료되었습니다.");
-                } else{
+                } else {
                     alert("회원정보를 다시 확인해주세요");
                 }
             });
 
         });
-
-
     </script>
 
-
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
     <script>
-        window.onload = function(){
-            document.getElementById("address").addEventListener("click", function(){ //주소입력칸을 클릭하면
+        window.onload = function () {
+            document.getElementById("address").addEventListener("click", function () { //주소입력칸을 클릭하면
                 //카카오 지도 발생
                 new daum.Postcode({
-                    oncomplete: function(data) { //선택시 입력값 세팅
+                    oncomplete: function (data) { //선택시 입력값 세팅
+                        document.getElementById("address").value = data.address; // 주소 넣기
+                        document.querySelector("input[id=address_detail]").focus(); //상세입력 포커싱
+                    }
+                }).open();
+            });
+
+            document.getElementById("address_btn").addEventListener("click", function () { //주소입력칸을 클릭하면
+                //카카오 지도 발생
+                new daum.Postcode({
+                    oncomplete: function (data) { //선택시 입력값 세팅
                         document.getElementById("address").value = data.address; // 주소 넣기
                         document.querySelector("input[id=address_detail]").focus(); //상세입력 포커싱
                     }
@@ -162,148 +170,146 @@
             });
         }
     </script>
-
 </head>
 <body>
-    <div id="navbar"></div>
+<div id="navbar"></div>
+<div class="container">
+    <div class="form-container">
+        <h1>회원가입</h1>
+        <form action="/starroad/member" method="post" enctype="multipart/form-data">
+            <h2>기본정보 <span class="required"><span class="star">*</span>&nbsp;표시는 필수 입력입니다</span></h2>
+            <table>
+                <tr>
+                    <th>성명 <span class="star">*</span></th>
+                    <td><input type="text" name="name" id="name" required
+                               pattern="^[가-힣]{2,5}|[a-zA-Z]{2,10}\s[a-zA-Z]{2,10}"></td>
+                </tr>
+                <tr>
+                    <th>아이디 <span class="star">*</span></th>
+                    <td>
+                        <input type="text" name="id" id="id" required>
+                        <a id="checkId" class="memberClick">중복확인</a><br>
+                        <div class='valid'><span id="result_checkId" style="font-size:12px;">6~12자리 영문/숫자 조합</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>비밀번호 <span class="star">*</span></th>
+                    <td>
+                        <input type="password" name="password" id="password" required>
+                        <div class='valid' id="result_Password">8~12자리 영문/숫자 조합 (대소문자)</div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>비밀번호 확인 <span class="star">*</span></th>
+                    <td>
+                        <input type="password" name="confirm_password" id="confirmPassword" required>
+                        <div class='valid' id="result_checkPassword">비밀번호를 다시한번 입력하세요</div>
+                    </td>
+                </tr>
+            </table>
+            <br>
+            <h2>추가정보</h2>
 
-    <div class="container">
-
-        <div class="form-container">
-            <h1>회원가입</h1>
-            <h2>기본정보 <span class="required"><span class="star">*</span>표시는 필수 입력입니다</span></h2>
-
-            <form action="/starroad/member" method="post" enctype="multipart/form-data">
-                <table>
-                    <tr>
-                        <th>성명 <span class="star">*</span></th>
-                        <td><input type="text" name="name" id="name" required></td>
-                    </tr>
-                    <tr>
-                        <th>아이디 <span class="star">*</span></th>
-                        <td>
-                            <input type="text" name="id" id="id" required>
-                            <a id="checkId" class="memberClick" >중복확인</a><br>
-                            <div class='valid'><span id="result_checkId" style="font-size:12px;">6~12자리 영문/숫자 조합</span></div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>비밀번호 <span class="star">*</span></th>
-                        <td>
-                            <input type="password" name="password" id="password" required>
-                            <div class='valid' id="result_Password">8~12자리 영문/숫자 조합 (대소문자)</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>비밀번호 확인 <span class="star">*</span></th>
-                        <td>
-                            <input type="password" name="confirm_password" id="confirmPassword" required>
-                            <div class='valid' id="result_checkPassword">비밀번호를 다시한번 입력하세요</div>
-                        </td>
-                    </tr>
-                </table>
-                <br>
-                <h2>추가정보</h2>
-
-                <table>
-                    <tr>
-                        <th>생년월일 <span class="star">*</span></th>
-                        <td><input type="date" name="birthday" id="birthday" required></td>
-                    </tr>
-                    <tr>
-                        <th>전화번호 <span class="star">*</span></th>
-                        <td>
-                            <input type="text" name="phone" /> -
-                            <input type="text" name="phone" /> -
-                            <input type="text" name="phone" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>이메일 <span class="star">*</span></th>
-                        <td>
-                            <input type="text" id="email" name="email" required>
-                            <a id="checkEmail" class="memberClick" >중복확인</a><br>
-                            <div class='valid'><span id="result_checkEmail" style="font-size:12px;">이메일을 적어주세요</span></div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>자택주소 <span class="star">*</span></th>
-                        <td>
-                            <input type="text" name="address" id="address" required>
-                            <input type="text" name="address" id="address_detail" placeholder="상세주소를 입력하세요" required>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>직업구분</th>
-                        <td>
-                            <select name="job" id="job">
-                                <option disabled selected>직업을 선택하세요</option>
-                                <option>학생</option>
-                                <option>직장인</option>
-                                <option>사업주</option>
-                                <option>프리랜서</option>
-                                <option>전문직</option>
-                                <option>주부</option>
-                                <option>기타</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>월수입 </th>
-                        <td>
-                            <input type="number" name="salary" id="salary" required>
-                            <div class='valid'>1,000원 단위 (소득이 없을시 0)</div>
-                        </td>
-                    </tr>
-                        <th>거래목적</th>
-                        <td>
-                            <select name="purpose" id="purpose">
-                                <option disabled selected>거래목적을 선택하세요</option>
-                                <option >급여 및 생활비</option>
-                                <option >저축 및 투자</option>
-                                <option >사업상 거래</option>
-                                <option >결제</option>
-                                <option >대출</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>거래자금의 원천</th>
-                        <td>
-                            <select name="source" id="source" >
-                                <option disabled selected>원천을 선택하세요</option>
-                                <option >근로 및 연금소득</option>
-                                <option >퇴직소득</option>
-                                <option >사업소득</option>
-                                <option >임대소득</option>
-                                <option >매매소득</option>
-                                <option>금융소득</option>
-                                <option >용돈/생활비/상속</option>
-                                <option >대출금</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>저금목표치 </th>
-                        <td>
-                            <span class="source"> 거래자금의 원천의</span>
-                            <input type="number" name="goal" id="goal" min="0" max="100" required>
-                            <span class="per">%</span>
-                            <div class='valid'>퍼센트단위 (0~100사이 숫자 입력)</div>
-                        </td>
-                    </tr>
-                </table>
-                <br>
-                <div class="agree-check">
-                    <input type="checkbox" required /> 이용약관 개인정보 수집 및 이용, 마케팅 활용선택에 모두 동의합니다.
-                </div>
-                <br>
-                <button type="submit" class="submit-button" >회원가입</button>
-                <br>
-                <br>
-            </form>
-        </div>
+            <table>
+                <tr>
+                    <th>생년월일 <span class="star">*</span></th>
+                    <td><input type="date" name="birthday" id="birthday" required max="9999-12-31"></td>
+                </tr>
+                <tr>
+                    <th>전화번호 <span class="star">*</span></th>
+                    <td>
+                        <input type="text" name="phone" pattern="\d{2,3}"/> -
+                        <input type="text" name="phone" pattern="\d{4}"/> -
+                        <input type="text" name="phone" pattern="\d{4}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th>이메일 <span class="star">*</span></th>
+                    <td>
+                        <input type="text" id="email" name="email" required>
+                        <a id="checkEmail" class="memberClick">중복확인</a><br>
+                        <div class='valid'><span id="result_checkEmail" style="font-size:12px;">이메일을 적어주세요</span></div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>자택주소 <span class="star">*</span></th>
+                    <td>
+                        <input type="text" name="address" id="address" required>
+                        <a id="address_btn" class="memberClick">주소검색</a><br>
+                        <input type="text" name="address" id="address_detail" placeholder="상세주소를 입력하세요" required>
+                    </td>
+                </tr>
+                <tr>
+                    <th>직업구분</th>
+                    <td>
+                        <select name="job" id="job">
+                            <option disabled selected>직업을 선택하세요</option>
+                            <option>학생</option>
+                            <option>직장인</option>
+                            <option>사업주</option>
+                            <option>프리랜서</option>
+                            <option>전문직</option>
+                            <option>주부</option>
+                            <option>기타</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>월수입</th>
+                    <td>
+                        <input type="number" name="salary" id="salary" required><span>천원</span>
+                        <div class='valid'>1,000원 단위 (소득이 없을시 0)</div>
+                    </td>
+                </tr>
+                <th>거래목적</th>
+                <td>
+                    <select name="purpose" id="purpose">
+                        <option disabled selected>거래목적을 선택하세요</option>
+                        <option>급여 및 생활비</option>
+                        <option>저축 및 투자</option>
+                        <option>사업상 거래</option>
+                        <option>결제</option>
+                        <option>대출</option>
+                    </select>
+                </td>
+                </tr>
+                <tr>
+                    <th>거래자금의 원천</th>
+                    <td>
+                        <select name="source" id="source">
+                            <option disabled selected>원천을 선택하세요</option>
+                            <option>근로 및 연금소득</option>
+                            <option>퇴직소득</option>
+                            <option>사업소득</option>
+                            <option>임대소득</option>
+                            <option>매매소득</option>
+                            <option>금융소득</option>
+                            <option>용돈/생활비/상속</option>
+                            <option>대출금</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>저금목표치</th>
+                    <td>
+                        <span class="source"> 거래자금의 원천의</span>
+                        <input type="number" name="goal" id="goal" min="0" max="100" required>
+                        <span class="per">%</span>
+                        <div class='valid'>퍼센트 단위 (0~100사이 숫자 입력)</div>
+                    </td>
+                </tr>
+            </table>
+            <br>
+            <div class="agree-check">
+                <input type="checkbox" required/> 이용약관 개인정보 수집 및 이용, 마케팅 활용선택에 모두 동의합니다.
+            </div>
+            <br>
+            <button type="submit" class="submit-button">회원가입</button>
+            <br>
+            <br>
+        </form>
     </div>
-
+</div>
 </body>
 </html>

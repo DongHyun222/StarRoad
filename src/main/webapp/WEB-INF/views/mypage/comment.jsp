@@ -5,7 +5,8 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>mypage</title>
+    <title>STARROAD</title>
+    <link rel="icon" href="${path}/resources/static/image/home/logo1.png" type="image/x-icon">
     <link rel="stylesheet" href="${path}/resources/static/css/common.css">
     <link rel="stylesheet" href="${path}/resources/static/css/mypage/sidebar.css">
     <link rel="stylesheet" href="${path}/resources/static/css/mypage/board.css">
@@ -30,7 +31,7 @@
             <li><a class='sidebar_menu' href='/starroad/mypage/password'>비밀번호 수정</a></li>
         </ul>
     </aside>
-    <article>
+    <article id="writings_c">
         <div id="sub_menu">
             <a id="not_sel" href="/starroad/mypage/board">작성글</a>&nbsp;
             <a id="sel" href="/starroad/mypage/comment">작성댓글</a>

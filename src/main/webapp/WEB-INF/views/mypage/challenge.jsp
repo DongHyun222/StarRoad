@@ -5,7 +5,8 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>mypage</title>
+    <title>STARROAD</title>
+    <link rel="icon" href="${path}/resources/static/image/home/logo1.png" type="image/x-icon">
     <link rel="stylesheet" href="${path}/resources/static/css/common.css">
     <link rel="stylesheet" href="${path}/resources/static/css/mypage/sidebar.css">
     <link rel="stylesheet" href="${path}/resources/static/css/mypage/challenge.css">
@@ -39,33 +40,60 @@
 
                 let logs = paymentLogs[idx].split(", ")
                 let status = logs.pop()
-                const fl_cont = document.querySelector('#flower_container')
-                fl_cont.innerHTML = ''
-                logs.forEach((fl) => {
-                    let flower = document.createElement("img")
-                    flower.src = "${path}/resources/static/image/mypage/flowers/" + fl + ".png"
-                    flower.width = 100
-                    flower.height = 100
-                    flower.style.margin = "10px 5px"
-                    document.querySelector('#flower_container').appendChild(flower)
+
+                let colors = ["#282930", "#5C7EFC", "#879FFC", "#CAD1FD", "#FFFFFF", "#FFF06F", "#F6AD5C", "#F07450"]
+                const star_cont = document.querySelector('#star_container')
+                star_cont.innerHTML = ''
+                logs.forEach((fl, idx) => {
+                    let star_b = document.createElement("div")
+                    star_b.className = "star_b"
+                    if (fl !== "0") {
+                        star_b.id = "star_b" + idx
+                        let star = document.createElement("div")
+                        star.className = "star"
+                        star.style.background = colors[fl]
+                        star.style.boxShadow = "0 0 3px 3px " + colors[fl]
+                        star.style.left = String(Math.random() * 90) + "px"
+                        star.style.top = String(Math.random() * (parseInt(300 / parseInt(logs.length/6))-40)) + "px"
+                        document.querySelector('#star_container').appendChild(star_b).append(star)
+                    } else {
+                        document.querySelector('#star_container').appendChild(star_b)
+                    }
                 })
 
                 $("#sub_info_s").css("display", "block")
-                $("#flower_container").css("display", "flex")
+                $("#star_container").css({"display": "flex", "visibility": "visible"})
+                $("#star_section").css("display", "block")
+                $("#sel_pic").css("display", "none")
+                $("#pic_exp").css("display", "none")
 
                 if (status === "-1") {          // 성공
                     $("#reward_btn").text("리워드를 받으세요 🥳")
                         .attr("disabled", false)
-                        .css({"display":"block", "background":"var(--main-kb-yellow-positive)", "color":"black", "cursor":"pointer"})
+                        .css({
+                            "display": "block",
+                            "background": "var(--main-kb-yellow-positive)",
+                            "color": "black",
+                            "cursor": "pointer"
+                        })
                 } else if (status === "-2") {   // 리워드를 이미 받았을 때, 끝났을 때
                     $("#reward_btn").text("완주 성공! 😎")
-                        .attr("disabled",true)
-                        .css({"display":"block", "background":"var(--sub-kb-gold)", "color":"white", "cursor":"unset"})
-                    console.log(period)
+                        .attr("disabled", true)
+                        .css({
+                            "display": "block",
+                            "background": "var(--sub-kb-gold)",
+                            "color": "white",
+                            "cursor": "unset"
+                        })
                 } else {
-                    $("#reward_btn").text("").append("<strong>"+status+"</strong>"+"개월 남았어요 💪")
-                        .attr("disabled",true)
-                        .css({"display":"block", "background":"var(--sub-kb-gold)", "color":"white", "cursor":"unset"})
+                    $("#reward_btn").text("").append("<strong>" + status + "</strong>" + "개월 남았어요 💪")
+                        .attr("disabled", true)
+                        .css({
+                            "display": "block",
+                            "background": "var(--sub-kb-gold)",
+                            "color": "white",
+                            "cursor": "unset"
+                        })
                 }
             })
         });
@@ -83,37 +111,46 @@
             <li><a class='sidebar_menu' href='/starroad/mypage/password'>비밀번호 수정</a></li>
         </ul>
     </aside>
-    <article>
-        <select name="subscription" id="sel_sub">
-            <option disabled selected>가입하신 적금을 선택해주세요</option>
-            <c:forEach items="${subscriptions}" var="subscription" varStatus="status">
-                <option value="${status.index}">&nbsp;${subscription.prod.name}</option>
-            </c:forEach>
-        </select>
+    <article id="sub_article">
+        <div>
+            <select name="subscription" id="sel_sub">
+                <option disabled selected>가입하신 적금을 선택해주세요</option>
+                <c:forEach items="${subscriptions}" var="subscription" varStatus="status">
+                    <option value="${status.index}">&nbsp;${subscription.prod.name}</option>
+                </c:forEach>
+            </select>
 
-        <section id="sub_info_s">
-            <div id="sub_na_c">
-                <span id="sub_name"></span>
-                <span id="sub_attr"></span>
-            </div>
-            <div id="sub_be_c">
-                <div id="bef_exp"></div>
-                <div id="sub_exp"></div>
-            </div>
-            <div id="sub_pp_c">
-                <div id="sub_period"></div>
-                <div id="sub_price"></div>
-            </div>
-        </section>
-        <section>
-            <div id="flower_container"></div>
-        </section>
-        <form action="/starroad/mypage/reward" method="post">
-            <input type="hidden" id="name_val" name="name">
-            <input type="hidden" id="period_val" name="period">
-            <input type="hidden" id="ss_no_val" name="sub_no">
-            <button id="reward_btn"></button>
-        </form>
+            <section id="sel_pic_exp">
+                <img id="sel_pic" src="${path}/resources/static/image/mypage/sel_pic.png">
+                <div id="pic_exp">가입하신 적금을 선택해주세요</div>
+            </section>
+
+            <section id="sub_info_s">
+                <div id="sub_na_c">
+                    <span id="sub_name"></span>
+                    <span id="sub_attr"></span>
+                </div>
+                <div id="sub_be_c">
+                    <div id="bef_exp"></div>
+                    <div id="sub_exp"></div>
+                </div>
+                <div id="sub_pp_c">
+                    <div id="sub_period"></div>
+                    <div id="sub_price"></div>
+                </div>
+            </section>
+
+            <section id="star_section">
+                <div id="star_container"></div>
+            </section>
+
+            <form action="/starroad/mypage/reward" method="post">
+                <input type="hidden" id="name_val" name="name">
+                <input type="hidden" id="period_val" name="period">
+                <input type="hidden" id="ss_no_val" name="sub_no">
+                <button id="reward_btn"></button>
+            </form>
+        </div>
     </article>
 </main>
 </html>

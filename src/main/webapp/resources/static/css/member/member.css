@@ -1,48 +1,69 @@
 .container {
     display: flex;
     justify-content: center;
-    margin-top : 20px;
-}
-
-div.password-container {
-    display : flex;
-    justify-content : center;
-    margin-top : 200px;
-}
-
-h1 {
-    font-size : 30px;
-    padding-bottom : 30px;
 }
 
 .form-container {
-    width : 800px;
-    justify-content: space-between; /* 요소를 가로로 분리하여 왼쪽과 오른쪽 정렬합니다. */
+    margin-top: 30px;
+}
 
+h1 {
+    font-size: 30px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+h2 {
+    font-size: 24px;
+}
+
+div.password-container {
+    display: flex;
+    justify-content: center;
+}
+
+table {
+    border-collapse: collapse;
+    border-radius: 6px;
+    border-style: hidden;
+    box-shadow: 0 0 0 1px #84888B;
 }
 
 table, th, td {
-
-    padding: 5px; /* 셀 내부 여백을 설정할 수 있습니다. */
+    padding: 10px; /* 셀 내부 여백을 설정할 수 있습니다. */
 }
 
 table th {
-    background-color: #E2E2E2;
     padding: 16px;
-    width : 200px;
+    width: 160px;
+    border-bottom: 1px solid #84888B;
+    text-align: left;
+}
+
+table td {
+    border-bottom: 1px solid #84888B;
+    width: 400px;
 }
 
 .memberClick {
     padding: 5px 10px; /* 원하는 패딩 크기로 조절하세요. */
-    background-color: #E2E2E2; /* 원하는 배경색으로 설정하세요. */
-    color: lightblack; /* 글자 색상 설정 */
-    border: none; /* 테두리 제거 */
+    margin-left: 15px;
     cursor: pointer; /* 커서 스타일을 포인터로 변경하여 클릭 가능한 모양으로 표시합니다. */
+    border: none;
+    background: var(--main-kb-yellow-positive);
+    border-radius: 5px;
+    text-align: center;
+    width: 80px;
+    height: 40px;
+}
+
+.memberClick:hover {
+    background-color: var(--main-kb-yellow);
 }
 
 .valid, .invalid {
-	font-size: 11px;
-	color : gray;
+    font-size: 13px;
+    color: grey;
 }
 
 .star {
@@ -55,33 +76,44 @@ table th {
     align-items: center;
 }
 
-table tr td input { /*테이블 인풋 길이 */
-	width: 240px;
+table tr td input, table tr td select { /*테이블 인풋 길이 */
+    border: 1px solid #dfdfdf;
+    padding: 5px;
+    border-radius: 5px;
+    width: 240px;
+    outline-color: var(--main-kb-yellow-positive);
 }
 
 table tr td select { /*테이블 인풋 길이 */
-	width: 248px;
+    width: 248px;
 }
 
-table tr th {
-	text-align: left;
+#salary {
+    width: 200px;
+    margin-right: 3px;
 }
 
 table tr td input[name=phone] {
-	width: 60px;
+    width: 60px;
 }
 
 .submit-button {
-    background-color: #FFBC00;
+    background-color: var(--main-kb-yellow-positive);
     border: none;
     cursor: pointer;
     padding: 12px 80px; /* 패딩 크기 조절 (상하 10px, 좌우 20px) */
     font-weight: bold; /* 글자 굵게 설정 */
     font-size: 24px; /* 글자 크기 조절 */
+    border-radius: 5px;
     text-align: center; /* 텍스트 가운데 정렬 */
     display: block; /* 블록 레벨 요소로 설정하여 가로 전체를 차지하도록 합니다. */
     margin: 0 auto; /* 가운데 정렬을 위해 좌우 여백을 자동으로 설정 */
 }
+
+.submit-button:hover {
+    background: var(--main-kb-yellow);
+}
+
 
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
@@ -95,35 +127,20 @@ table tr td input[name=goal] {
     padding-right: 5px; /* 오른쪽 여백을 조정합니다. */
 }
 
-/*table tr td input[name="address"]{
-    font-size : 15px;
-}*/
-
-.per{
-    color : #808080;
-}
-
-.source {
-    color : #808080;
-    font-size: 18px;
-}
-
-.info_h1{
-    font-size : 30px;
-    font-weight: bold;
-}
-
 div.info_div {
     display: flex;
     justify-content: center;
 }
 
 #update_btn {
-    margin: 0 auto;
+    margin: 30px auto;
 }
 
-.agree-check{
-    font-size : 16px;
+input[type="checkbox"] {
+    accent-color: var(--main-kb-yellow);
 }
 
-
+#address_detail {
+    margin-top: 10px;
+    width: 350px;
+}
