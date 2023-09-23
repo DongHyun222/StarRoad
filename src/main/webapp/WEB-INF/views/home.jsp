@@ -24,6 +24,8 @@
             $("#footer").load("${path}/resources/common_jsp/footer.jsp");
             $("#navbar").load("${path}/resources/common_jsp/navbar.jsp");
 
+            sessionStorage.setItem("modal", "0");
+
             window.addEventListener("wheel", function (e) {
                 e.preventDefault();
             }, {passive: false});
