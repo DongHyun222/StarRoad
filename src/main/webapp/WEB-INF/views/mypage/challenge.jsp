@@ -41,19 +41,18 @@
                 let logs = paymentLogs[idx].split(", ")
                 let status = logs.pop()
 
-                let colors = ["#282930", "#5C7EFC", "#879FFC", "#CAD1FD", "#FFFFFF", "#FFF06F", "#F6AD5C", "#F07450"]
                 const star_cont = document.querySelector('#star_container')
                 star_cont.innerHTML = ''
-                logs.forEach((fl, idx) => {
+                logs.forEach((st) => {
                     let star_b = document.createElement("div")
                     star_b.className = "star_b"
-                    if (fl !== "0") {
-                        star_b.id = "star_b" + idx
-                        let star = document.createElement("div")
+                    if (st !== "0") {
+                        let star = document.createElement("img")
+                        star.src = "${path}/resources/static/image/mypage/stars/" + st +".png"
+                        star.width = 10
+                        star.height = 10
                         star.className = "star"
-                        star.style.background = colors[fl]
-                        star.style.boxShadow = "0 0 3px 3px " + colors[fl]
-                        star.style.left = String(Math.random() * 90) + "px"
+                        star.style.left = String(Math.random() * 75 + 5) + "px"
                         star.style.top = String(Math.random() * (parseInt(300 / parseInt(logs.length/6))-40)) + "px"
                         document.querySelector('#star_container').appendChild(star_b).append(star)
                     } else {

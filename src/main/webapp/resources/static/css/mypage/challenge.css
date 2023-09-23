@@ -109,6 +109,17 @@
     width: 10px;
     aspect-ratio: 1/1;
     position: absolute;
+    animation: blink 2s ease infinite;
+}
+
+@keyframes blink {
+    0%,
+    100% {
+        filter: drop-shadow(0px 0px 5px white);
+    }
+    50% {
+        filter: drop-shadow(0px 0px 5px #282930);
+    }
 }
 
 #reward_btn {
