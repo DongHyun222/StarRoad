@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="${path}/resources/static/css/common.css">
     <link rel="stylesheet" type="text/css" href="${path}/resources/static/css/home/home.css">
     <link rel="stylesheet" type="text/css" href="${path}/resources/static/css/nav.css">
+    <link rel="stylesheet" type="text/css" href="${path}/resources/static/css/home/login_home.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <title>Starroad</title>
@@ -16,7 +17,10 @@
     <script type="text/javascript">
         $(function () {
             $("#navbar").load("${path}/resources/common_jsp/navbar.jsp");
-            sessionStorage.setItem("modal", "0");
+            $("#modal").css("display", "block");
+            if(sessionStorage.getItem("modal") === "1"){
+                $("#modal").css("display", "none");
+            }
         });
     </script>
 
@@ -112,5 +116,43 @@
         <p>청년 정책과 금융 지식을 한 곳에서! <br>청년 여러분을 위한 금융 정보와 혜택을 소개합니다.</p>
     </div>
 </div>
+
+<!-- 모달창 -->
+<div class="modal" id="modal">
+    <div class="modal_body">
+        <div class="modal_total_content">
+            <div class="modal_close">
+                <button class="modal_btn">✖ 닫기</button>
+            </div>
+            <div class="modal_content">
+                <p>
+                    <span class="modal_user_name">${currentUser}</span>님의 관심 정책으로 등록한 <br>
+                    "<span class="modal_policy">경기도 청년면접 수당</span>" 정책
+                    <span class="modal_day">마감 당일</span>입니다.
+                </p>
+            </div>
+            <div class="modal_btn_div">
+                <button class="modal_btn_link grow2" onclick="window.open('https://www.youthcenter.go.kr/youngPlcyUnif/youngPlcyUnifDtl.do?pageIndex=1&frameYn=&bizId=R2023060212952&dtlOpenYn=&plcyTpOpenTy=&plcyCmprInfo=&srchWord=&srchKeyWord=%EA%B2%BD%EC%A0%9C%2C%EA%B8%88%EC%9C%B5&srchPlcyTp=023030&chargerOrgCdAll=&srchRegion=003002008&srchAge=21&trgtJynEmp=&trgtJynEmp=&srchSortOrder=1&pageUnit=12')">👉 정책 신청하러 가기🏃</button>
+                <button class="modal_btn_link grow2" onclick="location.href='/starroad/policy';">👉 더 많은 정책 보러 가기🏃</button>
+            </div>
+            <div class="modal_allDay_close">
+                <p><input type="checkbox" id="modal_btn_allDay">&nbsp;&nbsp;오늘 하루 보지 않기</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const modal = document.querySelector("#modal");
+    const modal_btn = document.querySelector(".modal_btn");
+    const modal_btn_allDay = document.querySelector("#modal_btn_allDay");
+    modal_btn.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
+    modal_btn_allDay.addEventListener('click', () => {
+        sessionStorage.setItem('modal', "1");
+    });
+</script>
+
 </body>
 </html>
