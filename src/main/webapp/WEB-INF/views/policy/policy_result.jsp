@@ -94,6 +94,21 @@
             <div class="policy_box">
                 <c:forEach items="${policyList}" var="item" varStatus="status">
                     <div class="policy" data-aos="fade-up" data-aos-delay="${200*status.index}" data-aos-duration="400">
+                        <c:choose>
+                            <c:when test="${currentUser ne null}">
+                                <c:choose>
+                                    <c:when test="${item.name eq '경기도 청년면접수당'}">
+                                        <div class="like">💛</div>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <div class="like">🤍</div>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:when>
+                            <c:otherwise>
+                                <div class="like"></div>
+                            </c:otherwise>
+                        </c:choose>
                         <div class="name">${item.name}</div>
                         <div class="explain">${item.explain}</div>
                         <div class="tag">#${item.tag}</div>
