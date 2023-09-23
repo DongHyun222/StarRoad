@@ -64,7 +64,7 @@ html, body {
 
 #section2 {
     color: white;
-    background-color: #495DC5;
+    background-color: #3f5bd0;
 
     -webkit-transition: background .5s ease-out;
     -moz-transition: background .5s ease-out;
@@ -72,12 +72,12 @@ html, body {
     transition: background .5s ease-out;
 }
 
-#section2:hover  {
+#section2:hover {
     color: black;
-    background: #B6C1F9;
+    background: #879FFC;
 }
 
-#section2:hover > .content  {
+#section2:hover > .content {
     background-image: url("/resources/static/image/home/urban-line-stars-line.gif");
 }
 
@@ -95,15 +95,15 @@ html, body {
 }
 
 #section3 {
-    background-color: #EAFEFF;
+    background-color: #fff7b4;
 }
 
 #section4 {
-    background-color: #EFFFF1;
+    background-color: #f8c992;
 }
 
 #section5 {
-    background-color: #F6EBFF;
+    background-color: #ef9d88;
 }
 
 .title {
@@ -139,23 +139,29 @@ html, body {
     width: 180px;
     height: 50px;
     border-radius: 50px;
-    border: none;
+    /*border: none;*/
+    border: 3px solid white;
 }
 
 .main_btn a {
     color: white;
+    font-weight: bold;
 }
 
 #section3 .main_btn {
-    background-color: #40D0EF;
+    background-color: #ffcb1e;
 }
 
+/*#section3 .main_btn a {*/
+/*    color: black;*/
+/*}*/
+
 #section4 .main_btn {
-    background-color: #63CF30;
+    background-color: #F6AD5C;
 }
 
 #section5 .main_btn {
-    background-color: #A552E5;
+    background-color: #F07450;
 }
 
 .main_3d_img {

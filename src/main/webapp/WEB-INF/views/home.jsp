@@ -42,21 +42,11 @@
             })
         });
     </script>
-    <title>청년을 위한 금융 서비스 STARROAD</title>
+    <title>STARROAD</title>
 </head>
 
 <body>
 <div id="navbar"></div>
-<%--<div class="section" id="section1">--%>
-<%--    <div class="content">--%>
-<%--        <div class="title" data-aos="fade-up" data-aos-duration="3000">--%>
-<%--            STAR ROAD--%>
-<%--        </div>--%>
-<%--    </div>--%>
-<%--    <div class="scroll bounce">--%>
-<%--        <img class="fa fa-angle-double-down" src="${path}/resources/static/image/home/scroll.png">--%>
-<%--    </div>--%>
-<%--</div>--%>
 <div class="section" id="section2">
     <div class="content">
         <div>
@@ -64,7 +54,7 @@
                 STAR ROAD
             </div>
             <div id="section2_detail" class="detail" data-aos="fade-up" data-aos-duration="3000" data-aos-delay="1000">
-                세상을 바꾸는 금융<br>
+                KB와 함께 지속 가능 금융으로 나아가는 길,<br>
                 청년의 행복과 더 나은 세상을 만들어갑니다
             </div>
         </div>
@@ -80,7 +70,7 @@
                 예적금 상품 추천
             </div>
             <div id="section3_detail" class="detail" data-aos="fade-up" data-aos-duration="3000">
-                다양한 국민은행 상품을 추천받아요.<br>만기해지 시 예상 금액을 볼 수 있어요
+                다양한 국민은행 상품을 추천받아요<br>개인별 자산을 적용한 만기 예상 금액을 볼 수 있어요
             </div>
             <button class="main_btn" data-aos="fade-up" data-aos-duration="3000"><a href="/starroad/product">상품 추천
                 받기</a></button>
@@ -102,7 +92,8 @@
             </div>
             <div id="section4_detail" class="detail" data-aos="fade-up" data-aos-duration="3000">
                 나의 자산 상태를 차트로 파악하고,<br>
-                적금 유지하여 포인트리를 받아요.
+                적금 유지하여 포인트리를 받아요<br>
+                커뮤니티를 통해 사람들과 함께 적금 만기까지 달려보세요!
             </div>
             <c:choose>
                 <c:when test="${currentUser ne null}">
@@ -125,7 +116,8 @@
                 Policy
             </div>
             <div id="section5_detail" class="detail" data-aos="fade-up" data-aos-duration="3000">
-                청년을 위한 금융 정책을 알아보아요
+                청년을 위한 금융 정책을 살펴보고<br>
+                추가적인 혜택을 누려보세요!
             </div>
             <button class="main_btn" data-aos="fade-up" data-aos-duration="3000"><a href="/starroad/policy">청년 정책
                 보러가기</a></button>
