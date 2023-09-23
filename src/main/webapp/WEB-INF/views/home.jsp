@@ -83,7 +83,7 @@
         <div>
             <img id="section4_img_chart"
                  src="${path}/resources/static/image/home/section4_1.png" class="main_3d_img" alt="...">
-            <img id="section4_img_plant"
+            <img id="section4_img_plant" data-aos="zoom-in" data-aos-duration="2000"
                  src="${path}/resources/static/image/home/section4_2.png" class="main_3d_img" alt="...">
         </div>
         <div>
@@ -117,7 +117,8 @@
             </div>
             <div id="section5_detail" class="detail" data-aos="fade-up" data-aos-duration="3000">
                 청년을 위한 금융 정책을 살펴보고<br>
-                추가적인 혜택을 누려보세요!
+                추가적인 혜택을 누려보세요<br>
+                관심등록해두면 알림 서비스를 받을 수 있어요!
             </div>
             <button class="main_btn" data-aos="fade-up" data-aos-duration="3000"><a href="/starroad/policy">청년 정책
                 보러가기</a></button>
