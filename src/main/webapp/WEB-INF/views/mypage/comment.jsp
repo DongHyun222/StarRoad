@@ -40,7 +40,7 @@
             <c:forEach var="comment" items="${comments}">
                 <div class="b_contents">
                     <span class="b_type">${comment.board.type.equals("0")?"자유게시판":"인증게시판"}</span><br>
-                    <div class="b_title"><a href="#" class="b_title">${comment.content}</a></div>
+                    <div class="b_title"><a href="/starroad/board/detail?no=${comment.board.no}" class="b_title">${comment.content}</a></div>
                     <div class="w_t_d">
                         <div class="w_title">${comment.board.title}</div>
                         <div class="w_date">${comment.regdate.toString().substring(0,10)}</div>
