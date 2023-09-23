@@ -38,22 +38,23 @@
                 $("#sub_period").text(period + "개월")
                 $("#sub_price").text(sub[33].split("=")[1].split(")")[0] * 0.1 + "만원")
 
-                let logs = paymentLogs[idx].split(", ")
+                let tmp  = paymentLogs[idx].split("][")
+                let logs = tmp[0].split(", ")
+                let dates = tmp[1].split(", ")
                 let status = logs.pop()
 
                 const star_cont = document.querySelector('#star_container')
                 star_cont.innerHTML = ''
-                logs.forEach((st) => {
+                logs.forEach((st, idx) => {
                     let star_b = document.createElement("div")
                     star_b.className = "star_b"
                     if (st !== "0") {
                         let star = document.createElement("img")
                         star.src = "${path}/resources/static/image/mypage/stars/" + st +".png"
-                        star.width = 10
-                        star.height = 10
                         star.className = "star"
                         star.style.left = String(Math.random() * 75 + 5) + "px"
                         star.style.top = String(Math.random() * (parseInt(300 / parseInt(logs.length/6))-40)) + "px"
+                        star.title = dates[idx]
                         document.querySelector('#star_container').appendChild(star_b).append(star)
                     } else {
                         document.querySelector('#star_container').appendChild(star_b)
@@ -140,10 +141,11 @@
             </section>
 
             <section id="star_section">
+                <div style="margin: 0 0 20px 5px">❕ 별 위에 마우스를 올리면 납부 날짜가 나와요</div>
                 <div id="star_container"></div>
             </section>
 
-            <form action="/starroad/mypage/reward" method="post">
+            <form action="/starroad/mypage/reward" method="post" style="margin-top:70px">
                 <input type="hidden" id="name_val" name="name">
                 <input type="hidden" id="period_val" name="period">
                 <input type="hidden" id="ss_no_val" name="sub_no">

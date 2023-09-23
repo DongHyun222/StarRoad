@@ -83,7 +83,7 @@
 }
 
 #star_section {
-    height: 300px;
+    height: 400px;
     display: none;
 }
 
@@ -96,6 +96,7 @@
     background: #282930;
     border-radius: 5px;
     margin: 0 auto;
+    margin-bottom: 20px;
 }
 
 .star_b {
