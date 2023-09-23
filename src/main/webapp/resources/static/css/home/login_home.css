@@ -4,15 +4,16 @@
     top: 300px;
     left: 500px;
     width: 40%;
-    height: 35%;
+    height: 40%;
+    /*height: 35%;*/
 }
 
 .modal_body {
-    position: absolute;
-    top: 300px;
-    left: 500px;
-    width: 40%;
-    height: 35%;
+    /*position: absolute;*/
+    /*top: 300px;
+    left: 500px;*/
+    /*width: 40%;
+    height: 35%; */
     background-color: white;
     border: 6px solid var(--main-kb-yellow);
     border-radius: 10px;
@@ -77,7 +78,7 @@
 }
 
 .modal_btn_link {
-    margin-top: 3%;
+    margin-top: 1%;
     margin-left: 25px;
     height: min-content;
     background-color: white;
@@ -106,8 +107,9 @@
 
 /* 모달 닫기 하위 버튼 */
 .modal_allDay_close {
-    height: 10%;
+    height: 15%;
     padding-right: 70%;
+    padding-top: 30px;
     font-size: medium;
 }
 
