@@ -23,7 +23,7 @@ public class HomeController {
             session.removeAttribute("modal");
             mav = new ModelAndView("home");
         } else {
-            mav = new ModelAndView("LogInHome");
+            mav = new ModelAndView("loginHome");
             MemberDto dto = (MemberDto) session.getAttribute("currentUser");
             mav.addObject("currentUser", dto.getName());
         }
