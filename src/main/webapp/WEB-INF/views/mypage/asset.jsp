@@ -5,7 +5,8 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>mypage</title>
+    <title>STARROAD</title>
+    <link rel="icon" href="${path}/resources/static/image/home/logo1.png" type="image/x-icon">
     <link rel="stylesheet" href="${path}/resources/static/css/common.css">
     <link rel="stylesheet" href="${path}/resources/static/css/mypage/sidebar.css">
     <link rel="stylesheet" href="${path}/resources/static/css/mypage/asset.css">

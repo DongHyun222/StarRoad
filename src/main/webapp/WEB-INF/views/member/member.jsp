@@ -4,7 +4,8 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Member</title>
+    <title>STARROAD</title>
+    <link rel="icon" href="${path}/resources/static/image/home/logo1.png" type="image/x-icon">
     <script src="//code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="//code.jquery.com/jquery-latest.min.js"></script>
     <link rel="stylesheet" type="text/css" href="${path}/resources/static/css/common.css">

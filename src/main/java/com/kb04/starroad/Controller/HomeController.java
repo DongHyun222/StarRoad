@@ -10,7 +10,7 @@ import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpSession;
 
-@Api(tags = {"홈 컨트롤러 입니다"})
+@Api(tags = {"홈 API"})
 @RestController
 public class HomeController {
 
@@ -30,12 +30,4 @@ public class HomeController {
         return mav;
     }
 
-    @ApiOperation(value = "home", notes = "홈")
-    @GetMapping("/starroad/starroad")
-    public String home_api() {
-        // prefix: /WEB-INF/views
-        // suffix: .jsp
-        // 풀경로: /WEB-INF/views/test.jsp
-        return "home";
-    }
 }

@@ -60,6 +60,12 @@
 /*    transition: .3s, -webkit-mask-size .3s .3s;*/
 /*}*/
 
+.like {
+    margin-top: 20px;
+    text-align: end;
+    padding-inline: 20px;
+}
+
 .name {
     display: inline-flex;
     align-items: center;
@@ -68,7 +74,7 @@
     height: 20%;
     padding: 10px;
     word-break: keep-all;
-    margin-top: 20px;
+    /*margin-top: 20px;*/
 }
 
 .explain {
@@ -77,14 +83,15 @@
     font-size: smaller;
     height: 43%;
     padding-inline: 40px;
-    padding-top: 10px;
+    /*padding-top: 10px;*/
     word-break: keep-all;
 }
 
 .tag {
     color: var(--sub-kb-gold);
     font-size: medium;
-    padding: 20px;
+    padding-inline: 20px;
+    padding-block: 10px;
 }
 
 .link_btn {

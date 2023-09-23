@@ -5,7 +5,8 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>POLICY</title>
+    <title>STARROAD</title>
+    <link rel="icon" href="${path}/resources/static/image/home/logo1.png" type="image/x-icon">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -93,6 +94,21 @@
             <div class="policy_box">
                 <c:forEach items="${policyList}" var="item" varStatus="status">
                     <div class="policy" data-aos="fade-up" data-aos-delay="${200*status.index}" data-aos-duration="400">
+                        <c:choose>
+                            <c:when test="${currentUser ne null}">
+                                <c:choose>
+                                    <c:when test="${item.name eq '경기도 청년면접수당'}">
+                                        <div class="like">💛</div>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <div class="like">🤍</div>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:when>
+                            <c:otherwise>
+                                <div class="like"></div>
+                            </c:otherwise>
+                        </c:choose>
                         <div class="name">${item.name}</div>
                         <div class="explain">${item.explain}</div>
                         <div class="tag">#${item.tag}</div>

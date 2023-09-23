@@ -104,7 +104,7 @@
       height: 200px;
 }
 
-.comment-author {
+.currentUser {
     font-size: 14px; /
     color: blue;
     transform: translateY(20px);

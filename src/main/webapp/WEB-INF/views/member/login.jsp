@@ -5,7 +5,8 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>STARROAD</title>
+    <link rel="icon" href="${path}/resources/static/image/home/logo1.png" type="image/x-icon">
     <script src="//code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="${path}/resources/static/css/common.css">
     <link rel="stylesheet" type="text/css" href="/resources/static/css/auth/login.css">

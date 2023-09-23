@@ -5,7 +5,8 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>mypage</title>
+    <title>STARROAD</title>
+    <link rel="icon" href="${path}/resources/static/image/home/logo1.png" type="image/x-icon">
     <link rel="stylesheet" href="${path}/resources/static/css/common.css">
     <link rel="stylesheet" href="${path}/resources/static/css/mypage/sidebar.css">
     <link rel="stylesheet" href="${path}/resources/static/css/mypage/board.css">
@@ -39,7 +40,7 @@
             <c:forEach var="writing" items="${writings}">
                 <div class="b_contents">
                     <span class="b_type">${writing.type.equals("0")?"자유게시판":"인증게시판"}</span><br>
-                    <div class="b_title"><a href="#" class="b_title">${writing.title}</a></div>
+                    <div class="b_title"><a href="/starroad/board/detail?no=${writing.no}" class="b_title">${writing.title}</a></div>
                     <div class="w_d_l">
                         <div class="w_date">${writing.regdate.toString().substring(0,10)}</div>
                         <div id="likes_cc">

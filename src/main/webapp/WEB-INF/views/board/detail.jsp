@@ -9,7 +9,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <meta charset="UTF-8">
-    <title>게시물 상세보기</title>
+    <title>STARROAD</title>
+    <link rel="icon" href="${path}/resources/static/image/home/logo1.png" type="image/x-icon">
     <script src="//code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <link rel="stylesheet" type="text/css" href="/resources/static/css/board/detail.css">
@@ -37,11 +38,6 @@
                 <i class="fas fa-clock"></i>
                 <fmt:formatDate value="${board.regdate}" pattern="yyyy-MM-dd HH:mm" />
             </span>
-<%--            <span class="likes">
-
-                <img src="https://ifh.cc/g/aw0vjY.png" alt="Like Icon" style="vertical-align: middle; width: 20px; height: 20px;">
-                <c:out value="${board.likes}" />
-            </span> --%>
             </div>
 
             <div class="title-buttons more-actions">
@@ -70,23 +66,27 @@
         <div class="comment1"> 댓글<c:out value="${board.commentNum}" /></div>
 
         <div class="comment">
-        <div class="comment-input">
-             <form action="/starroad/comment" method="post">
-                 <textarea id="commentText" name="content" placeholder="댓글을 입력하세요" rows="4" cols="50"></textarea>
-                 <input type="hidden" name="board" value="${board.no}" />
-                 <button id="submitComment" type="submit">등록</button>
-             </form>
-        </div>
+            <div class="comment-input">
+                 <form action="/starroad/comment" method="post">
+                     <textarea id="commentText" name="content" placeholder="댓글을 입력하세요" rows="4" cols="50"></textarea>
+                     <input type="hidden" name="board" value="${board.no}" />
+                     <button id="submitComment" type="submit">등록</button>
+                 </form>
+            </div>
         </div>
 
         <div class="comments-list">
         <c:forEach var="comment" items="${board.comments}">
              <div class="comment-item">
                 <i class="fas fa-user-circle"></i>
-                 <strong class="comment-author"><c:out value="${currentUser.id}" /></strong> <br>
+                 <strong class="currentUser">
+                    <c:out value="${comment.member.id}" />
+                 </strong> <br>
+
                  <div class="comment-content">
-                 <span class="comment-content"><c:out value="${comment.content}" /></span> <br>
+                    <span class="comment-content"><c:out value="${comment.content}" /></span> <br>
                  </div>
+
                  <div class="comment-date">
                  <span class="comment-date">
                     <i class="fas fa-clock"></i>
@@ -118,7 +118,7 @@
        });
      document.getElementById("submitComment").addEventListener("click", function() {
 
-                      location.href = "/starroad/board/update?no=" + ${board.no}; // 수정 API 호출
+                      location.href = "/starroad/board/detail?no=" + ${board.no}; // 수정 API 호출
 
        });
 
@@ -148,12 +148,19 @@
         document.querySelectorAll(".comment-edit").forEach(function(button) {
             button.addEventListener("click", function() {
                 const commentNo = button.getAttribute("data-id");
-                location.href = "/starroad/comment/update?no=" + commentNo;
+                const boardNo = ${board.no};
+                location.href = "/starroad/comment/update?no=" + commentNo +"&boardNo=" + boardNo;
+
             });
         });
 
-        document.getElementById("submitComment").addEventListener("click", function() {
-            location.href = "/starroad/comment/create?no=" + ${board.no};
+        document.getElementById("submitComment").addEventListener("click", function(event) {
+            var commentContent = document.getElementById("commentText").value.trim();
+
+            if (!commentContent) {
+                alert("댓글 내용을 입력해주세요.");
+                event.preventDefault();
+            }
         });
 
        <!-- 좋아요 기능 -->
