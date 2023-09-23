@@ -20,6 +20,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.List;
@@ -86,6 +87,7 @@ public class MemberService {
         spec = spec.and(PaymentLogSpecification.getPayLogsBySubNo(sub_no));
 
         int[] result = new int[period + 1];
+        String[] logsYM = new String[period + 1];
         int status = 0;
         List<PaymentLogDto> paylogs = paymentLogRepository.findAll(spec).stream().map(PaymentLog::toPaymentLogDto).collect(Collectors.toList());
         LocalDate first = new java.sql.Date(paylogs.get(0).getPaymentDate().getTime()).toLocalDate();    // 처음 납부 날짜
@@ -94,6 +96,7 @@ public class MemberService {
 
         for (PaymentLogDto paylog : paylogs) {
             LocalDate day = new java.sql.Date(paylog.getPaymentDate().getTime()).toLocalDate();
+            logsYM[(int) ChronoUnit.MONTHS.between(first, day)] = day.format(DateTimeFormatter.ofPattern("yyyy-MM"));
             result[(int) ChronoUnit.MONTHS.between(first, day)] = day.getDayOfWeek().getValue();
         }
 
@@ -112,7 +115,7 @@ public class MemberService {
         }
         result[period] = status;
 
-        return Arrays.toString(result);
+        return Arrays.toString(result) + Arrays.toString(logsYM);
     }
 
     public int getReward(int period) {

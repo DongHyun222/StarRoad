@@ -10,10 +10,9 @@
     position: absolute;
     top: 93px;
     width: 500px;
-    height: 500px;
+    aspect-ratio: 1/1;
     overflow: hidden;
     left: 0;
-
     #egg {
         position: absolute;
         top: -189px;
@@ -26,19 +25,43 @@
 
 @keyframes shake {
     0% {
-        transform: rotate(0deg);
+        transform: rotate(-20deg);
     }
-    20% {
-        transform: rotate(45deg);
-    }
-    40% {
-        transform: rotate(0deg);
-    }
-    60% {
-        transform: rotate(-45deg);
+    50% {
+        transform: rotate(90deg);
     }
     100% {
-        transform: rotate(0deg);
+        transform: rotate(-20deg);
+    }
+}
+
+#egg_c2 {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 500px;
+    aspect-ratio: 1/1;
+    overflow: hidden;
+    #egg2 {
+        position: absolute;
+        bottom: -190px;
+        right: -140px;
+        width: 650px;
+        aspect-ratio: 1/1;
+        animation: shake2 10s infinite;
+        transform: scaleX(-1) scaleY(-1);
+    }
+}
+
+@keyframes shake2 {
+    0% {
+        transform: rotate(140deg);
+    }
+    50% {
+        transform: rotate(250deg);
+    }
+    100% {
+        transform: rotate(160deg);
     }
 }
 
