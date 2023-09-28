@@ -79,16 +79,16 @@
                     <div class="policy" data-aos="fade-up" data-aos-delay="${200*status.index}" data-aos-duration="400">
                         <c:choose>
                             <c:when test="${currentUser ne null}">
+                                <form id="likeForm${status.count}" method="post" action="/starroad/policy">
+                                    <input type="hidden" name="policyNo" value="${item.no}">
+                                    <input type="hidden" name="pageIndex" value="${currentPage}">
                                 <c:if test="${item.isLiked eq 'Y'}">
-                                    <div class="like">💛</div>
+                                    <div class="like" id="heart_icon${status.count}"><i class="fa-solid fa-heart" id="yellowHeart"></i></div>
                                 </c:if>
                                 <c:if test="${item.isLiked eq 'N'}">
-                                    <form id="likeForm" method="post" action="/starroad/policy">
-                                        <input type="hidden" name="policyNo" value="${item.no}">
-                                        <input type="hidden" name="pageIndex" value="${currentPage}">
-                                        <div class="like" id="heart_icon">🤍</div>
-                                    </form>
+                                    <div class="like heart_icon" id="heart_icon${status.count}"><i class="fa-solid fa-heart" id="whiteHeart"></i></div>
                                 </c:if>
+                                </form>
                             </c:when>
                             <c:otherwise>
                                 <div class="like"></div>
@@ -166,9 +166,20 @@
         });
     });
 
+
     $(document).ready(function() {
-        $("#heart_icon").on("click", function() {
-            $("#likeForm").submit();
+        $("#heart_icon1").on("click", function() {
+            $("#likeForm1").submit();
+        });
+    });
+    $(document).ready(function() {
+        $("#heart_icon2").on("click", function() {
+            $("#likeForm2").submit();
+        });
+    });
+    $(document).ready(function() {
+        $("#heart_icon3").on("click", function() {
+            $("#likeForm3").submit();
         });
     });
 
