@@ -15,4 +15,5 @@ public class PolicyResponseDto {
     private String tag;
     private String link;
     private String isLiked;
+    private String dDay;
 }

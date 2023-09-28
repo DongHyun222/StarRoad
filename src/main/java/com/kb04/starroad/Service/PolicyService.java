@@ -13,6 +13,10 @@ import com.kb04.starroad.Repository.Specification.PolicySpecification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.Temporal;
 import java.util.*;
 
 @RequiredArgsConstructor
@@ -200,5 +204,31 @@ public class PolicyService {
 
         PolicyHeart policyHeart = policyHeartRepository.findByMemberNoAndPolicyNo(memberDto.getNo(), policyNo);
         policyHeartRepository.deleteById(policyHeart.getNo());
+    }
+
+    public PolicyResponseDto modalPolicy(MemberDto memberDto){
+
+        List<PolicyHeart> list = policyHeartRepository.findAllByMemberNo(memberDto.getNo());
+        List<Policy> policyList = new ArrayList<>();
+        for (PolicyHeart policyHeart : list){
+            policyList.add(policyRepository.findByNo(policyHeart.getPolicy().getNo()));
+        }
+
+        policyList.sort(Comparator.comparing(Policy::getEndDate));
+
+        LocalDate policyDate = null;
+        for (Policy policy : policyList) {
+            policyDate = policy.getEndDate().toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate();
+            Long period = ChronoUnit.DAYS.between(policyDate, LocalDate.now());
+            if(period <= 0) {
+                return PolicyResponseDto.builder()
+                        .name(policy.getName())
+                        .dDay(String.valueOf(period))
+                        .build();
+            }
+        }
+        return null;
     }
 }
