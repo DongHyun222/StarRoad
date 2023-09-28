@@ -79,14 +79,12 @@
                     <div class="policy" data-aos="fade-up" data-aos-delay="${200*status.index}" data-aos-duration="400">
                         <c:choose>
                             <c:when test="${currentUser ne null}">
-                                <c:choose>
-                                    <c:when test="${item.name eq '경기도 청년면접수당'}">
-                                        <div class="like">💛</div>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <div class="like">🤍<i class="fa-solid fa-heart"></i></div>
-                                    </c:otherwise>
-                                </c:choose>
+                                <c:if test="${item.isLiked eq 'Y'}">
+                                    <div class="like">💛</div>
+                                </c:if>
+                                <c:if test="${item.isLiked eq 'N'}">
+                                    <div class="like">🤍</div>
+                                </c:if>
                             </c:when>
                             <c:otherwise>
                                 <div class="like"></div>

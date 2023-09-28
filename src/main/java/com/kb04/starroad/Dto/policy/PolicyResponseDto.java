@@ -14,5 +14,5 @@ public class PolicyResponseDto {
     private String explain;
     private String tag;
     private String link;
-    private boolean isLiked;
+    private String isLiked;
 }

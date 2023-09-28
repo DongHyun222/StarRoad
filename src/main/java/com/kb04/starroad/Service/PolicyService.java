@@ -38,7 +38,7 @@ public class PolicyService {
                     .location(policy.getLocation())
                     .tag(policy.getTag())
                     .link(policy.getLink())
-                    .isLiked(false)
+                    .isLiked("N")
                     .build();
             result.add(dto);
         }
@@ -111,7 +111,7 @@ public class PolicyService {
                     .tag(policy.getTag())
                     .link(policy.getLink())
                     .location(policy.getLocation())
-                    .isLiked(false)
+                    .isLiked("N")
                     .build();
             finalResult.add(dto);
         }
@@ -141,14 +141,18 @@ public class PolicyService {
         int memberNo = memberDto.getNo();
         List<PolicyHeart> heartList = policyHeartRepository.findAllByMemberNo(memberNo);
 
-        for(PolicyHeart heart : heartList){
-            for (PolicyResponseDto dto : list){
-                if(heart.getPolicy().getNo() == dto.getNo()){
-                    dto.setLiked(true);
+        if(heartList.equals(null))
+            return list;
+        else{
+            for(PolicyHeart heart : heartList){
+                for (PolicyResponseDto dto : list){
+                    if(heart.getPolicy().getNo() == dto.getNo()){
+                        dto.setIsLiked("Y");
+                    }
                 }
             }
-        }
 
-        return list;
+            return list;
+        }
     }
 }
