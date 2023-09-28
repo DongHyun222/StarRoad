@@ -3,8 +3,10 @@ package com.kb04.starroad.Service;
 import com.kb04.starroad.Dto.MemberDto;
 import com.kb04.starroad.Dto.policy.PolicyRequestDto;
 import com.kb04.starroad.Dto.policy.PolicyResponseDto;
+import com.kb04.starroad.Entity.Member;
 import com.kb04.starroad.Entity.Policy;
 import com.kb04.starroad.Entity.PolicyHeart;
+import com.kb04.starroad.Repository.MemberRepository;
 import com.kb04.starroad.Repository.PolicyHeartRepository;
 import com.kb04.starroad.Repository.PolicyRepository;
 import com.kb04.starroad.Repository.Specification.PolicySpecification;
@@ -19,6 +21,7 @@ public class PolicyService {
 
     private final PolicyRepository policyRepository;
     private final PolicyHeartRepository policyHeartRepository;
+    private final MemberRepository memberRepository;
     private static final int ITEMS_PER_PAGE = 3;
 
     /**
@@ -136,6 +139,11 @@ public class PolicyService {
         return result;
     }
 
+    /**
+     * 로그인한 유저의 관심 정책 표시
+     * @param list 필터링한 정책 리스트
+     * @param memberDto 현재 로그인한 유저
+     */
     public List<PolicyResponseDto> mappingPolicyHeart(List<PolicyResponseDto> list, MemberDto memberDto) {
 
         int memberNo = memberDto.getNo();
@@ -154,5 +162,43 @@ public class PolicyService {
 
             return list;
         }
+    }
+
+    /**
+     * 현재 로그인한 유저가 해당 정책을 관심 정책에 추가했는지 검사
+     * @param memberDto 현재 로그인한 유저
+     * @param policyNo 정책 번호
+     */
+    public boolean hasLiked(MemberDto memberDto, int policyNo) {
+
+        PolicyHeart policyHeart = policyHeartRepository.findByMemberNoAndPolicyNo(memberDto.getNo(), policyNo);
+        return policyHeart == null;
+    }
+
+    /**
+     * 현재 로그인한 유저의 관심 정책으로 등록
+     * @param memberDto 현재 로그인한 유저
+     * @param policyNo 정책 번호
+     */
+    public void addPolicyHeart(MemberDto memberDto, int policyNo){
+
+        Policy policy = policyRepository.findByNo(policyNo);
+        Member member = memberRepository.findByNo(memberDto.getNo());
+
+        policyHeartRepository.save(PolicyHeart.builder()
+                .member(member)
+                .policy(policy)
+                .build());
+    }
+
+    /**
+     * 현재 로그인한 유저의 관심 정책에서 삭제
+     * @param memberDto 현재 로그인한 유저
+     * @param policyNo 정책 번호
+     */
+    public void deletePolicyHeart(MemberDto memberDto, int policyNo){
+
+        PolicyHeart policyHeart = policyHeartRepository.findByMemberNoAndPolicyNo(memberDto.getNo(), policyNo);
+        policyHeartRepository.deleteById(policyHeart.getNo());
     }
 }

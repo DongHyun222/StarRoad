@@ -13,4 +13,7 @@ public interface PolicyHeartRepository extends JpaRepository<PolicyHeart, Intege
 
     @Query(nativeQuery = true, value = "select * from policy_heart where member_no = :no")
     List<PolicyHeart> findAllByMemberNo(@Param("no") int no);
+
+    @Query(nativeQuery = true, value = "select * from policy_heart where member_no = :memberNo and policy_no = :policyNo")
+    PolicyHeart findByMemberNoAndPolicyNo(@Param("memberNo") int memberNo, @Param("policyNo") int policyNo);
 }

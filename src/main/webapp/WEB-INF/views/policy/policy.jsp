@@ -83,7 +83,11 @@
                                     <div class="like">💛</div>
                                 </c:if>
                                 <c:if test="${item.isLiked eq 'N'}">
-                                    <div class="like">🤍</div>
+                                    <form id="likeForm" method="post" action="/starroad/policy">
+                                        <input type="hidden" name="policyNo" value="${item.no}">
+                                        <input type="hidden" name="pageIndex" value="${currentPage}">
+                                        <div class="like" id="heart_icon">🤍</div>
+                                    </form>
                                 </c:if>
                             </c:when>
                             <c:otherwise>
@@ -161,6 +165,13 @@
             }
         });
     });
+
+    $(document).ready(function() {
+        $("#heart_icon").on("click", function() {
+            $("#likeForm").submit();
+        });
+    });
+
 </script>
 </body>
 </html>
