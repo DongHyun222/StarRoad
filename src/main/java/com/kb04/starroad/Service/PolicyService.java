@@ -226,6 +226,7 @@ public class PolicyService {
                 return PolicyResponseDto.builder()
                         .name(policy.getName())
                         .dDay(String.valueOf(period))
+                        .link(policy.getLink())
                         .build();
             }
         }

@@ -145,13 +145,25 @@
             </div>
             <div class="modal_content">
                 <p>
-                    <span class="modal_user_name">${currentUser}</span>님의 관심 정책으로 등록한 <br>
-                    "<span class="modal_policy">경기도 청년면접 수당</span>" 정책
-                    <span class="modal_day">마감 당일</span>입니다.
+                    <c:choose>
+                        <c:when test="${message eq 'Y'}">
+                            <span class="modal_user_name">${currentUser}</span>님의 관심 정책으로 등록한 <br>
+                            "<span class="modal_policy">${policy.name}</span>" 정책
+                            <span class="modal_day">
+                                <c:choose>
+                                    <c:when test="${policy.DDay eq '0'}"> 마감 당일</c:when>
+                                    <c:otherwise>D${policy.DDay}</c:otherwise>
+                                </c:choose>
+                            </span>입니다.
+                        </c:when>
+                        <c:otherwise>
+                            <span>${message}</span>
+                        </c:otherwise>
+                    </c:choose>
                 </p>
             </div>
             <div class="modal_btn_div">
-                <button class="modal_btn_link grow2" onclick="window.open('https://www.youthcenter.go.kr/youngPlcyUnif/youngPlcyUnifDtl.do?pageIndex=1&frameYn=&bizId=R2023060212952&dtlOpenYn=&plcyTpOpenTy=&plcyCmprInfo=&srchWord=&srchKeyWord=%EA%B2%BD%EC%A0%9C%2C%EA%B8%88%EC%9C%B5&srchPlcyTp=023030&chargerOrgCdAll=&srchRegion=003002008&srchAge=21&trgtJynEmp=&trgtJynEmp=&srchSortOrder=1&pageUnit=12')">👉 정책 신청하러 가기🏃</button>
+                <button class="modal_btn_link grow2" onclick="window.open('${policy.link}')">👉 정책 신청하러 가기🏃</button>
                 <button class="modal_btn_link grow2" onclick="location.href='/starroad/policy';">👉 더 많은 정책 보러 가기🏃</button>
             </div>
             <div class="modal_allDay_close">

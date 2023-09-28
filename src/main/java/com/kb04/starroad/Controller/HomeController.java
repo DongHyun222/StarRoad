@@ -36,9 +36,9 @@ public class HomeController {
             if (result == null){
                 mav.addObject("message", "관심정책을 등록하고 알림을 받아보세요🤗");
             } else {
+                mav.addObject("message", "Y");
                 mav.addObject("currentUser", dto.getName());
-                mav.addObject("policyName", result.getName());
-                mav.addObject("policyDday", result.getDDay());
+                mav.addObject("policy", result);
             }
         }
         return mav;
