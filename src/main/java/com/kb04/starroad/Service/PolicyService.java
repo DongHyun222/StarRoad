@@ -1,8 +1,11 @@
 package com.kb04.starroad.Service;
 
+import com.kb04.starroad.Dto.MemberDto;
 import com.kb04.starroad.Dto.policy.PolicyRequestDto;
 import com.kb04.starroad.Dto.policy.PolicyResponseDto;
 import com.kb04.starroad.Entity.Policy;
+import com.kb04.starroad.Entity.PolicyHeart;
+import com.kb04.starroad.Repository.PolicyHeartRepository;
 import com.kb04.starroad.Repository.PolicyRepository;
 import com.kb04.starroad.Repository.Specification.PolicySpecification;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +18,7 @@ import java.util.*;
 public class PolicyService {
 
     private final PolicyRepository policyRepository;
+    private final PolicyHeartRepository policyHeartRepository;
     private static final int ITEMS_PER_PAGE = 3;
 
     /**
@@ -34,6 +38,7 @@ public class PolicyService {
                     .location(policy.getLocation())
                     .tag(policy.getTag())
                     .link(policy.getLink())
+                    .isLiked(false)
                     .build();
             result.add(dto);
         }
@@ -106,6 +111,7 @@ public class PolicyService {
                     .tag(policy.getTag())
                     .link(policy.getLink())
                     .location(policy.getLocation())
+                    .isLiked(false)
                     .build();
             finalResult.add(dto);
         }
@@ -130,4 +136,19 @@ public class PolicyService {
         return result;
     }
 
+    public List<PolicyResponseDto> mappingPolicyHeart(List<PolicyResponseDto> list, MemberDto memberDto) {
+
+        int memberNo = memberDto.getNo();
+        List<PolicyHeart> heartList = policyHeartRepository.findAllByMemberNo(memberNo);
+
+        for(PolicyHeart heart : heartList){
+            for (PolicyResponseDto dto : list){
+                if(heart.getPolicy().getNo() == dto.getNo()){
+                    dto.setLiked(true);
+                }
+            }
+        }
+
+        return list;
+    }
 }

@@ -84,7 +84,7 @@
                                         <div class="like">💛</div>
                                     </c:when>
                                     <c:otherwise>
-                                        <div class="like">🤍</div>
+                                        <div class="like">🤍<i class="fa-solid fa-heart"></i></div>
                                     </c:otherwise>
                                 </c:choose>
                             </c:when>
@@ -92,7 +92,7 @@
                                 <div class="like"></div>
                             </c:otherwise>
                         </c:choose>
-                        <div class="name">${item.name}</div><i class="fa-solid fa-heart"></i>
+                        <div class="name">${item.name}</div>
                         <div class="explain">${item.explain}</div>
                         <div class="tag">#${item.tag}</div>
                         <div class="btn_div">
