@@ -1,8 +1,11 @@
 package com.kb04.starroad.Controller;
 
 import com.kb04.starroad.Dto.MemberDto;
+import com.kb04.starroad.Dto.policy.PolicyResponseDto;
+import com.kb04.starroad.Service.PolicyService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -11,8 +14,11 @@ import springfox.documentation.annotations.ApiIgnore;
 import javax.servlet.http.HttpSession;
 
 @Api(tags = {"홈 API"})
+@RequiredArgsConstructor
 @RestController
 public class HomeController {
+
+    private final PolicyService policyService;
 
     @ApiOperation(value = "home", notes = "홈")
     @GetMapping("/starroad")
@@ -25,7 +31,15 @@ public class HomeController {
         } else {
             mav = new ModelAndView("loginHome");
             MemberDto dto = (MemberDto) session.getAttribute("currentUser");
-            mav.addObject("currentUser", dto.getName());
+
+            PolicyResponseDto result = policyService.modalPolicy(dto);
+            if (result == null){
+                mav.addObject("message", "관심정책을 등록하고 알림을 받아보세요🤗");
+            } else {
+                mav.addObject("message", "Y");
+                mav.addObject("currentUser", dto.getName());
+                mav.addObject("policy", result);
+            }
         }
         return mav;
     }

@@ -10,6 +10,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css"/>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script type="text/javascript">
@@ -78,14 +79,16 @@
                     <div class="policy" data-aos="fade-up" data-aos-delay="${200*status.index}" data-aos-duration="400">
                         <c:choose>
                             <c:when test="${currentUser ne null}">
-                                <c:choose>
-                                    <c:when test="${item.name eq '경기도 청년면접수당'}">
-                                        <div class="like">💛</div>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <div class="like">🤍</div>
-                                    </c:otherwise>
-                                </c:choose>
+                                <form id="likeForm${status.count}" method="post" action="/starroad/policy">
+                                    <input type="hidden" name="policyNo" value="${item.no}">
+                                    <input type="hidden" name="pageIndex" value="${currentPage}">
+                                <c:if test="${item.isLiked eq 'Y'}">
+                                    <div class="like" id="heart_icon${status.count}"><i class="fa-solid fa-heart" id="yellowHeart"></i></div>
+                                </c:if>
+                                <c:if test="${item.isLiked eq 'N'}">
+                                    <div class="like heart_icon" id="heart_icon${status.count}"><i class="fa-solid fa-heart" id="whiteHeart"></i></div>
+                                </c:if>
+                                </form>
                             </c:when>
                             <c:otherwise>
                                 <div class="like"></div>
@@ -162,6 +165,24 @@
             }
         });
     });
+
+
+    $(document).ready(function() {
+        $("#heart_icon1").on("click", function() {
+            $("#likeForm1").submit();
+        });
+    });
+    $(document).ready(function() {
+        $("#heart_icon2").on("click", function() {
+            $("#likeForm2").submit();
+        });
+    });
+    $(document).ready(function() {
+        $("#heart_icon3").on("click", function() {
+            $("#likeForm3").submit();
+        });
+    });
+
 </script>
 </body>
 </html>

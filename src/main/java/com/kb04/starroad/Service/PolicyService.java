@@ -1,13 +1,22 @@
 package com.kb04.starroad.Service;
 
+import com.kb04.starroad.Dto.MemberDto;
 import com.kb04.starroad.Dto.policy.PolicyRequestDto;
 import com.kb04.starroad.Dto.policy.PolicyResponseDto;
+import com.kb04.starroad.Entity.Member;
 import com.kb04.starroad.Entity.Policy;
+import com.kb04.starroad.Entity.PolicyHeart;
+import com.kb04.starroad.Repository.MemberRepository;
+import com.kb04.starroad.Repository.PolicyHeartRepository;
 import com.kb04.starroad.Repository.PolicyRepository;
 import com.kb04.starroad.Repository.Specification.PolicySpecification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.Temporal;
 import java.util.*;
 
 @RequiredArgsConstructor
@@ -15,6 +24,8 @@ import java.util.*;
 public class PolicyService {
 
     private final PolicyRepository policyRepository;
+    private final PolicyHeartRepository policyHeartRepository;
+    private final MemberRepository memberRepository;
     private static final int ITEMS_PER_PAGE = 3;
 
     /**
@@ -28,11 +39,13 @@ public class PolicyService {
 
         for(Policy policy : plist){
             PolicyResponseDto dto = PolicyResponseDto.builder()
+                    .no(policy.getNo())
                     .name(policy.getName())
                     .explain(policy.getExplain())
                     .location(policy.getLocation())
                     .tag(policy.getTag())
                     .link(policy.getLink())
+                    .isLiked("N")
                     .build();
             result.add(dto);
         }
@@ -99,11 +112,13 @@ public class PolicyService {
         List<PolicyResponseDto> finalResult = new ArrayList<>();
         for(Policy policy : result){
             PolicyResponseDto dto = PolicyResponseDto.builder()
+                    .no(policy.getNo())
                     .name(policy.getName())
                     .explain(policy.getExplain())
                     .tag(policy.getTag())
                     .link(policy.getLink())
                     .location(policy.getLocation())
+                    .isLiked("N")
                     .build();
             finalResult.add(dto);
         }
@@ -128,4 +143,93 @@ public class PolicyService {
         return result;
     }
 
+    /**
+     * 로그인한 유저의 관심 정책 표시
+     * @param list 필터링한 정책 리스트
+     * @param memberDto 현재 로그인한 유저
+     */
+    public List<PolicyResponseDto> mappingPolicyHeart(List<PolicyResponseDto> list, MemberDto memberDto) {
+
+        int memberNo = memberDto.getNo();
+        List<PolicyHeart> heartList = policyHeartRepository.findAllByMemberNo(memberNo);
+
+        if(heartList.equals(null))
+            return list;
+        else{
+            for(PolicyHeart heart : heartList){
+                for (PolicyResponseDto dto : list){
+                    if(heart.getPolicy().getNo() == dto.getNo()){
+                        dto.setIsLiked("Y");
+                    }
+                }
+            }
+
+            return list;
+        }
+    }
+
+    /**
+     * 현재 로그인한 유저가 해당 정책을 관심 정책에 추가했는지 검사
+     * @param memberDto 현재 로그인한 유저
+     * @param policyNo 정책 번호
+     */
+    public boolean hasLiked(MemberDto memberDto, int policyNo) {
+
+        PolicyHeart policyHeart = policyHeartRepository.findByMemberNoAndPolicyNo(memberDto.getNo(), policyNo);
+        return policyHeart == null;
+    }
+
+    /**
+     * 현재 로그인한 유저의 관심 정책으로 등록
+     * @param memberDto 현재 로그인한 유저
+     * @param policyNo 정책 번호
+     */
+    public void addPolicyHeart(MemberDto memberDto, int policyNo){
+
+        Policy policy = policyRepository.findByNo(policyNo);
+        Member member = memberRepository.findByNo(memberDto.getNo());
+
+        policyHeartRepository.save(PolicyHeart.builder()
+                .member(member)
+                .policy(policy)
+                .build());
+    }
+
+    /**
+     * 현재 로그인한 유저의 관심 정책에서 삭제
+     * @param memberDto 현재 로그인한 유저
+     * @param policyNo 정책 번호
+     */
+    public void deletePolicyHeart(MemberDto memberDto, int policyNo){
+
+        PolicyHeart policyHeart = policyHeartRepository.findByMemberNoAndPolicyNo(memberDto.getNo(), policyNo);
+        policyHeartRepository.deleteById(policyHeart.getNo());
+    }
+
+    public PolicyResponseDto modalPolicy(MemberDto memberDto){
+
+        List<PolicyHeart> list = policyHeartRepository.findAllByMemberNo(memberDto.getNo());
+        List<Policy> policyList = new ArrayList<>();
+        for (PolicyHeart policyHeart : list){
+            policyList.add(policyRepository.findByNo(policyHeart.getPolicy().getNo()));
+        }
+
+        policyList.sort(Comparator.comparing(Policy::getEndDate));
+
+        LocalDate policyDate = null;
+        for (Policy policy : policyList) {
+            policyDate = policy.getEndDate().toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate();
+            Long period = ChronoUnit.DAYS.between(policyDate, LocalDate.now());
+            if(period <= 0) {
+                return PolicyResponseDto.builder()
+                        .name(policy.getName())
+                        .dDay(String.valueOf(period))
+                        .link(policy.getLink())
+                        .build();
+            }
+        }
+        return null;
+    }
 }

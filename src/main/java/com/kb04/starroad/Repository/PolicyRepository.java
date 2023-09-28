@@ -12,4 +12,5 @@ import java.util.List;
 @Repository
 public interface PolicyRepository extends JpaRepository<Policy, Integer>, JpaSpecificationExecutor<Policy> {
 
+    Policy findByNo(int no);
 }

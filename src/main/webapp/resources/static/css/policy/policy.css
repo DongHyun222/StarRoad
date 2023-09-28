@@ -66,6 +66,22 @@
     padding-inline: 20px;
 }
 
+#whiteHeart {
+    color: silver;
+}
+
+#whiteHeart:hover {
+    font-size: larger;
+}
+
+#yellowHeart {
+    color: var(--main-kb-yellow);
+}
+
+#yellowHeart:hover {
+    font-size: larger;
+}
+
 .name {
     display: inline-flex;
     align-items: center;

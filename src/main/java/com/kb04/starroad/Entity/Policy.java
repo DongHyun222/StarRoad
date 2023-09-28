@@ -3,6 +3,7 @@ package com.kb04.starroad.Entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Getter
 @Entity
@@ -30,4 +31,7 @@ public class Policy {
 
     @Column(nullable = false, length = 5000)
     private String link;
+
+    @Column(nullable = false)
+    private Date endDate;
 }

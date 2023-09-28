@@ -1,15 +1,18 @@
 package com.kb04.starroad.Controller;
 
+import com.kb04.starroad.Dto.MemberDto;
 import com.kb04.starroad.Dto.policy.PolicyRequestDto;
 import com.kb04.starroad.Dto.policy.PolicyResponseDto;
-import com.kb04.starroad.Entity.Policy;
-import com.kb04.starroad.Repository.PolicyRepository;
 import com.kb04.starroad.Service.PolicyService;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import springfox.documentation.annotations.ApiIgnore;
+
+import javax.servlet.http.HttpSession;
 import java.util.*;
 
 @Api(tags = "청년정책 API")
@@ -19,12 +22,37 @@ public class PolicyController {
 
     private final PolicyService policyService;
 
+    @ApiOperation(value = "청년정책 찜", notes = "청년정책을 관심 정책으로 등록할 수 있다")
+    @PostMapping("/starroad/policy")
+    public ModelAndView likePolicy(@ApiParam(value = "정책 번호", example = "1") @RequestParam("policyNo")int policyNo,
+                                   @ApiParam(value = "페이지 번호", example = "5") @RequestParam(value = "pageIndex", defaultValue = "1") int pageIndex,
+                                   @ApiIgnore HttpSession session){
+
+        ModelAndView mav = new ModelAndView();
+        MemberDto memberDto = (MemberDto) session.getAttribute("currentUser");
+
+        if (!policyService.hasLiked(memberDto, policyNo)){  // 관심정책에서 삭제
+            policyService.deletePolicyHeart(memberDto, policyNo);
+            mav.setViewName("redirect:/starroad/policy?pageIndex=" + pageIndex);
+            return mav;
+        } else{  // 관심정책으로 등록
+            policyService.addPolicyHeart(memberDto, policyNo);
+            mav.setViewName("redirect:/starroad/policy?pageIndex=" + pageIndex);
+            return mav;
+        }
+
+    }
+
     @ApiOperation(value = "청년정책 조회", notes = "청년정책을 조회할 수 있다")
     @GetMapping("/starroad/policy")
     public ModelAndView policy(Model model,
-                               @ApiParam(value = "페이지 번호", example = "5") @RequestParam(value = "pageIndex", defaultValue = "1") int pageIndex) {
+                               @ApiParam(value = "페이지 번호", example = "5") @RequestParam(value = "pageIndex", defaultValue = "1") int pageIndex,
+                               @ApiIgnore HttpSession session) {
 
         List<PolicyResponseDto> result = policyService.selectAllPolicies();
+        if(session.getAttribute("currentUser") != null){
+            result = policyService.mappingPolicyHeart(result, (MemberDto) session.getAttribute("currentUser"));
+        }
         Map<String, Object> finalResult = policyService.returnPoliciesByPage(result, pageIndex);
 
         model.addAttribute("policyList", finalResult.get("policyList"));
@@ -45,7 +73,8 @@ public class PolicyController {
                                         @ApiParam(required = false, value = "금융지원 TAG") @RequestParam(required = false) String tag1,
                                         @ApiParam(required = false, value = "교육 TAG") @RequestParam(required = false) String tag2,
                                         @ApiParam(required = false, value = "생활지원 TAG") @RequestParam(required = false) String tag3,
-                                        @ApiParam(required = false, value = "금융자산 형성 TAG") @RequestParam(required = false) String tag4) {
+                                        @ApiParam(required = false, value = "금융자산 형성 TAG") @RequestParam(required = false) String tag4,
+                                        @ApiIgnore HttpSession session) {
 
         ModelAndView mav = new ModelAndView("policy/policy_result");
         PolicyRequestDto requestDto = PolicyRequestDto.builder()
@@ -60,6 +89,9 @@ public class PolicyController {
         if(policyService.judgePolicies(requestDto)){ //아무것도 입력하지 않은 경우
 
             List<PolicyResponseDto> result = policyService.selectAllPolicies();
+            if(session.getAttribute("currentUser") != null){
+                result = policyService.mappingPolicyHeart(result, (MemberDto) session.getAttribute("currentUser"));
+            }
             Map<String, Object> finalResult = policyService.returnPoliciesByPage(result, pageIndex);
 
             model.addAttribute("policyList", finalResult.get("policyList"));
@@ -70,6 +102,9 @@ public class PolicyController {
         else {
 
             List<PolicyResponseDto> result = policyService.selectDetailPolicies(requestDto);
+            if(session.getAttribute("currentUser") != null){
+                result = policyService.mappingPolicyHeart(result, (MemberDto) session.getAttribute("currentUser"));
+            }
             Map<String, Object> finalResult = policyService.returnPoliciesByPage(result, pageIndex);
 
             model.addAttribute("policyList", finalResult.get("policyList"));
