@@ -10,6 +10,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css"/>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script type="text/javascript">
@@ -91,7 +92,7 @@
                                 <div class="like"></div>
                             </c:otherwise>
                         </c:choose>
-                        <div class="name">${item.name}</div>
+                        <div class="name">${item.name}</div><i class="fa-solid fa-heart"></i>
                         <div class="explain">${item.explain}</div>
                         <div class="tag">#${item.tag}</div>
                         <div class="btn_div">
