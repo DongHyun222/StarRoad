@@ -28,6 +28,7 @@ public class PolicyService {
 
         for(Policy policy : plist){
             PolicyResponseDto dto = PolicyResponseDto.builder()
+                    .no(policy.getNo())
                     .name(policy.getName())
                     .explain(policy.getExplain())
                     .location(policy.getLocation())
@@ -99,6 +100,7 @@ public class PolicyService {
         List<PolicyResponseDto> finalResult = new ArrayList<>();
         for(Policy policy : result){
             PolicyResponseDto dto = PolicyResponseDto.builder()
+                    .no(policy.getNo())
                     .name(policy.getName())
                     .explain(policy.getExplain())
                     .tag(policy.getTag())

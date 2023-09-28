@@ -8,6 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 public class PolicyResponseDto {
 
+    private int no;
     private String name;
     private String location;
     private String explain;
