@@ -51,7 +51,7 @@
 
         <div class="content">
 
-            <img src="data:image/jpeg;base64,${board.imageBase64}" alt="" width="200" height="200" style="margin-bottom: 30px;" onerror="this.style.display='none'"/>
+            <img src="data:image/jpeg;base64,${board.imageBase64}" alt="" width="400" height="400" style="margin-bottom: 30px;" onerror="this.style.display='none'"/>
             <c:out value="${board.content}" />
             <div class="like-section">
             <form id="likeForm" method="post" action="/starroad/board/like">
