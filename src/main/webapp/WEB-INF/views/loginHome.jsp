@@ -152,7 +152,7 @@
                             <span class="modal_day">
                                 <c:choose>
                                     <c:when test="${policy.DDay eq '0'}"> 마감 당일</c:when>
-                                    <c:otherwise>D${policy.DDay}</c:otherwise>
+                                    <c:otherwise> D${policy.DDay}</c:otherwise>
                                 </c:choose>
                             </span>입니다.
                         </c:when>
@@ -163,7 +163,13 @@
                 </p>
             </div>
             <div class="modal_btn_div">
-                <button class="modal_btn_link grow2" onclick="window.open('${policy.link}')">👉 정책 신청하러 가기🏃</button>
+                <button class="modal_btn_link grow2"
+                        <c:choose>
+                            <c:when test="${policy.link ne null}">
+                                onclick="window.open('${policy.link}')"
+                            </c:when>
+                        </c:choose>
+                >👉 정책 신청하러 가기🏃</button>
                 <button class="modal_btn_link grow2" onclick="location.href='/starroad/policy';">👉 더 많은 정책 보러 가기🏃</button>
             </div>
             <div class="modal_allDay_close">
