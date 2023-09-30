@@ -206,6 +206,11 @@ public class PolicyService {
         policyHeartRepository.deleteById(policyHeart.getNo());
     }
 
+    /**
+     * 알림창에 표시할 정책 선별
+     * @param memberDto 현재 로그인한 유저
+     * @return PolicyResponseDto
+     */
     public PolicyResponseDto modalPolicy(MemberDto memberDto){
 
         List<PolicyHeart> list = policyHeartRepository.findAllByMemberNo(memberDto.getNo());

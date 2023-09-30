@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -81,7 +82,6 @@
                             <c:when test="${currentUser ne null}">
                                 <form id="likeForm${status.count}" method="post" action="/starroad/policy">
                                     <input type="hidden" name="policyNo" value="${item.no}">
-                                    <input type="hidden" name="pageIndex" value="${currentPage}">
                                 <c:if test="${item.isLiked eq 'Y'}">
                                     <div class="like" id="heart_icon${status.count}"><i class="fa-solid fa-heart" id="yellowHeart"></i></div>
                                 </c:if>
@@ -167,21 +167,17 @@
     });
 
 
-    $(document).ready(function() {
-        $("#heart_icon1").on("click", function() {
-            $("#likeForm1").submit();
+    for(let i = 1; i<${fn:length(policyList)} + 1; i++) {
+        $(document).ready(function() {
+            let id = '#heart_icon' + i;
+            let formId = '#likeForm' + i;
+            console.log(id);
+            console.log(formId);
+            $(id).on("click", function() {
+                $(formId).submit();
+            });
         });
-    });
-    $(document).ready(function() {
-        $("#heart_icon2").on("click", function() {
-            $("#likeForm2").submit();
-        });
-    });
-    $(document).ready(function() {
-        $("#heart_icon3").on("click", function() {
-            $("#likeForm3").submit();
-        });
-    });
+    }
 
 </script>
 </body>
