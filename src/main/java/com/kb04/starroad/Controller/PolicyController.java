@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.*;
 
@@ -25,22 +26,19 @@ public class PolicyController {
     @ApiOperation(value = "청년정책 찜", notes = "청년정책을 관심 정책으로 등록할 수 있다")
     @PostMapping("/starroad/policy")
     public ModelAndView likePolicy(@ApiParam(value = "정책 번호", example = "1") @RequestParam("policyNo")int policyNo,
-                                   @ApiParam(value = "페이지 번호", example = "5") @RequestParam(value = "pageIndex", defaultValue = "1") int pageIndex,
-                                   @ApiIgnore HttpSession session){
+                                   @ApiIgnore HttpSession session, @ApiIgnore HttpServletRequest request){
 
         ModelAndView mav = new ModelAndView();
         MemberDto memberDto = (MemberDto) session.getAttribute("currentUser");
+        String url = request.getHeader("referer").substring(21);
 
         if (!policyService.hasLiked(memberDto, policyNo)){  // 관심정책에서 삭제
             policyService.deletePolicyHeart(memberDto, policyNo);
-            mav.setViewName("redirect:/starroad/policy?pageIndex=" + pageIndex);
-            return mav;
         } else{  // 관심정책으로 등록
             policyService.addPolicyHeart(memberDto, policyNo);
-            mav.setViewName("redirect:/starroad/policy?pageIndex=" + pageIndex);
-            return mav;
         }
-
+        mav.setViewName("redirect:" + url);
+        return mav;
     }
 
     @ApiOperation(value = "청년정책 조회", notes = "청년정책을 조회할 수 있다")

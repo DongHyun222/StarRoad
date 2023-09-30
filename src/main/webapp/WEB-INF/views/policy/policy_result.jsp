@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,6 +11,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css"/>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script type="text/javascript">
@@ -17,24 +19,38 @@
             AOS.init();
             $("#navbar").load("${pageContext.request.contextPath}/resources/common_jsp/navbar.jsp");
         })
-        $(function () {
-            $("#location_${request_location}").prop("selected", true)
-        })
-        $(function () {
-            $("#keyword").val("${request_keyword}");
-        })
-        $(function () {
-            $("#${request_tag1}").prop('checked', true);
-        })
-        $(function () {
-            $("#${request_tag2}").prop('checked', true);
-        })
-        $(function () {
-            $("#${request_tag3}").prop('checked', true);
-        })
-        $(function () {
-            $("#${request_tag4}").prop('checked', true);
-        })
+
+        if ("${request_location}" != ""){
+            $(function () {
+                $("#location_${request_location}").prop("selected", true)
+            })
+        }
+        if ("${request_keyword}" != ""){
+            $(function () {
+                $("#keyword").val("${request_keyword}");
+            })
+        }
+        if ("${request_tag1}" != ""){
+            $(function () {
+                $("#${request_tag1}").prop('checked', true);
+            })
+        }
+        if ("${request_tag2}" != ""){
+            $(function () {
+                $("#${request_tag2}").prop('checked', true);
+            })
+        }
+        if ("${request_tag3}" != ""){
+            $(function () {
+                $("#${request_tag3}").prop('checked', true);
+            })
+        }
+        if ("${request_tag4}" != ""){
+            $(function () {
+                $("#${request_tag4}").prop('checked', true);
+            })
+        }
+
     </script>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/static/css/common.css">
     <link rel="stylesheet" type="text/css"
@@ -96,14 +112,15 @@
                     <div class="policy" data-aos="fade-up" data-aos-delay="${200*status.index}" data-aos-duration="400">
                         <c:choose>
                             <c:when test="${currentUser ne null}">
-                                <c:choose>
-                                    <c:when test="${item.name eq '경기도 청년면접수당'}">
-                                        <div class="like">💛</div>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <div class="like">🤍</div>
-                                    </c:otherwise>
-                                </c:choose>
+                                <form id="likeForm${status.count}" method="post" action="/starroad/policy">
+                                    <input type="hidden" name="policyNo" value="${item.no}">
+                                    <c:if test="${item.isLiked eq 'Y'}">
+                                        <div class="like" id="heart_icon${status.count}"><i class="fa-solid fa-heart" id="yellowHeart"></i></div>
+                                    </c:if>
+                                    <c:if test="${item.isLiked eq 'N'}">
+                                        <div class="like heart_icon" id="heart_icon${status.count}"><i class="fa-solid fa-heart" id="whiteHeart"></i></div>
+                                    </c:if>
+                                </form>
                             </c:when>
                             <c:otherwise>
                                 <div class="like"></div>
@@ -178,6 +195,20 @@
             }
         });
     });
+
+
+
+    for(let i = 1; i<${fn:length(policyList)} + 1; i++) {
+        $(document).ready(function() {
+            let id = '#heart_icon' + i;
+            let formId = '#likeForm' + i;
+            console.log(id);
+            console.log(formId);
+            $(id).on("click", function() {
+                $(formId).submit();
+            });
+        });
+    }
 </script>
 </body>
 </html>
